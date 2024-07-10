@@ -9,6 +9,7 @@ type Theme = {
   secondary: Color;
   text: Color;
   background: Color;
+  card: Color;
 
   style: () => Record<string, string>;
 };
@@ -17,15 +18,12 @@ function exportTheme(theme: Theme) {
   const keys = Object.keys(theme).filter((key) => key !== "style");
   const values = Object.values(theme);
 
-  return keys.reduce(
-    (acc, key, index) => {
-      const value = values[index];
-      const cssKey = key.replace(/([A-Z])/g, "-$1").toLowerCase();
-      acc[`--color-${cssKey}`] = value as string;
-      return acc;
-    },
-    {} as Record<string, string>,
-  );
+  return keys.reduce((acc, key, index) => {
+    const value = values[index];
+    const cssKey = key.replace(/([A-Z])/g, "-$1").toLowerCase();
+    acc[`--color-${cssKey}`] = value as string;
+    return acc;
+  }, {} as Record<string, string>);
 }
 
 export const lightTheme = {
@@ -33,6 +31,7 @@ export const lightTheme = {
   secondary: "#E6F2FF",
   text: "#1E1E1E",
   background: "#ffffff",
+  card: "#F2F2F2",
 
   style: function () {
     return vars(exportTheme(this));

@@ -10,6 +10,7 @@ const config = {
         secondary: "var(--color-secondary)",
         background: "var(--color-background)",
         text: "var(--color-text)",
+        card: "var(--color-card)",
       },
     },
   },
