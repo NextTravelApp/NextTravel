@@ -51,7 +51,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const theme = useTheme();
 
   return (
-    <View style={theme.style()} className="bg-background text-text">
+    <View
+      style={theme.style()}
+      className="flex min-h-screen flex-col bg-background text-text"
+    >
       {children}
     </View>
   );

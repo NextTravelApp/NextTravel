@@ -4,11 +4,9 @@ import "../assets/global.css";
 import { ThemeProvider } from "@/components/Theme";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, Tabs } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-
-export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
   initialRouteName: "(tabs)",
@@ -42,10 +40,19 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <ThemeProvider>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-      </Stack>
+      <Tabs
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: "",
+            tabBarIcon: () => <FontAwesome name="home" size={24} />,
+          }}
+        />
+      </Tabs>
     </ThemeProvider>
   );
 }

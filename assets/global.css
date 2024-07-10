@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ellipse {
+  clip-path: ellipse(60% 8rem at bottom center);
+}
