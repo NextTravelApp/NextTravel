@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi"]
 }
 
 datasource db {
@@ -8,16 +9,9 @@ datasource db {
 }
 
 model User {
-  id       String    @id
-  username String
+  id   String @id @default(cuid())
+  name String
+
+  email    String @unique
   password String
-  sessions Session[]
-}
-
-model Session {
-  id        String   @id
-  userId    String
-  expiresAt DateTime
-
-  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
