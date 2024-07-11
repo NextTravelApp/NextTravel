@@ -7,10 +7,13 @@
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^0.0.36",
     "@hono/zod-validator": "^0.2.2",
+    "ai": "^3.2.22",
     "database": "workspace:*",
     "hono": "^4.4.12",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.23.1"
   },
   "devDependencies": {
     "@types/bun": "latest"

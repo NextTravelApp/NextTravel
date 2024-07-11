@@ -8,7 +8,7 @@ export const registerSchema = z
       .string()
       .regex(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/,
-        "invalid_password"
+        "invalid_password",
       ),
     confirmPassword: z.string(),
   })

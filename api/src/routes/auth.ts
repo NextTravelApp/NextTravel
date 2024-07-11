@@ -23,7 +23,7 @@ hono.post("/register", zValidator("json", registerSchema), async (ctx) => {
       {
         error: "User already exists",
       },
-      400
+      400,
     );
   }
 
@@ -60,7 +60,7 @@ hono.post("/login", zValidator("json", loginSchema), async (ctx) => {
       {
         t: "invalid_password",
       },
-      401
+      401,
     );
   }
 
@@ -71,7 +71,7 @@ hono.post("/login", zValidator("json", loginSchema), async (ctx) => {
       {
         t: "invalid_password",
       },
-      401
+      401,
     );
   }
 

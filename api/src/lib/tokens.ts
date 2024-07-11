@@ -6,6 +6,6 @@ export async function signToken(userId: string) {
       user: userId,
       exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
     },
-    process.env.JWT_SECRET as string
+    process.env.JWT_SECRET as string,
   );
 }
