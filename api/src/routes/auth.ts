@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import prisma from "../lib/prisma";
 import { loginSchema, registerSchema } from "../lib/schemas";
 import { signToken } from "../lib/tokens";
+import { authenticated } from "../middlewares/auth";
 
 const hono = new Hono();
 hono.post("/register", zValidator("json", registerSchema), async (ctx) => {
@@ -59,7 +60,7 @@ hono.post("/login", zValidator("json", loginSchema), async (ctx) => {
       {
         t: "invalid_password",
       },
-      404
+      401
     );
   }
 
@@ -70,7 +71,7 @@ hono.post("/login", zValidator("json", loginSchema), async (ctx) => {
       {
         t: "invalid_password",
       },
-      404
+      401
     );
   }
 
@@ -79,6 +80,17 @@ hono.post("/login", zValidator("json", loginSchema), async (ctx) => {
   return ctx.json({
     token,
   });
+});
+
+hono.get("/me", authenticated, async (ctx) => {
+  const payload = ctx.get("jwtPayload");
+  const user = await prisma.user.findUnique({
+    where: {
+      id: payload.user,
+    },
+  });
+
+  return ctx.json(user);
 });
 
 export default hono;

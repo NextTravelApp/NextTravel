@@ -46,7 +46,7 @@ export default function App() {
           </View>
 
           <Button className="w-3/4">
-            <Text>Start planning!</Text>
+            <Text className="text-center">Start planning!</Text>
           </Button>
         </View>
       </View>

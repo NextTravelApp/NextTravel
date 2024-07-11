@@ -12,7 +12,7 @@ export type LocationProps = {
 export function Location(props: LocationProps) {
   return (
     <Link href={`/search?destination=${props.id}`} asChild>
-      <Pressable className="relative h-28 w-44">
+      <Pressable className="relative h-32 w-56">
         <Image
           source={props.image}
           contentFit="cover"
