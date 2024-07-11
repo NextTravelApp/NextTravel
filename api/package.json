@@ -1,0 +1,21 @@
+{
+  "name": "api",
+  "module": "src/index.ts",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.16.2",
+    "database": "workspace:*",
+    "hono": "^4.4.12"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prisma": "^5.16.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
