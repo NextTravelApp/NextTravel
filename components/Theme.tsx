@@ -1,6 +1,6 @@
 import { useColorScheme, vars } from "nativewind";
 import type { ReactNode } from "react";
-import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Color = `#${string}`;
 
@@ -50,11 +50,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const theme = useTheme();
 
   return (
-    <View
+    <SafeAreaView
       style={theme.style()}
       className="flex min-h-screen flex-col bg-background text-text"
     >
       {children}
-    </View>
+    </SafeAreaView>
   );
 }

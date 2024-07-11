@@ -11,7 +11,10 @@ export function View(props: DefaultView["props"]) {
 
 export function Text(props: DefaultText["props"]) {
   return (
-    <DefaultText {...props} className={`text-text ${props.className || ""}`} />
+    <DefaultText
+      {...props}
+      className={`font-geist text-text ${props.className || ""}`}
+    />
   );
 }
 
@@ -19,7 +22,7 @@ export function Input(props: TextInput["props"]) {
   return (
     <TextInput
       {...props}
-      className={`rounded-lg bg-card p-2 ${props.className || ""}`}
+      className={`rounded-lg bg-card p-2 font-geist ${props.className || ""}`}
     />
   );
 }

@@ -1,10 +1,10 @@
 import "react-native-reanimated";
 import "../assets/global.css";
 
-import { ThemeProvider } from "@/components/Theme";
+import { ThemeProvider, useTheme } from "@/components/Theme";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import { Stack, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
@@ -38,18 +38,21 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const theme = useTheme();
+
   return (
     <ThemeProvider>
       <Tabs
         screenOptions={{
           headerShown: false,
+          tabBarActiveTintColor: theme.primary,
         }}
       >
         <Tabs.Screen
           name="index"
           options={{
             title: "",
-            tabBarIcon: () => <FontAwesome name="home" size={24} />,
+            tabBarIcon: (props) => <FontAwesome name="home" {...props} />,
           }}
         />
       </Tabs>
