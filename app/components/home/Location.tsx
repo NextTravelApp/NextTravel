@@ -1,7 +1,7 @@
-import { Pressable } from "react-native";
-import { Image } from "../ui/Image";
-import { Text } from "../ui/Themed";
 import { Link } from "expo-router";
+import { Pressable } from "react-native";
+import { Text } from "react-native-paper";
+import { Image } from "../ui/Image";
 
 export type LocationProps = {
   image: string;

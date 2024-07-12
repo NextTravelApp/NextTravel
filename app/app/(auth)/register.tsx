@@ -1,9 +1,9 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
-import { Button, Input, Text, View } from "@/components/ui/Themed";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
+import { Button, Text, TextInput } from "react-native-paper";
 
 export default function Register() {
   const { login } = useSession();
@@ -15,32 +15,33 @@ export default function Register() {
 
   return (
     <View className="flex flex-1 flex-col bg-background">
-      <Input
+      <TextInput
         placeholder="Name"
         autoComplete="name"
         value={name}
         onChangeText={setName}
       />
-      <Input
+      <TextInput
         placeholder="Email"
         keyboardType="email-address"
         autoComplete="email"
         value={email}
         onChangeText={setEmail}
       />
-      <Input
+      <TextInput
         placeholder="Password"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
-      <Input
+      <TextInput
         placeholder="Confirm Password"
         secureTextEntry
         value={confirmPassword}
         onChangeText={setConfirmPassword}
       />
       <Button
+        mode="contained"
         onPress={() => {
           honoClient.auth.register
             .$post({

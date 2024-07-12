@@ -1,8 +1,8 @@
-import { useSession } from "@/components/auth/AuthContext";
 import { useTheme } from "@/components/Theme";
-import { View } from "@/components/ui/Themed";
+import { useSession } from "@/components/auth/AuthContext";
 import { Redirect } from "expo-router";
-import { ActivityIndicator } from "react-native";
+import { View } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function Account() {
   const theme = useTheme();
