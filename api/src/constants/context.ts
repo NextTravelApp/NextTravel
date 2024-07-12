@@ -1,5 +1,5 @@
 import type { User } from "database";
 
 export type Variables = {
-  user?: User;
+  user: Omit<User, "password">;
 };

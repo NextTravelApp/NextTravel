@@ -8,14 +8,7 @@ export default function Account() {
   const theme = useTheme();
   const { session, isLoading } = useSession();
 
-  if (isLoading)
-    return (
-      <ActivityIndicator
-        color={theme.primary}
-        className="m-auto"
-        size="large"
-      />
-    );
+  if (isLoading) return <ActivityIndicator className="m-auto" size="large" />;
 
   if (!session && !isLoading) return <Redirect href="/login" />;
 

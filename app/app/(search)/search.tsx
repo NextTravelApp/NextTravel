@@ -3,10 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
+import { ActivityIndicator, Text } from "react-native-paper";
 
 export default function SearchPage() {
   const { location, members, startDate, endDate } = useLocalSearchParams();
-  const query = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["search", location, members, startDate, endDate],
     queryFn: async () => {
       if (!location || !members || !startDate || !endDate) return null;
@@ -25,12 +26,17 @@ export default function SearchPage() {
         })
         .then(async (res) => await res.json());
 
-      console.log(res);
-
       return res;
     },
+    staleTime: 1000 * 60 * 5,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    refetchInterval: false,
   });
 
-  console.log(query);
+  if (isLoading) return <ActivityIndicator className="m-auto" size="large" />;
+  if (error) return <Text>An error occurred</Text>;
+
   return <View />;
 }
