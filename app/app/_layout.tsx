@@ -49,13 +49,10 @@ function RootLayoutNav() {
 
   return (
     <Tabs
-      screenOptions={({ route }) => ({
+      screenOptions={() => ({
         headerShown: false,
         tabBarShowLabel: false,
         tabBarActiveTintColor: theme.primary,
-        tabBarStyle: {
-          display: route.name === "(auth)" ? "none" : "flex",
-        },
       })}
     >
       <Tabs.Screen
@@ -65,17 +62,11 @@ function RootLayoutNav() {
         }}
       />
       <Tabs.Screen
-        name="account"
+        name="(auth)"
         options={{
           tabBarIcon: (props) => (
             <FontAwesome name="user-circle-o" {...props} />
           ),
-        }}
-      />
-      <Tabs.Screen
-        name="(auth)"
-        options={{
-          href: null,
         }}
       />
     </Tabs>

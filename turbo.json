@@ -1,11 +1,19 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": [".env"],
+  "globalEnv": [
+    "DATABASE_URL",
+    "JWT_SECRET",
+    "OPENAI_API_KEY",
+    "OPENAI_API_URL",
+    "EXPO_USE_METRO_WORKSPACE_ROOT",
+    "EXPO_PUBLIC_API_URL"
+  ],
 
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".expo/**", ".output/**"]
+      "outputs": [".expo/**", ".output/**", "dist/**"]
     },
     "dev": {
       "cache": false,

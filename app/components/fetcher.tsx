@@ -1,6 +1,9 @@
 import type { AppType } from "api";
 import * as SecureStore from "expo-secure-store";
-import { hc } from "hono/client";
+// @ts-expect-error Metro seems to not be able to find the package
+import { hc } from "hono/dist/client/client";
+import type { Client } from "hono/dist/types/client/types";
+import type { UnionToIntersection } from "hono/utils/types";
 import { Platform } from "react-native";
 
 const token =
@@ -17,7 +20,7 @@ if (token) {
   };
 }
 
-export const honoClient = hc<AppType>(
+export const honoClient: UnionToIntersection<Client<AppType>> = hc<AppType>(
   process.env.EXPO_PUBLIC_API_URL as string,
   { headers },
 );

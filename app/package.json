@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "dev": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start",
+    "android": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start --android",
+    "ios": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start --ios",
+    "web": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start --web"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",

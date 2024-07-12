@@ -8,9 +8,16 @@ export default function Account() {
   const theme = useTheme();
   const { session, isLoading } = useSession();
 
-  if (isLoading || true) return <ActivityIndicator color={theme.primary} />;
-  if (!session && !isLoading)
-    return <View className="flex flex-1 flex-col bg-background" />;
+  if (isLoading)
+    return (
+      <ActivityIndicator
+        color={theme.primary}
+        className="m-auto"
+        size="large"
+      />
+    );
+
+  if (!session && !isLoading) return <Redirect href="/login" />;
 
   return <View className="flex flex-1 flex-col bg-background" />;
 }
