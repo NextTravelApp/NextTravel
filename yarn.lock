@@ -3635,6 +3635,7 @@ __metadata:
     redis: "npm:^4.6.15"
     tsx: "npm:^4.16.2"
     typescript: "npm:^5.0.0"
+    unsplash-js: "npm:^7.0.19"
     zod: "npm:^3.23.8"
     zod-to-json-schema: "npm:^3.23.1"
   languageName: unknown
@@ -11058,6 +11059,13 @@ __metadata:
   version: 1.0.0
   resolution: "unpipe@npm:1.0.0"
   checksum: 10c0/193400255bd48968e5c5383730344fbb4fa114cdedfab26e329e50dd2d81b134244bb8a72c6ac1b10ab0281a58b363d06405632c9d49ca9dfd5e90cbd7d0f32c
+  languageName: node
+  linkType: hard
+
+"unsplash-js@npm:^7.0.19":
+  version: 7.0.19
+  resolution: "unsplash-js@npm:7.0.19"
+  checksum: 10c0/ea139e38e80b43d21baa5a97b3a461f0938da4e80c3ca1c2af62e4609ee204f27b20800b7459b62287f39c201d4d6b0578393f8412db4e9d3fd2b586af32a8bb
   languageName: node
   linkType: hard
 

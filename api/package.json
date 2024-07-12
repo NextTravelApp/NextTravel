@@ -17,6 +17,7 @@
     "database": "workspace:*",
     "hono": "^4.4.12",
     "redis": "^4.6.15",
+    "unsplash-js": "^7.0.19",
     "zod": "^3.23.8",
     "zod-to-json-schema": "^3.23.1"
   },

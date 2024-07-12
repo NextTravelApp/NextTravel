@@ -1,3 +1,5 @@
+import { useSession } from "@/components/auth/AuthContext";
+import { honoClient } from "@/components/fetcher";
 import { Location } from "@/components/home/Location";
 import {
   Button,
@@ -6,16 +8,19 @@ import {
 } from "@/components/injector/ReactNativePaper";
 import { Image } from "@/components/ui/Image";
 import { FontAwesome } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useQuery } from "@tanstack/react-query";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { Divider, TextInput as RNTextInput } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
 
 export default function App() {
+  const { session } = useSession();
   const router = useRouter();
+  const { location: defaultLocation } = useLocalSearchParams();
   const [dateOpen, setDateOpen] = useState(false);
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState((defaultLocation as string) ?? "");
   const [members, setMembers] = useState(0);
   const [range, setRange] = useState<{
     startDate?: Date;
@@ -24,10 +29,22 @@ export default function App() {
     startDate: undefined,
     endDate: undefined,
   });
+  const { data: popular } = useQuery({
+    queryKey: ["popular"],
+    queryFn: () =>
+      honoClient.search.popular.$get().then(async (res) => await res.json()),
+  });
+  const { data: history } = useQuery({
+    queryKey: ["history", session?.id],
+    queryFn: () =>
+      session
+        ? honoClient.search.history.$get().then(async (res) => await res.json())
+        : [],
+  });
 
   return (
     <ScrollView className="flex flex-1 flex-col bg-background">
-      <View className="relative mb-[24vh] h-2/5">
+      <View className="relative mb-[27vh] h-2/5">
         <Image
           className="w-full bg-[#0553]"
           source={require("@/assets/images/landscape.webp")}
@@ -142,7 +159,7 @@ export default function App() {
 
       <Divider />
 
-      <View className="flex gap-2 p-6">
+      <View className="flex gap-2 p-6 pt-0">
         <Text className="font-extrabold text-xl">Most requested</Text>
         <ScrollView
           horizontal
@@ -150,26 +167,16 @@ export default function App() {
             columnGap: 12,
           }}
         >
-          <Location
-            image={require("@/assets/images/landscape.webp")}
-            name="Paris"
-            id="paris"
-          />
-          <Location
-            image={require("@/assets/images/landscape.webp")}
-            name="Paris"
-            id="paris"
-          />
-          <Location
-            image={require("@/assets/images/landscape.webp")}
-            name="Paris"
-            id="paris"
-          />
-          <Location
-            image={require("@/assets/images/landscape.webp")}
-            name="Paris"
-            id="paris"
-          />
+          {popular?.map((search) => (
+            <Location
+              key={search.id}
+              image={search.image}
+              imageAttribs={search.imageAttributes}
+              name={search.name}
+              id={search.id}
+              restore
+            />
+          ))}
         </ScrollView>
       </View>
 
@@ -181,26 +188,16 @@ export default function App() {
             columnGap: 12,
           }}
         >
-          <Location
-            image={require("@/assets/images/landscape.webp")}
-            name="Paris"
-            id="paris"
-          />
-          <Location
-            image={require("@/assets/images/landscape.webp")}
-            name="Paris"
-            id="paris"
-          />
-          <Location
-            image={require("@/assets/images/landscape.webp")}
-            name="Paris"
-            id="paris"
-          />
-          <Location
-            image={require("@/assets/images/landscape.webp")}
-            name="Paris"
-            id="paris"
-          />
+          {history?.map((search) => (
+            <Location
+              key={search.id}
+              image={search.image}
+              imageAttribs={search.imageAttributes}
+              name={search.title}
+              id={search.id}
+              restore
+            />
+          ))}
         </ScrollView>
       </View>
 

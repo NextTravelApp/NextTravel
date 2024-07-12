@@ -9,13 +9,13 @@ export default function SearchPage() {
   const { location, members, startDate, endDate } = useLocalSearchParams();
   const { data, isLoading, error } = useQuery({
     queryKey: ["search", location, members, startDate, endDate],
-    queryFn: async () => {
+    queryFn: () => {
       if (!location || !members || !startDate || !endDate) return null;
 
       const parsedStart = format(startDate as string, "yyyy-MM-dd");
       const parsedEnd = format(endDate as string, "yyyy-MM-dd");
 
-      const res = await honoClient.search
+      return honoClient.search
         .$post({
           json: {
             location: location as string,
@@ -25,8 +25,6 @@ export default function SearchPage() {
           },
         })
         .then(async (res) => await res.json());
-
-      return res;
     },
     staleTime: 1000 * 60 * 5,
     refetchOnMount: false,

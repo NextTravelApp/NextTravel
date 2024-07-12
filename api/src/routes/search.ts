@@ -1,11 +1,12 @@
+import { readFileSync } from "node:fs";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { createApi } from "unsplash-js";
 import type { responseType } from "../constants/ai";
 import type { Variables } from "../constants/context";
 import { searchSchema } from "../constants/requests";
 import prisma from "../lib/prisma";
 import { authenticated } from "../middlewares/auth";
-import { readFileSync } from "node:fs";
 
 export const searchRoute = new Hono<{ Variables: Variables }>()
   .post(
@@ -28,7 +29,7 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
     zValidator("json", searchSchema),
     async (ctx) => {
       const user = ctx.get("user");
-      const _body = ctx.req.valid("json");
+      const body = ctx.req.valid("json");
       // TODO: Connect to AI
 
       await prisma.user.update({
@@ -48,10 +49,23 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
       if (process.env.RETURN_EXAMPLE_DATA)
         trip = JSON.parse(readFileSync("test/data.json", "utf-8"));
 
+      const unsplash = createApi({
+        accessKey: process.env.UNSPLASH_ACCESS_KEY as string,
+      });
+
+      const { response: photos } = await unsplash.search.getPhotos({
+        query: body.location,
+        perPage: 1,
+        plus: "none",
+      });
+
       await prisma.searchRequest.create({
         data: {
           userId: user.id,
           title: trip.title,
+          image: photos?.results[0].urls.small,
+          imageAttributes: photos?.results[0].user.links.html,
+          location: body.location,
           data: trip,
         },
       });
@@ -69,7 +83,19 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
       orderBy: {
         createdAt: "desc",
       },
+      select: {
+        id: true,
+        title: true,
+        location: true,
+        createdAt: true,
+        image: true,
+        imageAttributes: true,
+      },
     });
 
+    return ctx.json(searches);
+  })
+  .get("/popular", async (ctx) => {
+    const searches = await prisma.popularLocations.findMany();
     return ctx.json(searches);
   });

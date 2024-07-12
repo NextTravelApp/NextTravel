@@ -23,10 +23,20 @@ model User {
 model SearchRequest {
   id String @id @default(cuid())
 
-  title String
-  data  Json
+  title           String
+  image           String?
+  imageAttributes String?
+  location        String
+  data            Json
 
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
+}
+
+model PopularLocations {
+  id              String  @id
+  name            String
+  image           String?
+  imageAttributes String?
 }
