@@ -128,7 +128,7 @@ export default function App() {
             <Button
               onPress={() => {
                 router.push(
-                  `/search?location=${location}&members=${members}&startDate=${range.startDate?.toISOString()}&endDate=${range.endDate?.toISOString()}`,
+                  `/search?location=${location}&members=${members}&startDate=${range.startDate?.toLocaleDateString("en-US")}&endDate=${range.endDate?.toLocaleDateString("en-US")}`,
                 );
               }}
               mode="contained"

@@ -1,14 +1,12 @@
 import { Image as DefaultImage } from "expo-image";
-import { cssInterop } from "nativewind";
+import { remapProps } from "nativewind";
+
+const RemappedImage = remapProps(DefaultImage, {
+  className: "style",
+});
 
 export function Image(props: DefaultImage["props"]) {
-  cssInterop(DefaultImage, {
-    className: {
-      target: "style",
-    },
-  });
-
   const { className, ...rest } = props;
 
-  return <DefaultImage className={`flex-1 ${className || ""}`} {...rest} />;
+  return <RemappedImage className={`flex-1 ${className || ""}`} {...rest} />;
 }

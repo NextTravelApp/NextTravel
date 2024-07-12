@@ -44,6 +44,8 @@ export const systemPrompt = [
     "on where the attractions are, the price and the ratings,",
   "- No matter what, you should NEVER respond with a different structure than the " +
     "one provided below,",
+  "- You should base the plan based on user preferences if given and also on the " +
+    "ages of the members,",
   "- You should never add formatting ticks for the json output. " +
     "Just return it in plain text,",
   "",

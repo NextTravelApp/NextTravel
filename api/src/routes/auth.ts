@@ -1,12 +1,13 @@
 import { zValidator } from "@hono/zod-validator";
+import { hashSync, verifySync } from "@node-rs/argon2";
 import { Hono } from "hono";
-import prisma from "../lib/prisma";
+import type { Variables } from "../constants/context";
 import { loginSchema, registerSchema } from "../constants/requests";
+import prisma from "../lib/prisma";
 import { signToken } from "../lib/tokens";
 import { authenticated } from "../middlewares/auth";
-import { hashSync, verifySync } from "@node-rs/argon2";
 
-export const authRoute = new Hono()
+export const authRoute = new Hono<{ Variables: Variables }>()
   .post("/register", zValidator("json", registerSchema), async (ctx) => {
     const body = ctx.req.valid("json");
 
@@ -82,12 +83,6 @@ export const authRoute = new Hono()
     });
   })
   .get("/me", authenticated, async (ctx) => {
-    const payload = ctx.get("jwtPayload");
-    const user = await prisma.user.findUnique({
-      where: {
-        id: payload.user,
-      },
-    });
-
+    const user = ctx.get("user");
     return ctx.json(user);
   });

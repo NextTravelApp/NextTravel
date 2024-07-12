@@ -3632,6 +3632,7 @@ __metadata:
     ai: "npm:^3.2.22"
     database: "workspace:*"
     hono: "npm:^4.4.12"
+    hono-rate-limiter: "npm:^0.4.0"
     redis: "npm:^4.6.15"
     tsx: "npm:^4.16.2"
     typescript: "npm:^5.0.0"
@@ -3650,6 +3651,7 @@ __metadata:
     "@tanstack/react-query": "npm:^5.51.1"
     "@types/react": "npm:~18.2.79"
     api: "workspace:*"
+    date-fns: "npm:^3.6.0"
     expo: "npm:~51.0.20"
     expo-image: "npm:~1.12.12"
     expo-linking: "npm:~6.3.1"
@@ -4702,6 +4704,13 @@ __metadata:
     typescript: "npm:^5.5.3"
   languageName: unknown
   linkType: soft
+
+"date-fns@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "date-fns@npm:3.6.0"
+  checksum: 10c0/0b5fb981590ef2f8e5a3ba6cd6d77faece0ea7f7158948f2eaae7bbb7c80a8f63ae30b01236c2923cf89bb3719c33aeb150c715ea4fe4e86e37dcf06bed42fb6
+  languageName: node
+  linkType: hard
 
 "dayjs@npm:^1.8.15":
   version: 1.11.11
@@ -6220,6 +6229,15 @@ __metadata:
   dependencies:
     react-is: "npm:^16.7.0"
   checksum: 10c0/fe0889169e845d738b59b64badf5e55fa3cf20454f9203d1eb088df322d49d4318df774828e789898dcb280e8a5521bb59b3203385662ca5e9218a6ca5820e74
+  languageName: node
+  linkType: hard
+
+"hono-rate-limiter@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "hono-rate-limiter@npm:0.4.0"
+  peerDependencies:
+    hono: ^4.1.1
+  checksum: 10c0/09cfbe7c2f146b2799b4cd54ccef05e83788403b561a877e5c7da28e3e97ec6bc7ae0ee2e1b3a48ae07b68cae1d163c4d34950ae507e6bda06e7335a4243c6ee
   languageName: node
   linkType: hard
 

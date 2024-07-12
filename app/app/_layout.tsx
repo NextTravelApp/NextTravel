@@ -52,6 +52,7 @@ function RootLayoutNav() {
     <PaperProvider
       theme={{
         ...DefaultTheme,
+        roundness: 1,
         colors: {
           ...DefaultTheme.colors,
           ...theme,

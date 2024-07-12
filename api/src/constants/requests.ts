@@ -26,3 +26,10 @@ export const loginSchema = z.object({
   email: z.string().email("invalid_email"),
   password: z.string(),
 });
+
+export const searchSchema = z.object({
+  location: z.string(),
+  members: z.number(),
+  startDate: z.string().date(),
+  endDate: z.string().date(),
+});
