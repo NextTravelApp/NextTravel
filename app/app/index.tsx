@@ -1,15 +1,22 @@
 import { Location } from "@/components/home/Location";
-import { Button, TextInput } from "@/components/injector/ReactNativePaper";
+import {
+  Button,
+  Text,
+  TextInput,
+} from "@/components/injector/ReactNativePaper";
 import { Image } from "@/components/ui/Image";
+import { FontAwesome } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
-import { Divider, Text } from "react-native-paper";
+import { ScrollView, TouchableOpacity, View } from "react-native";
+import { Divider, TextInput as RNTextInput } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
 
-const blurhash = "NlGIinWAE1Rjjsj[_4V@RPRjWBj[-;WAj@RjWBay";
-
 export default function App() {
+  const router = useRouter();
   const [dateOpen, setDateOpen] = useState(false);
+  const [location, setLocation] = useState("");
+  const [members, setMembers] = useState(0);
   const [range, setRange] = useState<{
     startDate?: Date;
     endDate?: Date;
@@ -24,9 +31,7 @@ export default function App() {
         <Image
           className="w-full bg-[#0553]"
           source={require("@/assets/images/landscape.webp")}
-          placeholder={{ blurhash }}
           contentFit="cover"
-          transition={1000}
           blurRadius={2}
         />
 
@@ -46,30 +51,89 @@ export default function App() {
             Ready for your next travel?
           </Text>
 
-          <View className="flex w-3/4 gap-3">
+          <View className="flex w-5/6 gap-3">
             <TextInput
               mode="outlined"
               placeholder="Type your destination!"
               className="w-full"
+              value={location}
+              onChangeText={setLocation}
+              left={
+                <RNTextInput.Icon
+                  className="m-auto"
+                  icon={(props) => (
+                    <FontAwesome
+                      className="m-auto"
+                      name="location-arrow"
+                      {...props}
+                    />
+                  )}
+                  color="black"
+                  size={25}
+                />
+              }
             />
-            <View className="flex w-full flex-row gap-4">
-              <Button
-                labelClassName="!text-black"
-                mode="outlined"
-                className="!rounded-md flex items-center justify-center"
+            <View className="flex w-full max-w-full flex-1 flex-row justify-between">
+              <TouchableOpacity
+                className="w-[49%]"
                 onPress={() => setDateOpen(true)}
               >
-                Choose Period
-              </Button>
+                <TextInput
+                  mode="outlined"
+                  readOnly
+                  placeholder={
+                    range.startDate && range.endDate
+                      ? `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
+                      : "Period"
+                  }
+                  left={
+                    <RNTextInput.Icon
+                      className="m-auto"
+                      icon={(props) => (
+                        <FontAwesome
+                          className="m-auto"
+                          name="calendar"
+                          {...props}
+                        />
+                      )}
+                      color="black"
+                      size={25}
+                    />
+                  }
+                />
+              </TouchableOpacity>
+
               <TextInput
                 mode="outlined"
                 keyboardType="number-pad"
                 placeholder="1 adult(s)"
-                className="w-1/2"
+                className="w-[49%]"
+                value={members.toString()}
+                onChangeText={(text) => {
+                  setMembers(Number.parseInt(text) || 0);
+                }}
+                left={
+                  <RNTextInput.Icon
+                    className="m-auto"
+                    icon={(props) => (
+                      <FontAwesome className="m-auto" name="user" {...props} />
+                    )}
+                    color="black"
+                    size={25}
+                  />
+                }
               />
             </View>
 
-            <Button mode="contained" className="w-full">
+            <Button
+              onPress={() => {
+                router.push(
+                  `/search?location=${location}&members=${members}&startDate=${range.startDate?.toISOString()}&endDate=${range.endDate?.toISOString()}`,
+                );
+              }}
+              mode="contained"
+              className="w-full"
+            >
               Start planning!
             </Button>
           </View>
@@ -142,6 +206,7 @@ export default function App() {
 
       <DatePickerModal
         locale="en"
+        label="Select the range"
         mode="range"
         visible={dateOpen}
         onDismiss={() => {

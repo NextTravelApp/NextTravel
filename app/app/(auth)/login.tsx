@@ -3,7 +3,11 @@ import { honoClient } from "@/components/fetcher";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, View } from "react-native";
-import { Button, Text, TextInput } from "react-native-paper";
+import {
+  Button,
+  Text,
+  TextInput,
+} from "@/components/injector/ReactNativePaper";
 
 export default function Login() {
   const { login } = useSession();
