@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import type { User } from "database";
+import type { InferResponseType } from "hono/client";
 import { type PropsWithChildren, createContext, useContext } from "react";
-import { axiosClient } from "../fetcher";
+import { honoClient } from "../fetcher";
 import { useStorageState } from "../useStorageState";
 
 export type AuthContextType = {
-  session: User | null;
+  session: InferResponseType<typeof honoClient.auth.me.$get> | null;
   isLoading: boolean;
   login: (token: string) => void;
   logout: () => void;
@@ -23,10 +23,12 @@ export function useSession() {
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [[isLoading, token], setToken] = useStorageState("token");
-  const { data: session } = useQuery<User | null>({
+  const { data: session } = useQuery({
     queryKey: ["session", token],
     queryFn: () =>
-      token ? axiosClient.get<User>("/auth/me").then((res) => res.data) : null,
+      token
+        ? honoClient.auth.me.$get().then(async (res) => await res.json())
+        : null,
   });
 
   return (

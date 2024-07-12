@@ -1,10 +1,11 @@
 import { useSession } from "@/components/auth/AuthContext";
-import { axiosClient } from "@/components/fetcher";
+import { honoClient } from "@/components/fetcher";
 import { Button, Input, Text, View } from "@/components/ui/Themed";
 import { useRouter } from "expo-router";
 import { useState } from "react";
+import { Alert } from "react-native";
 
-export default function App() {
+export default function Register() {
   const { login } = useSession();
   const router = useRouter();
   const [name, setName] = useState("");
@@ -41,19 +42,24 @@ export default function App() {
       />
       <Button
         onPress={() => {
-          axiosClient
-            .post("/auth/register", {
-              name,
-              email,
-              password,
-              confirmPassword,
+          honoClient.auth.register
+            .$post({
+              json: {
+                name,
+                email,
+                password,
+                confirmPassword,
+              },
             })
-            .then((res) => res.data)
-            .then(({ token }) => {
-              login(token);
-              router.push("/");
-            })
-            .catch(console.error);
+            .then(async (res) => await res.json())
+            .then((data) => {
+              if ("token" in data) {
+                login(data.token);
+                router.push("/");
+              } else {
+                Alert.alert(data.t);
+              }
+            });
         }}
       >
         <Text>Submit</Text>

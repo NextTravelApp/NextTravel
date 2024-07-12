@@ -1,5 +1,5 @@
 {
-  "name": "nexttravel",
+  "name": "app",
   "main": "expo-router/entry",
   "version": "0.0.0",
   "private": true,
@@ -14,8 +14,7 @@
     "@react-native-community/datetimepicker": "8.0.1",
     "@react-navigation/native": "^6.1.17",
     "@tanstack/react-query": "^5.51.1",
-    "axios": "^1.7.2",
-    "expo": "~51.0.19",
+    "expo": "~51.0.20",
     "expo-image": "~1.12.12",
     "expo-linking": "~6.3.1",
     "expo-router": "~3.5.18",
@@ -24,6 +23,7 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
+    "hono": "^4.4.13",
     "nativewind": "^4.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -36,7 +36,7 @@
   "devDependencies": {
     "@babel/core": "^7.24.7",
     "@types/react": "~18.2.79",
-    "database": "workspace:*",
+    "api": "workspace:*",
     "tailwindcss": "^3.4.4",
     "typescript": "~5.3.3"
   }

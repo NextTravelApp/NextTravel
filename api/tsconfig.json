@@ -8,7 +8,7 @@
     "sourceMap": false,
     "strict": true,
     "skipLibCheck": true,
-    "types": ["node", "bun"],
+    "types": ["node"],
     "jsx": "react-jsx",
     "outDir": "dist"
   },

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import zodToJsonSchema from "zod-to-json-schema";
+import createSchema from "zod-to-json-schema";
 
 export const responseSchema = z.object({
   plan: z
@@ -48,7 +48,7 @@ export const systemPrompt = [
     "Just return it in plain text,",
   "",
   "JSON schema:",
-  JSON.stringify(zodToJsonSchema(responseSchema)),
+  JSON.stringify(createSchema(responseSchema)),
   "You MUST answer with a JSON object that matches the JSON schema above, " +
     "nothing else.",
 ].join("\n");
