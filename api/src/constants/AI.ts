@@ -6,20 +6,28 @@ export const responseSchema = z.object({
     .array(
       z
         .object({
-          date: z.string().describe("The date of the point"),
-          time: z.string().describe("The time of the point"),
-          duration: z.number().describe("The duration of the point"),
-          location: z.string().describe("The location of the point"),
-          attraction: z
+          title: z.string().describe("The title of the step"),
+          date: z.string().describe("The date of the step"),
+          time: z.string().describe("The time of the step"),
+          duration: z.number().describe("The duration of the step"),
+          location: z.string().describe("The location of the step"),
+          attractionId: z
             .string()
             .optional()
-            .describe("The attraction of the point"),
+            .describe("The id of an attraction if present"),
+          transportId: z
+            .string()
+            .optional()
+            .describe("The id of the transport to take"),
         })
         .describe("A step for the trip"),
     )
     .describe("The plan for the trip"),
 
-  hotelId: z.string().optional().describe("The hotel id to book"),
+  accomodationId: z
+    .string()
+    .optional()
+    .describe("The id of the accomodation to book"),
 });
 
 export type responseType = z.infer<typeof responseSchema>;
@@ -30,10 +38,10 @@ export const systemPrompt = [
   "Some rules and explanation:",
   "- User gives some information regarding the trip they want to execute,",
   "- Dates are always in the format 'MM/DD/YYYY",
-  "- You can call functions(getAttractions,getHotels,getDistance) to retrieve data " +
+  "- You can call functions(getAttraction,getAccomodations,getTransport) to retrieve data " +
     "from the web,",
-  "- When you respond, you must provide a full plan, select the best hotel based " +
-    "on where the attractions are but also the price,",
+  "- When you respond, you must provide a full plan, select the best accomodation based " +
+    "on where the attractions are, the price and the ratings,",
   "- No matter what, you should NEVER respond with a different structure than the " +
     "one provided below,",
   "- You should never add formatting ticks for the json output. " +

@@ -1,75 +1,53 @@
 import { tool } from "ai";
 import { z } from "zod";
+import { searchAttraction } from "../retriever/attractions";
+import { searchAccomodations } from "../retriever/accomodation";
+import { searchTransports } from "../retriever/transports";
 
 function logTool(tool: string, request: unknown) {
   console.log(`[AI] [Tool] ${tool}`, request);
 }
 
-export type AttractionsRequest = z.infer<(typeof getAttractions)["parameters"]>;
-export const getAttractions = tool({
-  description: "Get the best attractions of a location",
-  parameters: z.object({
-    location: z.string().describe("The location to get the attractions for"),
-  }),
+export const attractionRequestSchema = z.object({
+  name: z.string().describe("The name of the attraction"),
+  location: z.string().describe("The city of the attraction"),
+});
+export type AttractionRequest = z.infer<typeof attractionRequestSchema>;
+export const getAttraction = tool({
+  description: "Get info and pricing about a specific attraction",
+  parameters: attractionRequestSchema,
   execute: async (request) => {
-    // TODO: Implement the logic
     logTool("getAttractions", request);
-
-    return {
-      attractions: ["Eiffel Tower", "Louvre Museum", "Notre-Dame"],
-    };
+    return await searchAttraction(request);
   },
 });
 
-export type HotelsRequest = z.infer<(typeof getHotels)["parameters"]>;
-export const getHotels = tool({
-  description: "Get the best hotels in a specific location",
-  parameters: z.object({
-    location: z.string().describe("The location to get the hotels for"),
-  }),
+export const accomodationsRequestSchema = z.object({
+  location: z.string().describe("The location to get the hotels for"),
+  members: z.array(z.number()).describe("The ages of the members"),
+});
+export type AccomodationsRequest = z.infer<typeof accomodationsRequestSchema>;
+export const getAccomodations = tool({
+  description: "Get the best accomodations in a specific location",
+  parameters: accomodationsRequestSchema,
   execute: async (request) => {
-    // TODO: Implement the logic
-    logTool("getHotels", request);
-
-    return {
-      hotels: [
-        {
-          id: "h1",
-          name: "Hotel 1",
-          location: "Outside Paris",
-          price: 50,
-        },
-        {
-          id: "h2",
-          name: "Hotel 2",
-          location: "Eiffel Tower",
-          price: 100,
-        },
-        {
-          id: "h3",
-          name: "Hotel 3",
-          location: "Near the centre",
-          price: 75,
-        },
-      ],
-    };
+    logTool("getAccomodations", request);
+    return await searchAccomodations(request);
   },
 });
 
-export type GetDistanceRequest = z.infer<(typeof getDistance)["parameters"]>;
-export const getDistance = tool({
+export const transportRequestSchema = z.object({
+  origin: z.string().describe("The origin location"),
+  destination: z.string().describe("The destination location"),
+  date: z.string().describe("The date of the travel"),
+});
+export type TransportRequest = z.infer<typeof transportRequestSchema>;
+export const getTransport = tool({
   description:
-    "Get the time in seconds between two locations. Locations must be real and not an hotel name",
-  parameters: z.object({
-    origin: z.string().describe("The origin location"),
-    destination: z.string().describe("The destination location"),
-  }),
+    "Find the best transport and duration to move between two locations",
+  parameters: transportRequestSchema,
   execute: async (request) => {
-    // TODO: Implement the logic
-    logTool("getDistance", request);
-
-    return {
-      distance: 100,
-    };
+    logTool("getTransport", request);
+    return await searchTransports(request);
   },
 });

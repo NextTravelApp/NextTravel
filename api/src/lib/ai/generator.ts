@@ -2,7 +2,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { systemPrompt } from "../../constants/AI";
 import { UnexpectedResponseError } from "./exceptions";
-import { getAttractions, getDistance, getHotels } from "./tools";
+import { getAccomodations, getAttraction, getTransport } from "./tools";
 
 const ai = createOpenAI({
   baseURL: process.env.OPENAI_API_URL,
@@ -25,9 +25,9 @@ export async function generateTrip(
       ${theme ? `My ideal trip theme is ${theme}` : ""}`,
     maxTokens: 1000,
     tools: {
-      getAttractions,
-      getHotels,
-      getDistance,
+      getAttraction,
+      getAccomodations,
+      getTransport,
     },
   });
 
