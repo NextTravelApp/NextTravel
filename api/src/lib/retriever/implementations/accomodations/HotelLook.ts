@@ -1,13 +1,13 @@
-import type { AccomodationsRequest } from "@/lib/ai/tools";
-import type { AccomodationManager } from "@/lib/retriever/accomodation";
-import { type Accomodation, AccomodationType } from "@/lib/retriever/types";
-import { findLocation, getHotels } from "travelpayouts";
+import { findHotelsLocation, getHotels } from "travelpayouts";
+import type { AccomodationsRequest } from "../../../ai/tools";
+import type { AccomodationManager } from "../../accomodation";
+import { type Accomodation, AccomodationType } from "../../types";
 
-export class TravelPayoutsHotel implements AccomodationManager {
-  provider = "travelpayouts_hotel";
+export class HotelLook implements AccomodationManager {
+  provider = "hotellook";
 
   async search(data: AccomodationsRequest): Promise<Accomodation[]> {
-    const locations = await findLocation(data.location);
+    const locations = await findHotelsLocation(data.location);
     if (!locations.length) return [];
 
     const location = locations[0];

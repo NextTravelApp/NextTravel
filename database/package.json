@@ -3,10 +3,7 @@
   "version": "0.0.0",
   "main": "src/index.ts",
   "exports": {
-    ".": {
-      "import": "./src/index.ts",
-      "require": "./dist/index.js"
-    },
+    ".": "./dist/index.js",
     "./types": "./src/types.ts"
   },
   "scripts": {

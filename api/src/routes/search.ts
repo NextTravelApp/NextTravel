@@ -1,9 +1,10 @@
+import { readFileSync } from "node:fs";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { readFileSync } from "node:fs";
 import type { responseType } from "../constants/ai";
 import type { Variables } from "../constants/context";
 import { searchSchema } from "../constants/requests";
+import { generateTrip } from "../lib/ai/generator";
 import prisma from "../lib/prisma";
 import { getImage } from "../lib/unsplash";
 import { authenticated } from "../middlewares/auth";
@@ -31,6 +32,8 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
       const user = ctx.get("user");
       const body = ctx.req.valid("json");
 
+      console.log("[Search] Begin search");
+
       if (body.id) {
         const search = await prisma.searchRequest.findUnique({
           where: {
@@ -47,9 +50,29 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
             ...(search.response as responseType),
             id: search.id,
           });
+
+        return ctx.json(
+          {
+            t: "not_found",
+          },
+          {
+            status: 404,
+          },
+        );
       }
 
-      // TODO: Connect to AI
+      let trip: responseType;
+
+      if (process.env.RETURN_EXAMPLE_DATA) {
+        trip = JSON.parse(readFileSync("test/data.json", "utf-8"));
+      } else {
+        trip = await generateTrip(
+          body.location as string,
+          new Date(body.startDate as string),
+          new Date(body.endDate as string),
+          [body.members as number],
+        );
+      }
 
       await prisma.user.update({
         where: { id: user.id },
@@ -59,14 +82,6 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
           },
         },
       });
-
-      let trip: responseType = {
-        title: "Empty trip",
-        plan: [],
-      };
-
-      if (process.env.RETURN_EXAMPLE_DATA)
-        trip = JSON.parse(readFileSync("test/data.json", "utf-8"));
 
       const image = await getImage(body.location as string);
       const record = await prisma.searchRequest.create({

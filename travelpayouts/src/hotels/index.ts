@@ -11,7 +11,7 @@ function generateSignature(params: URLSearchParams) {
   return md5(data);
 }
 
-export const findLocation = async (query: string) => {
+export const findHotelsLocation = async (query: string) => {
   const params = new URLSearchParams();
   params.append("query", query);
   params.append("token", process.env.HOTELLOOK_TOKEN ?? "");

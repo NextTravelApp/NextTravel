@@ -1,1 +1,1 @@
-export { TravelPayoutsHotel } from "./TravelPayoutsHotel";
+export * from "./HotelLook";

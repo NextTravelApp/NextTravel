@@ -10,8 +10,6 @@
     "skipLibCheck": true,
     "types": ["node"],
     "jsx": "react-jsx",
-    "outDir": "dist",
-    "declaration": true
-  },
-  "include": ["./src/**/*"]
+    "outDir": "dist"
+  }
 }

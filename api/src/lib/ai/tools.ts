@@ -1,7 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { searchAttraction } from "../retriever/attractions";
-import { searchAccomodations } from "../retriever/accomodation";
+import { searchAttractions } from "../retriever/atattractions";
 import { searchTransports } from "../retriever/transports";
 
 function logTool(tool: string, request: unknown) {
@@ -18,15 +17,15 @@ export const getAttraction = tool({
   parameters: attractionRequestSchema,
   execute: async (request) => {
     logTool("getAttractions", request);
-    return await searchAttraction(request);
+    return await searchAttractions(request);
   },
 });
 
 export const accomodationsRequestSchema = z.object({
   location: z.string().describe("The location to get the hotels for"),
   members: z.array(z.number()).describe("The ages of the members"),
-  checkIn: z.string().date().describe("The check-in date"),
-  checkOut: z.string().date().describe("The check-out date"),
+  checkIn: z.string().date().describe("The check-in date in YYYY-MM-DD"),
+  checkOut: z.string().date().describe("The check-out date in YYYY-MM-DD"),
 });
 export type AccomodationsRequest = z.infer<typeof accomodationsRequestSchema>;
 export const getAccomodations = tool({
@@ -41,7 +40,7 @@ export const getAccomodations = tool({
 export const transportRequestSchema = z.object({
   origin: z.string().describe("The origin location"),
   destination: z.string().describe("The destination location"),
-  date: z.string().describe("The date of the travel"),
+  date: z.string().date().describe("The date of the travel in YYYY-MM-DD"),
 });
 export type TransportRequest = z.infer<typeof transportRequestSchema>;
 export const getTransport = tool({

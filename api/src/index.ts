@@ -1,6 +1,7 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { retrieverRoute } from "./routes/retriever";
 import { authRoute } from "./routes/auth";
 import { imageRoute } from "./routes/image";
 import { searchRoute } from "./routes/search";
@@ -17,6 +18,7 @@ const app = new Hono()
   )
   .route("/auth", authRoute)
   .route("/search", searchRoute)
+  .route("/retriever", retrieverRoute)
   .route("/image", imageRoute);
 
 serve(app);
