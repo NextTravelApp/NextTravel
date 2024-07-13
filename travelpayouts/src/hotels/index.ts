@@ -1,0 +1,73 @@
+import { formatDate } from "date-fns";
+import { axiosClient } from "../utils/fetcher";
+import type { HotelsResponse, LocationsResponse } from "./types";
+import md5 from "md5";
+
+function generateSignature(params: URLSearchParams) {
+  const keys = Array.from(params.keys()).sort();
+  const values = keys.map((key) => params.get(key)).join(":");
+  const data = `${process.env.HOTELLOOK_TOKEN}:${process.env.HOTELLOOK_PARTNER}:${values}`;
+
+  return md5(data);
+}
+
+export const findLocation = async (query: string) => {
+  const params = new URLSearchParams();
+  params.append("query", query);
+  params.append("token", process.env.HOTELLOOK_TOKEN ?? "");
+
+  const url = `https://engine.hotellook.com/api/v2/lookup.json?${params}`;
+  return axiosClient
+    .get<LocationsResponse>(url)
+    .then((res) => res.data)
+    .then((data) => data.results.locations);
+};
+
+export const getHotels = async (
+  cityId: string,
+  checkIn: Date,
+  checkOut: Date,
+  adultsCount: number,
+  childrens?: number[],
+) => {
+  let params = new URLSearchParams();
+  params.append("cityId", cityId);
+  params.append("checkIn", formatDate(checkIn, "yyyy-MM-dd"));
+  params.append("checkOut", formatDate(checkOut, "yyyy-MM-dd"));
+  params.append("adultsCount", adultsCount.toString());
+  params.append("currency", "EUR");
+  params.append("waitForResult", "1");
+
+  if (childrens) {
+    if (childrens.length > 3) throw new Error("Maximum children count is 3");
+
+    params.append("childrenCount", childrens.length.toString());
+    childrens.forEach((age, index) => {
+      if (age < 0 || age > 17)
+        throw new Error(`Child(${index}) age must be between 0 and 17`);
+
+      params.append(`childAge${index + 1}`, age.toString());
+    });
+  }
+
+  params.append("signature", generateSignature(params));
+  params.append("marker", process.env.HOTELLOOK_PARTNER ?? "");
+
+  let url = `http://engine.hotellook.com/api/v2/search/start.json?${params.toString()}`;
+  const { data } = await axiosClient.get(url);
+
+  if (!("searchId" in data))
+    throw new Error("Failed to get searchId from the response");
+
+  params = new URLSearchParams();
+  params.append("searchId", data.searchId);
+  params.append("limit", "20");
+  params.append("signature", generateSignature(params));
+  params.append("marker", process.env.HOTELLOOK_PARTNER ?? "");
+
+  url = `http://engine.hotellook.com/api/v2/search/getResult.json?${params.toString()}`;
+  return axiosClient
+    .get<HotelsResponse>(url)
+    .then((res) => res.data)
+    .then((data) => data.result);
+};

@@ -1,0 +1,20 @@
+{
+  "name": "travelpayouts",
+  "module": "src/index.ts",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/index.ts"
+  },
+  "devDependencies": {
+    "@types/md5": "^2",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "date-fns": "^3.6.0",
+    "md5": "^2.3.0"
+  }
+}
