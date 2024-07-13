@@ -1,5 +1,5 @@
-import { Text } from "../injector/ReactNativePaper";
 import { View } from "react-native";
+import { Text } from "../injector/ReactNativePaper";
 import { Image } from "../ui/Image";
 
 export type AccomodationProps = {
@@ -14,18 +14,20 @@ export type AccomodationProps = {
 
 export function Accomodation(props: AccomodationProps) {
   return (
-    <View className="flex h-56 w-full flex-1 flex-row rounded-lg bg-card">
+    <View className="flex min-h-36 w-full flex-1 flex-row gap-3 rounded-xl bg-card">
       <Image
-        source={props.image}
-        contentFit="cover"
-        className="h-full flex-1 rounded-lg"
+        source={{
+          uri: props.image,
+        }}
+        contentFit="fill"
+        className="h-full flex-1 rounded-xl"
       />
 
-      <View>
-        <Text className="!font-bold text-lg">{props.name}</Text>
-        <Text className="text-sm">{props.location}</Text>
-        <Text className="text-sm">Price: {props.price}</Text>
-        <Text className="text-sm">Rating: {props.rating}</Text>
+      <View className="m-auto w-1/2">
+        <Text className="!font-bold text-xl">{props.name}</Text>
+        <Text className="text-lg">{props.location}</Text>
+        <Text className="text-lg">Price: {props.price}</Text>
+        <Text className="text-lg">Rating: {props.rating}</Text>
       </View>
     </View>
   );

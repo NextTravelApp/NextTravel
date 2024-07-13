@@ -1,6 +1,7 @@
 import { honoClient } from "@/components/fetcher";
-import { Text } from "@/components/injector/ReactNativePaper";
+import { Button, Text } from "@/components/injector/ReactNativePaper";
 import { Accomodation } from "@/components/search/Accomodation";
+import { PlanStep } from "@/components/search/PlanStep";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -56,9 +57,11 @@ export default function SearchPage() {
   if (error) return <Text className="m-auto">An error occurred</Text>;
 
   return (
-    <View className="p-4">
+    <View className="flex flex-1 flex-col bg-background p-4">
       <Text className="!font-extrabold text-2xl">Your plan is ready!</Text>
-      <Text className="text-lg">Now let's check it!</Text>
+      <Text className="text-lg">
+        Click any item that you want to change to edit it.
+      </Text>
 
       <ScrollView className="mt-4">
         <Text className="!font-bold text-xl">Accomodation</Text>
@@ -70,7 +73,23 @@ export default function SearchPage() {
           price={100}
           rating={5}
         />
+
+        <View className="flex gap-3">
+          <Text className="!font-bold mt-4 text-xl">Your plan</Text>
+          {data?.plan.map((item) => (
+            <PlanStep key={item.title} {...item} />
+          ))}
+        </View>
       </ScrollView>
+
+      <View className="fixed bottom-16 left-3 flex h-14 w-[93vw] flex-row items-center rounded-xl bg-card px-4 shadow-xl">
+        <Text className="text-2xl">Total price:</Text>
+        <Text className="!font-bold ml-2 text-2xl">€100</Text>
+
+        <Button mode="contained" className="ml-auto">
+          Checkout
+        </Button>
+      </View>
     </View>
   );
 }

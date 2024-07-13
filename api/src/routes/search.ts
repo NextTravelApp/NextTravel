@@ -1,12 +1,11 @@
-import { readFileSync } from "node:fs";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { createApi } from "unsplash-js";
-import type { z } from "zod";
+import { readFileSync } from "node:fs";
 import type { responseType } from "../constants/ai";
 import type { Variables } from "../constants/context";
 import { searchSchema } from "../constants/requests";
 import prisma from "../lib/prisma";
+import { getImage } from "../lib/unsplash";
 import { authenticated } from "../middlewares/auth";
 
 export const searchRoute = new Hono<{ Variables: Variables }>()
@@ -69,22 +68,13 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
       if (process.env.RETURN_EXAMPLE_DATA)
         trip = JSON.parse(readFileSync("test/data.json", "utf-8"));
 
-      const unsplash = createApi({
-        accessKey: process.env.UNSPLASH_ACCESS_KEY as string,
-      });
-
-      const { response: photos } = await unsplash.search.getPhotos({
-        query: body.location as string,
-        perPage: 1,
-        plus: "none",
-      });
-
+      const image = await getImage(body.location as string);
       const record = await prisma.searchRequest.create({
         data: {
           userId: user.id,
           title: trip.title,
-          image: photos?.results[0].urls.small,
-          imageAttributes: photos?.results[0].user.links.html,
+          image: image?.url,
+          imageAttributes: image?.author,
           location: body.location as string,
           request: body,
           response: trip,
