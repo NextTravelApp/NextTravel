@@ -27,9 +27,48 @@ export const loginSchema = z.object({
   password: z.string(),
 });
 
-export const searchSchema = z.object({
-  location: z.string(),
-  members: z.number(),
-  startDate: z.string().date(),
-  endDate: z.string().date(),
-});
+export const searchSchema = z
+  .object({
+    id: z.string().optional(),
+    location: z.string().optional(),
+    members: z.number().optional(),
+    startDate: z.string().date().optional(),
+    endDate: z.string().date().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.id) return z.NEVER;
+    if (!data.location || !data.members || !data.startDate || !data.endDate)
+      ctx.addIssue({
+        code: "custom",
+        message: "missing_fields",
+      });
+
+    if (data.startDate && new Date(data.startDate) < new Date())
+      ctx.addIssue({
+        code: "invalid_date",
+        message: "invalid_start_date",
+        path: ["startDate"],
+      });
+
+    if (
+      data.startDate &&
+      data.endDate &&
+      new Date(data.startDate) > new Date(data.endDate)
+    )
+      ctx.addIssue({
+        code: "invalid_date",
+        message: "invalid_end_date",
+      });
+
+    if (data.members && data.members < 1)
+      ctx.addIssue({
+        code: "too_small",
+        message: "invalid_members",
+        minimum: 1,
+        path: ["members"],
+        inclusive: true,
+        type: "number",
+      });
+
+    return z.NEVER;
+  });

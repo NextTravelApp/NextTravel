@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { createApi } from "unsplash-js";
+import type { z } from "zod";
 import type { responseType } from "../constants/ai";
 import type { Variables } from "../constants/context";
 import { searchSchema } from "../constants/requests";
@@ -30,6 +31,25 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
     async (ctx) => {
       const user = ctx.get("user");
       const body = ctx.req.valid("json");
+
+      if (body.id) {
+        const search = await prisma.searchRequest.findUnique({
+          where: {
+            id: body.id,
+          },
+          select: {
+            id: true,
+            response: true,
+          },
+        });
+
+        if (search)
+          return ctx.json({
+            ...(search.response as responseType),
+            id: search.id,
+          });
+      }
+
       // TODO: Connect to AI
 
       await prisma.user.update({
@@ -54,23 +74,27 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
       });
 
       const { response: photos } = await unsplash.search.getPhotos({
-        query: body.location,
+        query: body.location as string,
         perPage: 1,
         plus: "none",
       });
 
-      await prisma.searchRequest.create({
+      const record = await prisma.searchRequest.create({
         data: {
           userId: user.id,
           title: trip.title,
           image: photos?.results[0].urls.small,
           imageAttributes: photos?.results[0].user.links.html,
-          location: body.location,
-          data: trip,
+          location: body.location as string,
+          request: body,
+          response: trip,
         },
       });
 
-      return ctx.json(trip);
+      return ctx.json({
+        ...trip,
+        id: record.id,
+      });
     },
   )
   .get("/history", authenticated, async (ctx) => {

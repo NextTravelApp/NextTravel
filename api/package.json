@@ -15,14 +15,13 @@
     "@node-rs/argon2": "^1.8.3",
     "ai": "^3.2.22",
     "database": "workspace:*",
-    "hono": "^4.4.12",
-    "redis": "^4.6.15",
+    "hono": "^4.4.13",
     "unsplash-js": "^7.0.19",
     "zod": "^3.23.8",
     "zod-to-json-schema": "^3.23.1"
   },
   "devDependencies": {
     "tsx": "^4.16.2",
-    "typescript": "^5.0.0"
+    "typescript": "^5.5.3"
   }
 }

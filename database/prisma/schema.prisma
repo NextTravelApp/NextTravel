@@ -27,7 +27,8 @@ model SearchRequest {
   image           String?
   imageAttributes String?
   location        String
-  data            Json
+  request         Json
+  response        Json
 
   userId    String
   user      User     @relation(fields: [userId], references: [id])

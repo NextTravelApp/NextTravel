@@ -44,7 +44,7 @@ export default function App() {
 
   return (
     <ScrollView className="flex flex-1 flex-col bg-background">
-      <View className="relative mb-[27vh] h-2/5">
+      <View className="relative mb-[24vh] h-2/5">
         <Image
           className="w-full bg-[#0553]"
           source={require("@/assets/images/landscape.webp")}
@@ -159,7 +159,7 @@ export default function App() {
 
       <Divider />
 
-      <View className="flex gap-2 p-6 pt-0">
+      <View className="mt-6 flex gap-2 p-6 pt-0">
         <Text className="font-extrabold text-xl">Most requested</Text>
         <ScrollView
           horizontal
@@ -174,7 +174,6 @@ export default function App() {
               imageAttribs={search.imageAttributes}
               name={search.name}
               id={search.id}
-              restore
             />
           ))}
         </ScrollView>

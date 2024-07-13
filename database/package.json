@@ -11,16 +11,20 @@
   },
   "scripts": {
     "db:studio": "prisma studio",
-    "db:generate": "prisma generate",
+    "db:generate": "prisma generate --no-hints",
     "db:push": "prisma db push",
     "build": "tsc",
     "postinstall": "prisma generate"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "devDependencies": {
     "prisma": "5.16.2",
+    "tsx": "^4.16.2",
     "typescript": "^5.5.3"
   },
   "dependencies": {
-    "@prisma/client": "^5.16.1"
+    "@prisma/client": "^5.16.2"
   }
 }
