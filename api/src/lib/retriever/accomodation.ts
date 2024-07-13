@@ -1,8 +1,8 @@
 import type { AccomodationsRequest } from "../ai/tools";
-import {} from "./implementations/accomodations";
+import { TravelPayoutsHotel } from "./implementations/accomodations";
 import type { Accomodation } from "./types";
 
-export const managers: AccomodationManager[] = [];
+export const managers: AccomodationManager[] = [new TravelPayoutsHotel()];
 
 export interface AccomodationManager {
   provider: string;

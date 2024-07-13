@@ -1,4 +1,6 @@
-import type { BaseResponse } from "../type";
+export type BaseResponse = {
+  status: "ok";
+};
 
 export type Location = {
   lat: string;

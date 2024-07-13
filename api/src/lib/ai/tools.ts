@@ -25,6 +25,8 @@ export const getAttraction = tool({
 export const accomodationsRequestSchema = z.object({
   location: z.string().describe("The location to get the hotels for"),
   members: z.array(z.number()).describe("The ages of the members"),
+  checkIn: z.string().date().describe("The check-in date"),
+  checkOut: z.string().date().describe("The check-out date"),
 });
 export type AccomodationsRequest = z.infer<typeof accomodationsRequestSchema>;
 export const getAccomodations = tool({

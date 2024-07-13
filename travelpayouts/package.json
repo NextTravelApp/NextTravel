@@ -1,15 +1,21 @@
 {
   "name": "travelpayouts",
   "module": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js"
+    }
+  },
+  "types": "dist/index.d.ts",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/md5": "^2",
-    "tsx": "^4.16.2",
     "typescript": "^5.5.3"
   },
   "dependencies": {

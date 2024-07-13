@@ -5,7 +5,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc"
   },
   "types": "src/index.ts",
   "dependencies": {
@@ -16,6 +17,7 @@
     "ai": "^3.2.22",
     "database": "workspace:*",
     "hono": "^4.4.13",
+    "travelpayouts": "workspace:*",
     "unsplash-js": "^7.0.19",
     "zod": "^3.23.8",
     "zod-to-json-schema": "^3.23.1"

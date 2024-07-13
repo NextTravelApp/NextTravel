@@ -10,7 +10,10 @@
     "skipLibCheck": true,
     "types": ["node"],
     "jsx": "react-jsx",
-    "outDir": "dist"
+    "outDir": "dist",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*.ts"]
 }

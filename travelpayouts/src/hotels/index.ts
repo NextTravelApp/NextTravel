@@ -1,7 +1,7 @@
 import { formatDate } from "date-fns";
+import md5 from "md5";
 import { axiosClient } from "../utils/fetcher";
 import type { HotelsResponse, LocationsResponse } from "./types";
-import md5 from "md5";
 
 function generateSignature(params: URLSearchParams) {
   const keys = Array.from(params.keys()).sort();
@@ -71,3 +71,5 @@ export const getHotels = async (
     .then((res) => res.data)
     .then((data) => data.result);
 };
+
+export type * from "./types";

@@ -3595,6 +3595,7 @@ __metadata:
     ai: "npm:^3.2.22"
     database: "workspace:*"
     hono: "npm:^4.4.13"
+    travelpayouts: "workspace:*"
     tsx: "npm:^4.16.2"
     typescript: "npm:^5.5.3"
     unsplash-js: "npm:^7.0.19"
@@ -10656,7 +10657,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"travelpayouts@workspace:travelpayouts":
+"travelpayouts@workspace:*, travelpayouts@workspace:travelpayouts":
   version: 0.0.0-use.local
   resolution: "travelpayouts@workspace:travelpayouts"
   dependencies:
@@ -10664,7 +10665,6 @@ __metadata:
     axios: "npm:^1.7.2"
     date-fns: "npm:^3.6.0"
     md5: "npm:^2.3.0"
-    tsx: "npm:^4.16.2"
     typescript: "npm:^5.5.3"
   languageName: unknown
   linkType: soft
