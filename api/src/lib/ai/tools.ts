@@ -1,7 +1,8 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { searchAttractions } from "../retriever/atattractions";
+import { searchAttractions } from "../retriever/attractions";
 import { searchTransports } from "../retriever/transports";
+import { searchAccomodations } from "../retriever/accomodation";
 
 function logTool(tool: string, request: unknown) {
   console.log(`[AI] [Tool] ${tool}`, request);
