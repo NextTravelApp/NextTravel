@@ -72,3 +72,4 @@ export const searchSchema = z
 
     return z.NEVER;
   });
+export type searchSchemaType = z.infer<typeof searchSchema>;

@@ -18,7 +18,7 @@ export default function SearchPage() {
   }>();
   const router = useRouter();
   const { data, isLoading, error } = useQuery({
-    queryKey: ["search", location, members, startDate, endDate, id],
+    queryKey: ["search", id, location, members, startDate, endDate],
     queryFn: async () => {
       const parsedStart = startDate
         ? format(startDate as string, "yyyy-MM-dd")
@@ -38,7 +38,7 @@ export default function SearchPage() {
       });
 
       const data = await res.json();
-
+      if ("t" in data) throw new Error(data.t);
       if (!id && data?.id)
         router.setParams({
           id: data.id,
@@ -72,6 +72,7 @@ export default function SearchPage() {
           image="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=fernando-alvarez-rodriguez-M7GddPqJowg-unsplash.jpg&w=640"
           price={100}
           rating={5}
+          edit
         />
 
         <View className="flex gap-3">

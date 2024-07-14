@@ -1,6 +1,6 @@
-import { readFileSync } from "node:fs";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { readFileSync } from "node:fs";
 import type { responseType } from "../constants/ai";
 import type { Variables } from "../constants/context";
 import { searchSchema } from "../constants/requests";
@@ -127,4 +127,26 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
   .get("/popular", async (ctx) => {
     const searches = await prisma.popularLocations.findMany();
     return ctx.json(searches);
+  })
+  .get("/:id", authenticated, async (ctx) => {
+    const id = ctx.req.param("id");
+
+    const search = await prisma.searchRequest.findUnique({
+      where: {
+        id: id,
+        userId: ctx.get("user").id,
+      },
+    });
+
+    if (!search)
+      return ctx.json(
+        {
+          t: "not_found",
+        },
+        {
+          status: 404,
+        },
+      );
+
+    return ctx.json(search);
   });

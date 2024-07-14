@@ -19,8 +19,6 @@ export function Location(props: LocationProps) {
   return (
     <Pressable
       onPress={(e) => {
-        console.log(e);
-        console.log(typeof e.target);
         if ("nodeName" in e.target && e.target.nodeName === "IMG")
           router.push(
             props.restore ? `/search?id=${props.id}` : `/?location=${props.id}`,
