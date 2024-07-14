@@ -1,6 +1,6 @@
-import { readFileSync } from "node:fs";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { readFileSync } from "node:fs";
 import type { responseType } from "../constants/ai";
 import type { Variables } from "../constants/context";
 import { searchSchema, searchUpdateSchema } from "../constants/requests";
@@ -9,7 +9,7 @@ import prisma from "../lib/prisma";
 import { getImage } from "../lib/unsplash";
 import { authenticated } from "../middlewares/auth";
 
-export const searchRoute = new Hono<{ Variables: Variables }>()
+export const planRoute = new Hono<{ Variables: Variables }>()
   .post(
     "/",
     authenticated,
@@ -32,35 +32,7 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
       const user = ctx.get("user");
       const body = ctx.req.valid("json");
 
-      console.log("[Search] Begin search");
-
-      if (body.id) {
-        const search = await prisma.searchRequest.findUnique({
-          where: {
-            id: body.id,
-          },
-          select: {
-            id: true,
-            response: true,
-          },
-        });
-
-        if (search)
-          return ctx.json({
-            ...(search.response as responseType),
-            id: search.id,
-          });
-
-        return ctx.json(
-          {
-            t: "not_found",
-          },
-          {
-            status: 404,
-          },
-        );
-      }
-
+      console.log("[Plan] Begin plan create");
       let trip: responseType;
 
       if (process.env.RETURN_EXAMPLE_DATA) {

@@ -21,7 +21,7 @@ export function Location(props: LocationProps) {
       onPress={(e) => {
         if ("nodeName" in e.target && e.target.nodeName === "IMG")
           router.push(
-            props.restore ? `/search?id=${props.id}` : `/?location=${props.id}`,
+            props.restore ? `/plan?id=${props.id}` : `/?location=${props.id}`,
           );
       }}
       className="relative h-32 w-56"

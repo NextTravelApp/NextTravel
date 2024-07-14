@@ -1,6 +1,6 @@
 import { honoClient } from "@/components/fetcher";
 import { Button, Text } from "@/components/injector/ReactNativePaper";
-import { Accomodation } from "@/components/search/Accomodation";
+import { Accomodation } from "@/components/plan/Accomodation";
 import { useQuery } from "@tanstack/react-query";
 import type { searchSchemaType } from "api";
 import { Link, Redirect, useLocalSearchParams } from "expo-router";
@@ -17,11 +17,11 @@ export default function SearchAccomodationPage() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["get-search", id],
+    queryKey: ["plan", id],
     queryFn: async () => {
       if (!id) return null;
 
-      const res = await honoClient.search[":id"].$get({
+      const res = await honoClient.plan[":id"].$get({
         param: {
           id: id,
         },
@@ -79,9 +79,9 @@ export default function SearchAccomodationPage() {
         <Text className="text-2xl">Total price:</Text>
         <Text className="!font-bold ml-2 text-2xl">€100</Text>
 
-        <Link href={`/search?id=${id}`} asChild>
+        <Link href={`/plan?id=${id}`} asChild>
           <Button mode="contained" className="ml-auto">
-            Go back
+            Back
           </Button>
         </Link>
       </View>

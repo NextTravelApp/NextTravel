@@ -1,35 +1,46 @@
 import { honoClient } from "@/components/fetcher";
 import { Button, Text } from "@/components/injector/ReactNativePaper";
-import { Accomodation } from "@/components/search/Accomodation";
-import { PlanStep } from "@/components/search/PlanStep";
+import { Accomodation } from "@/components/plan/Accomodation";
+import { PlanStep } from "@/components/plan/PlanStep";
 import { useQuery } from "@tanstack/react-query";
+import type { responseType } from "api";
 import { format } from "date-fns";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
-export default function SearchPage() {
-  const { location, members, startDate, endDate, id } = useLocalSearchParams<{
-    location?: string;
-    members?: string;
-    startDate?: string;
-    endDate?: string;
-    id?: string;
-  }>();
+export default function PlanPage() {
+  const { location, members, startDate, endDate, id, t } =
+    useLocalSearchParams<{
+      location?: string;
+      members?: string;
+      startDate?: string;
+      endDate?: string;
+      id?: string;
+      t?: string;
+    }>();
   const router = useRouter();
   const { data, isLoading, error } = useQuery({
-    queryKey: ["search", id, location, members, startDate, endDate],
+    queryKey: ["plan", id, location, members, startDate, endDate, t],
     queryFn: async () => {
-      const parsedStart = startDate
-        ? format(startDate as string, "yyyy-MM-dd")
-        : undefined;
-      const parsedEnd = endDate
-        ? format(endDate as string, "yyyy-MM-dd")
-        : undefined;
+      if (id) {
+        const res = await honoClient.plan[":id"].$get({
+          param: {
+            id: id as string,
+          },
+        });
 
-      const res = await honoClient.search.$post({
+        const resData = await res.json();
+        if ("t" in resData) throw new Error(resData.t);
+
+        return resData.response as responseType;
+      }
+
+      const parsedStart = format(startDate as string, "yyyy-MM-dd");
+      const parsedEnd = format(endDate as string, "yyyy-MM-dd");
+
+      const res = await honoClient.plan.$post({
         json: {
-          id: id as string,
           location: location as string,
           members: members ? Number.parseInt(members as string) : -1,
           startDate: parsedStart,
@@ -38,8 +49,7 @@ export default function SearchPage() {
       });
 
       const data = await res.json();
-      if ("t" in data) throw new Error(data.t);
-      if (!id && data?.id)
+      if (data.id)
         router.setParams({
           id: data.id,
         });
@@ -101,7 +111,7 @@ export default function SearchPage() {
         <Text className="!font-bold ml-2 text-2xl">€100</Text>
 
         <Button mode="contained" className="ml-auto">
-          Checkout
+          Next
         </Button>
       </View>
     </View>

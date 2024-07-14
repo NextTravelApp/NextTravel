@@ -29,20 +29,12 @@ export const loginSchema = z.object({
 
 export const searchSchema = z
   .object({
-    id: z.string().optional(),
-    location: z.string().optional(),
-    members: z.number().optional(),
-    startDate: z.string().date().optional(),
-    endDate: z.string().date().optional(),
+    location: z.string(),
+    members: z.number(),
+    startDate: z.string().date(),
+    endDate: z.string().date(),
   })
   .superRefine((data, ctx) => {
-    if (data.id) return z.NEVER;
-    if (!data.location || !data.members || !data.startDate || !data.endDate)
-      ctx.addIssue({
-        code: "custom",
-        message: "missing_fields",
-      });
-
     if (data.startDate && new Date(data.startDate) < new Date())
       ctx.addIssue({
         code: "invalid_date",

@@ -89,7 +89,7 @@ function RootLayoutNav() {
             ),
           }}
         />
-        <Tabs.Screen name="search" options={{ href: null }} />
+        <Tabs.Screen name="plan" options={{ href: null }} />
       </Tabs>
     </PaperProvider>
   );

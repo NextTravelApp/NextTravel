@@ -32,13 +32,13 @@ export default function App() {
   const { data: popular } = useQuery({
     queryKey: ["popular"],
     queryFn: () =>
-      honoClient.search.popular.$get().then(async (res) => await res.json()),
+      honoClient.plan.popular.$get().then(async (res) => await res.json()),
   });
   const { data: history } = useQuery({
     queryKey: ["history", session?.id],
     queryFn: () =>
       session
-        ? honoClient.search.history.$get().then(async (res) => await res.json())
+        ? honoClient.plan.history.$get().then(async (res) => await res.json())
         : [],
   });
 
@@ -145,7 +145,7 @@ export default function App() {
             <Button
               onPress={() => {
                 router.push(
-                  `/search?location=${location}&members=${members}&startDate=${range.startDate?.toLocaleDateString("en-US")}&endDate=${range.endDate?.toLocaleDateString("en-US")}`,
+                  `/plan?location=${location}&members=${members}&startDate=${range.startDate?.toLocaleDateString("en-US")}&endDate=${range.endDate?.toLocaleDateString("en-US")}`,
                 );
               }}
               mode="contained"
@@ -167,13 +167,13 @@ export default function App() {
             columnGap: 12,
           }}
         >
-          {popular?.map((search) => (
+          {popular?.map((plan) => (
             <Location
-              key={search.id}
-              image={search.image}
-              imageAttribs={search.imageAttributes}
-              name={search.name}
-              id={search.id}
+              key={plan.id}
+              image={plan.image}
+              imageAttribs={plan.imageAttributes}
+              name={plan.name}
+              id={plan.id}
             />
           ))}
         </ScrollView>
@@ -187,13 +187,13 @@ export default function App() {
             columnGap: 12,
           }}
         >
-          {history?.map((search) => (
+          {history?.map((plan) => (
             <Location
-              key={search.id}
-              image={search.image}
-              imageAttribs={search.imageAttributes}
-              name={search.title}
-              id={search.id}
+              key={plan.id}
+              image={plan.image}
+              imageAttribs={plan.imageAttributes}
+              name={plan.title}
+              id={plan.id}
               restore
             />
           ))}

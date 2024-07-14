@@ -23,7 +23,7 @@ export function Accomodation(props: AccomodationProps) {
 
   return (
     <Link
-      href={props.edit ? "#" : `/search/accomodation?id=${id}`}
+      href={props.edit ? "#" : `/plan/accomodation?id=${id}`}
       className="flex min-h-36 w-full flex-1 flex-row gap-3 rounded-xl bg-card"
       asChild
     >
@@ -31,7 +31,7 @@ export function Accomodation(props: AccomodationProps) {
         onPress={() => {
           if (!props.edit) return;
 
-          honoClient.search[":id"]
+          honoClient.plan[":id"]
             .$patch({
               param: {
                 id: id as string,
@@ -42,9 +42,9 @@ export function Accomodation(props: AccomodationProps) {
             })
             .then(() => {
               queryClient.invalidateQueries({
-                queryKey: ["search", id],
+                queryKey: ["plan", id],
               });
-              router.push(`/search?id=${id}`);
+              router.push(`/plan?id=${id}&t=${Date.now()}`);
             });
         }}
       >
