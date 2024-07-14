@@ -1,27 +1,16 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import {
-  accomodationsRequestSchema,
   attractionRequestSchema,
   transportRequestSchema,
 } from "../lib/ai/tools";
-import { searchAccomodations } from "../lib/retriever/accomodation";
 import { searchAttractions } from "../lib/retriever/attractions";
 import { searchTransports } from "../lib/retriever/transports";
 import { authenticated } from "../middlewares/auth";
+import { accomodationsRoute } from "./retriever/accomodations";
 
 export const retrieverRoute = new Hono()
-  .post(
-    "/accomodations",
-    authenticated,
-    zValidator("json", accomodationsRequestSchema),
-    async (ctx) => {
-      const body = ctx.req.valid("json");
-      const hotels = await searchAccomodations(body);
-
-      return ctx.json(hotels);
-    },
-  )
+  .route("/accomodations", accomodationsRoute)
   .post(
     "/attractions",
     authenticated,

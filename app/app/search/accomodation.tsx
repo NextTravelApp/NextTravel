@@ -1,7 +1,6 @@
 import { honoClient } from "@/components/fetcher";
 import { Button, Text } from "@/components/injector/ReactNativePaper";
 import { Accomodation } from "@/components/search/Accomodation";
-import { PlanStep } from "@/components/search/PlanStep";
 import { useQuery } from "@tanstack/react-query";
 import type { searchSchemaType } from "api";
 import { Link, Redirect, useLocalSearchParams } from "expo-router";
@@ -71,11 +70,7 @@ export default function SearchAccomodationPage() {
       <ScrollView className="mt-4">
         <View className="flex gap-3">
           {accomodations?.map((item) => (
-            <Accomodation
-              key={item.id}
-              image="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=fernando-alvarez-rodriguez-M7GddPqJowg-unsplash.jpg&w=640"
-              {...item}
-            />
+            <Accomodation key={item.id} {...item} edit />
           ))}
         </View>
       </ScrollView>

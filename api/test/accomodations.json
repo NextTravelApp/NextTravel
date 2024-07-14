@@ -1,0 +1,40 @@
+[
+  {
+    "_comment": "This is a sample data.",
+    "_comment2": "Data may not be accurate, do not use it for real purposes.",
+    "id": "a1",
+    "name": "Hotel 1",
+    "location": "Helsinki",
+    "image": "https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=francesca-saraco-_dS27XGgRyQ-unsplash.jpg&w=640",
+    "price": 100,
+    "type": "hotel",
+    "rating": 5
+  },
+  {
+    "id": "a2",
+    "name": "Hotel 2",
+    "location": "Helsinki",
+    "image": "https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=francesca-saraco-_dS27XGgRyQ-unsplash.jpg&w=640",
+    "price": 100,
+    "type": "hotel",
+    "rating": 5
+  },
+  {
+    "id": "a3",
+    "name": "Hotel 3",
+    "location": "Helsinki",
+    "image": "https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=francesca-saraco-_dS27XGgRyQ-unsplash.jpg&w=640",
+    "price": 100,
+    "type": "hotel",
+    "rating": 5
+  },
+  {
+    "id": "a4",
+    "name": "Hotel 4",
+    "location": "Helsinki",
+    "image": "https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=francesca-saraco-_dS27XGgRyQ-unsplash.jpg&w=640",
+    "price": 100,
+    "type": "hotel",
+    "rating": 5
+  }
+]

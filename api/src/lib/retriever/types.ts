@@ -23,6 +23,7 @@ export type Accomodation = {
   id: string;
   name: string;
   location: string;
+  image: string;
   price: number;
   type: AccomodationType;
   rating: number;

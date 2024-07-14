@@ -24,6 +24,7 @@ export class HotelLook implements AccomodationManager {
       name: hotel.name,
       location: hotel.address,
       price: hotel.minPriceTotal,
+      image: `https://photo.hotellook.com/image_v2/limit/${hotel.id}_0/200/150.jpg`,
       type: AccomodationType.HOTEL,
       rating: hotel.stars,
     }));

@@ -1,9 +1,9 @@
+import { readFileSync } from "node:fs";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { readFileSync } from "node:fs";
 import type { responseType } from "../constants/ai";
 import type { Variables } from "../constants/context";
-import { searchSchema } from "../constants/requests";
+import { searchSchema, searchUpdateSchema } from "../constants/requests";
 import { generateTrip } from "../lib/ai/generator";
 import prisma from "../lib/prisma";
 import { getImage } from "../lib/unsplash";
@@ -64,7 +64,7 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
       let trip: responseType;
 
       if (process.env.RETURN_EXAMPLE_DATA) {
-        trip = JSON.parse(readFileSync("test/data.json", "utf-8"));
+        trip = JSON.parse(readFileSync("test/search.json", "utf-8"));
       } else {
         trip = await generateTrip(
           body.location as string,
@@ -149,4 +149,46 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
       );
 
     return ctx.json(search);
-  });
+  })
+  .patch(
+    "/:id",
+    authenticated,
+    zValidator("json", searchUpdateSchema),
+    async (ctx) => {
+      const id = ctx.req.param("id");
+      const body = ctx.req.valid("json");
+
+      const search = await prisma.searchRequest.findUnique({
+        where: {
+          id: id,
+          userId: ctx.get("user").id,
+        },
+      });
+
+      if (!search)
+        return ctx.json(
+          {
+            t: "not_found",
+          },
+          {
+            status: 404,
+          },
+        );
+
+      const newBody = {
+        ...(search.response as responseType),
+        accomodationId: body.accomodationId,
+      };
+
+      await prisma.searchRequest.update({
+        where: {
+          id: id,
+        },
+        data: {
+          response: newBody,
+        },
+      });
+
+      return ctx.json(newBody);
+    },
+  );

@@ -52,6 +52,23 @@ export default function SearchPage() {
     refetchOnReconnect: false,
     refetchInterval: false,
   });
+  const { data: accomodation } = useQuery({
+    queryKey: ["accomodation", data?.accomodationId],
+    queryFn: async () => {
+      if (!data?.accomodationId) return null;
+
+      const res = await honoClient.retriever.accomodations[":id"].$get({
+        param: {
+          id: data.accomodationId,
+        },
+      });
+
+      const resData = await res.json();
+      if ("t" in resData) throw new Error(resData.t);
+
+      return resData;
+    },
+  });
 
   if (isLoading) return <ActivityIndicator className="m-auto" size="large" />;
   if (error) return <Text className="m-auto">An error occurred</Text>;
@@ -64,16 +81,12 @@ export default function SearchPage() {
       </Text>
 
       <ScrollView className="mt-4">
-        <Text className="!font-bold text-xl">Accomodation</Text>
-        <Accomodation
-          id="a1"
-          name="Example"
-          location={data?.plan[0]?.location ?? "Rome"}
-          image="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=fernando-alvarez-rodriguez-M7GddPqJowg-unsplash.jpg&w=640"
-          price={100}
-          rating={5}
-          edit
-        />
+        {accomodation && (
+          <>
+            <Text className="!font-bold text-xl">Accomodation</Text>
+            <Accomodation {...accomodation} />
+          </>
+        )}
 
         <View className="flex gap-3">
           <Text className="!font-bold mt-4 text-xl">Your plan</Text>
