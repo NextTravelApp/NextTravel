@@ -5,7 +5,7 @@ import { PlanStep } from "@/components/plan/PlanStep";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
 import { format } from "date-fns";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
@@ -110,9 +110,11 @@ export default function PlanPage() {
         <Text className="text-2xl">Total price:</Text>
         <Text className="!font-bold ml-2 text-2xl">€100</Text>
 
-        <Button mode="contained" className="ml-auto">
-          Next
-        </Button>
+        <Link href={`/plan/checkout?id=${id}`} asChild>
+          <Button mode="contained" className="ml-auto">
+            Next
+          </Button>
+        </Link>
       </View>
     </View>
   );

@@ -14,6 +14,7 @@ function generateSignature(params: URLSearchParams) {
 export const findHotelsLocation = async (query: string) => {
   const params = new URLSearchParams();
   params.append("query", query);
+  params.append("lookFor", "city");
   params.append("token", process.env.HOTELLOOK_TOKEN ?? "");
 
   const url = `https://engine.hotellook.com/api/v2/lookup.json?${params}`;

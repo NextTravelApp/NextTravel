@@ -1,6 +1,6 @@
-import { readFileSync } from "node:fs";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { readFileSync } from "node:fs";
 import { accomodationsRequestSchema } from "../../lib/ai/tools";
 import { searchAccomodations } from "../../lib/retriever/accomodation";
 import type { Accomodation } from "../../lib/retriever/types";

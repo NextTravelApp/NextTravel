@@ -29,6 +29,10 @@ export type ProductsResponse = {
   };
 };
 
+export type ProductResponse = {
+  data: ProductResult;
+};
+
 export type ProductResult = {
   id: number;
   title: string;
