@@ -49,11 +49,11 @@ export function PlanStep(props: PlanStepProps) {
         </ExternalLink>
       )}
 
-      <View className="absolute right-3 bottom-3 flex flex-row justify-end gap-3">
+      <Text className="absolute right-3 bottom-3 flex flex-row justify-end gap-3">
         {props.attractionId && (
           <FontAwesome6 name="landmark" size={24} color="black" />
         )}
-      </View>
+      </Text>
     </View>
   );
 }

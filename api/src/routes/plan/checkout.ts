@@ -4,17 +4,23 @@ import type { Variables } from "../../constants/context";
 import prisma from "../../lib/prisma";
 import { getAccomodation } from "../../lib/retriever/accomodations";
 import { getAttraction } from "../../lib/retriever/attractions";
+import { stripe } from "../../lib/stripe";
 import { authenticated } from "../../middlewares/auth";
 
 export type CheckoutItem = {
-  type: "attraction" | "accomodation";
+  type: "attraction" | "accomodation" | "fee";
   name: string;
   provider: string;
   price: number;
+  url?: string;
 };
 
 export type CheckoutResponse = {
   items: CheckoutItem[];
+  paymentIntent: string;
+  ephemeralKey: string;
+  customer: string;
+  publishableKey: string;
 };
 
 export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
@@ -54,6 +60,7 @@ export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
             name: attraction.name,
             provider: step.attractionId.split("_")[0],
             price: attraction.price,
+            url: attraction.checkoutUrl,
           });
       }
     }
@@ -70,8 +77,39 @@ export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
         });
     }
 
+    const total = items.reduce((acc, item) => acc + item.price, 0);
+    const fees = total * 0.1;
+    items.push({
+      type: "fee",
+      name: "NextTravel Fees",
+      provider: "nexttravel",
+      price: fees,
+    });
+
+    let customer = user.stripeId;
+    if (!customer)
+      customer = (
+        await stripe.customers.create({
+          name: user.name,
+          email: user.email,
+        })
+      ).id;
+
+    const ephemeralKey = await stripe.ephemeralKeys.create({ customer });
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: Math.round(fees * 100),
+      currency: "eur",
+      customer,
+      description: "NextTravel Payment",
+      metadata: { id },
+    });
+
     return ctx.json({
       items,
+      paymentIntent: paymentIntent.client_secret,
+      ephemeralKey: ephemeralKey.secret,
+      customer: customer,
+      publishableKey: process.env.EXPO_PUBLIC_STRIPE_PUBLIC_KEY as string,
     } as CheckoutResponse);
   },
 );

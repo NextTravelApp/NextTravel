@@ -1,4 +1,9 @@
-import { findTrips, getTrip, getTrips } from "travelpayouts";
+import {
+  findTrips,
+  getTrip,
+  getTripCheckoutLink,
+  getTrips,
+} from "travelpayouts";
 import type { AttractionRequest } from "../../../ai/tools";
 import type { AttractionManager } from "../../attractions";
 import type { Attraction } from "../../types";
@@ -23,14 +28,15 @@ export class WeGoTrip implements AttractionManager {
 
   async get(id: string): Promise<Attraction | undefined> {
     const trip = await getTrip(Number.parseInt(id));
-
     if (!trip) return undefined;
+    const checkout = await getTripCheckoutLink(trip.id);
 
     return {
       id: `${this.provider}_${trip.id}`,
       name: trip.title,
       location: trip.city.name,
       price: trip.price,
+      checkoutUrl: checkout,
     };
   }
 }

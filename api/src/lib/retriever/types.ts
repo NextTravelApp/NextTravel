@@ -3,6 +3,7 @@ export type Attraction = {
   name: string;
   location: string;
   price: number;
+  checkoutUrl?: string;
 };
 
 export enum AccomodationType {

@@ -18,6 +18,8 @@ model User {
   plan     String?
   searches Int             @default(0)
   history  SearchRequest[]
+  
+  stripeId String?
 }
 
 model SearchRequest {

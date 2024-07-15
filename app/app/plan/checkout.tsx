@@ -1,8 +1,12 @@
 import { honoClient } from "@/components/fetcher";
 import { Button, Text } from "@/components/injector/ReactNativePaper";
+import {
+  initPaymentSheet,
+  presentPaymentSheet,
+} from "@stripe/stripe-react-native";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
-import { Link, Redirect, useLocalSearchParams } from "expo-router";
+import { Redirect, useLocalSearchParams } from "expo-router";
 import { FlatList, ScrollView, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
@@ -47,6 +51,13 @@ export default function SearchAccomodationPage() {
 
       const data = await res.json();
       if ("t" in data) throw new Error(data.t);
+
+      await initPaymentSheet({
+        merchantDisplayName: "NextTravel",
+        customerId: data.customer,
+        customerEphemeralKeySecret: data.ephemeralKey,
+        paymentIntentClientSecret: data.paymentIntent,
+      });
 
       return data;
     },
@@ -110,17 +121,18 @@ export default function SearchAccomodationPage() {
         />
       </ScrollView>
 
-      <Link
-        href="#"
-        className="fixed bottom-16 left-3 h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
-      >
+      <View className="fixed bottom-16 left-3 h-14 w-[93vw] items-center justify-center px-4 text-center font-bold">
         <Text className="mt-auto font-light">
           By clicking below you agree to our terms and conditions
         </Text>
-        <Button className="w-full" mode="contained">
+        <Button
+          onPress={() => presentPaymentSheet()}
+          className="w-full"
+          mode="contained"
+        >
           Checkout
         </Button>
-      </Link>
+      </View>
     </View>
   );
 }

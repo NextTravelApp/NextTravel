@@ -5,7 +5,7 @@
     "version": "0.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "nexttravel",
+    "scheme": "app.nexttravel",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",

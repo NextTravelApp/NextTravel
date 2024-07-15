@@ -36,4 +36,11 @@ export const getTrip = async (id: number) => {
     .then((res) => res.data.data);
 };
 
+export const getTripCheckoutLink = async (id: number) => {
+  const item = await getTrip(id);
+  if (!item) return undefined;
+
+  return `https://wegotrip.com/checkout/${item.slug}-p${item.id}/booking/?sub_id=${process.env.WEGOTRIP_PARTNER}`;
+};
+
 export type * from "./types";

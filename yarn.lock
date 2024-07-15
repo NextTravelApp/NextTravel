@@ -3132,6 +3132,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stripe/stripe-react-native@npm:0.37.2":
+  version: 0.37.2
+  resolution: "@stripe/stripe-react-native@npm:0.37.2"
+  peerDependencies:
+    expo: ">=46.0.9"
+    react: "*"
+    react-native: "*"
+  peerDependenciesMeta:
+    expo:
+      optional: true
+  checksum: 10c0/f5980a288bf7b828fc2ef31db366b3959576226a306c13bd02e3f0d3dcfcb17399282173f592604c5a251430781751d9bf2cbb44d5428424807d84af526addb9
+  languageName: node
+  linkType: hard
+
 "@tanstack/query-core@npm:5.51.1":
   version: 5.51.1
   resolution: "@tanstack/query-core@npm:5.51.1"
@@ -3221,7 +3235,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:>=8.1.0":
   version: 20.14.10
   resolution: "@types/node@npm:20.14.10"
   dependencies:
@@ -3602,6 +3616,7 @@ __metadata:
     ai: "npm:^3.2.22"
     database: "workspace:*"
     hono: "npm:^4.4.13"
+    stripe: "npm:^16.2.0"
     travelpayouts: "workspace:*"
     tsx: "npm:^4.16.2"
     typescript: "npm:^5.5.3"
@@ -3619,6 +3634,7 @@ __metadata:
     "@dev-plugins/react-query": "npm:^0.0.6"
     "@expo/vector-icons": "npm:^14.0.2"
     "@react-navigation/native": "npm:^6.1.17"
+    "@stripe/stripe-react-native": "npm:0.37.2"
     "@tanstack/react-query": "npm:^5.51.1"
     "@types/react": "npm:~18.2.79"
     api: "workspace:*"
@@ -9191,6 +9207,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"qs@npm:^6.11.0":
+  version: 6.12.3
+  resolution: "qs@npm:6.12.3"
+  dependencies:
+    side-channel: "npm:^1.0.6"
+  checksum: 10c0/243ddcc8f49dab78fc51041f7f64c500b47c671c45a101a8aca565d8537cb562921da7ef1a831b4a7051596ec88bb35a0d5e25a240025e8b32c6bfb69f00bf2f
+  languageName: node
+  linkType: hard
+
 "query-string@npm:^7.1.3":
   version: 7.1.3
   resolution: "query-string@npm:7.1.3"
@@ -10141,7 +10166,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"side-channel@npm:^1.0.4":
+"side-channel@npm:^1.0.4, side-channel@npm:^1.0.6":
   version: 1.0.6
   resolution: "side-channel@npm:1.0.6"
   dependencies:
@@ -10568,6 +10593,16 @@ __metadata:
   version: 2.0.1
   resolution: "strip-json-comments@npm:2.0.1"
   checksum: 10c0/b509231cbdee45064ff4f9fd73609e2bcc4e84a4d508e9dd0f31f70356473fde18abfb5838c17d56fb236f5a06b102ef115438de0600b749e818a35fbbc48c43
+  languageName: node
+  linkType: hard
+
+"stripe@npm:^16.2.0":
+  version: 16.2.0
+  resolution: "stripe@npm:16.2.0"
+  dependencies:
+    "@types/node": "npm:>=8.1.0"
+    qs: "npm:^6.11.0"
+  checksum: 10c0/893bdca9ee43d11f59e2c44b5d9f6816415ec1ac7e0430b149583a20745ca6ed25f77a31bbefbca08204c1cc32ecc35ca6a8c9350859f50b598e4d4f6f2b77e0
   languageName: node
   linkType: hard
 
