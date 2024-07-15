@@ -1,10 +1,8 @@
 import { honoClient } from "@/components/fetcher";
 import { Button, Text } from "@/components/injector/ReactNativePaper";
-import { Accomodation } from "@/components/plan/Accomodation";
 import { useQuery } from "@tanstack/react-query";
-import type { searchSchemaType } from "api";
 import { Link, Redirect, useLocalSearchParams } from "expo-router";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
 export default function SearchAccomodationPage() {

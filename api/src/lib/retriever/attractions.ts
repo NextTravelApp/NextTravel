@@ -15,7 +15,19 @@ export async function searchAttractions(
   data: AttractionRequest,
 ): Promise<Attraction[]> {
   const results = await Promise.all(
-    managers.map((manager) => manager.search(data)),
+    managers.map(async (manager) => {
+      try {
+        return await manager.search(data);
+        // biome-ignore lint/suspicious/noExplicitAny: Errors cannot have type here
+      } catch (error: any) {
+        console.log(
+          `[Retriever] [Attractions] Manager ${manager.provider} returned an error:`,
+          "message" in error ? error.message : "Unknown error",
+        );
+
+        return [];
+      }
+    }),
   );
 
   return results.flat();

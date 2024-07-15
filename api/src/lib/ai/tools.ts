@@ -1,6 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { searchAccomodations } from "../retriever/accomodation";
+import { searchAccomodations } from "../retriever/accomodations";
 import { searchAttractions } from "../retriever/attractions";
 import { searchTransports } from "../retriever/transports";
 

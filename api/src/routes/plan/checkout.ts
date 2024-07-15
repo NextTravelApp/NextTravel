@@ -4,7 +4,21 @@ import { z } from "zod";
 import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
 import prisma from "../../lib/prisma";
+import { getAccomodation } from "../../lib/retriever/accomodations";
+import { getAttraction } from "../../lib/retriever/attractions";
+import { getTransport } from "../../lib/retriever/transports";
 import { authenticated } from "../../middlewares/auth";
+
+export type CheckoutItem = {
+  type: "attraction" | "accomodation" | "transport";
+  name: string;
+  provider: string;
+  price: number;
+};
+
+export type CheckoutResponse = {
+  items: CheckoutItem[];
+};
 
 export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
   "/",
@@ -37,28 +51,48 @@ export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
       );
 
     const data = plan.response as responseType;
-    const payments = [];
+    const items: CheckoutItem[] = [];
 
     for (const step of data.plan) {
       if (step.attractionId) {
-        payments.push({
-          type: "attraction",
-        });
+        const attraction = await getAttraction(step.attractionId);
+
+        if (attraction)
+          items.push({
+            type: "attraction",
+            name: attraction.name,
+            provider: step.attractionId.split("_")[0],
+            price: attraction.price,
+          });
       }
 
       if (step.transportId) {
-        payments.push({
-          type: "transport",
-        });
+        const transport = await getTransport(step.transportId);
+
+        if (transport)
+          items.push({
+            type: "transport",
+            name: `${transport.from} - ${transport.to}`,
+            provider: step.transportId.split("_")[0],
+            price: transport.price,
+          });
       }
     }
 
-    payments.push({
-      type: "accomodation",
-    });
+    if (data.accomodationId) {
+      const accomodation = await getAccomodation(data.accomodationId);
+
+      if (accomodation)
+        items.push({
+          type: "accomodation",
+          name: accomodation.name,
+          provider: data.accomodationId.split("_")[0],
+          price: accomodation.price,
+        });
+    }
 
     return ctx.json({
-      payments,
-    });
+      items,
+    } as CheckoutResponse);
   },
 );

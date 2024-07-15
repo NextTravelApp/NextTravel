@@ -1,6 +1,6 @@
 import { findHotelsOrLocation, getHotels } from "travelpayouts";
 import type { AccomodationsRequest } from "../../../ai/tools";
-import type { AccomodationManager } from "../../accomodation";
+import type { AccomodationManager } from "../../accomodations";
 import { type Accomodation, AccomodationType } from "../../types";
 
 export class HotelLook implements AccomodationManager {

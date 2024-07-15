@@ -1,10 +1,10 @@
-export type SearchResponse = {
+export type AttractionsSearchResponse = {
   data: {
-    results: SearchResult[];
+    results: AttractionsSearchResult[];
   };
 };
 
-export type SearchResult = {
+export type AttractionsSearchResult = {
   id: number;
   name: string;
   slug: string;
@@ -23,17 +23,17 @@ export type SearchResult = {
   type: "city" | "attraction";
 };
 
-export type ProductsResponse = {
+export type AttractionsProductsResponse = {
   data: {
-    results: ProductResult[];
+    results: AttractionsProductResult[];
   };
 };
 
-export type ProductResponse = {
-  data?: ProductResult;
+export type AttractionsProductResponse = {
+  data?: AttractionsProductResult;
 };
 
-export type ProductResult = {
+export type AttractionsProductResult = {
   id: number;
   title: string;
   slug: string;

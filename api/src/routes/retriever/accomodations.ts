@@ -4,7 +4,7 @@ import { accomodationsRequestSchema } from "../../lib/ai/tools";
 import {
   getAccomodation,
   searchAccomodations,
-} from "../../lib/retriever/accomodation";
+} from "../../lib/retriever/accomodations";
 import { authenticated } from "../../middlewares/auth";
 
 export const accomodationsRoute = new Hono()

@@ -1,6 +1,6 @@
 import { Text } from "@/components/injector/ReactNativePaper";
 import { FontAwesome6 } from "@expo/vector-icons";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Pressable } from "react-native";
 import { ExternalLink } from "../ui/ExternalLink";
 import { Image } from "../ui/Image";

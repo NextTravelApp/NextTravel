@@ -1,8 +1,8 @@
 import { axiosClient } from "../utils/fetcher";
 import type {
-  ProductResponse,
-  ProductsResponse,
-  SearchResponse,
+  AttractionsProductResponse,
+  AttractionsProductsResponse,
+  AttractionsSearchResponse,
 } from "./types";
 
 export const findTrips = async (query: string) => {
@@ -11,7 +11,7 @@ export const findTrips = async (query: string) => {
 
   const url = `https://app.wegotrip.com/api/v2/search/?${params}`;
   return axiosClient
-    .get<SearchResponse>(url)
+    .get<AttractionsSearchResponse>(url)
     .then((res) => res.data.data.results);
 };
 
@@ -22,7 +22,7 @@ export const getTrips = async (attractionId: number) => {
 
   const url = `https://app.wegotrip.com/api/v2/products/popular/?${params.toString()}`;
   return axiosClient
-    .get<ProductsResponse>(url)
+    .get<AttractionsProductsResponse>(url)
     .then((res) => res.data.data.results);
 };
 
@@ -31,7 +31,9 @@ export const getTrip = async (id: number) => {
   params.append("currency", "EUR");
 
   const url = `https://app.wegotrip.com/api/v2/products/${id}/?${params.toString()}`;
-  return axiosClient.get<ProductResponse>(url).then((res) => res.data.data);
+  return axiosClient
+    .get<AttractionsProductResponse>(url)
+    .then((res) => res.data.data);
 };
 
 export type * from "./types";

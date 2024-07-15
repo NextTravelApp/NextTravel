@@ -27,7 +27,7 @@ export class WeGoTrip implements AttractionManager {
     if (!trip) return undefined;
 
     return {
-      id,
+      id: `${this.provider}_${trip.id}`,
       name: trip.title,
       location: trip.city.name,
       price: trip.price,

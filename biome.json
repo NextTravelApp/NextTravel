@@ -75,7 +75,8 @@
         "noNewSymbol": "off",
         "noSetterReturn": "off",
         "noUnreachable": "off",
-        "noUnreachableSuper": "off"
+        "noUnreachableSuper": "off",
+        "noUnusedImports": "warn"
       }
     },
     "ignore": ["**/metro.config.js", "android/app/build"]

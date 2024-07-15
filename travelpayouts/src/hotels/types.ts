@@ -1,20 +1,16 @@
-export type BaseResponse = {
-  status: "ok";
-};
-
-export type Location = {
+export type HotelsLocation = {
   lat: string;
   lon: string;
 };
 
-export type SearchResponse = {
+export type HotelsSearchResponse = {
   results: {
-    locations: LocationResult[];
+    locations: HotelsLocationResult[];
     hotels: SimpleHotelResult[];
   };
-} & BaseResponse;
+};
 
-export type LocationResult = {
+export type HotelsLocationResult = {
   cityName: string;
   hotelsCount: string;
   _score: number;
@@ -23,12 +19,12 @@ export type LocationResult = {
   countryName: string;
   iata: string[];
   id: string;
-  location: Location;
+  location: HotelsLocation;
 };
 
 export type SimpleHotelResult = {
   id: string;
-  location: Location;
+  location: HotelsLocation;
   _score: string;
   locationName: string;
   locationId: string;
@@ -38,7 +34,7 @@ export type SimpleHotelResult = {
 
 export type HotelsResponse = {
   result: HotelResult[];
-} & BaseResponse;
+};
 
 export type HotelResult = {
   fullUrl: string;
@@ -53,7 +49,7 @@ export type HotelResult = {
   name: string;
   url: string;
   popularity: number;
-  location: Location;
+  location: HotelsLocation;
   stars: number;
   distance: number;
   rooms: HotelRoom[];

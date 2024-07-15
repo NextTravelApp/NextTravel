@@ -1,7 +1,7 @@
 import { formatDate } from "date-fns";
 import md5 from "md5";
 import { axiosClient } from "../utils/fetcher";
-import type { HotelsResponse, SearchResponse } from "./types";
+import type { HotelsResponse, HotelsSearchResponse } from "./types";
 
 function generateSignature(params: URLSearchParams) {
   const keys = Array.from(params.keys()).sort();
@@ -22,7 +22,7 @@ export const findHotelsOrLocation = async (
 
   const url = `https://engine.hotellook.com/api/v2/lookup.json?${params}`;
   return axiosClient
-    .get<SearchResponse>(url)
+    .get<HotelsSearchResponse>(url)
     .then((res) => res.data)
     .then((data) => data.results);
 };
