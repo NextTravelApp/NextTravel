@@ -1,16 +1,13 @@
-import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { z } from "zod";
 import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
 import prisma from "../../lib/prisma";
 import { getAccomodation } from "../../lib/retriever/accomodations";
 import { getAttraction } from "../../lib/retriever/attractions";
-import { getTransport } from "../../lib/retriever/transports";
 import { authenticated } from "../../middlewares/auth";
 
 export type CheckoutItem = {
-  type: "attraction" | "accomodation" | "transport";
+  type: "attraction" | "accomodation";
   name: string;
   provider: string;
   price: number;
@@ -21,21 +18,15 @@ export type CheckoutResponse = {
 };
 
 export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
-  "/",
+  "/:id",
   authenticated,
-  zValidator(
-    "json",
-    z.object({
-      id: z.string(),
-    }),
-  ),
   async (ctx) => {
-    const body = ctx.req.valid("json");
+    const id = ctx.req.param("id");
     const user = ctx.get("user");
 
     const plan = await prisma.searchRequest.findUnique({
       where: {
-        id: body.id,
+        id: id,
         userId: user.id,
       },
     });
@@ -63,18 +54,6 @@ export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
             name: attraction.name,
             provider: step.attractionId.split("_")[0],
             price: attraction.price,
-          });
-      }
-
-      if (step.transportId) {
-        const transport = await getTransport(step.transportId);
-
-        if (transport)
-          items.push({
-            type: "transport",
-            name: `${transport.from} - ${transport.to}`,
-            provider: step.transportId.split("_")[0],
-            price: transport.price,
           });
       }
     }

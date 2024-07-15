@@ -75,16 +75,14 @@ export default function SearchAccomodationPage() {
         </View>
       </ScrollView>
 
-      <View className="fixed bottom-16 left-3 flex h-14 w-[93vw] flex-row items-center rounded-xl bg-card px-4 shadow-xl">
-        <Text className="text-2xl">Total price:</Text>
-        <Text className="!font-bold ml-2 text-2xl">€100</Text>
-
-        <Link href={`/plan?id=${id}`} asChild>
-          <Button mode="contained" className="ml-auto">
-            Back
-          </Button>
-        </Link>
-      </View>
+      <Link href={`/plan?id=${id}`} asChild>
+        <Button
+          mode="contained"
+          className="fixed bottom-16 left-3 h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
+        >
+          Back
+        </Button>
+      </Link>
     </View>
   );
 }

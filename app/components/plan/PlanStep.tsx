@@ -13,7 +13,6 @@ export type PlanStepProps = {
   time: string;
   duration: number;
   attractionId?: string | undefined;
-  transportId?: string | undefined;
 };
 
 export function PlanStep(props: PlanStepProps) {
@@ -53,9 +52,6 @@ export function PlanStep(props: PlanStepProps) {
       <View className="absolute right-3 bottom-3 flex flex-row justify-end gap-3">
         {props.attractionId && (
           <FontAwesome6 name="landmark" size={24} color="black" />
-        )}
-        {props.transportId && (
-          <FontAwesome6 name="bus" size={24} color="black" />
         )}
       </View>
     </View>

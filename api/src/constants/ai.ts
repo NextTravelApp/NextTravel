@@ -16,10 +16,6 @@ export const responseSchema = z.object({
             .string()
             .optional()
             .describe("The id of an attraction if present"),
-          transportId: z
-            .string()
-            .optional()
-            .describe("The id of the transport to take"),
         })
         .describe("A step for the trip"),
     )
@@ -39,7 +35,7 @@ export const systemPrompt = [
   "Some rules and explanation:",
   "- User gives some information regarding the trip they want to execute,",
   "- Dates are always in the format 'MM/DD/YYYY",
-  "- You can call functions(getAttraction,getAccomodations,getTransport) to retrieve data " +
+  "- You can call functions(getAttraction,getAccomodations) to retrieve data " +
     "from the web,",
   "- When you respond, you must provide a full plan, select the best accomodation based " +
     "on where the attractions are, the price and the ratings,",

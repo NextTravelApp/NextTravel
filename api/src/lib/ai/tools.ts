@@ -2,7 +2,6 @@ import { tool } from "ai";
 import { z } from "zod";
 import { searchAccomodations } from "../retriever/accomodations";
 import { searchAttractions } from "../retriever/attractions";
-import { searchTransports } from "../retriever/transports";
 
 function logTool(tool: string, request: unknown) {
   console.log(`[AI] [Tool] ${tool}`, request);
@@ -35,21 +34,5 @@ export const getAccomodations = tool({
   execute: async (request) => {
     logTool("getAccomodations", request);
     return await searchAccomodations(request);
-  },
-});
-
-export const transportRequestSchema = z.object({
-  origin: z.string().describe("The origin location"),
-  destination: z.string().describe("The destination location"),
-  date: z.string().date().describe("The date of the travel in YYYY-MM-DD"),
-});
-export type TransportRequest = z.infer<typeof transportRequestSchema>;
-export const getTransport = tool({
-  description:
-    "Find the best transport and duration to move between two locations",
-  parameters: transportRequestSchema,
-  execute: async (request) => {
-    logTool("getTransport", request);
-    return await searchTransports(request);
   },
 });

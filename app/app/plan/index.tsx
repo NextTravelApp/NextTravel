@@ -106,16 +106,14 @@ export default function PlanPage() {
         </View>
       </ScrollView>
 
-      <View className="fixed bottom-16 left-3 flex h-14 w-[93vw] flex-row items-center rounded-xl bg-card px-4 shadow-xl">
-        <Text className="text-2xl">Total price:</Text>
-        <Text className="!font-bold ml-2 text-2xl">€100</Text>
-
-        <Link href={`/plan/checkout?id=${id}`} asChild>
-          <Button mode="contained" className="ml-auto">
-            Next
-          </Button>
-        </Link>
-      </View>
+      <Link href={`/plan/checkout?id=${id}`} asChild>
+        <Button
+          mode="contained"
+          className="fixed bottom-16 left-3 h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
+        >
+          Next
+        </Button>
+      </Link>
     </View>
   );
 }

@@ -1,8 +1,9 @@
 import { honoClient } from "@/components/fetcher";
 import { Button, Text } from "@/components/injector/ReactNativePaper";
 import { useQuery } from "@tanstack/react-query";
+import type { responseType } from "api";
 import { Link, Redirect, useLocalSearchParams } from "expo-router";
-import { View } from "react-native";
+import { FlatList, ScrollView, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
 export default function SearchAccomodationPage() {
@@ -10,7 +11,7 @@ export default function SearchAccomodationPage() {
     id?: string;
   }>();
 
-  const { isLoading, error } = useQuery({
+  const { data: plan } = useQuery({
     queryKey: ["plan", id],
     queryFn: async () => {
       if (!id) return null;
@@ -33,8 +34,32 @@ export default function SearchAccomodationPage() {
     refetchInterval: false,
   });
 
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["checkout", id],
+    queryFn: async () => {
+      if (!id) return null;
+
+      const res = await honoClient.plan.checkout[":id"].$post({
+        param: {
+          id: id,
+        },
+      });
+
+      const data = await res.json();
+      if ("t" in data) throw new Error(data.t);
+
+      return data;
+    },
+    staleTime: 1000 * 60 * 5,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    refetchInterval: false,
+  });
+
   if (!id) return <Redirect href="/" />;
-  if (isLoading) return <ActivityIndicator className="m-auto" size="large" />;
+  if (isLoading || !data)
+    return <ActivityIndicator className="m-auto" size="large" />;
   if (error) return <Text className="m-auto">An error occurred</Text>;
 
   return (
@@ -42,18 +67,60 @@ export default function SearchAccomodationPage() {
       <Text className="!font-extrabold text-2xl">Ready for checkout?</Text>
       <Text className="text-lg">Let's make this plan real!</Text>
 
-      <Text className="!font-bold mt-6 text-xl">Checkout Details</Text>
+      <ScrollView className="mt-4">
+        <Text className="!font-bold text-xl">Checkout Details</Text>
+        <View className="mt-1">
+          {data.items
+            .filter((item) => item.price > 0)
+            .filter(
+              (item, i, arr) =>
+                arr.findIndex((a) => a.name === item.name) === i,
+            )
+            .map((item) => (
+              <View
+                key={item.name}
+                className="flex w-full flex-row justify-between"
+              >
+                <Text className="text-lg">{item.name}</Text>
+                <Text className="text-lg">€{item.price}</Text>
+              </View>
+            ))}
+        </View>
 
-      <View className="fixed bottom-16 left-3 flex h-14 w-[93vw] flex-row items-center rounded-xl bg-card px-4 shadow-xl">
-        <Text className="text-2xl">Total price:</Text>
-        <Text className="!font-bold ml-2 text-2xl">€100</Text>
+        <Text className="!font-bold mt-3 text-xl">Payment processors</Text>
+        <Text className="text-lg">
+          Some payments will not be sent through our platform due to additional
+          detail requested
+        </Text>
+        <Text className="text-lg">
+          After checkout you’ll be able to be forwarded on the following
+          platforms.
+        </Text>
 
-        <Link href={`/plan?id=${id}`} asChild>
-          <Button mode="contained" className="ml-auto">
-            Back
-          </Button>
-        </Link>
-      </View>
+        <Text className="!font-bold mt-3 text-xl">Your plan</Text>
+        <FlatList
+          data={(plan?.response as responseType)?.plan ?? []}
+          renderItem={({ item }) => (
+            <Text className="flex flex-row items-center gap-2 text-lg">
+              <View className="block h-2 w-2 rounded-full bg-text" />{" "}
+              {item.title}
+            </Text>
+          )}
+          keyExtractor={(item) => `${item.title}-${item.date}`}
+        />
+      </ScrollView>
+
+      <Link
+        href="#"
+        className="fixed bottom-16 left-3 h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
+      >
+        <Text className="mt-auto font-light">
+          By clicking below you agree to our terms and conditions
+        </Text>
+        <Button className="w-full" mode="contained">
+          Checkout
+        </Button>
+      </Link>
     </View>
   );
 }

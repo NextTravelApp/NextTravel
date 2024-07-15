@@ -2,7 +2,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { systemPrompt } from "../../constants/ai";
 import { UnexpectedResponseError } from "./exceptions";
-import { getAccomodations, getAttraction, getTransport } from "./tools";
+import { getAccomodations, getAttraction } from "./tools";
 
 const ai = createOpenAI({
   baseURL: process.env.OPENAI_API_URL,
@@ -27,7 +27,6 @@ export async function generateTrip(
     tools: {
       getAttraction,
       getAccomodations,
-      getTransport,
     },
   });
 

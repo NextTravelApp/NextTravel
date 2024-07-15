@@ -1,11 +1,3 @@
-export type Transport = {
-  id: string;
-  from: string;
-  to: string;
-  price: number;
-  duration: number;
-};
-
 export type Attraction = {
   id: string;
   name: string;

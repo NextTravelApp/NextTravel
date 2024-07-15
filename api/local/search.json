@@ -8,8 +8,7 @@
       "date": "01/01/2025",
       "time": "10:00",
       "duration": 2,
-      "location": "Helsinki Airport",
-      "transportId": "local_t1"
+      "location": "Helsinki Airport"
     },
     {
       "title": "Check-in at Hotel Helsinki",
@@ -32,8 +31,7 @@
       "time": "14:00",
       "duration": 2,
       "location": "Helsinki",
-      "attractionId": "local_a1",
-      "transportId": "local_t1"
+      "attractionId": "local_a1"
     },
     {
       "title": "Visit Temppeliaukio Church",
@@ -78,8 +76,7 @@
       "date": "01/05/2025",
       "time": "12:00",
       "duration": 2,
-      "location": "Helsinki Airport",
-      "transportId": "local_t1"
+      "location": "Helsinki Airport"
     }
   ],
   "accomodationId": "local_h1"
