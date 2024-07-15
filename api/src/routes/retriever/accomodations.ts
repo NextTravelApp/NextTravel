@@ -1,9 +1,10 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { readFileSync } from "node:fs";
 import { accomodationsRequestSchema } from "../../lib/ai/tools";
-import { searchAccomodations } from "../../lib/retriever/accomodation";
-import type { Accomodation } from "../../lib/retriever/types";
+import {
+  getAccomodation,
+  searchAccomodations,
+} from "../../lib/retriever/accomodation";
 import { authenticated } from "../../middlewares/auth";
 
 export const accomodationsRoute = new Hono()
@@ -20,17 +21,7 @@ export const accomodationsRoute = new Hono()
   )
   .get("/:id", authenticated, async (ctx) => {
     const id = ctx.req.param("id");
-    let accomodation: Accomodation | undefined;
-
-    if (process.env.RETURN_EXAMPLE_DATA) {
-      accomodation = (
-        JSON.parse(
-          readFileSync("local/accomodations.json", "utf-8"),
-        ) as Accomodation[]
-      ).find((acc) => acc.id === id);
-    } else {
-      // TODO
-    }
+    const accomodation = await getAccomodation(id);
 
     if (!accomodation) {
       return ctx.json(

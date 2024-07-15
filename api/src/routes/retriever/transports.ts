@@ -1,9 +1,7 @@
-import { readFileSync } from "node:fs";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { transportRequestSchema } from "../../lib/ai/tools";
-import { searchTransports } from "../../lib/retriever/transports";
-import type { Transport } from "../../lib/retriever/types";
+import { getTransport, searchTransports } from "../../lib/retriever/transports";
 import { authenticated } from "../../middlewares/auth";
 
 export const transportsRoute = new Hono()
@@ -20,17 +18,7 @@ export const transportsRoute = new Hono()
   )
   .get("/:id", authenticated, async (ctx) => {
     const id = ctx.req.param("id");
-    let transport: Transport | undefined;
-
-    if (process.env.RETURN_EXAMPLE_DATA) {
-      transport = (
-        JSON.parse(
-          readFileSync("local/transports.json", "utf-8"),
-        ) as Transport[]
-      ).find((att) => att.id === id);
-    } else {
-      // TODO
-    }
+    const transport = getTransport(id);
 
     if (!transport) {
       return ctx.json(

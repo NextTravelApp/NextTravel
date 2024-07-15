@@ -1,9 +1,9 @@
+import { useQueryClient } from "@tanstack/react-query";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { Pressable, View } from "react-native";
+import { honoClient } from "../fetcher";
 import { Text } from "../injector/ReactNativePaper";
 import { Image } from "../ui/Image";
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
-import { honoClient } from "../fetcher";
-import { useQueryClient } from "@tanstack/react-query";
 
 export type AccomodationProps = {
   id: string;
@@ -59,8 +59,12 @@ export function Accomodation(props: AccomodationProps) {
         <View className="m-auto w-1/2">
           <Text className="!font-bold text-xl">{props.name}</Text>
           <Text className="text-lg">{props.location}</Text>
-          <Text className="text-lg">Price: {props.price}</Text>
-          <Text className="text-lg">Rating: {props.rating}</Text>
+          {props.price > 0 && (
+            <Text className="text-lg">Price: {props.price}</Text>
+          )}
+          {props.rating > 0 && (
+            <Text className="text-lg">Rating: {props.rating}</Text>
+          )}
         </View>
       </Pressable>
     </Link>

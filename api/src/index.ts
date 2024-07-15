@@ -3,8 +3,8 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { authRoute } from "./routes/auth";
 import { imageRoute } from "./routes/image";
-import { retrieverRoute } from "./routes/retriever";
 import { planRoute } from "./routes/plan";
+import { retrieverRoute } from "./routes/retriever";
 
 const app = new Hono()
   .use(

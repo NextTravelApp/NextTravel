@@ -7,9 +7,10 @@ export type Location = {
   lon: string;
 };
 
-export type LocationsResponse = {
+export type SearchResponse = {
   results: {
     locations: LocationResult[];
+    hotels: SimpleHotelResult[];
   };
 } & BaseResponse;
 
@@ -23,6 +24,16 @@ export type LocationResult = {
   iata: string[];
   id: string;
   location: Location;
+};
+
+export type SimpleHotelResult = {
+  id: string;
+  location: Location;
+  _score: string;
+  locationName: string;
+  locationId: string;
+  fullName: string;
+  label: string;
 };
 
 export type HotelsResponse = {

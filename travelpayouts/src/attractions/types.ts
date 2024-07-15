@@ -30,7 +30,7 @@ export type ProductsResponse = {
 };
 
 export type ProductResponse = {
-  data: ProductResult;
+  data?: ProductResult;
 };
 
 export type ProductResult = {

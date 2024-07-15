@@ -3,12 +3,18 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "lint": "biome lint && biome format"
+    "lint": "biome check",
+    "prepare": "husky"
   },
   "workspaces": ["api", "app", "database", "travelpayouts"],
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
     "turbo": "^2.0.6"
+  },
+  "lint-staged": {
+    "*": ["biome check --no-errors-on-unmatched --files-ignore-unknown=true"]
   },
   "packageManager": "yarn@4.3.1"
 }

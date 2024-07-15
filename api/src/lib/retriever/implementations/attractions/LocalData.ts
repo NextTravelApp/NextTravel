@@ -8,4 +8,8 @@ export class LocalData implements AttractionManager {
   async search(): Promise<Attraction[]> {
     return JSON.parse(readFileSync("local/attractions.json", "utf-8"));
   }
+
+  async get(id: string): Promise<Attraction | undefined> {
+    return this.search().then((data) => data.find((item) => item.id === id));
+  }
 }

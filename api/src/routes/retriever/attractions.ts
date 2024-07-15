@@ -1,9 +1,10 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { readFileSync } from "node:fs";
 import { attractionRequestSchema } from "../../lib/ai/tools";
-import { searchAttractions } from "../../lib/retriever/attractions";
-import type { Attraction } from "../../lib/retriever/types";
+import {
+  getAttraction,
+  searchAttractions,
+} from "../../lib/retriever/attractions";
 import { authenticated } from "../../middlewares/auth";
 
 export const attractionsRoute = new Hono()
@@ -20,17 +21,7 @@ export const attractionsRoute = new Hono()
   )
   .get("/:id", authenticated, async (ctx) => {
     const id = ctx.req.param("id");
-    let attraction: Attraction | undefined;
-
-    if (process.env.RETURN_EXAMPLE_DATA) {
-      attraction = (
-        JSON.parse(
-          readFileSync("local/attractions.json", "utf-8"),
-        ) as Attraction[]
-      ).find((att) => att.id === id);
-    } else {
-      // TODO
-    }
+    const attraction = getAttraction(id);
 
     if (!attraction) {
       return ctx.json(

@@ -1,8 +1,8 @@
 import { remapProps } from "nativewind";
 import {
   Button as RNButton,
-  TextInput as RNTextInput,
   Text as RNText,
+  TextInput as RNTextInput,
 } from "react-native-paper";
 
 export const Button = remapProps(RNButton, {

@@ -8,6 +8,7 @@ if (process.env.RETURN_EXAMPLE_DATA) managers.push(new LocalData());
 export interface TransportManager {
   provider: string;
   search(data: TransportRequest): Promise<Transport[]>;
+  get(id: string): Promise<Transport | undefined>;
 }
 
 export async function searchTransports(
@@ -18,4 +19,13 @@ export async function searchTransports(
   );
 
   return results.flat();
+}
+
+export async function getTransport(id: string): Promise<Transport | undefined> {
+  const manager = managers.find(
+    (manager) => manager.provider === id.split("_")[0],
+  );
+  if (!manager) return undefined;
+
+  return manager.get(id.split(`${manager.provider}_`)[1]);
 }

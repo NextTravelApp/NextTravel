@@ -1,7 +1,7 @@
 import { formatDate } from "date-fns";
 import md5 from "md5";
 import { axiosClient } from "../utils/fetcher";
-import type { HotelsResponse, LocationsResponse } from "./types";
+import type { HotelsResponse, SearchResponse } from "./types";
 
 function generateSignature(params: URLSearchParams) {
   const keys = Array.from(params.keys()).sort();
@@ -11,31 +11,31 @@ function generateSignature(params: URLSearchParams) {
   return md5(data);
 }
 
-export const findHotelsLocation = async (query: string) => {
+export const findHotelsOrLocation = async (
+  query: string,
+  lookFor: "hotel" | "city",
+) => {
   const params = new URLSearchParams();
   params.append("query", query);
-  params.append("lookFor", "city");
+  params.append("lookFor", lookFor);
   params.append("token", process.env.HOTELLOOK_TOKEN ?? "");
 
   const url = `https://engine.hotellook.com/api/v2/lookup.json?${params}`;
   return axiosClient
-    .get<LocationsResponse>(url)
+    .get<SearchResponse>(url)
     .then((res) => res.data)
-    .then((data) => data.results.locations);
+    .then((data) => data.results);
 };
 
 export const getHotels = async (
-  id: {
-    type: "hotelId" | "cityId";
-    value: string;
-  },
+  id: string,
   checkIn: Date,
   checkOut: Date,
   adultsCount: number,
   childrens?: number[],
 ) => {
   let params = new URLSearchParams();
-  params.append(id.type, id.value);
+  params.append("cityId", id);
   params.append("checkIn", formatDate(checkIn, "yyyy-MM-dd"));
   params.append("checkOut", formatDate(checkOut, "yyyy-MM-dd"));
   params.append("adultsCount", adultsCount.toString());

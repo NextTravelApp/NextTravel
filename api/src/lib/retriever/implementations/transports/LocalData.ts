@@ -8,4 +8,8 @@ export class LocalData implements TransportManager {
   async search(): Promise<Transport[]> {
     return JSON.parse(readFileSync("local/transports.json", "utf-8"));
   }
+
+  async get(id: string): Promise<Transport | undefined> {
+    return this.search().then((data) => data.find((item) => item.id === id));
+  }
 }

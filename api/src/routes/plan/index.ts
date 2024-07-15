@@ -1,6 +1,6 @@
+import { readFileSync } from "node:fs";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { readFileSync } from "node:fs";
 import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
 import { searchSchema, searchUpdateSchema } from "../../constants/requests";

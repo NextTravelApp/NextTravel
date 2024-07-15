@@ -1,10 +1,10 @@
-import { View } from "react-native";
-import { Text } from "../injector/ReactNativePaper";
-import { Image } from "../ui/Image";
-import { useQuery } from "@tanstack/react-query";
-import { honoClient } from "../fetcher";
-import { ExternalLink } from "../ui/ExternalLink";
 import { FontAwesome6 } from "@expo/vector-icons";
+import { useQuery } from "@tanstack/react-query";
+import { View } from "react-native";
+import { honoClient } from "../fetcher";
+import { Text } from "../injector/ReactNativePaper";
+import { ExternalLink } from "../ui/ExternalLink";
+import { Image } from "../ui/Image";
 
 export type PlanStepProps = {
   location: string;
