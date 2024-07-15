@@ -1,0 +1,9 @@
+[
+  {
+    "id": "t1",
+    "from": "Rome",
+    "to": "Milan",
+    "price": 50,
+    "duration": 10800
+  }
+]

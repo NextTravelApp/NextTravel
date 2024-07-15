@@ -5,12 +5,7 @@
     "build": "turbo build",
     "lint": "biome lint && biome format"
   },
-  "workspaces": [
-    "api",
-    "app",
-    "database",
-    "travelpayouts"
-  ],
+  "workspaces": ["api", "app", "database", "travelpayouts"],
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "turbo": "^2.0.6"

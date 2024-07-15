@@ -1,6 +1,6 @@
+import { readFileSync } from "node:fs";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { readFileSync } from "node:fs";
 import { transportRequestSchema } from "../../lib/ai/tools";
 import { searchTransports } from "../../lib/retriever/transports";
 import type { Transport } from "../../lib/retriever/types";
@@ -13,13 +13,7 @@ export const transportsRoute = new Hono()
     zValidator("json", transportRequestSchema),
     async (ctx) => {
       const body = ctx.req.valid("json");
-      let transports: Transport[];
-
-      if (process.env.RETURN_EXAMPLE_DATA) {
-        transports = JSON.parse(readFileSync("test/transports.json", "utf-8"));
-      } else {
-        transports = await searchTransports(body);
-      }
+      const transports = await searchTransports(body);
 
       return ctx.json(transports);
     },
@@ -30,7 +24,9 @@ export const transportsRoute = new Hono()
 
     if (process.env.RETURN_EXAMPLE_DATA) {
       transport = (
-        JSON.parse(readFileSync("test/transports.json", "utf-8")) as Transport[]
+        JSON.parse(
+          readFileSync("local/transports.json", "utf-8"),
+        ) as Transport[]
       ).find((att) => att.id === id);
     } else {
       // TODO

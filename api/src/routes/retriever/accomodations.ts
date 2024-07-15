@@ -13,15 +13,7 @@ export const accomodationsRoute = new Hono()
     zValidator("json", accomodationsRequestSchema),
     async (ctx) => {
       const body = ctx.req.valid("json");
-      let accomodations: Accomodation[];
-
-      if (process.env.RETURN_EXAMPLE_DATA) {
-        accomodations = JSON.parse(
-          readFileSync("test/accomodations.json", "utf-8"),
-        );
-      } else {
-        accomodations = await searchAccomodations(body);
-      }
+      const accomodations = await searchAccomodations(body);
 
       return ctx.json(accomodations);
     },
@@ -33,7 +25,7 @@ export const accomodationsRoute = new Hono()
     if (process.env.RETURN_EXAMPLE_DATA) {
       accomodation = (
         JSON.parse(
-          readFileSync("test/accomodations.json", "utf-8"),
+          readFileSync("local/accomodations.json", "utf-8"),
         ) as Accomodation[]
       ).find((acc) => acc.id === id);
     } else {

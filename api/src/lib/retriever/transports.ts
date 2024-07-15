@@ -1,8 +1,9 @@
 import type { TransportRequest } from "../ai/tools";
-import {} from "./implementations/transports";
+import { LocalData } from "./implementations/transports";
 import type { Transport } from "./types";
 
 export const managers: TransportManager[] = [];
+if (process.env.RETURN_EXAMPLE_DATA) managers.push(new LocalData());
 
 export interface TransportManager {
   provider: string;

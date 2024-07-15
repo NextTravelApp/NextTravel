@@ -37,7 +37,7 @@ export const planRoute = new Hono<{ Variables: Variables }>()
       let trip: responseType;
 
       if (process.env.RETURN_EXAMPLE_DATA) {
-        trip = JSON.parse(readFileSync("test/search.json", "utf-8"));
+        trip = JSON.parse(readFileSync("local/search.json", "utf-8"));
       } else {
         trip = await generateTrip(
           body.location as string,

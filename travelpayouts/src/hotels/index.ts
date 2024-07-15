@@ -25,14 +25,17 @@ export const findHotelsLocation = async (query: string) => {
 };
 
 export const getHotels = async (
-  cityId: string,
+  id: {
+    type: "hotelId" | "cityId";
+    value: string;
+  },
   checkIn: Date,
   checkOut: Date,
   adultsCount: number,
   childrens?: number[],
 ) => {
   let params = new URLSearchParams();
-  params.append("cityId", cityId);
+  params.append(id.type, id.value);
   params.append("checkIn", formatDate(checkIn, "yyyy-MM-dd"));
   params.append("checkOut", formatDate(checkOut, "yyyy-MM-dd"));
   params.append("adultsCount", adultsCount.toString());

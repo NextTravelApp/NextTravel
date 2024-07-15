@@ -4,7 +4,7 @@ import type { AttractionManager } from "../../attractions";
 import type { Attraction } from "../../types";
 
 export class WeGoTrip implements AttractionManager {
-  provider = "travelpayouts_hotel";
+  provider = "wegotrip";
 
   async search(data: AttractionRequest): Promise<Attraction[]> {
     const locations = await findTrips(data.name);

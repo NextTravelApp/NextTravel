@@ -1,8 +1,9 @@
 import type { AttractionRequest } from "../ai/tools";
-import { WeGoTrip } from "./implementations/attractions";
+import { LocalData, WeGoTrip } from "./implementations/attractions";
 import type { Attraction } from "./types";
 
 export const managers: AttractionManager[] = [new WeGoTrip()];
+if (process.env.RETURN_EXAMPLE_DATA) managers.push(new LocalData());
 
 export interface AttractionManager {
   provider: string;
