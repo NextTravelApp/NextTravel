@@ -4,7 +4,7 @@ import { Text } from "@/components/injector/ReactNativePaper";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
 import { Redirect, useLocalSearchParams } from "expo-router";
-import { FlatList, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
 export default function SearchAccomodationPage() {
@@ -99,16 +99,14 @@ export default function SearchAccomodationPage() {
         </Text>
 
         <Text className="!font-bold mt-3 text-xl">Your plan</Text>
-        <FlatList
-          data={(plan?.response as responseType)?.plan ?? []}
-          renderItem={({ item }) => (
-            <Text className="flex flex-row items-center gap-2 text-lg">
-              <View className="block h-2 w-2 rounded-full bg-text" />{" "}
-              {item.title}
-            </Text>
-          )}
-          keyExtractor={(item) => `${item.title}-${item.date}`}
-        />
+        {((plan?.response as responseType)?.plan ?? []).map((item) => (
+          <Text
+            key={item.title}
+            className="flex flex-row items-center gap-2 text-lg"
+          >
+            <View className="block h-2 w-2 rounded-full bg-text" /> {item.title}
+          </Text>
+        ))}
 
         <Text className="mt-auto pt-4 font-light">
           By clicking below you agree to our terms and conditions

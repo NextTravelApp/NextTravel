@@ -4,10 +4,16 @@ import { Accomodation } from "@/components/plan/Accomodation";
 import { PlanStep } from "@/components/plan/PlanStep";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
-import { format } from "date-fns";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
+
+const formatDate = (date: string) => {
+  const split = date.split("/");
+  if (split[0].length === 1) split[0] = `0${split[0]}`;
+  if (split[1].length === 1) split[1] = `0${split[1]}`;
+  return `${split[2]}-${split[0]}-${split[1]}`;
+};
 
 export default function PlanPage() {
   const { location, members, startDate, endDate, id, t } =
@@ -35,20 +41,23 @@ export default function PlanPage() {
 
         return resData.response as responseType;
       }
-
-      const parsedStart = format(startDate as string, "yyyy-MM-dd");
-      const parsedEnd = format(endDate as string, "yyyy-MM-dd");
+      if (!location || !members || !startDate || !endDate) return null;
 
       const res = await honoClient.plan.$post({
         json: {
           location: location as string,
           members: members ? Number.parseInt(members as string) : -1,
-          startDate: parsedStart,
-          endDate: parsedEnd,
+          startDate: formatDate(startDate),
+          endDate: formatDate(endDate),
         },
       });
 
       const data = await res.json();
+      if ("error" in data) {
+        // biome-ignore lint/suspicious/noExplicitAny: Errors are not  typed
+        throw new Error((data as any).error);
+      }
+
       if (data.id)
         router.setParams({
           id: data.id,
@@ -81,7 +90,10 @@ export default function PlanPage() {
   });
 
   if (isLoading) return <ActivityIndicator className="m-auto" size="large" />;
-  if (error) return <Text className="m-auto">An error occurred</Text>;
+  if (error)
+    return (
+      <Text className="m-auto">An error occurred: {JSON.stringify(error)}</Text>
+    );
 
   return (
     <View className="flex flex-1 flex-col bg-background p-4">

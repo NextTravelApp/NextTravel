@@ -3660,7 +3660,6 @@ __metadata:
     "@tanstack/react-query": "npm:^5.51.1"
     "@types/react": "npm:~18.2.79"
     api: "workspace:*"
-    date-fns: "npm:^3.6.0"
     expo: "npm:~51.0.20"
     expo-image: "npm:~1.12.12"
     expo-linking: "npm:~6.3.1"

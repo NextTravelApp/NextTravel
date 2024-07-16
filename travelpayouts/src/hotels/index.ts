@@ -57,7 +57,7 @@ export const getHotels = async (
   params.append("signature", generateSignature(params));
   params.append("marker", process.env.HOTELLOOK_PARTNER ?? "");
 
-  let url = `http://engine.hotellook.com/api/v2/search/start.json?${params.toString()}`;
+  let url = `https://engine.hotellook.com/api/v2/search/start.json?${params.toString()}`;
   const { data } = await axiosClient.get(url);
 
   if (!("searchId" in data))
@@ -69,7 +69,7 @@ export const getHotels = async (
   params.append("signature", generateSignature(params));
   params.append("marker", process.env.HOTELLOOK_PARTNER ?? "");
 
-  url = `http://engine.hotellook.com/api/v2/search/getResult.json?${params.toString()}`;
+  url = `https://engine.hotellook.com/api/v2/search/getResult.json?${params.toString()}`;
   return axiosClient
     .get<HotelsResponse>(url)
     .then((res) => res.data)
