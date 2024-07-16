@@ -95,7 +95,12 @@ export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
         })
       ).id;
 
-    const ephemeralKey = await stripe.ephemeralKeys.create({ customer });
+    const ephemeralKey = await stripe.ephemeralKeys.create(
+      { customer },
+      {
+        apiVersion: "2024-06-20",
+      },
+    );
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(fees * 100),
       currency: "eur",

@@ -7,12 +7,11 @@ import {
   TextInput,
 } from "@/components/injector/ReactNativePaper";
 import { Image } from "@/components/ui/Image";
-import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
-import { Divider, TextInput as RNTextInput } from "react-native-paper";
+import { Divider } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
 
 export default function App() {
@@ -75,20 +74,6 @@ export default function App() {
               className="w-full"
               value={location}
               onChangeText={setLocation}
-              left={
-                <RNTextInput.Icon
-                  className="m-auto"
-                  icon={(props) => (
-                    <FontAwesome
-                      className="m-auto"
-                      name="location-arrow"
-                      {...props}
-                    />
-                  )}
-                  color="black"
-                  size={25}
-                />
-              }
             />
             <View className="flex w-full max-w-full flex-1 flex-row justify-between">
               <TouchableOpacity
@@ -103,20 +88,6 @@ export default function App() {
                       ? `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
                       : "Period"
                   }
-                  left={
-                    <RNTextInput.Icon
-                      className="m-auto"
-                      icon={(props) => (
-                        <FontAwesome
-                          className="m-auto"
-                          name="calendar"
-                          {...props}
-                        />
-                      )}
-                      color="black"
-                      size={25}
-                    />
-                  }
                 />
               </TouchableOpacity>
 
@@ -129,16 +100,6 @@ export default function App() {
                 onChangeText={(text) => {
                   setMembers(Number.parseInt(text) || 0);
                 }}
-                left={
-                  <RNTextInput.Icon
-                    className="m-auto"
-                    icon={(props) => (
-                      <FontAwesome className="m-auto" name="user" {...props} />
-                    )}
-                    color="black"
-                    size={25}
-                  />
-                }
               />
             </View>
 

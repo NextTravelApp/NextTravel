@@ -5,7 +5,6 @@ import { ThemeProvider, useTheme } from "@/components/Theme";
 import { AuthProvider } from "@/components/auth/AuthContext";
 import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { StripeProvider } from "@stripe/stripe-react-native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Tabs } from "expo-router";
@@ -71,35 +70,29 @@ function RootLayoutNav() {
         },
       }}
     >
-      <StripeProvider
-        publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLIC_KEY as string}
-        urlScheme="app.nexttravel"
-        merchantIdentifier="app.nexttravel"
+      <Tabs
+        screenOptions={() => ({
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: theme.primary,
+        })}
       >
-        <Tabs
-          screenOptions={() => ({
-            headerShown: false,
-            tabBarShowLabel: false,
-            tabBarActiveTintColor: theme.primary,
-          })}
-        >
-          <Tabs.Screen
-            name="index"
-            options={{
-              tabBarIcon: (props) => <FontAwesome name="home" {...props} />,
-            }}
-          />
-          <Tabs.Screen
-            name="(auth)"
-            options={{
-              tabBarIcon: (props) => (
-                <FontAwesome name="user-circle-o" {...props} />
-              ),
-            }}
-          />
-          <Tabs.Screen name="plan" options={{ href: null }} />
-        </Tabs>
-      </StripeProvider>
+        <Tabs.Screen
+          name="index"
+          options={{
+            tabBarIcon: (props) => <FontAwesome name="home" {...props} />,
+          }}
+        />
+        <Tabs.Screen
+          name="(auth)"
+          options={{
+            tabBarIcon: (props) => (
+              <FontAwesome name="user-circle-o" {...props} />
+            ),
+          }}
+        />
+        <Tabs.Screen name="plan" options={{ href: null }} />
+      </Tabs>
     </PaperProvider>
   );
 }
