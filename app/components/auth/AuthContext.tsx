@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { InferResponseType } from "hono/client";
 import { type PropsWithChildren, createContext, useContext } from "react";
+import { registerForPushNotificationsAsync } from "../NotificationHandler";
 import { honoClient } from "../fetcher";
 import { useStorageState } from "../useStorageState";
 
@@ -36,7 +37,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
       value={{
         session: session || null,
         isLoading,
-        login: (token: string) => setToken(token),
+        login: (token: string) => {
+          setToken(token);
+          registerForPushNotificationsAsync();
+        },
         logout: () => setToken(null),
       }}
     >

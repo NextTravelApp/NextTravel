@@ -1,6 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { hashSync, verifySync } from "@node-rs/argon2";
 import { Hono } from "hono";
+import { z } from "zod";
 import type { Variables } from "../constants/context";
 import { loginSchema, registerSchema } from "../constants/requests";
 import prisma from "../lib/prisma";
@@ -85,4 +86,27 @@ export const authRoute = new Hono<{ Variables: Variables }>()
   .get("/me", authenticated, async (ctx) => {
     const user = ctx.get("user");
     return ctx.json(user);
-  });
+  })
+  .post(
+    "/notification",
+    authenticated,
+    zValidator(
+      "json",
+      z.object({
+        token: z.string(),
+      }),
+    ),
+    async (ctx) => {
+      const user = ctx.get("user");
+      const body = ctx.req.valid("json");
+
+      await prisma.notificationToken.create({
+        data: {
+          token: body.token,
+          userId: user.id,
+        },
+      });
+
+      return ctx.json({ success: true });
+    },
+  );

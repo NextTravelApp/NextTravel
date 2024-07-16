@@ -19,7 +19,15 @@ model User {
   searches Int             @default(0)
   history  SearchRequest[]
 
-  stripeId String?
+  stripeId           String?
+  notificationTokens NotificationToken[]
+}
+
+model NotificationToken {
+  token String @id
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
 
 model SearchRequest {

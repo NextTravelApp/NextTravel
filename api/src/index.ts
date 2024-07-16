@@ -5,6 +5,7 @@ import { authRoute } from "./routes/auth";
 import { imageRoute } from "./routes/image";
 import { planRoute } from "./routes/plan";
 import { retrieverRoute } from "./routes/retriever";
+import { systemRoute } from "./routes/system";
 
 const app = new Hono()
   .use(
@@ -19,9 +20,11 @@ const app = new Hono()
   .route("/auth", authRoute)
   .route("/plan", planRoute)
   .route("/retriever", retrieverRoute)
-  .route("/image", imageRoute);
+  .route("/image", imageRoute)
+  .route("/system", systemRoute);
 
 serve(app);
+
 export type AppType = typeof app;
 export type * from "./constants/requests";
 export type { responseType } from "./constants/ai";
