@@ -21,6 +21,7 @@ export type CheckoutResponse = {
   ephemeralKey: string;
   customer: string;
   publishableKey: string;
+  url: string;
 };
 
 export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
@@ -87,7 +88,7 @@ export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
     });
 
     let customer = user.stripeId;
-    if (!customer)
+    if (!customer) {
       customer = (
         await stripe.customers.create({
           name: user.name,
@@ -95,22 +96,52 @@ export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
         })
       ).id;
 
+      await prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          stripeId: customer,
+        },
+      });
+    }
+
     const ephemeralKey = await stripe.ephemeralKeys.create(
       { customer },
       {
         apiVersion: "2024-06-20",
       },
     );
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(fees * 100),
-      currency: "eur",
+
+    const checkout = await stripe.checkout.sessions.create({
+      mode: "payment",
       customer,
-      description: "NextTravel Payment",
+      line_items: [
+        {
+          price_data: {
+            currency: "eur",
+            product_data: {
+              name: "NextTravel Plan",
+            },
+            unit_amount: Math.round(fees * 100),
+          },
+          quantity: 1,
+        },
+      ],
       metadata: { id },
+      payment_intent_data: {
+        setup_future_usage: "on_session",
+        description: "NextTravel Payment",
+      },
     });
+
+    const paymentIntent = await stripe.paymentIntents.retrieve(
+      checkout.payment_intent as string,
+    );
 
     return ctx.json({
       items,
+      url: checkout.url,
       paymentIntent: paymentIntent.client_secret,
       ephemeralKey: ephemeralKey.secret,
       customer: customer,

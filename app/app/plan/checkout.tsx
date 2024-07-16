@@ -113,6 +113,7 @@ export default function SearchAccomodationPage() {
         </Text>
 
         <CheckoutButton
+          url={data.url}
           customer={data.customer}
           ephemeralKey={data.ephemeralKey}
           paymentIntent={data.paymentIntent}

@@ -11,6 +11,29 @@ export function CheckoutButton({
   ephemeralKey,
   paymentIntent,
 }: {
+  url: string;
+  customer: string;
+  ephemeralKey: string;
+  paymentIntent: string;
+}) {
+  return (
+    <StripeProvider
+      publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLIC_KEY as string}
+    >
+      <ProvidedCheckoutButton
+        customer={customer}
+        ephemeralKey={ephemeralKey}
+        paymentIntent={paymentIntent}
+      />
+    </StripeProvider>
+  );
+}
+
+function ProvidedCheckoutButton({
+  customer,
+  ephemeralKey,
+  paymentIntent,
+}: {
   customer: string;
   ephemeralKey: string;
   paymentIntent: string;
@@ -27,16 +50,12 @@ export function CheckoutButton({
   }, [customer, ephemeralKey, paymentIntent]);
 
   return (
-    <StripeProvider
-      publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLIC_KEY as string}
+    <Button
+      onPress={() => presentPaymentSheet()}
+      className="w-full"
+      mode="contained"
     >
-      <Button
-        onPress={() => presentPaymentSheet()}
-        className="w-full"
-        mode="contained"
-      >
-        Checkout
-      </Button>
-    </StripeProvider>
+      Checkout
+    </Button>
   );
 }

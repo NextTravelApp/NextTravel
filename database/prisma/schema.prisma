@@ -18,7 +18,7 @@ model User {
   plan     String?
   searches Int             @default(0)
   history  SearchRequest[]
-  
+
   stripeId String?
 }
 
@@ -31,6 +31,7 @@ model SearchRequest {
   location        String
   request         Json
   response        Json
+  paid            Boolean @default(false)
 
   userId    String
   user      User     @relation(fields: [userId], references: [id])
