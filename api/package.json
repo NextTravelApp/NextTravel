@@ -15,7 +15,9 @@
     "@node-rs/argon2": "^1.8.3",
     "ai": "^3.2.22",
     "database": "workspace:*",
+    "email": "workspace:*",
     "hono": "^4.4.13",
+    "nodemailer": "^6.9.14",
     "stripe": "^16.2.0",
     "travelpayouts": "workspace:*",
     "unsplash-js": "^7.0.19",
@@ -23,6 +25,7 @@
     "zod-to-json-schema": "^3.23.1"
   },
   "devDependencies": {
+    "@types/nodemailer": "^6",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3"
   }

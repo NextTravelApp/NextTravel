@@ -65,6 +65,7 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
           location: body.location as string,
           request: body,
           response: trip,
+          date: new Date(body.startDate),
         },
       });
 
