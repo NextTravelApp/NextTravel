@@ -6,7 +6,7 @@
     "lint": "biome check",
     "prepare": "husky"
   },
-  "workspaces": ["api", "app", "database", "travelpayouts", "email"],
+  "workspaces": ["api", "app", "database", "travelpayouts"],
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "husky": "^9.0.11",

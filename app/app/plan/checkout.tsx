@@ -106,10 +106,6 @@ export default function SearchAccomodationPage() {
             <View className="block h-2 w-2 rounded-full bg-text" /> {item.title}
           </Text>
         ))}
-
-        <Text className="mt-auto pt-4 font-light">
-          By clicking below you agree to our terms and conditions
-        </Text>
       </ScrollView>
     </View>
   );
