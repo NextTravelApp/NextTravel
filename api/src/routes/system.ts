@@ -1,9 +1,9 @@
+import { WithText, render } from "email";
 import { Hono } from "hono";
 import type { responseType } from "../constants/ai";
 import { sendEmail, sendNotification } from "../lib/notifications";
 import prisma from "../lib/prisma";
 import { system } from "../middlewares/system";
-import { render, WithText } from "email";
 
 export const systemRoute = new Hono()
   .use("*", system)

@@ -1,4 +1,3 @@
-import { CheckoutButton } from "@/components/checkout/CheckoutButton";
 import { honoClient } from "@/components/fetcher";
 import { Text } from "@/components/injector/ReactNativePaper";
 import { useQuery } from "@tanstack/react-query";
@@ -111,13 +110,6 @@ export default function SearchAccomodationPage() {
         <Text className="mt-auto pt-4 font-light">
           By clicking below you agree to our terms and conditions
         </Text>
-
-        <CheckoutButton
-          url={data.url}
-          customer={data.customer}
-          ephemeralKey={data.ephemeralKey}
-          paymentIntent={data.paymentIntent}
-        />
       </ScrollView>
     </View>
   );

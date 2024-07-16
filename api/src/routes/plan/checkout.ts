@@ -4,7 +4,6 @@ import type { Variables } from "../../constants/context";
 import prisma from "../../lib/prisma";
 import { getAccomodation } from "../../lib/retriever/accomodations";
 import { getAttraction } from "../../lib/retriever/attractions";
-import { stripe } from "../../lib/stripe";
 import { authenticated } from "../../middlewares/auth";
 
 export type CheckoutItem = {
@@ -17,11 +16,6 @@ export type CheckoutItem = {
 
 export type CheckoutResponse = {
   items: CheckoutItem[];
-  paymentIntent: string;
-  ephemeralKey: string;
-  customer: string;
-  publishableKey: string;
-  url: string;
 };
 
 export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
@@ -78,74 +72,8 @@ export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
         });
     }
 
-    const total = items.reduce((acc, item) => acc + item.price, 0);
-    const fees = total * 0.1;
-    items.push({
-      type: "fee",
-      name: "NextTravel Fees",
-      provider: "nexttravel",
-      price: fees,
-    });
-
-    let customer = user.stripeId;
-    if (!customer) {
-      customer = (
-        await stripe.customers.create({
-          name: user.name,
-          email: user.email,
-        })
-      ).id;
-
-      await prisma.user.update({
-        where: {
-          id: user.id,
-        },
-        data: {
-          stripeId: customer,
-        },
-      });
-    }
-
-    const ephemeralKey = await stripe.ephemeralKeys.create(
-      { customer },
-      {
-        apiVersion: "2024-06-20",
-      },
-    );
-
-    const checkout = await stripe.checkout.sessions.create({
-      mode: "payment",
-      customer,
-      line_items: [
-        {
-          price_data: {
-            currency: "eur",
-            product_data: {
-              name: "NextTravel Plan",
-            },
-            unit_amount: Math.round(fees * 100),
-          },
-          quantity: 1,
-        },
-      ],
-      metadata: { id },
-      payment_intent_data: {
-        setup_future_usage: "on_session",
-        description: "NextTravel Payment",
-      },
-    });
-
-    const paymentIntent = await stripe.paymentIntents.retrieve(
-      checkout.payment_intent as string,
-    );
-
     return ctx.json({
       items,
-      url: checkout.url,
-      paymentIntent: paymentIntent.client_secret,
-      ephemeralKey: ephemeralKey.secret,
-      customer: customer,
-      publishableKey: process.env.EXPO_PUBLIC_STRIPE_PUBLIC_KEY as string,
     } as CheckoutResponse);
   },
 );
