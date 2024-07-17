@@ -4,8 +4,9 @@ import { Location } from "@/components/home/Location";
 import { Button, SafeAreaView, Text, TextInput } from "@/components/injector";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useState } from "react";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Keyboard, ScrollView, TouchableOpacity, View } from "react-native";
+import Autocomplete from "react-native-autocomplete-input";
 import { DatePickerModal } from "react-native-paper-dates";
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
     startDate: undefined,
     endDate: undefined,
   });
+  const [keyboard, setKeyboard] = useState(false);
   const { data: popular } = useQuery({
     queryKey: ["popular"],
     queryFn: () =>
@@ -35,6 +37,11 @@ const App = () => {
         : [],
   });
 
+  useEffect(() => {
+    Keyboard.addListener("keyboardDidShow", () => setKeyboard(true));
+    Keyboard.addListener("keyboardDidHide", () => setKeyboard(false));
+  }, []);
+
   return (
     <SafeAreaView className="flex flex-1 flex-col bg-background">
       <ScrollView>
@@ -44,13 +51,42 @@ const App = () => {
           </Text>
 
           <View className="flex w-5/6 gap-3">
-            <TextInput
-              mode="outlined"
-              placeholder="Type your destination!"
-              className="w-full"
+            <Autocomplete
+              data={["Paris"].filter((item) =>
+                item.toLowerCase().includes(location.toLowerCase()),
+              )}
               value={location}
               onChangeText={setLocation}
+              flatListProps={{
+                keyExtractor: (item) => item,
+                renderItem: ({ item }) => <Text>{item}</Text>,
+              }}
+              renderResultList={(results) => (
+                <ScrollView className="w-full rounded-b-xl bg-card">
+                  {(results.data as string[]).map((item) => (
+                    <TouchableOpacity
+                      key={item}
+                      onPress={() => setLocation(item)}
+                      className="z-10 w-full p-2"
+                    >
+                      <Text>{item}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+              )}
+              // hideResults={!location || !keyboard}
+              renderTextInput={(props) => (
+                // @ts-expect-error Input doesn't accept same props
+                <TextInput
+                  mode="outlined"
+                  placeholder="Type your destination!"
+                  className="w-full"
+                  {...props}
+                  style={{}}
+                />
+              )}
             />
+
             <View className="flex w-full max-w-full flex-1 flex-row justify-between">
               <TouchableOpacity
                 className="w-[49%]"
