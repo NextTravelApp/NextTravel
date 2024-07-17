@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { Button, Text } from "../injector";
 
 export function LimitScreen() {
@@ -22,7 +22,12 @@ export function LimitScreen() {
         coontinue
       </Text>
 
-      <Button mode="contained">Buy Premium</Button>
+      <Button
+        mode="contained"
+        onPress={() => Alert.alert("This feature is not available yet.")}
+      >
+        Buy Premium
+      </Button>
     </View>
   );
 }
