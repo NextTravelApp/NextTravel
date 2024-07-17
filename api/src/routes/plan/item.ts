@@ -1,6 +1,8 @@
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
+import { searchUpdateSchema } from "../../constants/requests";
 import prisma from "../../lib/prisma";
 import { getAccomodation } from "../../lib/retriever/accomodations";
 import { getAttraction } from "../../lib/retriever/attractions";
@@ -18,10 +20,74 @@ export type CheckoutResponse = {
   items: CheckoutItem[];
 };
 
-export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
-  "/:id",
-  authenticated,
-  async (ctx) => {
+export const itemRoute = new Hono<{ Variables: Variables }>()
+  .get("/", authenticated, async (ctx) => {
+    const id = ctx.req.param("id");
+
+    const search = await prisma.searchRequest.findUnique({
+      where: {
+        id: id,
+        userId: ctx.get("user").id,
+      },
+    });
+
+    if (!search)
+      return ctx.json(
+        {
+          t: "not_found",
+        },
+        {
+          status: 404,
+        },
+      );
+
+    return ctx.json(search);
+  })
+  .patch(
+    "/",
+    authenticated,
+    zValidator("json", searchUpdateSchema),
+    async (ctx) => {
+      const id = ctx.req.param("id");
+      const body = ctx.req.valid("json");
+
+      const search = await prisma.searchRequest.findUnique({
+        where: {
+          id: id,
+          userId: ctx.get("user").id,
+        },
+      });
+
+      if (!search)
+        return ctx.json(
+          {
+            t: "not_found",
+          },
+          {
+            status: 404,
+          },
+        );
+
+      const newBody = {
+        ...(search.response as responseType),
+      };
+
+      if (body.accomodationId) newBody.accomodationId = body.accomodationId;
+
+      await prisma.searchRequest.update({
+        where: {
+          id: id,
+        },
+        data: {
+          response: newBody,
+          bookmark: body.bookmark,
+        },
+      });
+
+      return ctx.json(newBody);
+    },
+  )
+  .post("/checkout", authenticated, async (ctx) => {
     const id = ctx.req.param("id");
     const user = ctx.get("user");
 
@@ -75,5 +141,4 @@ export const checkoutRoute = new Hono<{ Variables: Variables }>().post(
     return ctx.json({
       items,
     } as CheckoutResponse);
-  },
-);
+  });

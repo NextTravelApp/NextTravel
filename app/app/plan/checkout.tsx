@@ -1,16 +1,19 @@
+import { useTheme } from "@/components/Theme";
 import { honoClient } from "@/components/fetcher";
 import { Button, SafeAreaView, Text } from "@/components/injector";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
-import { useQuery } from "@tanstack/react-query";
+import { FontAwesome } from "@expo/vector-icons";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { responseType } from "api";
 import { Link, Redirect, useLocalSearchParams } from "expo-router";
-import { ScrollView, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 
 const CheckoutPage = () => {
   const { id } = useLocalSearchParams<{
     id?: string;
   }>();
-
+  const theme = useTheme();
+  const queryClient = useQueryClient();
   const { data: plan } = useQuery({
     queryKey: ["plan", id],
     queryFn: async () => {
@@ -39,7 +42,7 @@ const CheckoutPage = () => {
     queryFn: async () => {
       if (!id) return null;
 
-      const res = await honoClient.plan.checkout[":id"].$post({
+      const res = await honoClient.plan[":id"].checkout.$post({
         param: {
           id: id,
         },
@@ -56,6 +59,19 @@ const CheckoutPage = () => {
     refetchOnReconnect: false,
     refetchInterval: false,
   });
+  const bookmark = useMutation({
+    mutationFn: (bookmark: boolean) =>
+      honoClient.plan[":id"].$patch({
+        param: {
+          id: id as string,
+        },
+        json: {
+          bookmark,
+        },
+      }),
+    onSettled: async () =>
+      await queryClient.invalidateQueries({ queryKey: ["plan", id] }),
+  });
 
   if (!id) return <Redirect href="/" />;
   if (isLoading || !data) return <LoadingScreen />;
@@ -63,8 +79,34 @@ const CheckoutPage = () => {
 
   return (
     <SafeAreaView className="flex flex-1 flex-col bg-background p-4">
-      <Text className="!font-extrabold text-2xl">Ready for checkout?</Text>
-      <Text className="text-lg">Let's make this plan real!</Text>
+      <View className="flex flex-row justify-between">
+        <View>
+          <Text className="!font-extrabold text-2xl">Ready for checkout?</Text>
+          <Text className="text-lg">Let's make this plan real!</Text>
+        </View>
+
+        <Pressable
+          onPress={() => {
+            bookmark.mutate(
+              bookmark.isPending ? !bookmark.variables : !plan?.bookmark,
+            );
+          }}
+        >
+          <FontAwesome
+            name={
+              bookmark.isPending
+                ? bookmark.variables
+                  ? "bookmark"
+                  : "bookmark-o"
+                : plan?.bookmark
+                  ? "bookmark"
+                  : "bookmark-o"
+            }
+            size={24}
+            color={theme.text}
+          />
+        </Pressable>
+      </View>
 
       <ScrollView className="mt-4">
         <Text className="!font-bold text-xl">Checkout Details</Text>

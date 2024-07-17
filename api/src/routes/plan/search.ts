@@ -3,7 +3,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
-import { searchSchema, searchUpdateSchema } from "../../constants/requests";
+import { searchSchema } from "../../constants/requests";
 import { generateTrip } from "../../lib/ai/generator";
 import prisma from "../../lib/prisma";
 import { getImage } from "../../lib/unsplash";
@@ -91,68 +91,4 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
   .get("/popular", async (ctx) => {
     const searches = await prisma.popularLocations.findMany();
     return ctx.json(searches);
-  })
-  .get("/:id", authenticated, async (ctx) => {
-    const id = ctx.req.param("id");
-
-    const search = await prisma.searchRequest.findUnique({
-      where: {
-        id: id,
-        userId: ctx.get("user").id,
-      },
-    });
-
-    if (!search)
-      return ctx.json(
-        {
-          t: "not_found",
-        },
-        {
-          status: 404,
-        },
-      );
-
-    return ctx.json(search);
-  })
-  .patch(
-    "/:id",
-    authenticated,
-    zValidator("json", searchUpdateSchema),
-    async (ctx) => {
-      const id = ctx.req.param("id");
-      const body = ctx.req.valid("json");
-
-      const search = await prisma.searchRequest.findUnique({
-        where: {
-          id: id,
-          userId: ctx.get("user").id,
-        },
-      });
-
-      if (!search)
-        return ctx.json(
-          {
-            t: "not_found",
-          },
-          {
-            status: 404,
-          },
-        );
-
-      const newBody = {
-        ...(search.response as responseType),
-        accomodationId: body.accomodationId,
-      };
-
-      await prisma.searchRequest.update({
-        where: {
-          id: id,
-        },
-        data: {
-          response: newBody,
-        },
-      });
-
-      return ctx.json(newBody);
-    },
-  );
+  });

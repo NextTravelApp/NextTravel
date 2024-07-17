@@ -1,12 +1,24 @@
 import { useSession } from "@/components/auth/AuthContext";
+import { honoClient } from "@/components/fetcher";
+import { Location } from "@/components/home/Location";
 import { SafeAreaView, Text } from "@/components/injector";
 import { LoadingScreen } from "@/components/ui/Screens";
 import { FontAwesome } from "@expo/vector-icons";
+import { useQuery } from "@tanstack/react-query";
 import { Redirect } from "expo-router";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 
 const Account = () => {
   const { session, isLoading } = useSession();
+  const bookmarks = useQuery({
+    queryKey: ["bookmarks", session?.id],
+    queryFn: () =>
+      session
+        ? honoClient.auth.me.bookmarks
+            .$get()
+            .then(async (res) => await res.json())
+        : [],
+  });
 
   if (isLoading) return <LoadingScreen />;
   if (!session) return <Redirect href="/login" />;
@@ -17,6 +29,25 @@ const Account = () => {
         <FontAwesome name="user-circle-o" size={80} color="gray" />
         <Text className="text-2xl">{session.name}</Text>
       </View>
+
+      <Text className="mt-4 font-bold text-2xl">Bookmarks</Text>
+      <ScrollView
+        horizontal
+        contentContainerStyle={{
+          columnGap: 12,
+        }}
+      >
+        {bookmarks.data?.map((bookmark) => (
+          <Location
+            key={bookmark.id}
+            image={bookmark.image}
+            imageAttribs={bookmark.imageAttributes}
+            name={bookmark.title}
+            id={bookmark.id}
+            restore
+          />
+        ))}
+      </ScrollView>
     </SafeAreaView>
   );
 };

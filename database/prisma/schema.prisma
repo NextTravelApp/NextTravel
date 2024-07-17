@@ -39,7 +39,7 @@ model SearchRequest {
   location        String
   request         Json
   response        Json
-  paid            Boolean @default(false)
+  bookmark        Boolean  @default(false)
   date            DateTime
 
   userId    String

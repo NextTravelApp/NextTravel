@@ -87,6 +87,17 @@ export const authRoute = new Hono<{ Variables: Variables }>()
     const user = ctx.get("user");
     return ctx.json(user);
   })
+  .get("/me/bookmarks", authenticated, async (ctx) => {
+    const user = ctx.get("user");
+    const bookmarks = await prisma.searchRequest.findMany({
+      where: {
+        userId: user.id,
+        bookmark: true,
+      },
+    });
+
+    return ctx.json(bookmarks);
+  })
   .post(
     "/notification",
     authenticated,

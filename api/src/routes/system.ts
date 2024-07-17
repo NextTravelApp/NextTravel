@@ -9,7 +9,7 @@ export const systemRoute = new Hono()
   .post("/send-notifications", async (ctx) => {
     const plans = await prisma.searchRequest.findMany({
       where: {
-        paid: true,
+        bookmark: true,
         date: {
           gte: new Date(),
         },
@@ -32,8 +32,8 @@ export const systemRoute = new Hono()
     for (const plan of plans) {
       for (const token of plan.user.notificationTokens) {
         await sendNotification(token.token, {
-          title: "Ready for your travel?",
-          body: `Your ${(plan.response as responseType)?.title} is almost here!`,
+          title: "Don't forget your travel plan!",
+          body: `Your ${(plan.response as responseType)?.title} is ready in your app. What are you waiting for?`,
         });
       }
     }
