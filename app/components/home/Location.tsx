@@ -1,4 +1,4 @@
-import { Text } from "@/components/injector/ReactNativePaper";
+import { Text } from "@/components/injector";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Pressable } from "react-native";

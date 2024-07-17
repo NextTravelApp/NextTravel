@@ -1,13 +1,14 @@
 import { honoClient } from "@/components/fetcher";
-import { Button, Text } from "@/components/injector/ReactNativePaper";
+import { Button, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
 import { useQuery } from "@tanstack/react-query";
 import type { searchSchemaType } from "api";
 import { Link, Redirect, useLocalSearchParams } from "expo-router";
 import { ScrollView, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function SearchAccomodationPage() {
+const SearchAccomodationPage = () => {
   const { id } = useLocalSearchParams<{
     id?: string;
   }>();
@@ -65,24 +66,30 @@ export default function SearchAccomodationPage() {
 
   return (
     <View className="flex flex-1 flex-col bg-background p-4">
-      <Text className="!font-extrabold text-2xl">Select your accomodation</Text>
+      <SafeAreaView>
+        <Text className="!font-extrabold text-2xl">
+          Select your accomodation
+        </Text>
 
-      <ScrollView className="mt-4">
-        <View className="flex gap-3">
-          {accomodations?.map((item) => (
-            <Accomodation key={item.id} {...item} edit />
-          ))}
-        </View>
-      </ScrollView>
+        <ScrollView className="mt-4">
+          <View className="flex gap-3">
+            {accomodations?.map((item) => (
+              <Accomodation key={item.id} {...item} edit />
+            ))}
+          </View>
+        </ScrollView>
 
-      <Link href={`/plan?id=${id}`} asChild>
-        <Button
-          mode="contained"
-          className="fixed bottom-16 left-3 h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
-        >
-          Back
-        </Button>
-      </Link>
+        <Link href={`/plan?id=${id}`} asChild>
+          <Button
+            mode="contained"
+            className="fixed bottom-16 left-3 h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
+          >
+            Back
+          </Button>
+        </Link>
+      </SafeAreaView>
     </View>
   );
-}
+};
+
+export default SearchAccomodationPage;

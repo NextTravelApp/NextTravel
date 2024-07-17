@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { Pressable, View } from "react-native";
 import { honoClient } from "../fetcher";
-import { Text } from "../injector/ReactNativePaper";
+import { Text } from "../injector";
 import { Image } from "../ui/Image";
 
 export type AccomodationProps = {

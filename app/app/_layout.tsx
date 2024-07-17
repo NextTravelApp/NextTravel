@@ -12,12 +12,13 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { DefaultTheme, PaperProvider } from "react-native-paper";
 import { en, registerTranslation } from "react-native-paper-dates";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const queryClient = new QueryClient();
 SplashScreen.preventAutoHideAsync();
 registerTranslation("en", en);
 
-export default function RootLayout() {
+const RootLayout = () => {
   const [loaded, error] = useFonts({
     Geist: require("../assets/fonts/GeistVF.ttf"),
     ...FontAwesome.font,
@@ -40,14 +41,16 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <AuthProvider>
-          <RootLayoutNav />
-        </AuthProvider>
-      </ThemeProvider>
+      <SafeAreaProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <RootLayoutNav />
+          </AuthProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
     </QueryClientProvider>
   );
-}
+};
 
 function RootLayoutNav() {
   const theme = useTheme();
@@ -96,3 +99,5 @@ function RootLayoutNav() {
     </PaperProvider>
   );
 }
+
+export default RootLayout;

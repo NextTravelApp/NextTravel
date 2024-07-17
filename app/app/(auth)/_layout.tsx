@@ -1,7 +1,7 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { Redirect, Slot, usePathname } from "expo-router";
 
-export default function AuthLayout() {
+const AuthLayout = () => {
   const { session, isLoading } = useSession();
   const pathName = usePathname();
 
@@ -13,4 +13,6 @@ export default function AuthLayout() {
     return <Redirect href="/account" />;
 
   return <Slot />;
-}
+};
+
+export default AuthLayout;
