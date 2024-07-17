@@ -1,6 +1,7 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { Location } from "@/components/home/Location";
+import { getLocale } from "@/components/i18n/LocalesHandler";
 import { Button, SafeAreaView, Text, TextInput } from "@/components/injector";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -43,7 +44,7 @@ const App = () => {
             Ready for your next travel?
           </Text>
 
-          <View className="flex w-5/6 gap-3">
+          <View className="flex w-5/6 flex-1 gap-3">
             <TextInput
               mode="outlined"
               placeholder="Type your destination!"
@@ -136,8 +137,7 @@ const App = () => {
         </View>
 
         <DatePickerModal
-          locale="en"
-          label="Select the range"
+          locale={getLocale()}
           mode="range"
           visible={dateOpen}
           onDismiss={() => {

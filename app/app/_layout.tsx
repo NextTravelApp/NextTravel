@@ -3,6 +3,7 @@ import "../assets/global.css";
 
 import { ThemeProvider, useTheme } from "@/components/Theme";
 import { AuthProvider } from "@/components/auth/AuthContext";
+import { getLocale } from "@/components/i18n/LocalesHandler";
 import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -11,13 +12,13 @@ import { Tabs } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { View } from "react-native";
-import { DefaultTheme, PaperProvider } from "react-native-paper";
-import { en, registerTranslation } from "react-native-paper-dates";
+import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
+import ReactNativePaperDates from "react-native-paper-dates";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const queryClient = new QueryClient();
 SplashScreen.preventAutoHideAsync();
-registerTranslation("en", en);
+ReactNativePaperDates.registerTranslation("en", ReactNativePaperDates.en);
 
 const RootLayout = () => {
   const [loaded, error] = useFonts({
@@ -54,6 +55,20 @@ const RootLayout = () => {
 
 function RootLayoutNav() {
   const theme = useTheme();
+  const DefaultTheme =
+    theme.colorScheme === "dark" ? MD3DarkTheme : MD3LightTheme;
+
+  useEffect(() => {
+    const code = getLocale();
+
+    if (code !== "en" && code in ReactNativePaperDates) {
+      const translation = ReactNativePaperDates[
+        code as keyof typeof ReactNativePaperDates
+      ] as ReactNativePaperDates.TranslationsType;
+
+      ReactNativePaperDates.registerTranslation(code, translation);
+    }
+  }, []);
 
   return (
     <PaperProvider
@@ -64,7 +79,6 @@ function RootLayoutNav() {
           ...DefaultTheme.colors,
           ...theme,
           surface: theme.card,
-          backdrop: theme.background,
           onSurfaceVariant: theme.placeholders,
           onSurface: theme.text,
         },

@@ -58,7 +58,12 @@ export const darkTheme = {
 
 export const useTheme = () => {
   const { colorScheme } = useColorScheme();
-  return colorScheme === "dark" ? darkTheme : lightTheme;
+  const theme = colorScheme === "dark" ? darkTheme : lightTheme;
+
+  return {
+    ...theme,
+    colorScheme,
+  };
 };
 
 export function ThemeProvider({ children }: { children: ReactNode }) {

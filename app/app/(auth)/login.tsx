@@ -1,6 +1,6 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
-import { Button, SafeAreaView, Text, TextInput } from "@/components/injector";
+import { Button, SafeAreaView, TextInput } from "@/components/injector";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert } from "react-native";
@@ -12,22 +12,27 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   return (
-    <SafeAreaView className="flex flex-1 flex-col bg-background">
+    <SafeAreaView className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">
       <TextInput
+        mode="outlined"
         placeholder="Email"
         keyboardType="email-address"
         autoComplete="email"
         value={email}
         onChangeText={setEmail}
+        className="w-full"
       />
       <TextInput
+        mode="outlined"
         placeholder="Password"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
+        className="w-full"
       />
       <Button
         mode="contained"
+        className="w-full"
         onPress={() => {
           honoClient.auth.login
             .$post({ json: { email, password } })
@@ -42,7 +47,7 @@ const Login = () => {
             });
         }}
       >
-        <Text>Submit</Text>
+        Submit
       </Button>
     </SafeAreaView>
   );
