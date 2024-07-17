@@ -1,11 +1,11 @@
 import { honoClient } from "@/components/fetcher";
 import { Button, SafeAreaView, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
+import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useQuery } from "@tanstack/react-query";
 import type { searchSchemaType } from "api";
 import { Link, Redirect, useLocalSearchParams } from "expo-router";
 import { ScrollView, View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 
 const SearchAccomodationPage = () => {
   const { id } = useLocalSearchParams<{
@@ -60,8 +60,8 @@ const SearchAccomodationPage = () => {
   });
 
   if (!id) return <Redirect href="/" />;
-  if (isLoading) return <ActivityIndicator className="m-auto" size="large" />;
-  if (error) return <Text className="m-auto">An error occurred</Text>;
+  if (isLoading) return <LoadingScreen />;
+  if (error) return <ErrorScreen error={error.message} />;
 
   return (
     <SafeAreaView className="flex min-h-screen flex-1 flex-col bg-background p-4">
@@ -78,7 +78,7 @@ const SearchAccomodationPage = () => {
       <Link href={`/plan?id=${id}`} asChild>
         <Button
           mode="contained"
-          className="fixed bottom-16 left-0 h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
+          className="h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
         >
           Back
         </Button>

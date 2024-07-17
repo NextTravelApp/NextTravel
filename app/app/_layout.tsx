@@ -10,6 +10,7 @@ import { useFonts } from "expo-font";
 import { Tabs } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { View } from "react-native";
 import { DefaultTheme, PaperProvider } from "react-native-paper";
 import { en, registerTranslation } from "react-native-paper-dates";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -58,10 +59,14 @@ function RootLayoutNav() {
     <PaperProvider
       theme={{
         ...DefaultTheme,
-        roundness: 1,
+        roundness: 3,
         colors: {
           ...DefaultTheme.colors,
           ...theme,
+          surface: theme.card,
+          backdrop: theme.background,
+          onSurfaceVariant: theme.placeholders,
+          onSurface: theme.text,
         },
         fonts: {
           ...DefaultTheme.fonts,
@@ -76,6 +81,9 @@ function RootLayoutNav() {
           headerShown: false,
           tabBarShowLabel: false,
           tabBarActiveTintColor: theme.primary,
+          tabBarBackground: () => (
+            <View className="h-full w-full bg-background" />
+          ),
         })}
       >
         <Tabs.Screen

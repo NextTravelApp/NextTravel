@@ -3,11 +3,11 @@ import { Button, SafeAreaView, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
 import { LimitScreen } from "@/components/plan/LimitScreen";
 import { PlanStep } from "@/components/plan/PlanStep";
+import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 
 const formatDate = (date: string) => {
   const split = date.split("/");
@@ -91,10 +91,9 @@ const PlanPage = () => {
     },
   });
 
-  if (isLoading) return <ActivityIndicator className="m-auto" size="large" />;
+  if (isLoading) return <LoadingScreen />;
   if (error && error.message === "month_limit") return <LimitScreen />;
-  if (error)
-    return <Text className="m-auto">An error occurred: {error.message}</Text>;
+  if (error) return <ErrorScreen error={error.message} />;
 
   return (
     <SafeAreaView className="flex flex-1 flex-col bg-background p-4">
@@ -111,7 +110,7 @@ const PlanPage = () => {
           </>
         )}
 
-        <View className="flex gap-3 pb-20">
+        <View className="flex gap-3 pb-6">
           <Text className="!font-bold mt-4 text-xl">Your plan</Text>
           {data?.plan?.map((item) => (
             <PlanStep key={item.title} {...item} />
@@ -122,7 +121,7 @@ const PlanPage = () => {
       <Link href={`/plan/checkout?id=${id}`} asChild>
         <Button
           mode="contained"
-          className="fixed bottom-16 left-0 h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
+          className="h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
         >
           Next
         </Button>

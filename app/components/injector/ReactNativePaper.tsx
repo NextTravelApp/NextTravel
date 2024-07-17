@@ -10,10 +10,35 @@ export const Button = cssInterop(RNButton, {
   labelClassName: { target: "labelStyle" },
 });
 
-export const TextInput = cssInterop(RNTextInput, {
+const RemappedTextInput = cssInterop(RNTextInput, {
   className: { target: "style" },
 });
 
-export const Text = cssInterop(RNText, {
+const RemappedText = cssInterop(RNText, {
   className: { target: "style" },
 });
+
+export function TextInput({
+  className,
+  ...props
+}: React.ComponentProps<typeof RemappedTextInput>) {
+  return (
+    <RemappedTextInput
+      outlineStyle={{
+        borderRadius: 15,
+      }}
+      contentStyle={{
+        paddingLeft: 10,
+      }}
+      className={`bg-card ${className || ""}`}
+      {...props}
+    />
+  );
+}
+
+export function Text({
+  className,
+  ...props
+}: React.ComponentProps<typeof RemappedText>) {
+  return <RemappedText className={`text-text ${className || ""}`} {...props} />;
+}

@@ -59,10 +59,11 @@ const App = () => {
                 <TextInput
                   mode="outlined"
                   readOnly
-                  placeholder={
-                    range.startDate && range.endDate
-                      ? `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
-                      : "Period"
+                  placeholder="Period"
+                  value={
+                    range.startDate &&
+                    range.endDate &&
+                    `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
                   }
                 />
               </TouchableOpacity>

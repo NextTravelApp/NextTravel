@@ -1,6 +1,7 @@
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { View } from "react-native";
+import { useTheme } from "../Theme";
 import { honoClient } from "../fetcher";
 import { Text } from "../injector";
 import { ExternalLink } from "../ui/ExternalLink";
@@ -16,6 +17,7 @@ export type PlanStepProps = {
 };
 
 export function PlanStep(props: PlanStepProps) {
+  const theme = useTheme();
   const { data: image } = useQuery({
     queryKey: ["image", props.location],
     queryFn: () =>
@@ -51,7 +53,7 @@ export function PlanStep(props: PlanStepProps) {
 
       <Text className="absolute right-3 bottom-3 flex flex-row justify-end gap-3">
         {props.attractionId && (
-          <FontAwesome6 name="landmark" size={24} color="black" />
+          <FontAwesome6 name="landmark" size={24} color={theme.text} />
         )}
       </Text>
     </View>

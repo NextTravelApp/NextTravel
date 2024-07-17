@@ -23,12 +23,12 @@ export function Location(props: LocationProps) {
           props.restore ? `/plan?id=${props.id}` : `/?location=${props.id}`,
         );
       }}
-      className="relative h-48 w-64"
+      className="relative h-48 w-80"
     >
       <Image
         source={props.image}
         contentFit="cover"
-        className="w-full rounded-xl"
+        className="h-full w-full rounded-xl"
         data-image
       />
 
@@ -37,7 +37,7 @@ export function Location(props: LocationProps) {
       </Text>
 
       {props.imageAttribs && (
-        <ExternalLink href={props.imageAttribs}>
+        <ExternalLink asChild href={props.imageAttribs}>
           <FontAwesome6
             className="absolute right-3 bottom-3"
             name="unsplash"

@@ -11,6 +11,7 @@ const config = {
         secondary: "var(--color-secondary)",
         background: "var(--color-background)",
         text: "var(--color-text)",
+        placeholders: "var(--color-placeholders)",
         card: "var(--color-card)",
       },
     },

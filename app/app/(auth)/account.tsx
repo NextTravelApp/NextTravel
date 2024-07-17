@@ -1,14 +1,14 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { SafeAreaView, Text } from "@/components/injector";
+import { LoadingScreen } from "@/components/ui/Screens";
 import { FontAwesome } from "@expo/vector-icons";
 import { Redirect } from "expo-router";
 import { View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 
 const Account = () => {
   const { session, isLoading } = useSession();
 
-  if (isLoading) return <ActivityIndicator className="m-auto" size="large" />;
+  if (isLoading) return <LoadingScreen />;
   if (!session) return <Redirect href="/login" />;
 
   return (

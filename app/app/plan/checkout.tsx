@@ -1,10 +1,10 @@
 import { honoClient } from "@/components/fetcher";
 import { Button, SafeAreaView, Text } from "@/components/injector";
+import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
 import { Link, Redirect, useLocalSearchParams } from "expo-router";
 import { ScrollView, View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 
 const CheckoutPage = () => {
   const { id } = useLocalSearchParams<{
@@ -58,9 +58,8 @@ const CheckoutPage = () => {
   });
 
   if (!id) return <Redirect href="/" />;
-  if (isLoading || !data)
-    return <ActivityIndicator className="m-auto" size="large" />;
-  if (error) return <Text className="m-auto">An error occurred</Text>;
+  if (isLoading || !data) return <LoadingScreen />;
+  if (error) return <ErrorScreen error={error.message} />;
 
   return (
     <SafeAreaView className="flex flex-1 flex-col bg-background p-4">

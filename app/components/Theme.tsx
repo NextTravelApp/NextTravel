@@ -8,6 +8,7 @@ type Theme = {
   primary: Color;
   secondary: Color;
   text: Color;
+  placeholders: Color;
   background: Color;
   card: Color;
 
@@ -33,6 +34,7 @@ export const lightTheme = {
   primary: "#66B3FF",
   secondary: "#E6F2FF",
   text: "#1E1E1E",
+  placeholders: "#A0A0A0",
   background: "#ffffff",
   card: "#F2F2F2",
 
@@ -41,8 +43,18 @@ export const lightTheme = {
   },
 } satisfies Theme;
 
-// todo: code a dark theme
-export const darkTheme = lightTheme;
+export const darkTheme = {
+  primary: "#66B3FF",
+  secondary: "#E6F2FF",
+  text: "#F2F2F2",
+  placeholders: "#A0A0A0",
+  background: "#1E1E1E",
+  card: "#2A2A2A",
+
+  style: function () {
+    return vars(exportTheme(this));
+  },
+} satisfies Theme;
 
 export const useTheme = () => {
   const { colorScheme } = useColorScheme();
@@ -55,7 +67,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   return (
     <View
       style={theme.style()}
-      className="flex min-h-screen flex-1 flex-col bg-background text-text"
+      className="flex min-h-screen w-full flex-1 flex-col bg-background text-text"
     >
       {children}
     </View>
