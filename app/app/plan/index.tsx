@@ -1,6 +1,7 @@
 import { honoClient } from "@/components/fetcher";
 import { Button, Text } from "@/components/injector/ReactNativePaper";
 import { Accomodation } from "@/components/plan/Accomodation";
+import { LimitScreen } from "@/components/plan/LimitScreen";
 import { PlanStep } from "@/components/plan/PlanStep";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
@@ -53,10 +54,11 @@ export default function PlanPage() {
       });
 
       const data = await res.json();
-      if ("error" in data) {
-        // biome-ignore lint/suspicious/noExplicitAny: Errors are not  typed
+      if ("error" in data)
+        // biome-ignore lint/suspicious/noExplicitAny: Errors are not typed
         throw new Error((data as any).error);
-      }
+
+      if ("t" in data) throw new Error(data.t);
 
       if (data.id)
         router.setParams({
@@ -90,10 +92,9 @@ export default function PlanPage() {
   });
 
   if (isLoading) return <ActivityIndicator className="m-auto" size="large" />;
+  if (error && error.message === "month_limit") return <LimitScreen />;
   if (error)
-    return (
-      <Text className="m-auto">An error occurred: {JSON.stringify(error)}</Text>
-    );
+    return <Text className="m-auto">An error occurred: {error.message}</Text>;
 
   return (
     <View className="flex flex-1 flex-col bg-background p-4">
@@ -112,7 +113,7 @@ export default function PlanPage() {
 
         <View className="flex gap-3">
           <Text className="!font-bold mt-4 text-xl">Your plan</Text>
-          {data?.plan.map((item) => (
+          {data?.plan?.map((item) => (
             <PlanStep key={item.title} {...item} />
           ))}
         </View>

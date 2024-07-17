@@ -10,71 +10,62 @@ import { getImage } from "../../lib/unsplash";
 import { authenticated } from "../../middlewares/auth";
 
 export const searchRoute = new Hono<{ Variables: Variables }>()
-  .post(
-    "/",
-    authenticated,
-    async (ctx, next) => {
-      const user = ctx.get("user");
-      if (user.searches >= 10)
-        return ctx.json(
-          {
-            t: "month_limit",
-          },
-          {
-            status: 429,
-          },
-        );
+  .post("/", authenticated, zValidator("json", searchSchema), async (ctx) => {
+    const user = ctx.get("user");
+    const body = ctx.req.valid("json");
 
-      return next();
-    },
-    zValidator("json", searchSchema),
-    async (ctx) => {
-      const user = ctx.get("user");
-      const body = ctx.req.valid("json");
-
-      console.log("[Plan] Begin plan create");
-      let trip: responseType;
-
-      if (process.env.RETURN_EXAMPLE_DATA) {
-        trip = JSON.parse(readFileSync("local/search.json", "utf-8"));
-      } else {
-        trip = await generateTrip(
-          body.location as string,
-          new Date(body.startDate as string),
-          new Date(body.endDate as string),
-          [body.members as number],
-        );
-      }
-
-      await prisma.user.update({
-        where: { id: user.id },
-        data: {
-          searches: {
-            increment: 1,
-          },
+    if (user.searches >= 10)
+      return ctx.json(
+        {
+          t: "month_limit",
         },
-      });
-
-      const image = await getImage(body.location as string);
-      const record = await prisma.searchRequest.create({
-        data: {
-          userId: user.id,
-          title: trip.title,
-          image: image?.url,
-          imageAttributes: image?.author,
-          location: body.location as string,
-          request: body,
-          response: trip,
-          date: new Date(body.startDate),
+        {
+          status: 429,
         },
-      });
+      );
 
-      return ctx.json({
-        ...trip,
-        id: record.id,
-      });
-    },
-  )
+    console.log("[Plan] Begin plan create");
+    let trip: responseType;
+
+    if (process.env.RETURN_EXAMPLE_DATA) {
+      trip = JSON.parse(readFileSync("local/search.json", "utf-8"));
+    } else {
+      trip = await generateTrip(
+        body.location as string,
+        new Date(body.startDate as string),
+        new Date(body.endDate as string),
+        [body.members as number],
+      );
+    }
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        searches: {
+          increment: 1,
+        },
+      },
+    });
+
+    const image = await getImage(body.location as string);
+    const record = await prisma.searchRequest.create({
+      data: {
+        userId: user.id,
+        title: trip.title,
+        image: image?.url,
+        imageAttributes: image?.author,
+        location: body.location as string,
+        request: body,
+        response: trip,
+        date: new Date(body.startDate),
+      },
+    });
+
+    return ctx.json({
+      ...trip,
+      id: record.id,
+    });
+  })
   .get("/history", authenticated, async (ctx) => {
     const user = ctx.get("user");
 

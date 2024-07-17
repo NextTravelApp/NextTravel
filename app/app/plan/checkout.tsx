@@ -1,8 +1,8 @@
 import { honoClient } from "@/components/fetcher";
-import { Text } from "@/components/injector/ReactNativePaper";
+import { Button, Text } from "@/components/injector/ReactNativePaper";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
-import { Redirect, useLocalSearchParams } from "expo-router";
+import { Link, Redirect, useLocalSearchParams } from "expo-router";
 import { ScrollView, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
@@ -89,12 +89,11 @@ export default function SearchAccomodationPage() {
 
         <Text className="!font-bold mt-3 text-xl">Payment processors</Text>
         <Text className="text-lg">
-          Some payments will not be sent through our platform due to additional
-          detail requested
+          NextTravel creates amazing trips for you but is not responsible for
+          attractions, accommodations, and travels.
         </Text>
         <Text className="text-lg">
-          After checkout you’ll be able to be forwarded on the following
-          platforms.
+          You can check and pay the providers by clicking the button below.
         </Text>
 
         <Text className="!font-bold mt-3 text-xl">Your plan</Text>
@@ -106,6 +105,16 @@ export default function SearchAccomodationPage() {
             <View className="block h-2 w-2 rounded-full bg-text" /> {item.title}
           </Text>
         ))}
+
+        {data.items
+          .filter((item) => item.price > 0 && item.url)
+          .map((item) => (
+            <Link href={item.url as string} key={item.name} asChild>
+              <Button mode="contained" className="mt-2">
+                {item.name}
+              </Button>
+            </Link>
+          ))}
       </ScrollView>
     </View>
   );
