@@ -1,5 +1,6 @@
 import { useTheme } from "@/components/Theme";
 import { honoClient } from "@/components/fetcher";
+import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text } from "@/components/injector";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { FontAwesome } from "@expo/vector-icons";
@@ -81,8 +82,10 @@ const CheckoutPage = () => {
     <SafeAreaView className="flex flex-1 flex-col bg-background p-4">
       <View className="flex flex-row justify-between">
         <View>
-          <Text className="!font-extrabold text-2xl">Ready for checkout?</Text>
-          <Text className="text-lg">Let's make this plan real!</Text>
+          <Text className="!font-extrabold text-2xl">
+            {i18n.t("plan.checkout.title")}
+          </Text>
+          <Text className="text-lg">{i18n.t("plan.checkout.description")}</Text>
         </View>
 
         <Pressable
@@ -109,7 +112,9 @@ const CheckoutPage = () => {
       </View>
 
       <ScrollView className="mt-4">
-        <Text className="!font-bold text-xl">Checkout Details</Text>
+        <Text className="!font-bold text-xl">
+          {i18n.t("plan.checkout.details")}
+        </Text>
         <View className="mt-1">
           {data.items
             .filter((item) => item.price > 0)
@@ -128,16 +133,16 @@ const CheckoutPage = () => {
             ))}
         </View>
 
-        <Text className="!font-bold mt-3 text-xl">Payment processors</Text>
-        <Text className="text-lg">
-          NextTravel creates amazing trips for you but is not responsible for
-          attractions, accommodations, and travels.
+        <Text className="!font-bold mt-3 text-xl">
+          {i18n.t("plan.checkout.processor.title")}
         </Text>
         <Text className="text-lg">
-          You can check and pay the providers by clicking the button below.
+          {i18n.t("plan.checkout.processor.description")}
         </Text>
 
-        <Text className="!font-bold mt-3 text-xl">Your plan</Text>
+        <Text className="!font-bold mt-3 text-xl">
+          {i18n.t("plan.checkout.plan")}
+        </Text>
         {((plan?.response as responseType)?.plan ?? []).map((item) => (
           <Text
             key={item.title}

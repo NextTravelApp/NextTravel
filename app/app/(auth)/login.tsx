@@ -1,5 +1,6 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
+import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, TextInput } from "@/components/injector";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -47,7 +48,7 @@ const Login = () => {
             });
         }}
       >
-        Submit
+        {i18n.t("account.submit")}
       </Button>
     </SafeAreaView>
   );

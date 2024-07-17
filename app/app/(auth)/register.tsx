@@ -1,5 +1,6 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
+import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, TextInput } from "@/components/injector";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -18,7 +19,7 @@ const Register = () => {
       <TextInput
         className="w-full"
         mode="outlined"
-        placeholder="Name"
+        placeholder={i18n.t("account.name")}
         autoComplete="name"
         value={name}
         onChangeText={setName}
@@ -43,7 +44,7 @@ const Register = () => {
       <TextInput
         className="w-full"
         mode="outlined"
-        placeholder="Confirm Password"
+        placeholder={i18n.t("account.confirm-password")}
         secureTextEntry
         value={confirmPassword}
         onChangeText={setConfirmPassword}
@@ -72,7 +73,7 @@ const Register = () => {
             });
         }}
       >
-        Submit
+        {i18n.t("account.register")}
       </Button>
     </SafeAreaView>
   );

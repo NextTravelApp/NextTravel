@@ -6,6 +6,6 @@ const translations = {
   en,
 };
 
-const i18n = new I18n(translations);
+export const i18n = new I18n(translations);
 i18n.locale = getLocale();
 i18n.enableFallback = true;

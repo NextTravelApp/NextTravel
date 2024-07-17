@@ -1,4 +1,5 @@
 import { honoClient } from "@/components/fetcher";
+import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
 import { LimitScreen } from "@/components/plan/LimitScreen";
@@ -97,21 +98,21 @@ const PlanPage = () => {
 
   return (
     <SafeAreaView className="flex flex-1 flex-col bg-background p-4">
-      <Text className="!font-extrabold text-2xl">Your plan is ready!</Text>
-      <Text className="text-lg">
-        Click any item that you want to change to edit it.
-      </Text>
+      <Text className="!font-extrabold text-2xl">{i18n.t("plan.title")}</Text>
+      <Text className="text-lg">{i18n.t("plan.description")}</Text>
 
       <ScrollView className="mt-4">
         {accomodation && (
           <>
-            <Text className="!font-bold text-xl">Accomodation</Text>
+            <Text className="!font-bold text-xl">
+              {i18n.t("plan.accomodation-title")}
+            </Text>
             <Accomodation {...accomodation} />
           </>
         )}
 
         <View className="flex gap-3 pb-6">
-          <Text className="!font-bold mt-4 text-xl">Your plan</Text>
+          <Text className="!font-bold mt-4 text-xl">{i18n.t("plan.plan")}</Text>
           {data?.plan?.map((item) => (
             <PlanStep key={item.title} {...item} />
           ))}
@@ -123,7 +124,7 @@ const PlanPage = () => {
           mode="contained"
           className="h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
         >
-          Next
+          {i18n.t("plan.next")}
         </Button>
       </Link>
     </SafeAreaView>

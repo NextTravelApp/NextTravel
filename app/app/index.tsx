@@ -1,6 +1,7 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { Location } from "@/components/home/Location";
+import { i18n } from "@/components/i18n";
 import { getLocale } from "@/components/i18n/LocalesHandler";
 import { Button, SafeAreaView, Text, TextInput } from "@/components/injector";
 import { useQuery } from "@tanstack/react-query";
@@ -41,7 +42,7 @@ const App = () => {
       <ScrollView>
         <View className="flex w-full flex-1 items-center gap-3">
           <Text className="font-extrabold text-2xl">
-            Ready for your next travel?
+            {i18n.t("home.title")}
           </Text>
 
           <TextInput
@@ -59,7 +60,7 @@ const App = () => {
               <TextInput
                 mode="outlined"
                 readOnly
-                placeholder="Period"
+                placeholder={i18n.t("home.period")}
                 value={
                   range.startDate &&
                   range.endDate &&
@@ -71,7 +72,7 @@ const App = () => {
             <TextInput
               mode="outlined"
               keyboardType="number-pad"
-              placeholder="1 adult(s)"
+              placeholder={i18n.t("home.members-placeholder")}
               className="w-[49%]"
               value={members?.toString()}
               onChangeText={(text) => {
@@ -94,7 +95,9 @@ const App = () => {
         </View>
 
         <View className="mt-6 flex gap-2">
-          <Text className="font-extrabold text-xl">Most requested</Text>
+          <Text className="font-extrabold text-xl">
+            {i18n.t("home.most-requested")}
+          </Text>
           <ScrollView
             horizontal
             contentContainerStyle={{
@@ -114,7 +117,9 @@ const App = () => {
         </View>
 
         <View className="mt-6 flex gap-2">
-          <Text className="font-extrabold text-xl">Last searches</Text>
+          <Text className="font-extrabold text-xl">
+            {i18n.t("home.last-searches")}
+          </Text>
           <ScrollView
             horizontal
             contentContainerStyle={{

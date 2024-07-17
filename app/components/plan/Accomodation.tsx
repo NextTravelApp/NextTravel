@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { Pressable, View } from "react-native";
 import { honoClient } from "../fetcher";
+import { i18n } from "../i18n";
 import { Text } from "../injector";
 import { Image } from "../ui/Image";
 
@@ -60,10 +61,14 @@ export function Accomodation(props: AccomodationProps) {
           <Text className="!font-bold text-xl">{props.name}</Text>
           <Text className="text-lg">{props.location}</Text>
           {props.price > 0 && (
-            <Text className="text-lg">Price: {props.price}</Text>
+            <Text className="text-lg">
+              {i18n.t("plan.accomodation.price")}: {props.price}
+            </Text>
           )}
           {props.rating > 0 && (
-            <Text className="text-lg">Rating: {props.rating}</Text>
+            <Text className="text-lg">
+              {i18n.t("plan.accomodation.rating")}: {props.rating}
+            </Text>
           )}
         </View>
       </Pressable>

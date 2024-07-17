@@ -1,6 +1,7 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { Location } from "@/components/home/Location";
+import { i18n } from "@/components/i18n";
 import { SafeAreaView, Text } from "@/components/injector";
 import { LoadingScreen } from "@/components/ui/Screens";
 import { FontAwesome } from "@expo/vector-icons";
@@ -30,7 +31,9 @@ const Account = () => {
         <Text className="text-2xl">{session.name}</Text>
       </View>
 
-      <Text className="mt-4 font-bold text-2xl">Bookmarks</Text>
+      <Text className="mt-4 font-bold text-2xl">
+        {i18n.t("account.bookmarks")}
+      </Text>
       <ScrollView
         horizontal
         contentContainerStyle={{

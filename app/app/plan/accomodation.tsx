@@ -1,4 +1,5 @@
 import { honoClient } from "@/components/fetcher";
+import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
@@ -65,7 +66,9 @@ const SearchAccomodationPage = () => {
 
   return (
     <SafeAreaView className="flex min-h-screen flex-1 flex-col bg-background p-4">
-      <Text className="!font-extrabold text-2xl">Select your accomodation</Text>
+      <Text className="!font-extrabold text-2xl">
+        {i18n.t("plan.accomodation.select")}
+      </Text>
 
       <ScrollView className="mt-4">
         <View className="flex gap-3">
@@ -80,7 +83,7 @@ const SearchAccomodationPage = () => {
           mode="contained"
           className="h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
         >
-          Back
+          {i18n.t("plan.back")}
         </Button>
       </Link>
     </SafeAreaView>

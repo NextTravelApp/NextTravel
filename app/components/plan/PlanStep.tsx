@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { View } from "react-native";
 import { useTheme } from "../Theme";
 import { honoClient } from "../fetcher";
+import { i18n } from "../i18n";
 import { Text } from "../injector";
 import { ExternalLink } from "../ui/ExternalLink";
 import { Image } from "../ui/Image";
@@ -41,8 +42,12 @@ export function PlanStep(props: PlanStepProps) {
       <View className="m-auto w-1/2">
         <Text className="!font-bold text-xl">{props.title}</Text>
         <Text className="text-lg">{props.location}</Text>
-        <Text className="text-lg">Duration: {props.duration}</Text>
-        <Text className="text-lg">Time: {props.time}</Text>
+        <Text className="text-lg">
+          {i18n.t("plan.step.duration")}: {props.duration}
+        </Text>
+        <Text className="text-lg">
+          {i18n.t("plan.step.time")}: {props.time}
+        </Text>
       </View>
 
       {image && "author" in image && (
