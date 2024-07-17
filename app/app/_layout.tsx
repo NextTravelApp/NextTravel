@@ -20,7 +20,6 @@ registerTranslation("en", en);
 
 const RootLayout = () => {
   const [loaded, error] = useFonts({
-    Geist: require("../assets/fonts/GeistVF.ttf"),
     ...FontAwesome.font,
   });
   useReactQueryDevTools(queryClient);
@@ -68,7 +67,6 @@ function RootLayoutNav() {
           ...DefaultTheme.fonts,
           default: {
             ...DefaultTheme.fonts.default,
-            fontFamily: "Geist",
           },
         },
       }}

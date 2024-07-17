@@ -1,19 +1,19 @@
-import { remapProps } from "nativewind";
+import { cssInterop } from "nativewind";
 import {
   Button as RNButton,
   Text as RNText,
   TextInput as RNTextInput,
 } from "react-native-paper";
 
-export const Button = remapProps(RNButton, {
-  className: "style",
-  labelClassName: "labelStyle",
+export const Button = cssInterop(RNButton, {
+  className: { target: "style" },
+  labelClassName: { target: "labelStyle" },
 });
 
-export const TextInput = remapProps(RNTextInput, {
-  className: "style",
+export const TextInput = cssInterop(RNTextInput, {
+  className: { target: "style" },
 });
 
-export const Text = remapProps(RNText, {
-  className: "style",
+export const Text = cssInterop(RNText, {
+  className: { target: "style" },
 });

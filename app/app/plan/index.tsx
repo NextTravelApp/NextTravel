@@ -1,5 +1,5 @@
 import { honoClient } from "@/components/fetcher";
-import { Button, Text } from "@/components/injector";
+import { Button, SafeAreaView, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
 import { LimitScreen } from "@/components/plan/LimitScreen";
 import { PlanStep } from "@/components/plan/PlanStep";
@@ -8,7 +8,6 @@ import type { responseType } from "api";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const formatDate = (date: string) => {
   const split = date.split("/");
@@ -98,39 +97,37 @@ const PlanPage = () => {
     return <Text className="m-auto">An error occurred: {error.message}</Text>;
 
   return (
-    <View className="flex flex-1 flex-col bg-background p-4">
-      <SafeAreaView>
-        <Text className="!font-extrabold text-2xl">Your plan is ready!</Text>
-        <Text className="text-lg">
-          Click any item that you want to change to edit it.
-        </Text>
+    <SafeAreaView className="flex flex-1 flex-col bg-background p-4">
+      <Text className="!font-extrabold text-2xl">Your plan is ready!</Text>
+      <Text className="text-lg">
+        Click any item that you want to change to edit it.
+      </Text>
 
-        <ScrollView className="mt-4">
-          {accomodation && (
-            <>
-              <Text className="!font-bold text-xl">Accomodation</Text>
-              <Accomodation {...accomodation} />
-            </>
-          )}
+      <ScrollView className="mt-4">
+        {accomodation && (
+          <>
+            <Text className="!font-bold text-xl">Accomodation</Text>
+            <Accomodation {...accomodation} />
+          </>
+        )}
 
-          <View className="flex gap-3">
-            <Text className="!font-bold mt-4 text-xl">Your plan</Text>
-            {data?.plan?.map((item) => (
-              <PlanStep key={item.title} {...item} />
-            ))}
-          </View>
-        </ScrollView>
+        <View className="flex gap-3 pb-20">
+          <Text className="!font-bold mt-4 text-xl">Your plan</Text>
+          {data?.plan?.map((item) => (
+            <PlanStep key={item.title} {...item} />
+          ))}
+        </View>
+      </ScrollView>
 
-        <Link href={`/plan/checkout?id=${id}`} asChild>
-          <Button
-            mode="contained"
-            className="fixed bottom-16 left-3 h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
-          >
-            Next
-          </Button>
-        </Link>
-      </SafeAreaView>
-    </View>
+      <Link href={`/plan/checkout?id=${id}`} asChild>
+        <Button
+          mode="contained"
+          className="fixed bottom-16 left-0 h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
+        >
+          Next
+        </Button>
+      </Link>
+    </SafeAreaView>
   );
 };
 

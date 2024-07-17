@@ -18,13 +18,12 @@ export function Location(props: LocationProps) {
 
   return (
     <Pressable
-      onPress={(e) => {
-        if ("nodeName" in e.target && e.target.nodeName === "IMG")
-          router.push(
-            props.restore ? `/plan?id=${props.id}` : `/?location=${props.id}`,
-          );
+      onPress={() => {
+        router.push(
+          props.restore ? `/plan?id=${props.id}` : `/?location=${props.id}`,
+        );
       }}
-      className="relative h-32 w-56"
+      className="relative h-48 w-64"
     >
       <Image
         source={props.image}

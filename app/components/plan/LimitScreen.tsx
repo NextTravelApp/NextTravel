@@ -4,20 +4,8 @@ import { Button, Text } from "../injector";
 export function LimitScreen() {
   return (
     <View className="flex flex-1 flex-col items-center justify-center gap-3 bg-background text-center">
-      <Text
-        style={{
-          fontSize: 40,
-        }}
-        className="text-center font-extrabold"
-      >
-        Oh no!
-      </Text>
-      <Text
-        style={{
-          fontSize: 20,
-        }}
-        className="text-center"
-      >
+      <Text className="text-center font-extrabold text-4xl">Oh no!</Text>
+      <Text className="text-center text-xl">
         You have reached your monthly limit. Buy a premium subscription to
         coontinue
       </Text>

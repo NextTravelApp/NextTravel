@@ -1,13 +1,12 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { Location } from "@/components/home/Location";
-import { Button, Text, TextInput } from "@/components/injector";
+import { Button, SafeAreaView, Text, TextInput } from "@/components/injector";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { DatePickerModal } from "react-native-paper-dates";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const App = () => {
   const { session } = useSession();
@@ -37,8 +36,8 @@ const App = () => {
   });
 
   return (
-    <ScrollView className="flex flex-1 flex-col bg-background">
-      <SafeAreaView>
+    <SafeAreaView className="flex flex-1 flex-col bg-background">
+      <ScrollView>
         <View className="flex w-full items-center gap-3">
           <Text className="font-extrabold text-2xl">
             Ready for your next travel?
@@ -72,7 +71,7 @@ const App = () => {
                 mode="outlined"
                 keyboardType="number-pad"
                 placeholder="1 adult(s)"
-                className="w-full"
+                className="w-[49%]"
                 value={members.toString()}
                 onChangeText={(text) => {
                   setMembers(Number.parseInt(text) || 0);
@@ -150,8 +149,8 @@ const App = () => {
             setDateOpen(false);
           }}
         />
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

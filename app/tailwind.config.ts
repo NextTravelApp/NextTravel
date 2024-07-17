@@ -13,9 +13,6 @@ const config = {
         text: "var(--color-text)",
         card: "var(--color-card)",
       },
-      fontFamily: {
-        geist: ["Geist", "ui-sans-serif"],
-      },
     },
   },
   plugins: [],

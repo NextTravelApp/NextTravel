@@ -22,5 +22,10 @@ if (token) {
 
 export const honoClient: UnionToIntersection<Client<AppType>> = hc<AppType>(
   process.env.EXPO_PUBLIC_API_URL as string,
-  { headers },
+  {
+    headers: {
+      ...headers,
+      "User-Agent": "NextTravel/0.0.0",
+    },
+  },
 );

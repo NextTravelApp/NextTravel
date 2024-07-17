@@ -1,10 +1,9 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
-import { Button, Text, TextInput } from "@/components/injector";
+import { Button, SafeAreaView, Text, TextInput } from "@/components/injector";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Alert } from "react-native";
 
 const Register = () => {
   const { login } = useSession();
@@ -15,59 +14,57 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
-    <SafeAreaView>
-      <View className="flex flex-1 flex-col bg-background">
-        <TextInput
-          placeholder="Name"
-          autoComplete="name"
-          value={name}
-          onChangeText={setName}
-        />
-        <TextInput
-          placeholder="Email"
-          keyboardType="email-address"
-          autoComplete="email"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextInput
-          placeholder="Password"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TextInput
-          placeholder="Confirm Password"
-          secureTextEntry
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-        />
-        <Button
-          mode="contained"
-          onPress={() => {
-            honoClient.auth.register
-              .$post({
-                json: {
-                  name,
-                  email,
-                  password,
-                  confirmPassword,
-                },
-              })
-              .then(async (res) => await res.json())
-              .then((data) => {
-                if ("token" in data) {
-                  login(data.token);
-                  router.push("/");
-                } else {
-                  Alert.alert(data.t);
-                }
-              });
-          }}
-        >
-          <Text>Submit</Text>
-        </Button>
-      </View>
+    <SafeAreaView className="flex flex-1 flex-col bg-background">
+      <TextInput
+        placeholder="Name"
+        autoComplete="name"
+        value={name}
+        onChangeText={setName}
+      />
+      <TextInput
+        placeholder="Email"
+        keyboardType="email-address"
+        autoComplete="email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        placeholder="Password"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+      <TextInput
+        placeholder="Confirm Password"
+        secureTextEntry
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+      />
+      <Button
+        mode="contained"
+        onPress={() => {
+          honoClient.auth.register
+            .$post({
+              json: {
+                name,
+                email,
+                password,
+                confirmPassword,
+              },
+            })
+            .then(async (res) => await res.json())
+            .then((data) => {
+              if ("token" in data) {
+                login(data.token);
+                router.push("/");
+              } else {
+                Alert.alert(data.t);
+              }
+            });
+        }}
+      >
+        <Text>Submit</Text>
+      </Button>
     </SafeAreaView>
   );
 };

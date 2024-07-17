@@ -27,7 +27,7 @@ export function PlanStep(props: PlanStepProps) {
   });
 
   return (
-    <View className="relative flex min-h-36 w-full flex-1 flex-row gap-3 rounded-xl bg-card last:mb-20">
+    <View className="relative flex min-h-36 w-full flex-1 flex-row gap-3 rounded-xl bg-card">
       <Image
         source={{
           uri: !image || "error" in image ? undefined : image.url,
