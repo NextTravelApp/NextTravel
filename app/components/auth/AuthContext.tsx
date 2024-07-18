@@ -25,7 +25,7 @@ export function useSession() {
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [[isLoading, token], setToken] = useStorageState("token");
-  const { data: session } = useQuery({
+  const { data: session, isLoading: isSessionLoading } = useQuery({
     queryKey: ["session", token],
     queryFn: () =>
       token
@@ -37,10 +37,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
     <AuthContext.Provider
       value={{
         session: session || null,
-        isLoading,
+        isLoading: isLoading || isSessionLoading,
         login: (token: string) => {
           setToken(token);
           registerForPushNotificationsAsync();
+
           honoClient.auth.language
             .$patch({
               json: { language: getLocale() },

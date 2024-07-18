@@ -59,4 +59,5 @@ export type searchSchemaType = z.infer<typeof searchSchema>;
 export const searchUpdateSchema = z.object({
   accomodationId: z.string().optional(),
   bookmark: z.boolean().optional(),
+  public: z.boolean().optional(),
 });

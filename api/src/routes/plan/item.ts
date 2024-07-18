@@ -24,10 +24,18 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
   .get("/", authenticated, async (ctx) => {
     const id = ctx.req.param("id");
 
-    const search = await prisma.searchRequest.findUnique({
+    const search = await prisma.searchRequest.findFirst({
       where: {
-        id: id,
-        userId: ctx.get("user").id,
+        OR: [
+          {
+            id: id,
+            userId: ctx.get("user").id,
+          },
+          {
+            id: id,
+            public: true,
+          },
+        ],
       },
     });
 
@@ -84,6 +92,7 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
         data: {
           response: newBody,
           bookmark: body.bookmark,
+          public: body.public,
         },
       });
 

@@ -69,6 +69,19 @@ const CheckoutPage = () => {
     onSettled: async () =>
       await queryClient.invalidateQueries({ queryKey: ["plan", id] }),
   });
+  const publishPost = useMutation({
+    mutationFn: (publicPost: boolean) =>
+      honoClient.plan[":id"].$patch({
+        param: {
+          id: id as string,
+        },
+        json: {
+          public: publicPost,
+        },
+      }),
+    onSettled: async () =>
+      await queryClient.invalidateQueries({ queryKey: ["plan", id] }),
+  });
 
   if (!id) return <Redirect href="/" />;
   if (isLoading || !data) return <LoadingScreen />;
@@ -76,7 +89,7 @@ const CheckoutPage = () => {
 
   return (
     <SafeAreaView className="flex flex-1 flex-col bg-background p-4">
-      <View className="flex flex-row justify-between">
+      <View className="flex flex-row items-center justify-between">
         <View>
           <Text className="!font-extrabold text-2xl">
             {i18n.t("plan.checkout.title")}
@@ -84,27 +97,51 @@ const CheckoutPage = () => {
           <Text className="text-lg">{i18n.t("plan.checkout.description")}</Text>
         </View>
 
-        <Pressable
-          onPress={() => {
-            bookmark.mutate(
-              bookmark.isPending ? !bookmark.variables : !plan?.bookmark,
-            );
-          }}
-        >
-          <FontAwesome
-            name={
-              bookmark.isPending
-                ? bookmark.variables
-                  ? "bookmark"
-                  : "bookmark-o"
-                : plan?.bookmark
-                  ? "bookmark"
-                  : "bookmark-o"
-            }
-            size={24}
-            color={theme.text}
-          />
-        </Pressable>
+        <View className="flex flex-row items-center gap-3">
+          <Pressable
+            onPress={() => {
+              publishPost.mutate(
+                publishPost.isPending ? !publishPost.variables : !plan?.public,
+              );
+            }}
+          >
+            <FontAwesome
+              name={
+                publishPost.isPending
+                  ? publishPost.variables
+                    ? "eye-slash"
+                    : "eye"
+                  : plan?.public
+                    ? "eye-slash"
+                    : "eye"
+              }
+              size={24}
+              color={theme.text}
+            />
+          </Pressable>
+
+          <Pressable
+            onPress={() => {
+              bookmark.mutate(
+                bookmark.isPending ? !bookmark.variables : !plan?.bookmark,
+              );
+            }}
+          >
+            <FontAwesome
+              name={
+                bookmark.isPending
+                  ? bookmark.variables
+                    ? "bookmark"
+                    : "bookmark-o"
+                  : plan?.bookmark
+                    ? "bookmark"
+                    : "bookmark-o"
+              }
+              size={24}
+              color={theme.text}
+            />
+          </Pressable>
+        </View>
       </View>
 
       <ScrollView className="mt-4">

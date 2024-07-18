@@ -74,6 +74,7 @@ export const en = {
   },
   account: {
     bookmarks: "Bookmarks",
+    public: "Public / Shared",
     name: "Name",
     confirm_password: "Confirm Password",
     submit: "Submit",

@@ -19,6 +19,13 @@ const Account = () => {
             .then(async (res) => await res.json())
         : [],
   });
+  const publicPlans = useQuery({
+    queryKey: ["public", session?.id],
+    queryFn: () =>
+      session
+        ? honoClient.auth.me.public.$get().then(async (res) => await res.json())
+        : [],
+  });
 
   if (isLoading) return <LoadingScreen />;
   if (!session) return null;
@@ -30,28 +37,51 @@ const Account = () => {
         <Text className="text-2xl">{session.name}</Text>
       </View>
 
-      <Text className="mt-4 font-bold text-2xl">
-        {i18n.t("account.bookmarks")}
-      </Text>
-      <ScrollView
-        horizontal
-        contentContainerStyle={{
-          columnGap: 12,
-        }}
-      >
-        {bookmarks.data?.map((bookmark) => (
-          <Location
-            key={bookmark.id}
-            image={bookmark.image}
-            imageAttribs={bookmark.imageAttributes}
-            name={bookmark.title}
-            id={bookmark.id}
-            restore
-          />
-        ))}
-      </ScrollView>
+      <View>
+        <Text className="mt-4 font-bold text-2xl">
+          {i18n.t("account.bookmarks")}
+        </Text>
+        <ScrollView
+          horizontal
+          contentContainerStyle={{
+            columnGap: 12,
+          }}
+        >
+          {bookmarks.data?.map((bookmark) => (
+            <Location
+              key={bookmark.id}
+              image={bookmark.image}
+              imageAttribs={bookmark.imageAttributes}
+              name={bookmark.title}
+              id={bookmark.id}
+              restore
+            />
+          ))}
+        </ScrollView>
 
-      <Button mode="contained" onPress={logout}>
+        <Text className="mt-4 font-bold text-2xl">
+          {i18n.t("account.public")}
+        </Text>
+        <ScrollView
+          horizontal
+          contentContainerStyle={{
+            columnGap: 12,
+          }}
+        >
+          {publicPlans.data?.map((bookmark) => (
+            <Location
+              key={bookmark.id}
+              image={bookmark.image}
+              imageAttribs={bookmark.imageAttributes}
+              name={bookmark.title}
+              id={bookmark.id}
+              restore
+            />
+          ))}
+        </ScrollView>
+      </View>
+
+      <Button className="mt-auto" mode="contained" onPress={logout}>
         Logout
       </Button>
     </SafeAreaView>

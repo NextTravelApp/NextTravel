@@ -89,6 +89,17 @@ export const authRoute = new Hono<{ Variables: Variables }>()
 
     return ctx.json(bookmarks);
   })
+  .get("/me/public", authenticated, async (ctx) => {
+    const user = ctx.get("user");
+    const requests = await prisma.searchRequest.findMany({
+      where: {
+        userId: user.id,
+        public: true,
+      },
+    });
+
+    return ctx.json(requests);
+  })
   .post(
     "/notification",
     authenticated,
@@ -127,12 +138,13 @@ export const authRoute = new Hono<{ Variables: Variables }>()
       const user = ctx.get("user");
       const body = ctx.req.valid("json");
 
-      await prisma.user.update({
-        where: { id: user.id },
-        data: {
-          language: body.language,
-        },
-      });
+      if (user.language !== body.language)
+        await prisma.user.update({
+          where: { id: user.id },
+          data: {
+            language: body.language,
+          },
+        });
 
       return ctx.json({ success: true });
     },
