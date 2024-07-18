@@ -2,7 +2,7 @@ import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { Location } from "@/components/home/Location";
 import { i18n } from "@/components/i18n";
-import { SafeAreaView, Text } from "@/components/injector";
+import { Button, SafeAreaView, Text } from "@/components/injector";
 import { LoadingScreen } from "@/components/ui/Screens";
 import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
@@ -10,7 +10,7 @@ import { Redirect } from "expo-router";
 import { ScrollView, View } from "react-native";
 
 const Account = () => {
-  const { session, isLoading } = useSession();
+  const { session, isLoading, logout } = useSession();
   const bookmarks = useQuery({
     queryKey: ["bookmarks", session?.id],
     queryFn: () =>
@@ -51,6 +51,10 @@ const Account = () => {
           />
         ))}
       </ScrollView>
+
+      <Button mode="contained" onPress={logout}>
+        Logout
+      </Button>
     </SafeAreaView>
   );
 };
