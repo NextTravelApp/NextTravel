@@ -24,7 +24,7 @@ export const stripeRoute = new Hono().post("/webhook", async (ctx) => {
       err instanceof Error ? err.message : "Internal server error"
     }`;
 
-    console.log(errorMessage);
+    console.warn("[Stripe] [Webhook] Error:", errorMessage);
     return ctx.json({ error: true, message: errorMessage }, 400);
   }
 });

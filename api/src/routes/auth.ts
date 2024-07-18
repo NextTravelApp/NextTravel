@@ -1,4 +1,3 @@
-import { zValidator } from "@hono/zod-validator";
 import { hashSync, verifySync } from "@node-rs/argon2";
 import { Hono } from "hono";
 import { z } from "zod";
@@ -7,6 +6,7 @@ import { loginSchema, registerSchema } from "../constants/requests";
 import { signToken } from "../lib/jwt";
 import prisma from "../lib/prisma";
 import { authenticated } from "../middlewares/auth";
+import { zValidator } from "../middlewares/validator";
 
 export const authRoute = new Hono<{ Variables: Variables }>()
   .post("/register", zValidator("json", registerSchema), async (ctx) => {
@@ -51,7 +51,7 @@ export const authRoute = new Hono<{ Variables: Variables }>()
     if (!user || !user.password) {
       return ctx.json(
         {
-          t: "invalid_password",
+          t: "auth.wrong_password",
         },
         401,
       );
@@ -62,7 +62,7 @@ export const authRoute = new Hono<{ Variables: Variables }>()
     if (!passwordMatch) {
       return ctx.json(
         {
-          t: "invalid_password",
+          t: "auth.wrong_password",
         },
         401,
       );

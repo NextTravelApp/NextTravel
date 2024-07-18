@@ -6,7 +6,6 @@ import { Button, SafeAreaView, Text } from "@/components/injector";
 import { LoadingScreen } from "@/components/ui/Screens";
 import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
-import { Redirect } from "expo-router";
 import { ScrollView, View } from "react-native";
 
 const Account = () => {
@@ -22,7 +21,7 @@ const Account = () => {
   });
 
   if (isLoading) return <LoadingScreen />;
-  if (!session) return <Redirect href="/login" />;
+  if (!session) return null;
 
   return (
     <SafeAreaView className="flex flex-1 flex-col bg-background p-4">

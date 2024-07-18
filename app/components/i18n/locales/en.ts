@@ -6,7 +6,6 @@ export const en = {
       done: "Done",
     },
 
-    title: "Ready for your next travel?",
     destination: "Type your destination",
     period: "Period",
     members_placeholder: "Members",
@@ -25,6 +24,7 @@ export const en = {
       invalid_password:
         "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
       match_passwords: "Passwords don't match",
+      wrong_password: "Wrong password",
     },
 
     plan: {

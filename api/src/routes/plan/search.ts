@@ -1,5 +1,4 @@
 import { readFileSync } from "node:fs";
-import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
@@ -8,6 +7,7 @@ import { generateTrip } from "../../lib/ai/generator";
 import prisma from "../../lib/prisma";
 import { getImage } from "../../lib/unsplash";
 import { authenticated } from "../../middlewares/auth";
+import { zValidator } from "../../middlewares/validator";
 
 export const searchRoute = new Hono<{ Variables: Variables }>()
   .post("/", authenticated, zValidator("json", searchSchema), async (ctx) => {

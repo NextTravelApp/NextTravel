@@ -70,7 +70,7 @@ const Login = () => {
                   login(data.token);
                   router.push("/account");
                 } else {
-                  setError(i18n.t(`errors.auth.${data.t || "invalid_email"}`));
+                  setError(i18n.t(`errors.${data.t || "auth.invalid_email"}`));
                 }
               });
           }}

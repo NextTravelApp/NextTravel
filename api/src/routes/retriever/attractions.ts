@@ -1,4 +1,3 @@
-import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { attractionRequestSchema } from "../../lib/ai/tools";
 import {
@@ -6,6 +5,7 @@ import {
   searchAttractions,
 } from "../../lib/retriever/attractions";
 import { authenticated } from "../../middlewares/auth";
+import { zValidator } from "../../middlewares/validator";
 
 export const attractionsRoute = new Hono()
   .post(

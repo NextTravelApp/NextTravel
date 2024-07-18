@@ -4,16 +4,18 @@ import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text, TextInput } from "@/components/injector";
 import Banner from "@/components/svg/Banner";
+import { Alert } from "@/components/ui/Alert";
 import { FontAwesome } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import { TextInput as RNTextInput } from "react-native-paper";
 
 const Login = () => {
   const theme = useTheme();
   const { login } = useSession();
   const router = useRouter();
+  const [error, setError] = useState<string | undefined>();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,6 +30,7 @@ const Login = () => {
           }}
           color={theme.text}
         />
+
         <TextInput
           mode="outlined"
           placeholder="Name"
@@ -97,7 +100,7 @@ const Login = () => {
                   login(data.token);
                   router.push("/account");
                 } else {
-                  Alert.alert(data.t);
+                  setError(i18n.t(`errors.${data.t || "auth.invalid_email"}`));
                 }
               });
           }}
@@ -113,6 +116,14 @@ const Login = () => {
           </Text>
         </View>
       </View>
+
+      <Alert
+        title={i18n.t("errors.screen.title")}
+        message={error}
+        onDismiss={() => {
+          setError(undefined);
+        }}
+      />
     </SafeAreaView>
   );
 };
