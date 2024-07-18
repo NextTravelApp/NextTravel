@@ -3,6 +3,7 @@ import type { InferResponseType } from "hono/client";
 import { type PropsWithChildren, createContext, useContext } from "react";
 import { registerForPushNotificationsAsync } from "../NotificationHandler";
 import { honoClient } from "../fetcher";
+import { getLocale } from "../i18n/LocalesHandler";
 import { useStorageState } from "../useStorageState";
 
 export type AuthContextType = {
@@ -40,6 +41,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
         login: (token: string) => {
           setToken(token);
           registerForPushNotificationsAsync();
+          honoClient.auth.language
+            .$patch({
+              json: { language: getLocale() },
+            })
+            .then(() => console.log("[Locale] Locale updated successfully"));
         },
         logout: () => setToken(null),
       }}

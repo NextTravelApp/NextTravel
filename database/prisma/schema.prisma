@@ -15,19 +15,13 @@ model User {
   email    String @unique
   password String
 
+  language String          @default("en")
   plan     String?
   searches Int             @default(0)
   history  SearchRequest[]
 
   stripeId           String?
-  notificationTokens NotificationToken[]
-}
-
-model NotificationToken {
-  token String @id
-
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
+  notificationTokens String[]
 }
 
 model SearchRequest {

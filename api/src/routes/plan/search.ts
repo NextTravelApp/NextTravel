@@ -35,6 +35,7 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
         new Date(body.startDate as string),
         new Date(body.endDate as string),
         [body.members as number],
+        user.language,
       );
     }
 

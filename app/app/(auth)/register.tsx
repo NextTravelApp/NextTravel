@@ -44,7 +44,7 @@ const Register = () => {
       <TextInput
         className="w-full"
         mode="outlined"
-        placeholder={i18n.t("account.confirm-password")}
+        placeholder={i18n.t("account.confirm_password")}
         secureTextEntry
         value={confirmPassword}
         onChangeText={setConfirmPassword}

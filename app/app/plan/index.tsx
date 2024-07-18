@@ -105,7 +105,7 @@ const PlanPage = () => {
         {accomodation && (
           <>
             <Text className="!font-bold text-xl">
-              {i18n.t("plan.accomodation-title")}
+              {i18n.t("plan.accomodation_title")}
             </Text>
             <Accomodation {...accomodation} />
           </>

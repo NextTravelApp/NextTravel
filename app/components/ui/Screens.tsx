@@ -24,7 +24,7 @@ export function ErrorScreen({
       <Text className="text-center text-xl">
         {i18n.t("errors.screen.description")}
       </Text>
-      <Text className="text-center text-lg">{error}</Text>
+      <Text className="text-center text-lg">{i18n.t(`errors.${error}`)}</Text>
     </View>
   );
 }

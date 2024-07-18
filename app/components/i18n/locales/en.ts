@@ -2,15 +2,31 @@ export const en = {
   home: {
     title: "Ready for your next travel?",
     period: "Period",
-    "members-placeholder": "1 adult(s)",
-    "most-requested": "Most requested",
-    "last-searches": "Last searches",
+    members_placeholder: "1 adult(s)",
+    most_requested: "Most requested",
+    last_searches: "Last searches",
   },
   errors: {
     screen: {
       title: "Oh no!",
       description: "An error occurred.. Please try again later",
     },
+
+    auth: {
+      invalid_email: "Invalid email",
+      invalid_password:
+        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
+      match_passwords: "Passwords don't match",
+    },
+
+    plan: {
+      invalid_start_date: "Start date must be after today",
+      invalid_end_date: "End date must be after start date",
+      min_members: "You must have at least one member",
+    },
+
+    not_found: "The requested item was not found",
+    month_limit: "You have reached your monthly limit",
   },
   plan: {
     limit: {
@@ -42,7 +58,7 @@ export const en = {
 
     title: "Your plan is ready!",
     description: "Click any item that you want to change to edit it.",
-    "accomodation-title": "Accomodation",
+    accomodation_title: "Accomodation",
     plan: "Your plan",
     next: "Next",
     back: "Back",
@@ -50,7 +66,7 @@ export const en = {
   account: {
     bookmarks: "Bookmarks",
     name: "Name",
-    "confirm-password": "Confirm Password",
+    confirm_password: "Confirm Password",
     submit: "Submit",
   },
 };

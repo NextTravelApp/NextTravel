@@ -4,8 +4,8 @@ import { Hono } from "hono";
 import { z } from "zod";
 import type { Variables } from "../constants/context";
 import { loginSchema, registerSchema } from "../constants/requests";
+import { signToken } from "../lib/jwt";
 import prisma from "../lib/prisma";
-import { signToken } from "../lib/tokens";
 import { authenticated } from "../middlewares/auth";
 
 export const authRoute = new Hono<{ Variables: Variables }>()
@@ -111,10 +111,35 @@ export const authRoute = new Hono<{ Variables: Variables }>()
       const user = ctx.get("user");
       const body = ctx.req.valid("json");
 
-      await prisma.notificationToken.create({
+      await prisma.user.update({
+        where: { id: user.id },
         data: {
-          token: body.token,
-          userId: user.id,
+          notificationTokens: {
+            push: body.token,
+          },
+        },
+      });
+
+      return ctx.json({ success: true });
+    },
+  )
+  .patch(
+    "/language",
+    authenticated,
+    zValidator(
+      "json",
+      z.object({
+        language: z.string(),
+      }),
+    ),
+    async (ctx) => {
+      const user = ctx.get("user");
+      const body = ctx.req.valid("json");
+
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          language: body.language,
         },
       });
 

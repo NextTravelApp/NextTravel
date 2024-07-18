@@ -14,6 +14,7 @@ export async function generateTrip(
   startDate: Date,
   endDate: Date,
   members: number[],
+  locale: string,
   theme?: string,
 ) {
   const result = await generateText({
@@ -22,6 +23,7 @@ export async function generateTrip(
     system: systemPrompt,
     prompt: `I want to visit ${location} from ${startDate.toLocaleDateString("en-US")} to ${endDate.toLocaleDateString("en-US")}.
       I will travel with ${members.length} of the ages ${members.join(", ")} including me.
+      My language is ${locale}.
       ${theme ? `My ideal trip theme is ${theme}` : ""}`,
     maxTokens: 1000,
     tools: {
@@ -30,7 +32,6 @@ export async function generateTrip(
     },
   });
 
-  // TODO: Log the usage to a database
   console.log(`[AI] Used ${result.usage.totalTokens} tokens`);
 
   try {

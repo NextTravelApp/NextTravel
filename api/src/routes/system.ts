@@ -19,11 +19,7 @@ export const systemRoute = new Hono()
         user: {
           select: {
             email: true,
-            notificationTokens: {
-              select: {
-                token: true,
-              },
-            },
+            notificationTokens: true,
           },
         },
       },
@@ -31,12 +27,21 @@ export const systemRoute = new Hono()
 
     for (const plan of plans) {
       for (const token of plan.user.notificationTokens) {
-        await sendNotification(token.token, {
+        await sendNotification(token, {
           title: "Don't forget your travel plan!",
           body: `Your ${(plan.response as responseType)?.title} is ready in your app. What are you waiting for?`,
         });
       }
     }
+
+    return ctx.json({ success: true });
+  })
+  .post("/reset-month", async (ctx) => {
+    await prisma.user.updateMany({
+      data: {
+        searches: 0,
+      },
+    });
 
     return ctx.json({ success: true });
   });

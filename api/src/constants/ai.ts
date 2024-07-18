@@ -44,6 +44,7 @@ export const systemPrompt = [
   "- You should base the plan based on user preferences if given and also on the " +
     "ages of the members,",
   "- You should give a creative and short name to the trip based on what is included in it,",
+  "- Use the language provided by the user to write the titles,",
   "- You should never add formatting ticks for the json output. " +
     "Just return it in plain text,",
   "",

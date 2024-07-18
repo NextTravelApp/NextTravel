@@ -72,7 +72,7 @@ const App = () => {
             <TextInput
               mode="outlined"
               keyboardType="number-pad"
-              placeholder={i18n.t("home.members-placeholder")}
+              placeholder={i18n.t("home.members_placeholder")}
               className="w-[49%]"
               value={members?.toString()}
               onChangeText={(text) => {
@@ -96,7 +96,7 @@ const App = () => {
 
         <View className="mt-6 flex gap-2">
           <Text className="font-extrabold text-xl">
-            {i18n.t("home.most-requested")}
+            {i18n.t("home.most_requested")}
           </Text>
           <ScrollView
             horizontal
@@ -118,7 +118,7 @@ const App = () => {
 
         <View className="mt-6 flex gap-2">
           <Text className="font-extrabold text-xl">
-            {i18n.t("home.last-searches")}
+            {i18n.t("home.last_searches")}
           </Text>
           <ScrollView
             horizontal

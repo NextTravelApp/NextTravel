@@ -4,6 +4,7 @@ export default new PrismaClient({
   omit: {
     user: {
       password: true,
+      notificationTokens: true,
     },
   },
 });
