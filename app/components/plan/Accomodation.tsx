@@ -24,7 +24,7 @@ export function Accomodation(props: AccomodationProps) {
 
   return (
     <Link
-      href={props.edit ? "#" : `/plan/accomodation?id=${id}`}
+      href={props.edit ? "#" : `/plan/${id}/accomodation`}
       className="flex min-h-36 w-full flex-1 flex-row gap-3 rounded-xl bg-card"
       asChild
     >
@@ -73,7 +73,7 @@ export function Accomodation(props: AccomodationProps) {
                     queryClient.invalidateQueries({
                       queryKey: ["plan", id],
                     });
-                    router.push(`/plan?id=${id}&t=${Date.now()}`);
+                    router.push(`/plan/${id}?t=${Date.now()}`);
                   });
               }}
               mode="contained"

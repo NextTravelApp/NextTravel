@@ -11,18 +11,16 @@ import { Pressable, ScrollView, View } from "react-native";
 
 const CheckoutPage = () => {
   const { id } = useLocalSearchParams<{
-    id?: string;
+    id: string;
   }>();
   const theme = useTheme();
   const queryClient = useQueryClient();
   const { data: plan } = useQuery({
     queryKey: ["plan", id],
     queryFn: async () => {
-      if (!id) return null;
-
       const res = await honoClient.plan[":id"].$get({
         param: {
-          id: id,
+          id: id as string,
         },
       });
 
@@ -41,11 +39,9 @@ const CheckoutPage = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["checkout", id],
     queryFn: async () => {
-      if (!id) return null;
-
       const res = await honoClient.plan[":id"].checkout.$post({
         param: {
-          id: id,
+          id: id as string,
         },
       });
 

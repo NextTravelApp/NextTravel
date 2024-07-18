@@ -7,66 +7,27 @@ import { PlanStep } from "@/components/plan/PlanStep";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { ScrollView, View } from "react-native";
 
-const formatDate = (date: string) => {
-  const split = date.split("/");
-  if (split[0].length === 1) split[0] = `0${split[0]}`;
-  if (split[1].length === 1) split[1] = `0${split[1]}`;
-  return `${split[2]}-${split[0]}-${split[1]}`;
-};
-
 const PlanPage = () => {
-  const { location, members, startDate, endDate, id, t } =
-    useLocalSearchParams<{
-      location?: string;
-      members?: string;
-      startDate?: string;
-      endDate?: string;
-      id?: string;
-      t?: string;
-    }>();
-  const router = useRouter();
+  const { id, t } = useLocalSearchParams<{
+    id: string;
+    t?: string;
+  }>();
   const { data, isLoading, error } = useQuery({
-    queryKey: ["plan", id, location, members, startDate, endDate, t],
+    queryKey: ["plan", id, t],
     queryFn: async () => {
-      if (id) {
-        const res = await honoClient.plan[":id"].$get({
-          param: {
-            id: id as string,
-          },
-        });
-
-        const resData = await res.json();
-        if ("t" in resData) throw new Error(resData.t);
-
-        return resData.response as responseType;
-      }
-      if (!location || !members || !startDate || !endDate) return null;
-
-      const res = await honoClient.plan.$post({
-        json: {
-          location: location as string,
-          members: members.split(",").map((item) => Number.parseInt(item)),
-          startDate: formatDate(startDate),
-          endDate: formatDate(endDate),
+      const res = await honoClient.plan[":id"].$get({
+        param: {
+          id: id as string,
         },
       });
 
-      const data = await res.json();
-      if ("error" in data)
-        // biome-ignore lint/suspicious/noExplicitAny: Errors are not typed
-        throw new Error((data as any).error);
+      const resData = await res.json();
+      if ("t" in resData) throw new Error(resData.t);
 
-      if ("t" in data) throw new Error(data.t);
-
-      if (data.id)
-        router.setParams({
-          id: data.id,
-        });
-
-      return data;
+      return resData.response as responseType;
     },
     staleTime: 1000 * 60 * 5,
     refetchOnMount: false,
@@ -119,7 +80,7 @@ const PlanPage = () => {
         </View>
       </ScrollView>
 
-      <Link href={`/plan/checkout?id=${id}`} asChild>
+      <Link href={`/plan/${id}/checkout`} asChild>
         <Button
           mode="contained"
           className="h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"

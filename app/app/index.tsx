@@ -96,7 +96,7 @@ const App = () => {
                 return;
 
               router.push({
-                pathname: "/plan",
+                pathname: "/plan/create",
                 params: {
                   location,
                   members,

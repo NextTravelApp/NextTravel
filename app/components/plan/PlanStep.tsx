@@ -33,7 +33,7 @@ export function PlanStep(props: PlanStepProps) {
     <View className="relative flex min-h-36 w-full flex-1 flex-row gap-3 rounded-xl bg-card">
       <Image
         source={{
-          uri: !image || "error" in image ? undefined : image.url,
+          uri: !image || "t" in image ? undefined : image.url,
         }}
         contentFit="fill"
         className="h-full flex-1 rounded-xl"

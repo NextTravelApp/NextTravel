@@ -20,7 +20,7 @@ export function Location(props: LocationProps) {
     <Pressable
       onPress={() => {
         router.push(
-          props.restore ? `/plan?id=${props.id}` : `/?location=${props.id}`,
+          props.restore ? `/plan/${props.id}` : `/?location=${props.id}`,
         );
       }}
       className="relative h-48 w-80"

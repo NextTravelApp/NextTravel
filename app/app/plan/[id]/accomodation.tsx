@@ -10,7 +10,7 @@ import { ScrollView, View } from "react-native";
 
 const SearchAccomodationPage = () => {
   const { id } = useLocalSearchParams<{
-    id?: string;
+    id: string;
   }>();
 
   const {
@@ -20,11 +20,9 @@ const SearchAccomodationPage = () => {
   } = useQuery({
     queryKey: ["plan", id],
     queryFn: async () => {
-      if (!id) return null;
-
       const res = await honoClient.plan[":id"].$get({
         param: {
-          id: id,
+          id: id as string,
         },
       });
 
@@ -48,10 +46,10 @@ const SearchAccomodationPage = () => {
       const request = searchRecord.request as searchSchemaType;
       const res = await honoClient.retriever.accomodations.$post({
         json: {
-          location: request.location as string,
-          members: [request.members as number],
-          checkIn: request.startDate as string,
-          checkOut: request.endDate as string,
+          location: request.location,
+          members: request.members,
+          checkIn: request.startDate,
+          checkOut: request.endDate,
         },
       });
 
@@ -78,7 +76,7 @@ const SearchAccomodationPage = () => {
         </View>
       </ScrollView>
 
-      <Link href={`/plan?id=${id}`} asChild>
+      <Link href={`/plan/${id}`} asChild>
         <Button
           mode="contained"
           className="h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
