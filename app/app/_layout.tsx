@@ -106,9 +106,10 @@ function RootLayoutNav() {
           tabBarShowLabel: false,
           tabBarActiveTintColor: theme.primary,
           tabBarBackground: () => (
-            <View className="h-full w-full bg-background" />
+            <View className="relative h-full w-full bg-background" />
           ),
           tabBarStyle: {
+            paddingBottom: 0,
             borderWidth: 0,
             display:
               pathName === "/login" || pathName === "/register"

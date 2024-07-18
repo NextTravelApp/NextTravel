@@ -1,3 +1,4 @@
+import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text } from "@/components/injector";
@@ -15,6 +16,7 @@ const PlanPage = () => {
     id: string;
     t?: string;
   }>();
+  const { session } = useSession();
   const { data, isLoading, error } = useQuery({
     queryKey: ["plan", id, t],
     queryFn: async () => {
@@ -27,7 +29,10 @@ const PlanPage = () => {
       const resData = await res.json();
       if ("t" in resData) throw new Error(resData.t);
 
-      return resData.response as responseType;
+      return {
+        ...(resData.response as responseType),
+        userId: resData.userId,
+      };
     },
     staleTime: 1000 * 60 * 5,
     refetchOnMount: false,
@@ -68,7 +73,10 @@ const PlanPage = () => {
             <Text className="!font-bold text-xl">
               {i18n.t("plan.accomodation_title")}
             </Text>
-            <Accomodation {...accomodation} />
+            <Accomodation
+              {...accomodation}
+              switch={session?.id === data?.userId}
+            />
           </>
         )}
 

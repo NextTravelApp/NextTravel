@@ -1,4 +1,5 @@
 import { useTheme } from "@/components/Theme";
+import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text } from "@/components/injector";
@@ -7,13 +8,14 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { responseType } from "api";
 import { Link, Redirect, useLocalSearchParams } from "expo-router";
-import { Pressable, ScrollView, View } from "react-native";
+import { Pressable, ScrollView, Share, View } from "react-native";
 
 const CheckoutPage = () => {
   const { id } = useLocalSearchParams<{
     id: string;
   }>();
   const theme = useTheme();
+  const { session } = useSession();
   const queryClient = useQueryClient();
   const { data: plan } = useQuery({
     queryKey: ["plan", id],
@@ -97,51 +99,55 @@ const CheckoutPage = () => {
           <Text className="text-lg">{i18n.t("plan.checkout.description")}</Text>
         </View>
 
-        <View className="flex flex-row items-center gap-3">
-          <Pressable
-            onPress={() => {
-              publishPost.mutate(
-                publishPost.isPending ? !publishPost.variables : !plan?.public,
-              );
-            }}
-          >
-            <FontAwesome
-              name={
-                publishPost.isPending
-                  ? publishPost.variables
-                    ? "eye-slash"
-                    : "eye"
-                  : plan?.public
-                    ? "eye-slash"
-                    : "eye"
-              }
-              size={24}
-              color={theme.text}
-            />
-          </Pressable>
+        {session?.id === plan?.userId && (
+          <View className="flex flex-row items-center gap-3">
+            <Pressable
+              onPress={() => {
+                publishPost.mutate(
+                  publishPost.isPending
+                    ? !publishPost.variables
+                    : !plan?.public,
+                );
+              }}
+            >
+              <FontAwesome
+                name={
+                  publishPost.isPending
+                    ? publishPost.variables
+                      ? "eye-slash"
+                      : "eye"
+                    : plan?.public
+                      ? "eye-slash"
+                      : "eye"
+                }
+                size={24}
+                color={theme.text}
+              />
+            </Pressable>
 
-          <Pressable
-            onPress={() => {
-              bookmark.mutate(
-                bookmark.isPending ? !bookmark.variables : !plan?.bookmark,
-              );
-            }}
-          >
-            <FontAwesome
-              name={
-                bookmark.isPending
-                  ? bookmark.variables
-                    ? "bookmark"
-                    : "bookmark-o"
-                  : plan?.bookmark
-                    ? "bookmark"
-                    : "bookmark-o"
-              }
-              size={24}
-              color={theme.text}
-            />
-          </Pressable>
-        </View>
+            <Pressable
+              onPress={() => {
+                bookmark.mutate(
+                  bookmark.isPending ? !bookmark.variables : !plan?.bookmark,
+                );
+              }}
+            >
+              <FontAwesome
+                name={
+                  bookmark.isPending
+                    ? bookmark.variables
+                      ? "bookmark"
+                      : "bookmark-o"
+                    : plan?.bookmark
+                      ? "bookmark"
+                      : "bookmark-o"
+                }
+                size={24}
+                color={theme.text}
+              />
+            </Pressable>
+          </View>
+        )}
       </View>
 
       <ScrollView className="mt-4">
@@ -195,6 +201,20 @@ const CheckoutPage = () => {
             </Link>
           ))}
       </ScrollView>
+
+      <Button
+        mode="contained"
+        className="mt-4"
+        onPress={async () => {
+          publishPost.mutate(true);
+
+          Share.share({
+            url: `${process.env.EXPO_PUBLIC_APP_URL as string}/plan/${id}`,
+          });
+        }}
+      >
+        {i18n.t("plan.share")}
+      </Button>
     </SafeAreaView>
   );
 };

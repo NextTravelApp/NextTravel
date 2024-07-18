@@ -15,6 +15,7 @@ export type AccomodationProps = {
   rating: number;
   link?: string;
   edit?: boolean;
+  switch?: boolean;
 };
 
 export function Accomodation(props: AccomodationProps) {
@@ -24,13 +25,13 @@ export function Accomodation(props: AccomodationProps) {
 
   return (
     <Link
-      href={props.edit ? "#" : `/plan/${id}/accomodation`}
+      href={props.edit || !props.switch ? "#" : `/plan/${id}/accomodation`}
       className="flex min-h-36 w-full flex-1 flex-row gap-3 rounded-xl bg-card"
       asChild
     >
       <Pressable
         onPress={(e) => {
-          if (props.edit) e.preventDefault();
+          if (props.edit || !props.switch) e.preventDefault();
         }}
       >
         <Image

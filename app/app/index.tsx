@@ -4,7 +4,7 @@ import { honoClient } from "@/components/fetcher";
 import { Location } from "@/components/home/Location";
 import { i18n } from "@/components/i18n";
 import { getLocale } from "@/components/i18n/LocalesHandler";
-import { Button, SafeAreaView, Text, TextInput } from "@/components/injector";
+import { Button, Text, TextInput } from "@/components/injector";
 import Banner from "@/components/svg/Banner";
 import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
@@ -13,9 +13,11 @@ import { useEffect, useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { Dialog, Portal, TextInput as RNTextInput } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const App = () => {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
   const { session } = useSession();
   const router = useRouter();
   const { location: defaultLocation } = useLocalSearchParams<{
@@ -50,7 +52,14 @@ const App = () => {
   }, [defaultLocation]);
 
   return (
-    <SafeAreaView className="flex flex-1 flex-col bg-background p-6">
+    <ScrollView
+      className="flex flex-1 flex-col bg-background"
+      style={{
+        paddingTop: insets.top,
+        paddingLeft: insets.left + 16,
+        paddingRight: insets.right + 16,
+      }}
+    >
       <View className="flex w-full flex-1 items-center gap-3">
         <Banner
           style={{
@@ -78,6 +87,7 @@ const App = () => {
             onPress={() => setDateOpen(true)}
           >
             <TextInput
+              onPress={() => setDateOpen(true)}
               mode="outlined"
               readOnly
               placeholder={i18n.t("home.period")}
@@ -100,6 +110,7 @@ const App = () => {
             onPress={() => setMembersOpen(true)}
           >
             <TextInput
+              onPress={() => setMembersOpen(true)}
               mode="outlined"
               readOnly
               placeholder={i18n.t("home.members_placeholder")}
@@ -163,7 +174,7 @@ const App = () => {
         </ScrollView>
       </View>
 
-      <View className="mt-6 flex gap-2">
+      <View className="mt-6 flex gap-2 pb-20">
         <Text className="font-extrabold text-xl">
           {i18n.t("home.last_searches")}
         </Text>
@@ -261,7 +272,7 @@ const App = () => {
           </Dialog.Actions>
         </Dialog>
       </Portal>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 

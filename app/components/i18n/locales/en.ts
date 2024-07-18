@@ -71,6 +71,7 @@ export const en = {
     plan: "Your plan",
     next: "Next",
     back: "Back",
+    share: "Share",
   },
   account: {
     bookmarks: "Bookmarks",
