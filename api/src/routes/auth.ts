@@ -12,16 +12,22 @@ export const authRoute = new Hono<{ Variables: Variables }>()
   .post("/register", zValidator("json", registerSchema), async (ctx) => {
     const body = ctx.req.valid("json");
 
-    const existing = await prisma.user.findFirst({
-      where: {
-        email: {
-          equals: body.email,
-          mode: "insensitive",
+    try {
+      const hashedPassword = hashSync(body.password);
+      const user = await prisma.user.create({
+        data: {
+          name: body.name,
+          email: body.email,
+          password: hashedPassword,
         },
-      },
-    });
+      });
 
-    if (existing) {
+      const token = await signToken(user.id);
+
+      return ctx.json({
+        token,
+      });
+    } catch (_) {
       return ctx.json(
         {
           t: "email_used",
@@ -29,21 +35,6 @@ export const authRoute = new Hono<{ Variables: Variables }>()
         400,
       );
     }
-
-    const hashedPassword = hashSync(body.password);
-    const user = await prisma.user.create({
-      data: {
-        name: body.name,
-        email: body.email,
-        password: hashedPassword,
-      },
-    });
-
-    const token = await signToken(user.id);
-
-    return ctx.json({
-      token,
-    });
   })
   .post("/login", zValidator("json", loginSchema), async (ctx) => {
     const body = ctx.req.valid("json");

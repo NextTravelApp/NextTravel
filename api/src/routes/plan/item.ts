@@ -56,6 +56,9 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
           id: id,
           userId: ctx.get("user").id,
         },
+        select: {
+          response: true,
+        },
       });
 
       if (!search)
@@ -95,6 +98,9 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
       where: {
         id: id,
         userId: user.id,
+      },
+      select: {
+        response: true,
       },
     });
 

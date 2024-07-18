@@ -48,7 +48,7 @@ const PlanPage = () => {
       const res = await honoClient.plan.$post({
         json: {
           location: location as string,
-          members: members ? Number.parseInt(members as string) : -1,
+          members: members.split(",").map((item) => Number.parseInt(item)),
           startDate: formatDate(startDate),
           endDate: formatDate(endDate),
         },

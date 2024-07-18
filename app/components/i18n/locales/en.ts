@@ -30,6 +30,7 @@ export const en = {
       invalid_start_date: "Start date must be after today",
       invalid_end_date: "End date must be after start date",
       min_members: "You must have at least one member",
+      min_age: "Members must be at least 1 year old",
     },
 
     not_found: "The requested item was not found",

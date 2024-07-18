@@ -30,7 +30,7 @@ export const loginSchema = z.object({
 export const searchSchema = z
   .object({
     location: z.string(),
-    members: z.number().min(1, "plan.min_members"),
+    members: z.array(z.number().min(1, "min_age")).min(1, "plan.min_members"),
     startDate: z.string().date(),
     endDate: z.string().date(),
   })

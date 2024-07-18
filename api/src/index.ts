@@ -23,7 +23,9 @@ const app = new Hono()
   .route("/image", imageRoute)
   .route("/system", systemRoute);
 
-serve(app);
+serve(app, (info) => {
+  console.log(`[Server] Listening on ${info.address}:${info.port}`);
+});
 
 export type AppType = typeof app;
 export type * from "./constants/requests";

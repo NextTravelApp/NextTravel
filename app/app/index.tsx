@@ -4,11 +4,12 @@ import { Location } from "@/components/home/Location";
 import { i18n } from "@/components/i18n";
 import { getLocale } from "@/components/i18n/LocalesHandler";
 import { Button, SafeAreaView, Text, TextInput } from "@/components/injector";
+import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
-import { Dialog, Portal } from "react-native-paper";
+import { Dialog, Portal, TextInput as RNTextInput } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
 
 const App = () => {
@@ -86,9 +87,23 @@ const App = () => {
 
           <Button
             onPress={() => {
-              router.push(
-                `/plan?location=${location}&members=${members}&startDate=${range.startDate?.toLocaleDateString("en-US")}&endDate=${range.endDate?.toLocaleDateString("en-US")}`,
-              );
+              if (
+                !location ||
+                !members.length ||
+                !range.startDate ||
+                !range.endDate
+              )
+                return;
+
+              router.push({
+                pathname: "/plan",
+                params: {
+                  location,
+                  members,
+                  startDate: range.startDate?.toLocaleDateString("en-US"),
+                  endDate: range.endDate?.toLocaleDateString("en-US"),
+                },
+              });
             }}
             mode="contained"
             className="w-full"
@@ -161,20 +176,42 @@ const App = () => {
           <Dialog visible={membersOpen} onDismiss={() => setMembersOpen(false)}>
             <Dialog.Title>{i18n.t("home.members.title")}</Dialog.Title>
             <Dialog.Content>
-              {members.map((member, index) => (
-                <TextInput
-                  // biome-ignore lint/suspicious/noArrayIndexKey: This is a unique key
-                  key={index}
-                  mode="outlined"
-                  keyboardType="numeric"
-                  value={member.toString()}
-                  onChangeText={(value) => {
-                    const newMembers = members.slice();
-                    newMembers[index] = Number.parseInt(value);
-                    setMembers(newMembers);
-                  }}
-                />
-              ))}
+              <ScrollView>
+                {members.map((member, index) => (
+                  <TextInput
+                    // biome-ignore lint/suspicious/noArrayIndexKey: This is a unique key
+                    key={index}
+                    mode="outlined"
+                    keyboardType="numeric"
+                    value={member.toString()}
+                    onChangeText={(value) => {
+                      const newMembers = members.slice();
+                      newMembers[index] = Number.parseInt(value);
+                      setMembers(newMembers);
+                    }}
+                    className="!bg-transparent mb-4"
+                    right={
+                      <RNTextInput.Icon
+                        className="m-auto"
+                        icon={(props) => (
+                          <FontAwesome
+                            className="m-auto"
+                            name="trash"
+                            color={props.color}
+                            size={props.size}
+                          />
+                        )}
+                        size={25}
+                        onPress={() => {
+                          const newMembers = members.slice();
+                          newMembers.splice(index, 1);
+                          setMembers(newMembers);
+                        }}
+                      />
+                    }
+                  />
+                ))}
+              </ScrollView>
             </Dialog.Content>
             <Dialog.Actions>
               <Button

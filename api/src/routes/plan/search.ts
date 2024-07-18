@@ -34,7 +34,7 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
         body.location as string,
         new Date(body.startDate as string),
         new Date(body.endDate as string),
-        [body.members as number],
+        body.members,
         user.language,
       );
     }
@@ -77,13 +77,9 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
       orderBy: {
         createdAt: "desc",
       },
-      select: {
-        id: true,
-        title: true,
-        location: true,
-        createdAt: true,
-        image: true,
-        imageAttributes: true,
+      omit: {
+        request: true,
+        response: true,
       },
     });
 

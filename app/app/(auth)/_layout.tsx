@@ -1,16 +1,17 @@
 import { useSession } from "@/components/auth/AuthContext";
-import { Redirect, Slot, usePathname } from "expo-router";
+import { Slot, usePathname, useRouter } from "expo-router";
+import { useEffect } from "react";
 
 const AuthLayout = () => {
   const { session, isLoading } = useSession();
+  const router = useRouter();
   const pathName = usePathname();
 
-  if (
-    !isLoading &&
-    session &&
-    (pathName === "/login" || pathName === "/register")
-  )
-    return <Redirect href="/account" />;
+  useEffect(() => {
+    if (pathName !== "/login" && pathName !== "/register") return;
+    if (isLoading) return;
+    if (session) router.push("/account");
+  }, [session, isLoading, pathName, router]);
 
   return <Slot />;
 };
