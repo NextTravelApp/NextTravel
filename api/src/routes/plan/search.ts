@@ -87,5 +87,8 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
   })
   .get("/popular", async (ctx) => {
     const searches = await prisma.popularLocations.findMany();
+
+    ctx.header("Cache-Control", "public, max-age=3600");
+
     return ctx.json(searches);
   });

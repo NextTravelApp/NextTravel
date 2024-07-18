@@ -11,7 +11,7 @@
     "db:generate": "prisma generate --no-hints",
     "db:push": "prisma db push",
     "build": "tsc",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate --no-hints"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

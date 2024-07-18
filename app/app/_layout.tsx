@@ -2,13 +2,13 @@ import "react-native-reanimated";
 import "../assets/global.css";
 
 import { ThemeProvider, useTheme } from "@/components/Theme";
-import { AuthProvider } from "@/components/auth/AuthContext";
+import { AuthProvider, useSession } from "@/components/auth/AuthContext";
 import { getLocale } from "@/components/i18n/LocalesHandler";
 import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { Tabs } from "expo-router";
+import { Tabs, usePathname, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { View } from "react-native";
@@ -55,6 +55,9 @@ const RootLayout = () => {
 
 function RootLayoutNav() {
   const theme = useTheme();
+  const pathName = usePathname();
+  const router = useRouter();
+  const { isLoading, session } = useSession();
   const DefaultTheme =
     theme.colorScheme === "dark" ? MD3DarkTheme : MD3LightTheme;
 
@@ -69,6 +72,13 @@ function RootLayoutNav() {
       ReactNativePaperDates.registerTranslation(code, translation);
     }
   }, []);
+
+  useEffect(() => {
+    if (pathName === "/login" || pathName === "/register") return;
+    if (isLoading) return;
+
+    if (!session) router.push("/login");
+  }, [session, isLoading, pathName, router]);
 
   return (
     <PaperProvider
@@ -99,7 +109,11 @@ function RootLayoutNav() {
             <View className="h-full w-full bg-background" />
           ),
           tabBarStyle: {
-            borderTopWidth: 0,
+            borderWidth: 0,
+            display:
+              pathName === "/login" || pathName === "/register"
+                ? "none"
+                : "flex",
           },
         })}
       >

@@ -7,6 +7,7 @@ export const en = {
     },
 
     title: "Ready for your next travel?",
+    destination: "Type your destination",
     period: "Period",
     members_placeholder: "Members",
     most_requested: "Most requested",

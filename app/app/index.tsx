@@ -50,10 +50,18 @@ const App = () => {
 
           <TextInput
             mode="outlined"
-            placeholder="Type your destination!"
+            placeholder={i18n.t("home.destination")}
             className="w-full"
             value={location}
             onChangeText={setLocation}
+            left={
+              <RNTextInput.Icon
+                icon={(props) => (
+                  <FontAwesome name="location-arrow" {...props} />
+                )}
+                size={25}
+              />
+            }
           />
           <View className="flex w-full max-w-full flex-1 flex-row justify-between">
             <TouchableOpacity
@@ -65,9 +73,15 @@ const App = () => {
                 readOnly
                 placeholder={i18n.t("home.period")}
                 value={
-                  range.startDate &&
-                  range.endDate &&
-                  `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
+                  range.startDate && range.endDate
+                    ? `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
+                    : ""
+                }
+                left={
+                  <RNTextInput.Icon
+                    icon={(props) => <FontAwesome name="calendar" {...props} />}
+                    size={25}
+                  />
                 }
               />
             </TouchableOpacity>
@@ -81,6 +95,12 @@ const App = () => {
                 readOnly
                 placeholder={i18n.t("home.members_placeholder")}
                 value={members.join(", ")}
+                left={
+                  <RNTextInput.Icon
+                    icon={(props) => <FontAwesome name="users" {...props} />}
+                    size={25}
+                  />
+                }
               />
             </TouchableOpacity>
           </View>
@@ -197,8 +217,7 @@ const App = () => {
                           <FontAwesome
                             className="m-auto"
                             name="trash"
-                            color={props.color}
-                            size={props.size}
+                            {...props}
                           />
                         )}
                         size={25}
@@ -218,7 +237,7 @@ const App = () => {
                 className="px-4"
                 mode="contained-tonal"
                 onPress={() => {
-                  setMembers([...members, 0]);
+                  setMembers([...members, 18]);
                 }}
               >
                 {i18n.t("home.members.add")}
