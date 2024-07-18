@@ -41,7 +41,7 @@ const Login = () => {
             .then((data) => {
               if ("token" in data) {
                 login(data.token);
-                router.push("/");
+                router.push("/account");
               } else {
                 Alert.alert(data.t);
               }

@@ -98,6 +98,9 @@ function RootLayoutNav() {
           tabBarBackground: () => (
             <View className="h-full w-full bg-background" />
           ),
+          tabBarStyle: {
+            borderTopWidth: 0,
+          },
         })}
       >
         <Tabs.Screen

@@ -1,10 +1,17 @@
 export const en = {
   home: {
+    members: {
+      title: "Members",
+      add: "Add",
+      done: "Done",
+    },
+
     title: "Ready for your next travel?",
     period: "Period",
-    members_placeholder: "1 adult(s)",
+    members_placeholder: "Members",
     most_requested: "Most requested",
     last_searches: "Last searches",
+    submit: "Start planning!",
   },
   errors: {
     screen: {

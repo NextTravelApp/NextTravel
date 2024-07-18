@@ -71,7 +71,7 @@ const SearchAccomodationPage = () => {
       </Text>
 
       <ScrollView className="mt-4">
-        <View className="flex gap-3">
+        <View className="flex gap-3 pb-4">
           {accomodations?.map((item) => (
             <Accomodation key={item.id} {...item} edit />
           ))}

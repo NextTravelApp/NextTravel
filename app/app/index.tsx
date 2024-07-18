@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
+import { Dialog, Portal } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
 
 const App = () => {
@@ -15,8 +16,9 @@ const App = () => {
   const router = useRouter();
   const { location: defaultLocation } = useLocalSearchParams();
   const [dateOpen, setDateOpen] = useState(false);
+  const [membersOpen, setMembersOpen] = useState(false);
   const [location, setLocation] = useState((defaultLocation as string) ?? "");
-  const [members, setMembers] = useState<number | undefined>();
+  const [members, setMembers] = useState<number[]>([]);
   const [range, setRange] = useState<{
     startDate?: Date;
     endDate?: Date;
@@ -69,16 +71,17 @@ const App = () => {
               />
             </TouchableOpacity>
 
-            <TextInput
-              mode="outlined"
-              keyboardType="number-pad"
-              placeholder={i18n.t("home.members_placeholder")}
+            <TouchableOpacity
               className="w-[49%]"
-              value={members?.toString()}
-              onChangeText={(text) => {
-                setMembers(Number.parseInt(text) || 0);
-              }}
-            />
+              onPress={() => setMembersOpen(true)}
+            >
+              <TextInput
+                mode="outlined"
+                readOnly
+                placeholder={i18n.t("home.members_placeholder")}
+                value={members.join(", ")}
+              />
+            </TouchableOpacity>
           </View>
 
           <Button
@@ -90,7 +93,7 @@ const App = () => {
             mode="contained"
             className="w-full"
           >
-            Start planning!
+            {i18n.t("home.submit")}
           </Button>
         </View>
 
@@ -153,6 +156,46 @@ const App = () => {
             setDateOpen(false);
           }}
         />
+
+        <Portal>
+          <Dialog visible={membersOpen} onDismiss={() => setMembersOpen(false)}>
+            <Dialog.Title>{i18n.t("home.members.title")}</Dialog.Title>
+            <Dialog.Content>
+              {members.map((member, index) => (
+                <TextInput
+                  // biome-ignore lint/suspicious/noArrayIndexKey: This is a unique key
+                  key={index}
+                  mode="outlined"
+                  keyboardType="numeric"
+                  value={member.toString()}
+                  onChangeText={(value) => {
+                    const newMembers = members.slice();
+                    newMembers[index] = Number.parseInt(value);
+                    setMembers(newMembers);
+                  }}
+                />
+              ))}
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button
+                className="px-4"
+                mode="contained-tonal"
+                onPress={() => {
+                  setMembers([...members, 0]);
+                }}
+              >
+                {i18n.t("home.members.add")}
+              </Button>
+              <Button
+                className="px-4"
+                mode="contained"
+                onPress={() => setMembersOpen(false)}
+              >
+                {i18n.t("home.members.done")}
+              </Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
       </ScrollView>
     </SafeAreaView>
   );

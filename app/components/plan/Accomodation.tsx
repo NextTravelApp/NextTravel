@@ -3,7 +3,7 @@ import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { Pressable, View } from "react-native";
 import { honoClient } from "../fetcher";
 import { i18n } from "../i18n";
-import { Text } from "../injector";
+import { Button, Text } from "../injector";
 import { Image } from "../ui/Image";
 
 export type AccomodationProps = {
@@ -29,24 +29,8 @@ export function Accomodation(props: AccomodationProps) {
       asChild
     >
       <Pressable
-        onPress={() => {
-          if (!props.edit) return;
-
-          honoClient.plan[":id"]
-            .$patch({
-              param: {
-                id: id as string,
-              },
-              json: {
-                accomodationId: props.id,
-              },
-            })
-            .then(() => {
-              queryClient.invalidateQueries({
-                queryKey: ["plan", id],
-              });
-              router.push(`/plan?id=${id}&t=${Date.now()}`);
-            });
+        onPress={(e) => {
+          if (props.edit) e.preventDefault();
         }}
       >
         <Image
@@ -57,7 +41,7 @@ export function Accomodation(props: AccomodationProps) {
           className="h-full flex-1 rounded-xl"
         />
 
-        <View className="m-auto w-1/2">
+        <View className="m-auto flex h-full w-1/2 py-4">
           <Text className="!font-bold text-xl">{props.name}</Text>
           <Text className="text-lg">{props.location}</Text>
           {props.price > 0 && (
@@ -69,6 +53,34 @@ export function Accomodation(props: AccomodationProps) {
             <Text className="text-lg">
               {i18n.t("plan.accomodation.rating")}: {props.rating}
             </Text>
+          )}
+
+          {props.edit && (
+            <Button
+              onPress={() => {
+                if (!props.edit) return;
+
+                honoClient.plan[":id"]
+                  .$patch({
+                    param: {
+                      id: id as string,
+                    },
+                    json: {
+                      accomodationId: props.id,
+                    },
+                  })
+                  .then(() => {
+                    queryClient.invalidateQueries({
+                      queryKey: ["plan", id],
+                    });
+                    router.push(`/plan?id=${id}&t=${Date.now()}`);
+                  });
+              }}
+              mode="contained"
+              className="mt-4 w-3/4"
+            >
+              Book
+            </Button>
           )}
         </View>
       </Pressable>
