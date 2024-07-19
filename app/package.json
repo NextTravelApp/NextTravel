@@ -10,6 +10,7 @@
     "web": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start --web"
   },
   "dependencies": {
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@dev-plugins/react-query": "^0.0.6",
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/native": "^6.1.18",
