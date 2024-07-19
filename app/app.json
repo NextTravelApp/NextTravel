@@ -15,7 +15,10 @@
     "ios": {
       "supportsTablet": true,
       "associatedDomains": ["applinks:nexttravel.app"],
-      "bundleIdentifier": "app.nexttravel"
+      "bundleIdentifier": "app.nexttravel",
+      "infoPlist": {
+        "NSCameraUsageDescription": "App uses camera to scan"
+      }
     },
     "android": {
       "adaptiveIcon": {
