@@ -10,9 +10,10 @@
     "web": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start --web"
   },
   "dependencies": {
-    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@dev-plugins/react-query": "^0.0.6",
+    "@dotlottie/react-player": "^1.6.19",
     "@expo/vector-icons": "^14.0.2",
+    "@lottiefiles/react-lottie-player": "^3.5.4",
     "@react-navigation/native": "^6.1.18",
     "@tanstack/react-query": "^5.51.9",
     "expo": "~51.0.21",
@@ -30,6 +31,7 @@
     "expo-web-browser": "~13.0.3",
     "hono": "^4.5.0",
     "i18n-js": "^4.4.3",
+    "lottie-react-native": "6.7.0",
     "nativewind": "^4.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",

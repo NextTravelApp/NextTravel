@@ -1,12 +1,12 @@
 import { View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 import { i18n } from "../i18n";
 import { Text } from "../injector";
+import { AnimatedLogo } from "../svg/Logo";
 
 export function LoadingScreen() {
   return (
-    <View className="min-h-screen w-full bg-background">
-      <ActivityIndicator className="m-auto" size="large" />
+    <View className="min-h-screen w-full items-center justify-center bg-background">
+      <AnimatedLogo />
     </View>
   );
 }
