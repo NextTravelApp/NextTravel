@@ -1,3 +1,4 @@
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { accomodationsRequestSchema } from "../../lib/ai/tools";
 import {
@@ -5,13 +6,13 @@ import {
   searchAccomodations,
 } from "../../lib/retriever/accomodations";
 import { authenticated } from "../../middlewares/auth";
-import { zValidator } from "../../middlewares/validator";
+import { validatorCallback } from "../../middlewares/validator";
 
 export const accomodationsRoute = new Hono()
   .post(
     "/",
     authenticated,
-    zValidator("json", accomodationsRequestSchema),
+    zValidator("json", accomodationsRequestSchema, validatorCallback),
     async (ctx) => {
       const body = ctx.req.valid("json");
       const accomodations = await searchAccomodations(body);

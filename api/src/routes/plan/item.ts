@@ -1,3 +1,4 @@
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
@@ -6,7 +7,7 @@ import prisma from "../../lib/prisma";
 import { getAccomodation } from "../../lib/retriever/accomodations";
 import { getAttraction } from "../../lib/retriever/attractions";
 import { authenticated } from "../../middlewares/auth";
-import { zValidator } from "../../middlewares/validator";
+import { validatorCallback } from "../../middlewares/validator";
 
 export type CheckoutItem = {
   type: "attraction" | "accomodation" | "fee";
@@ -54,7 +55,7 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
   .patch(
     "/",
     authenticated,
-    zValidator("json", searchUpdateSchema),
+    zValidator("json", searchUpdateSchema, validatorCallback),
     async (ctx) => {
       const id = ctx.req.param("id");
       const body = ctx.req.valid("json");

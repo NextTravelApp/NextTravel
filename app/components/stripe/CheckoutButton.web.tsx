@@ -30,7 +30,10 @@ export function CheckoutButton(props: CheckoutButtonProps) {
   return (
     <View>
       <Button
-        disabled={(session?.plan || "random_traveler") === props.plan}
+        disabled={
+          !process.env.EXPO_PUBLIC_ENABLE_STRIPE ||
+          (session?.plan || "random_traveler") === props.plan
+        }
         mode="contained"
         onPress={() => {
           fetchClientSecret().then(setClientSecret);

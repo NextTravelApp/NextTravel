@@ -1,3 +1,4 @@
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { attractionRequestSchema } from "../../lib/ai/tools";
 import {
@@ -5,13 +6,13 @@ import {
   searchAttractions,
 } from "../../lib/retriever/attractions";
 import { authenticated } from "../../middlewares/auth";
-import { zValidator } from "../../middlewares/validator";
+import { validatorCallback } from "../../middlewares/validator";
 
 export const attractionsRoute = new Hono()
   .post(
     "/",
     authenticated,
-    zValidator("json", attractionRequestSchema),
+    zValidator("json", attractionRequestSchema, validatorCallback),
     async (ctx) => {
       const body = ctx.req.valid("json");
       const attractions = await searchAttractions(body);

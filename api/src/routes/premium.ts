@@ -1,3 +1,4 @@
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import type { Stripe } from "stripe";
 import { z } from "zod";
@@ -6,7 +7,7 @@ import { getPlan, plans } from "../constants/premium";
 import prisma from "../lib/prisma";
 import { stripe } from "../lib/stripe";
 import { authenticated } from "../middlewares/auth";
-import { zValidator } from "../middlewares/validator";
+import { validatorCallback } from "../middlewares/validator";
 
 export const premiumRoute = new Hono<{ Variables: Variables }>()
   .get("/plans", async (ctx) => {
@@ -20,11 +21,15 @@ export const premiumRoute = new Hono<{ Variables: Variables }>()
       z.object({
         plan: z.string(),
       }),
+      validatorCallback,
     ),
     async (ctx) => {
       const user = ctx.get("user");
       const body = ctx.req.valid("json");
       const plan = getPlan(body.plan);
+
+      if (!process.env.EXPO_PUBLIC_ENABLE_STRIPE)
+        return ctx.json({ error: "Stripe is not enabled" }, 400);
 
       if (user.plan === plan.id)
         return ctx.json(

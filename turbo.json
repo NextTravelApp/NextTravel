@@ -2,12 +2,11 @@
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": [".env"],
   "globalEnv": [
-    "DATABASE_URL",
-    "JWT_SECRET",
-    "OPENAI_API_KEY",
-    "OPENAI_API_URL",
     "EXPO_USE_METRO_WORKSPACE_ROOT",
-    "EXPO_PUBLIC_API_URL"
+    "EXPO_PUBLIC_API_URL",
+    "EXPO_PUBLIC_APP_URL",
+    "EXPO_PUBLIC_ENABLE_STRIPE",
+    "EXPO_PUBLIC_STRIPE"
   ],
   "ui": "tui",
 

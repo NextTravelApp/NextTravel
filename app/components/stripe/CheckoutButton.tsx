@@ -37,7 +37,10 @@ export function CheckoutButton(props: CheckoutButtonProps) {
 
   return (
     <Button
-      disabled={(session?.plan || "random_traveler") === props.plan}
+      disabled={
+        !process.env.EXPO_PUBLIC_ENABLE_STRIPE ||
+        (session?.plan || "random_traveler") === props.plan
+      }
       loading={subscribe.isPending}
       mode="contained"
       onPress={() => subscribe.mutate()}

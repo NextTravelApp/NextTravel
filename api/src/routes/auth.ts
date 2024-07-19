@@ -1,3 +1,4 @@
+import { zValidator } from "@hono/zod-validator";
 import { hashSync, verifySync } from "@node-rs/argon2";
 import type { Prisma } from "database";
 import { Hono } from "hono";
@@ -11,79 +12,88 @@ import {
 import { signToken, verifyToken } from "../lib/jwt";
 import prisma from "../lib/prisma";
 import { authenticated } from "../middlewares/auth";
-import { zValidator } from "../middlewares/validator";
+import { validatorCallback } from "../middlewares/validator";
 
 export const authRoute = new Hono<{ Variables: Variables }>()
-  .post("/register", zValidator("json", registerSchema), async (ctx) => {
-    const body = ctx.req.valid("json");
+  .post(
+    "/register",
+    zValidator("json", registerSchema, validatorCallback),
+    async (ctx) => {
+      const body = ctx.req.valid("json");
 
-    try {
-      const hashedPassword = hashSync(body.password);
-      const user = await prisma.user.create({
-        data: {
-          name: body.name,
+      try {
+        const hashedPassword = hashSync(body.password);
+        const user = await prisma.user.create({
+          data: {
+            name: body.name,
+            email: body.email,
+            password: hashedPassword,
+          },
+        });
+
+        const token = await signToken(user.id);
+
+        return ctx.json({
+          token,
+        });
+      } catch (_) {
+        return ctx.json(
+          {
+            t: "email_used",
+          },
+          400,
+        );
+      }
+    },
+  )
+  .post(
+    "/login",
+    zValidator("json", loginSchema, validatorCallback),
+    async (ctx) => {
+      const body = ctx.req.valid("json");
+      const user = await prisma.user.findUnique({
+        where: {
           email: body.email,
-          password: hashedPassword,
+        },
+        select: {
+          id: true,
+          password: true,
         },
       });
+
+      if (!user || !user.password) {
+        return ctx.json(
+          {
+            t: "auth.wrong_password",
+          },
+          401,
+        );
+      }
+
+      const passwordMatch = verifySync(user.password, body.password);
+
+      if (!passwordMatch) {
+        return ctx.json(
+          {
+            t: "auth.wrong_password",
+          },
+          401,
+        );
+      }
 
       const token = await signToken(user.id);
 
       return ctx.json({
         token,
       });
-    } catch (_) {
-      return ctx.json(
-        {
-          t: "email_used",
-        },
-        400,
-      );
-    }
-  })
-  .post("/login", zValidator("json", loginSchema), async (ctx) => {
-    const body = ctx.req.valid("json");
-    const user = await prisma.user.findUnique({
-      where: {
-        email: body.email,
-      },
-      select: {
-        id: true,
-        password: true,
-      },
-    });
-
-    if (!user || !user.password) {
-      return ctx.json(
-        {
-          t: "auth.wrong_password",
-        },
-        401,
-      );
-    }
-
-    const passwordMatch = verifySync(user.password, body.password);
-
-    if (!passwordMatch) {
-      return ctx.json(
-        {
-          t: "auth.wrong_password",
-        },
-        401,
-      );
-    }
-
-    const token = await signToken(user.id);
-
-    return ctx.json({
-      token,
-    });
-  })
+    },
+  )
   .post(
     "/password/forgot",
     zValidator(
       "json",
       z.object({ email: z.string().email("auth.invalid_email") }),
+      validatorCallback,
     ),
     async (ctx) => {
       const body = ctx.req.valid("json");
@@ -110,65 +120,69 @@ export const authRoute = new Hono<{ Variables: Variables }>()
       return ctx.json({ success: true });
     },
   )
-  .post("/password/reset", zValidator("json", resetSchema), async (ctx) => {
-    const body = ctx.req.valid("json");
-    const auth = ctx.req.header("Authorization");
+  .post(
+    "/password/reset",
+    zValidator("json", resetSchema, validatorCallback),
+    async (ctx) => {
+      const body = ctx.req.valid("json");
+      const auth = ctx.req.header("Authorization");
 
-    let userId: string | null = null;
-    if (auth?.split(" ")[1]) {
-      const token = auth.split(" ")[1];
-      const decoded = await verifyToken(token);
+      let userId: string | null = null;
+      if (auth?.split(" ")[1]) {
+        const token = auth.split(" ")[1];
+        const decoded = await verifyToken(token);
 
-      if (decoded) {
-        userId = decoded.user;
+        if (decoded) {
+          userId = decoded.user;
+        }
       }
-    }
 
-    let condition: Prisma.UserWhereUniqueInput;
-    if (userId) {
-      condition = { id: userId };
-    } else {
-      condition = { resetCode: body.current };
-    }
+      let condition: Prisma.UserWhereUniqueInput;
+      if (userId) {
+        condition = { id: userId };
+      } else {
+        condition = { resetCode: body.current };
+      }
 
-    const user = await prisma.user.findUnique({
-      where: {
-        ...condition,
-      },
-      omit: {
-        password: false,
-      },
-    });
-
-    if (!user) {
-      return ctx.json(
-        {
-          t: "auth.wrong_password",
+      const user = await prisma.user.findUnique({
+        where: {
+          ...condition,
         },
-        401,
-      );
-    }
-
-    if (userId && !verifySync(user.password, body.current)) {
-      return ctx.json(
-        {
-          t: "auth.wrong_password",
+        omit: {
+          password: false,
         },
-        401,
-      );
-    }
+      });
 
-    const hashedPassword = hashSync(body.password);
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        password: hashedPassword,
-        resetCode: null,
-      },
-    });
+      if (!user) {
+        return ctx.json(
+          {
+            t: "auth.wrong_password",
+          },
+          401,
+        );
+      }
 
-    return ctx.json({ success: true });
-  })
+      if (userId && !verifySync(user.password, body.current)) {
+        return ctx.json(
+          {
+            t: "auth.wrong_password",
+          },
+          401,
+        );
+      }
+
+      const hashedPassword = hashSync(body.password);
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          password: hashedPassword,
+          resetCode: null,
+        },
+      });
+
+      return ctx.json({ success: true });
+    },
+  )
   .get("/me", authenticated, async (ctx) => {
     const user = ctx.get("user");
     return ctx.json(user);
@@ -203,6 +217,7 @@ export const authRoute = new Hono<{ Variables: Variables }>()
       z.object({
         token: z.string(),
       }),
+      validatorCallback,
     ),
     async (ctx) => {
       const user = ctx.get("user");
@@ -228,6 +243,7 @@ export const authRoute = new Hono<{ Variables: Variables }>()
       z.object({
         language: z.string(),
       }),
+      validatorCallback,
     ),
     async (ctx) => {
       const user = ctx.get("user");
