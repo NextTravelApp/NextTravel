@@ -31,4 +31,5 @@ serve(app, (info) => {
 
 export type AppType = typeof app;
 export type * from "./constants/requests";
+export type * from "./constants/premium";
 export type { responseType } from "./constants/ai";

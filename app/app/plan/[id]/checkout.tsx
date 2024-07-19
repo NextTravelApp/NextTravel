@@ -173,13 +173,6 @@ const CheckoutPage = () => {
         </View>
 
         <Text className="!font-bold mt-3 text-xl">
-          {i18n.t("plan.checkout.processor.title")}
-        </Text>
-        <Text className="text-lg">
-          {i18n.t("plan.checkout.processor.description")}
-        </Text>
-
-        <Text className="!font-bold mt-3 text-xl">
           {i18n.t("plan.checkout.plan")}
         </Text>
         {((plan?.response as responseType)?.plan ?? []).map((item) => (
@@ -191,6 +184,12 @@ const CheckoutPage = () => {
           </Text>
         ))}
 
+        <Text className="!font-bold mt-3 text-xl">
+          {i18n.t("plan.checkout.processor.title")}
+        </Text>
+        <Text className="mb-4 text-lg">
+          {i18n.t("plan.checkout.processor.description")}
+        </Text>
         {data.items
           .filter((item) => item.price > 0 && item.url)
           .map((item) => (
@@ -203,7 +202,7 @@ const CheckoutPage = () => {
       </ScrollView>
 
       <Button
-        mode="contained"
+        mode="outlined"
         className="mt-4"
         onPress={async () => {
           publishPost.mutate(true);

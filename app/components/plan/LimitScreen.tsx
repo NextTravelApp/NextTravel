@@ -1,4 +1,5 @@
-import { Alert, View } from "react-native";
+import { Link } from "expo-router";
+import { View } from "react-native";
 import { i18n } from "../i18n";
 import { Button, Text } from "../injector";
 
@@ -12,12 +13,9 @@ export function LimitScreen() {
         {i18n.t("plan.limit.description")}
       </Text>
 
-      <Button
-        mode="contained"
-        onPress={() => Alert.alert("This feature is not available yet.")}
-      >
-        {i18n.t("plan.limit.premium")}
-      </Button>
+      <Link href="/premium" asChild>
+        <Button mode="contained">{i18n.t("plan.limit.premium")}</Button>
+      </Link>
     </View>
   );
 }

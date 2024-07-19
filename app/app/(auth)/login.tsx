@@ -7,17 +7,21 @@ import Banner from "@/components/svg/Banner";
 import { Alert } from "@/components/ui/Alert";
 import { FontAwesome } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { TextInput as RNTextInput } from "react-native-paper";
 
 const Login = () => {
   const theme = useTheme();
-  const { login } = useSession();
+  const { session, login } = useSession();
   const router = useRouter();
   const [error, setError] = useState<string | undefined>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (session) router.push("/account");
+  }, [session, router]);
 
   return (
     <SafeAreaView className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">

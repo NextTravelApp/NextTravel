@@ -3,7 +3,7 @@ export const en = {
     members: {
       title: "Members",
       description:
-        "Warning! There should be at least a member with 18 years old",
+        "Warning! There should be at least a member with 18 years old if you plan to book an accomodation",
       add: "Add",
       done: "Done",
     },
@@ -80,6 +80,42 @@ export const en = {
     share: "Share",
   },
   account: {
+    premium: {
+      random_traveler: {
+        title: "Random Traveler",
+        features: [
+          { title: "1 trip per month", active: true },
+          { title: "Switch accomodation", active: true },
+          { title: "AI assistant", active: false },
+          { title: "Trip themes", active: false },
+        ],
+      },
+
+      expert_traveler: {
+        title: "Random Traveler",
+        features: [
+          { title: "5 trip per month", active: true },
+          { title: "Switch accomodation", active: true },
+          { title: "AI assistant", active: true },
+          { title: "Trip themes", active: true },
+        ],
+      },
+
+      free_spirit: {
+        title: "Random Traveler",
+        features: [
+          { title: "No monthly limits", active: true },
+          { title: "Switch accomodation", active: true },
+          { title: "AI assistant", active: true },
+          { title: "Trip themes", active: true },
+        ],
+      },
+
+      title: "Travel with no limits",
+      current: "Current",
+      buy: "Buy",
+    },
+
     bookmarks: "Bookmarks",
     public: "Public / Shared",
     name: "Name",

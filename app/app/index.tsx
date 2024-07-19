@@ -218,7 +218,9 @@ const App = () => {
         <Dialog visible={membersOpen} onDismiss={() => setMembersOpen(false)}>
           <Dialog.Title>{i18n.t("home.members.title")}</Dialog.Title>
           <Dialog.Content>
-            <Text>{i18n.t("home.members.description")}</Text>
+            {members.every((m) => m < 18) && (
+              <Text className="mb-4">{i18n.t("home.members.description")}</Text>
+            )}
 
             <ScrollView>
               {members.map((member, index) => (

@@ -130,6 +130,7 @@ function RootLayoutNav() {
             tabBarIcon: (props) => (
               <FontAwesome name="user-circle-o" {...props} />
             ),
+            href: "/account",
           }}
         />
         <Tabs.Screen name="plan" options={{ href: null }} />

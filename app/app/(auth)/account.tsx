@@ -6,6 +6,7 @@ import { Button, SafeAreaView, Text } from "@/components/injector";
 import { LoadingScreen } from "@/components/ui/Screens";
 import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "expo-router";
 import { ScrollView, View } from "react-native";
 
 const Account = () => {
@@ -35,6 +36,9 @@ const Account = () => {
       <View className="flex w-full items-center">
         <FontAwesome name="user-circle-o" size={80} color="gray" />
         <Text className="text-2xl">{session.name}</Text>
+        <Text className="text-lg text-primary">
+          {i18n.t(`account.premium.${session.plan || "random_traveler"}.title`)}
+        </Text>
       </View>
 
       <View>
@@ -81,9 +85,17 @@ const Account = () => {
         </ScrollView>
       </View>
 
-      <Button className="mt-auto" mode="contained" onPress={logout}>
-        Logout
-      </Button>
+      <View className="mt-auto flex w-full flex-row items-center gap-3">
+        <Link href="/premium" asChild>
+          <Button className="w-[49%]" mode="outlined">
+            Manage Plan
+          </Button>
+        </Link>
+
+        <Button className="w-[49%]" mode="contained" onPress={logout}>
+          Logout
+        </Button>
+      </View>
     </SafeAreaView>
   );
 };
