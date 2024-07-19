@@ -1,4 +1,5 @@
-import { sign } from "hono/jwt";
+import { sign, verify } from "hono/jwt";
+import type { JWTPayload } from "hono/utils/jwt/types";
 
 export async function signToken(userId: string) {
   return await sign(
@@ -8,4 +9,14 @@ export async function signToken(userId: string) {
     },
     process.env.JWT_SECRET as string,
   );
+}
+
+export async function verifyToken(token: string) {
+  try {
+    return (await verify(token, process.env.JWT_SECRET as string)) as {
+      user: string;
+    } & JWTPayload;
+  } catch (_) {
+    return null;
+  }
 }

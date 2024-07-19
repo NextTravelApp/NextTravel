@@ -5,6 +5,10 @@ export default new PrismaClient({
     user: {
       password: true,
       notificationTokens: true,
+      resetCode: true,
+    },
+    searchRequest: {
+      tokens: true,
     },
   },
 });

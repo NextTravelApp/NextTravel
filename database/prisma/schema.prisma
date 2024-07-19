@@ -12,15 +12,16 @@ model User {
   id   String @id @default(cuid())
   name String
 
-  email    String @unique
-  password String
+  email     String  @unique
+  password  String
+  resetCode String? @unique
 
   language String          @default("en")
   plan     String?
   searches Int             @default(0)
   history  SearchRequest[]
 
-  stripeId           String?
+  stripeId           String?  @unique
   notificationTokens String[]
 }
 
@@ -36,6 +37,8 @@ model SearchRequest {
   bookmark        Boolean  @default(false)
   public          Boolean  @default(false)
   date            DateTime
+
+  tokens Int
 
   userId    String
   user      User     @relation(fields: [userId], references: [id])

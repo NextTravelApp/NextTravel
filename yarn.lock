@@ -17,15 +17,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ai-sdk/openai@npm:^0.0.36":
-  version: 0.0.36
-  resolution: "@ai-sdk/openai@npm:0.0.36"
+"@ai-sdk/openai@npm:^0.0.37":
+  version: 0.0.37
+  resolution: "@ai-sdk/openai@npm:0.0.37"
   dependencies:
     "@ai-sdk/provider": "npm:0.0.12"
     "@ai-sdk/provider-utils": "npm:1.0.2"
   peerDependencies:
     zod: ^3.0.0
-  checksum: 10c0/006e529b439744cf82ede01d814e7c47a0ef6625c78000973b42302d81f56fed8690656e677626485e8bf0bcd96ed357a911361059e16808279fee491853bf02
+  checksum: 10c0/b9683be5a3dbef4d2599f8ba9dcbdcc0f2d68a567f38bed1974c96f5eef86538f7629b82d29c743daa2ab0831a49a8e4f659fdcbc0fc4ecf3c9b79e698db0a7c
   languageName: node
   linkType: hard
 
@@ -81,9 +81,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ai-sdk/react@npm:0.0.23":
-  version: 0.0.23
-  resolution: "@ai-sdk/react@npm:0.0.23"
+"@ai-sdk/react@npm:0.0.24":
+  version: 0.0.24
+  resolution: "@ai-sdk/react@npm:0.0.24"
   dependencies:
     "@ai-sdk/provider-utils": "npm:1.0.2"
     "@ai-sdk/ui-utils": "npm:0.0.15"
@@ -96,7 +96,7 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10c0/97b67093163e0fe49524136db4c9c89ba47aac831cb6b198edaceb2a9963ab7d838f9bfd23b1c3282b4fc7c1f17e54539363a0a6fd50b2bb84eaaa412e22c445
+  checksum: 10c0/b7a0ef62a4325715f745399a29ee1198b5fb7177849c25fbaea1f7fcd270e4d803cf35434cad446474d9dca02a60031e909caf0324e5ca67b0d1700ad097fda2
   languageName: node
   linkType: hard
 
@@ -145,9 +145,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ai-sdk/vue@npm:0.0.18":
-  version: 0.0.18
-  resolution: "@ai-sdk/vue@npm:0.0.18"
+"@ai-sdk/vue@npm:0.0.19":
+  version: 0.0.19
+  resolution: "@ai-sdk/vue@npm:0.0.19"
   dependencies:
     "@ai-sdk/provider-utils": "npm:0.0.14"
     "@ai-sdk/ui-utils": "npm:0.0.15"
@@ -157,7 +157,7 @@ __metadata:
   peerDependenciesMeta:
     vue:
       optional: true
-  checksum: 10c0/2e05108d6596fcc9bb8b8a6d576316d67af606d518d759f6fd87a7a7e3080344e5ad29a597108c3fe09d2ebe23789ee56dfce55f3b38917e540d84b75ef7067a
+  checksum: 10c0/162553b777dd501e01ddcee668b4c4cc8efa6f4c39c70079413e44451e9f8ff7daa5fcf7426c2045ee3d0b2543d0a9731d523db5b3a72224344f6a99535f631b
   languageName: node
   linkType: hard
 
@@ -3751,17 +3751,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ai@npm:^3.2.29":
-  version: 3.2.29
-  resolution: "ai@npm:3.2.29"
+"ai@npm:^3.2.31":
+  version: 3.2.31
+  resolution: "ai@npm:3.2.31"
   dependencies:
     "@ai-sdk/provider": "npm:0.0.12"
     "@ai-sdk/provider-utils": "npm:1.0.2"
-    "@ai-sdk/react": "npm:0.0.23"
+    "@ai-sdk/react": "npm:0.0.24"
     "@ai-sdk/solid": "npm:0.0.17"
     "@ai-sdk/svelte": "npm:0.0.18"
     "@ai-sdk/ui-utils": "npm:0.0.15"
-    "@ai-sdk/vue": "npm:0.0.18"
+    "@ai-sdk/vue": "npm:0.0.19"
     "@opentelemetry/api": "npm:1.9.0"
     eventsource-parser: "npm:1.1.2"
     json-schema: "npm:0.4.0"
@@ -3784,7 +3784,7 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10c0/587ae47c61f9aaa822c5237191c9641d53d8a9fb4f00ddcab95611c10bbde5bbd41d01255af6b48ac23004f23310988435259b7c6f39f6d2967945e03e9dcdaa
+  checksum: 10c0/f1c4bfba5385ffa79cc6cf20e0c6424358447fc4692df0c7c0749abd28207a9e3b664c03f9638bbc80f46bd4463505eb51b5a15418038c2dda3cb8bc1a947605
   languageName: node
   linkType: hard
 
@@ -3933,11 +3933,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "api@workspace:api"
   dependencies:
-    "@ai-sdk/openai": "npm:^0.0.36"
+    "@ai-sdk/openai": "npm:^0.0.37"
     "@hono/node-server": "npm:^1.12.0"
     "@hono/zod-validator": "npm:^0.2.2"
     "@node-rs/argon2": "npm:^1.8.3"
-    ai: "npm:^3.2.29"
+    ai: "npm:^3.2.31"
     database: "workspace:*"
     hono: "npm:^4.5.0"
     stripe: "npm:^16.2.0"

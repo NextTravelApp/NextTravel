@@ -26,7 +26,9 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
       );
 
     console.log("[Plan] Begin plan create");
-    let trip: responseType;
+    let trip: responseType & {
+      tokens?: number;
+    };
 
     if (process.env.RETURN_EXAMPLE_DATA) {
       trip = JSON.parse(readFileSync("local/search.json", "utf-8"));
@@ -58,13 +60,18 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
         imageAttributes: image?.author,
         location: body.location as string,
         request: body,
-        response: trip,
+        response: {
+          ...trip,
+          tokens: undefined,
+        },
+        tokens: trip.tokens ?? 0,
         date: new Date(body.startDate),
       },
     });
 
     return ctx.json({
       ...trip,
+      tokens: undefined,
       id: record.id,
     });
   })

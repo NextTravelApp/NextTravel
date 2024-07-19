@@ -37,7 +37,10 @@ export async function generateTrip(
   );
 
   try {
-    return JSON.parse(result.text);
+    return {
+      ...JSON.parse(result.text),
+      tokens: result.usage.totalTokens,
+    };
   } catch (_) {
     throw new UnexpectedResponseError(
       "AI response is not a valid JSON object",

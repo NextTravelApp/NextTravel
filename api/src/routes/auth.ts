@@ -1,9 +1,14 @@
 import { hashSync, verifySync } from "@node-rs/argon2";
+import type { Prisma } from "database";
 import { Hono } from "hono";
 import { z } from "zod";
 import type { Variables } from "../constants/context";
-import { loginSchema, registerSchema } from "../constants/requests";
-import { signToken } from "../lib/jwt";
+import {
+  loginSchema,
+  registerSchema,
+  resetSchema,
+} from "../constants/requests";
+import { signToken, verifyToken } from "../lib/jwt";
 import prisma from "../lib/prisma";
 import { authenticated } from "../middlewares/auth";
 import { zValidator } from "../middlewares/validator";
@@ -73,6 +78,96 @@ export const authRoute = new Hono<{ Variables: Variables }>()
     return ctx.json({
       token,
     });
+  })
+  .post(
+    "/password/forgot",
+    zValidator(
+      "json",
+      z.object({ email: z.string().email("auth.invalid_email") }),
+    ),
+    async (ctx) => {
+      const body = ctx.req.valid("json");
+      const user = await prisma.user.findUnique({
+        where: {
+          email: body.email,
+        },
+      });
+
+      if (!user) {
+        return ctx.json({
+          success: true,
+        });
+      }
+
+      const token = Math.random().toString(36).substring(2, 15);
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { resetCode: token },
+      });
+
+      // TODO: Send email
+
+      return ctx.json({ success: true });
+    },
+  )
+  .post("/password/reset", zValidator("json", resetSchema), async (ctx) => {
+    const body = ctx.req.valid("json");
+    const auth = ctx.req.header("Authorization");
+
+    let userId: string | null = null;
+    if (auth?.split(" ")[1]) {
+      const token = auth.split(" ")[1];
+      const decoded = await verifyToken(token);
+
+      if (decoded) {
+        userId = decoded.user;
+      }
+    }
+
+    let condition: Prisma.UserWhereUniqueInput;
+    if (userId) {
+      condition = { id: userId };
+    } else {
+      condition = { resetCode: body.current };
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        ...condition,
+      },
+      omit: {
+        password: false,
+      },
+    });
+
+    if (!user) {
+      return ctx.json(
+        {
+          t: "auth.wrong_password",
+        },
+        401,
+      );
+    }
+
+    if (userId && !verifySync(user.password, body.current)) {
+      return ctx.json(
+        {
+          t: "auth.wrong_password",
+        },
+        401,
+      );
+    }
+
+    const hashedPassword = hashSync(body.password);
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password: hashedPassword,
+        resetCode: null,
+      },
+    });
+
+    return ctx.json({ success: true });
   })
   .get("/me", authenticated, async (ctx) => {
     const user = ctx.get("user");

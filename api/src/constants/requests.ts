@@ -1,16 +1,20 @@
 import { z } from "zod";
 
+const passwordSchema = {
+  password: z
+    .string()
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/,
+      "auth.invalid_password",
+    ),
+  confirmPassword: z.string(),
+};
+
 export const registerSchema = z
   .object({
     name: z.string(),
     email: z.string().email("auth.invalid_email"),
-    password: z
-      .string()
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/,
-        "auth.invalid_password",
-      ),
-    confirmPassword: z.string(),
+    ...passwordSchema,
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
@@ -26,6 +30,21 @@ export const loginSchema = z.object({
   email: z.string().email("auth.invalid_email"),
   password: z.string(),
 });
+
+export const resetSchema = z
+  .object({
+    current: z.string(),
+    ...passwordSchema,
+  })
+  .superRefine(({ confirmPassword, password }, ctx) => {
+    if (confirmPassword !== password) {
+      ctx.addIssue({
+        code: "custom",
+        message: "auth.match_passwords",
+        path: ["confirmPassword"],
+      });
+    }
+  });
 
 export const searchSchema = z
   .object({
