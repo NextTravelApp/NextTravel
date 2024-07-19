@@ -3436,6 +3436,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stripe/stripe-react-native@npm:0.37.2":
+  version: 0.37.2
+  resolution: "@stripe/stripe-react-native@npm:0.37.2"
+  peerDependencies:
+    expo: ">=46.0.9"
+    react: "*"
+    react-native: "*"
+  peerDependenciesMeta:
+    expo:
+      optional: true
+  checksum: 10c0/f5980a288bf7b828fc2ef31db366b3959576226a306c13bd02e3f0d3dcfcb17399282173f592604c5a251430781751d9bf2cbb44d5428424807d84af526addb9
+  languageName: node
+  linkType: hard
+
 "@tanstack/query-core@npm:5.51.9":
   version: 5.51.9
   resolution: "@tanstack/query-core@npm:5.51.9"
@@ -3926,6 +3940,7 @@ __metadata:
     "@expo/vector-icons": "npm:^14.0.2"
     "@lottiefiles/react-lottie-player": "npm:^3.5.4"
     "@react-navigation/native": "npm:^6.1.18"
+    "@stripe/stripe-react-native": "npm:0.37.2"
     "@tanstack/react-query": "npm:^5.51.9"
     "@types/react": "npm:~18.2.79"
     api: "workspace:*"
