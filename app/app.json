@@ -14,7 +14,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "associatedDomains": ["applinks:nexttravel.app"]
+      "associatedDomains": ["applinks:nexttravel.app"],
+      "bundleIdentifier": "app.nexttravel"
     },
     "android": {
       "adaptiveIcon": {
