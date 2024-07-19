@@ -1,4 +1,9 @@
-import { findHotelsOrLocation, getHotels } from "travelpayouts";
+import {
+  findHotelsOrLocation,
+  formatImage,
+  getHotels,
+  getHotelsImage,
+} from "travelpayouts";
 import type { AccomodationsRequest } from "../../../ai/tools";
 import type { AccomodationManager } from "../../accomodations";
 import { type Accomodation, AccomodationType } from "../../types";
@@ -24,7 +29,7 @@ export class HotelLook implements AccomodationManager {
       name: hotel.name,
       location: hotel.address,
       price: hotel.minPriceTotal,
-      image: `https://photo.hotellook.com/image_v2/limit/${hotel.id}_0/200/150.jpg`,
+      image: hotel.image,
       type: AccomodationType.HOTEL,
       rating: hotel.stars,
     }));
@@ -34,14 +39,17 @@ export class HotelLook implements AccomodationManager {
     const { hotels } = await findHotelsOrLocation(id, "hotel");
     if (!hotels.length) return undefined;
 
-    return hotels.map((hotel) => ({
+    const hotel = hotels[0];
+    const image = await getHotelsImage([hotel.id]);
+
+    return {
       id: `${this.provider}_${hotel.id}`,
       name: hotel.label,
       location: hotel.locationName,
       price: 0,
-      image: `https://photo.hotellook.com/image_v2/limit/${hotel.id}_0/200/150.jpg`,
+      image: formatImage(image[hotel.id][0]),
       type: AccomodationType.HOTEL,
       rating: 0,
-    }))[0];
+    };
   }
 }

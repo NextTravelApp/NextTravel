@@ -1,4 +1,5 @@
 import { honoClient } from "@/components/fetcher";
+import { i18n } from "@/components/i18n";
 import { LimitScreen } from "@/components/plan/LimitScreen";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useQuery } from "@tanstack/react-query";
@@ -12,15 +13,16 @@ const formatDate = (date: string) => {
 };
 
 const CreatePlanPage = () => {
-  const { location, members, startDate, endDate } = useLocalSearchParams<{
+  const { location, members, startDate, endDate, t } = useLocalSearchParams<{
     location?: string;
     members?: string;
     startDate?: string;
     endDate?: string;
+    t?: string;
   }>();
   const router = useRouter();
   const { error } = useQuery({
-    queryKey: ["plan", location, members, startDate, endDate],
+    queryKey: ["plan", location, members, startDate, endDate, t],
     queryFn: async () => {
       if (!location || !members || !startDate || !endDate) return null;
 
@@ -53,7 +55,7 @@ const CreatePlanPage = () => {
   if (error && error.message === "month_limit") return <LimitScreen />;
   if (error) return <ErrorScreen error={error.message} />;
 
-  return <LoadingScreen />;
+  return <LoadingScreen title={i18n.t("plan.loading.create")} />;
 };
 
 export default CreatePlanPage;

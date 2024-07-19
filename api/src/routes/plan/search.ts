@@ -14,7 +14,7 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
     const user = ctx.get("user");
     const body = ctx.req.valid("json");
 
-    if (user.searches >= 10)
+    if (user.searches >= 20)
       return ctx.json(
         {
           t: "month_limit",

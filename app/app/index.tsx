@@ -45,6 +45,7 @@ const App = () => {
       session
         ? honoClient.plan.history.$get().then(async (res) => await res.json())
         : [],
+    staleTime: 1000 * 60 * 5,
   });
 
   useEffect(() => {
@@ -142,6 +143,7 @@ const App = () => {
                 members,
                 startDate: range.startDate?.toLocaleDateString("en-US"),
                 endDate: range.endDate?.toLocaleDateString("en-US"),
+                t: Date.now(),
               },
             });
           }}
@@ -216,6 +218,8 @@ const App = () => {
         <Dialog visible={membersOpen} onDismiss={() => setMembersOpen(false)}>
           <Dialog.Title>{i18n.t("home.members.title")}</Dialog.Title>
           <Dialog.Content>
+            <Text>{i18n.t("home.members.description")}</Text>
+
             <ScrollView>
               {members.map((member, index) => (
                 <TextInput

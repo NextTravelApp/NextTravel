@@ -38,7 +38,7 @@ const SearchAccomodationPage = () => {
     refetchInterval: false,
   });
 
-  const { data: accomodations } = useQuery({
+  const { data: accomodations, isLoading: isListLoading } = useQuery({
     queryKey: ["accomodations", searchRecord?.id],
     queryFn: async () => {
       if (!searchRecord) return null;
@@ -59,7 +59,8 @@ const SearchAccomodationPage = () => {
   });
 
   if (!id) return <Redirect href="/" />;
-  if (isLoading) return <LoadingScreen />;
+  if (isLoading || isListLoading)
+    return <LoadingScreen title={i18n.t("plan.loading.accomodation")} />;
   if (error) return <ErrorScreen error={error.message} />;
 
   return (

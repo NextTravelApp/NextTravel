@@ -3,9 +3,10 @@ import { i18n } from "../i18n";
 import { Text } from "../injector";
 import { AnimatedLogo } from "../svg/Logo";
 
-export function LoadingScreen() {
+export function LoadingScreen({ title }: { title?: string }) {
   return (
     <View className="min-h-screen w-full items-center justify-center bg-background">
+      {title && <Text className="text-center font-bold text-xl">{title}</Text>}
       <AnimatedLogo />
     </View>
   );

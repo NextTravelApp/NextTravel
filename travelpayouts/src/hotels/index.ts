@@ -1,7 +1,11 @@
 import { formatDate } from "date-fns";
 import md5 from "md5";
 import { axiosClient } from "../utils/fetcher";
-import type { HotelsResponse, HotelsSearchResponse } from "./types";
+import type {
+  HotelImages,
+  HotelsResponse,
+  HotelsSearchResponse,
+} from "./types";
 
 function generateSignature(params: URLSearchParams) {
   const keys = Array.from(params.keys()).sort();
@@ -34,12 +38,13 @@ export const getHotels = async (
   adultsCount: number,
   childrens?: number[],
 ) => {
-  let params = new URLSearchParams();
+  const params = new URLSearchParams();
   params.append("cityId", id);
   params.append("checkIn", formatDate(checkIn, "yyyy-MM-dd"));
   params.append("checkOut", formatDate(checkOut, "yyyy-MM-dd"));
   params.append("adultsCount", adultsCount.toString());
   params.append("currency", "EUR");
+  params.append("limit", "50");
   params.append("waitForResult", "1");
 
   if (childrens) {
@@ -57,23 +62,30 @@ export const getHotels = async (
   params.append("signature", generateSignature(params));
   params.append("marker", process.env.HOTELLOOK_PARTNER ?? "");
 
-  let url = `https://engine.hotellook.com/api/v2/search/start.json?${params.toString()}`;
-  const { data } = await axiosClient.get(url);
-
-  if (!("searchId" in data))
-    throw new Error("Failed to get searchId from the response");
-
-  params = new URLSearchParams();
-  params.append("searchId", data.searchId);
-  params.append("limit", "20");
-  params.append("signature", generateSignature(params));
-  params.append("marker", process.env.HOTELLOOK_PARTNER ?? "");
-
-  url = `https://engine.hotellook.com/api/v2/search/getResult.json?${params.toString()}`;
-  return axiosClient
+  const url = `https://engine.hotellook.com/api/v2/search/start.json?${params.toString()}`;
+  const data = await axiosClient
     .get<HotelsResponse>(url)
     .then((res) => res.data)
     .then((data) => data.result);
+
+  const images = await getHotelsImage(data.map((hotel) => hotel.id));
+  return data.map((hotel) => {
+    const image = images[hotel.id];
+
+    return {
+      ...hotel,
+      image: formatImage(image[0]),
+    };
+  });
+};
+
+export const getHotelsImage = async (id: number[]) => {
+  const url = `https://yasen.hotellook.com/photos/hotel_photos?id=${id.join(",")}`;
+  return axiosClient.get<HotelImages>(url).then((res) => res.data);
+};
+
+export const formatImage = (id: number) => {
+  return `https://photo.hotellook.com/image_v2/limit/${id}/200/150.jpg`;
 };
 
 export type * from "./types";

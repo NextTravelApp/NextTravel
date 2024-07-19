@@ -2,6 +2,8 @@ export const en = {
   home: {
     members: {
       title: "Members",
+      description:
+        "Warning! There should be at least a member with 18 years old",
       add: "Add",
       done: "Done",
     },
@@ -38,6 +40,10 @@ export const en = {
     month_limit: "You have reached your monthly limit",
   },
   plan: {
+    loading: {
+      create: "Generating your trip..",
+      accomodation: "Looking for the best accomodations..",
+    },
     limit: {
       title: "Oh no!",
       description:

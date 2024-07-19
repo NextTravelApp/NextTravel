@@ -32,7 +32,9 @@ export async function generateTrip(
     },
   });
 
-  console.log(`[AI] Used ${result.usage.totalTokens} tokens`);
+  console.log(
+    `[AI] Used ${result.usage.totalTokens} tokens (${result.usage.promptTokens} for prompt, ${result.usage.completionTokens} for tools)`,
+  );
 
   try {
     return JSON.parse(result.text);

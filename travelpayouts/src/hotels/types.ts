@@ -23,7 +23,7 @@ export type HotelsLocationResult = {
 };
 
 export type SimpleHotelResult = {
-  id: string;
+  id: number;
   location: HotelsLocation;
   _score: string;
   locationName: string;
@@ -72,4 +72,8 @@ export type HotelRoom = {
   total: number;
   price: number;
   internalTypeId: number;
+};
+
+export type HotelImages = {
+  [hotelId: string]: number[];
 };
