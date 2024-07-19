@@ -92,7 +92,7 @@ export const en = {
       },
 
       expert_traveler: {
-        title: "Random Traveler",
+        title: "Expert Traveler",
         features: [
           { title: "5 trip per month", active: true },
           { title: "Switch accomodation", active: true },
@@ -102,7 +102,7 @@ export const en = {
       },
 
       free_spirit: {
-        title: "Random Traveler",
+        title: "Free Spirit",
         features: [
           { title: "No monthly limits", active: true },
           { title: "Switch accomodation", active: true },

@@ -3436,6 +3436,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stripe/react-stripe-js@npm:^2.7.3":
+  version: 2.7.3
+  resolution: "@stripe/react-stripe-js@npm:2.7.3"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    "@stripe/stripe-js": ^1.44.1 || ^2.0.0 || ^3.0.0 || ^4.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/820923a3abfae68fbe8145efa0f35317634d44f7ada4b8d57f928f10dfa32e768252939ea75f2e166c55aa9035ecaa2d686423216d0bbfb06ba22c3c70fc7771
+  languageName: node
+  linkType: hard
+
+"@stripe/stripe-js@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "@stripe/stripe-js@npm:4.1.0"
+  checksum: 10c0/68d207ef6e019b04ae9d0ded32353aff11789a93ddcafaa441ac7e919e531dace5dbc549afa6aa24bb57b73404cb3c4f89ac1252d2e5167d25909b21ab67d8b7
+  languageName: node
+  linkType: hard
+
 "@stripe/stripe-react-native@npm:0.37.2":
   version: 0.37.2
   resolution: "@stripe/stripe-react-native@npm:0.37.2"
@@ -3940,6 +3960,8 @@ __metadata:
     "@expo/vector-icons": "npm:^14.0.2"
     "@lottiefiles/react-lottie-player": "npm:^3.5.4"
     "@react-navigation/native": "npm:^6.1.18"
+    "@stripe/react-stripe-js": "npm:^2.7.3"
+    "@stripe/stripe-js": "npm:^4.1.0"
     "@stripe/stripe-react-native": "npm:0.37.2"
     "@tanstack/react-query": "npm:^5.51.9"
     "@types/react": "npm:~18.2.79"
@@ -9760,7 +9782,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.8.1":
+"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:

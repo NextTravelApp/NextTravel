@@ -11,6 +11,7 @@ export type AuthContextType = {
   isLoading: boolean;
   login: (token: string) => void;
   logout: () => void;
+  refetch: () => void;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -25,7 +26,11 @@ export function useSession() {
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [[isLoading, token], setToken] = useStorageState("token");
-  const { data: session, isLoading: isSessionLoading } = useQuery({
+  const {
+    data: session,
+    isLoading: isSessionLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["session", token],
     queryFn: () =>
       token
@@ -49,6 +54,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
             .then(() => console.log("[Locale] Locale updated successfully"));
         },
         logout: () => setToken(null),
+        refetch,
       }}
     >
       {children}

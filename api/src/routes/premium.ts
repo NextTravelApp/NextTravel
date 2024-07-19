@@ -69,10 +69,10 @@ export const premiumRoute = new Hono<{ Variables: Variables }>()
       const items = await stripe.products.search({
         query: `metadata["id"]:"${plan.id}"`,
       });
-      console.log(items);
       const item = items.data.find((item) =>
         process.env.NODE_ENV === "production" ? item.livemode : !item.livemode,
       );
+
       if (!item) return ctx.json({ error: "Plan not found" }, 400);
 
       const subscription = await stripe.subscriptions.create({
@@ -85,6 +85,10 @@ export const premiumRoute = new Hono<{ Variables: Variables }>()
         payment_behavior: "default_incomplete",
         payment_settings: { save_default_payment_method: "on_subscription" },
         expand: ["latest_invoice.payment_intent"],
+        metadata: {
+          user: user.id,
+          plan: plan.id,
+        },
       });
 
       return ctx.json({

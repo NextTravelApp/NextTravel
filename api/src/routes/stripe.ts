@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import prisma from "../lib/prisma";
 import { stripe } from "../lib/stripe";
 
 export const stripeRoute = new Hono().post("/webhook", async (ctx) => {
@@ -10,13 +11,51 @@ export const stripeRoute = new Hono().post("/webhook", async (ctx) => {
     }
 
     const body = await ctx.req.text();
-    const _event = await stripe.webhooks.constructEventAsync(
+    const event = await stripe.webhooks.constructEventAsync(
       body,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET as string,
     );
 
-    // TODO
+    if (
+      event.type !== "customer.subscription.created" &&
+      event.type !== "customer.subscription.deleted"
+    )
+      return ctx.json({ success: true }, 200);
+
+    const metadata = event.data.object.metadata as {
+      user: string;
+      plan: string;
+    };
+
+    switch (event.type) {
+      case "customer.subscription.created": {
+        await prisma.user.update({
+          where: {
+            id: metadata.user,
+          },
+          data: {
+            plan: metadata.plan,
+          },
+        });
+
+        break;
+      }
+      case "customer.subscription.deleted": {
+        await prisma.user.update({
+          where: {
+            id: metadata.user,
+          },
+          data: {
+            plan: null,
+          },
+        });
+
+        break;
+      }
+      default:
+        break;
+    }
 
     return ctx.json({ success: true }, 200);
   } catch (err) {

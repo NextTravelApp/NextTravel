@@ -1,8 +1,8 @@
 import type { Plan } from "api";
 import { View } from "react-native";
 import { i18n } from "../i18n";
-import { Button, Text } from "../injector";
-import { useSession } from "./AuthContext";
+import { Text } from "../injector";
+import { CheckoutButton } from "../stripe/CheckoutButton";
 
 export type PlanCardProps = {
   plan: Plan;
@@ -14,8 +14,6 @@ type Features = {
 }[];
 
 export function PlanCard({ plan }: PlanCardProps) {
-  const { session } = useSession();
-
   return (
     <View className="flex flex-row justify-between rounded-xl bg-card p-6">
       <View>
@@ -44,14 +42,8 @@ export function PlanCard({ plan }: PlanCardProps) {
         <Text className="ml-auto text-end font-extrabold text-3xl">
           €{plan.price}
         </Text>
-        <Button
-          disabled={(session?.plan || "random_traveler") === plan.id}
-          mode="contained"
-        >
-          {(session?.plan || "random_traveler") === plan.id
-            ? i18n.t("account.premium.current")
-            : i18n.t("account.premium.buy")}
-        </Button>
+
+        <CheckoutButton plan={plan.id} />
       </View>
     </View>
   );
