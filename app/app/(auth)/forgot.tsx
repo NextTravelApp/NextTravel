@@ -1,27 +1,20 @@
 import { useTheme } from "@/components/Theme";
-import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text, TextInput } from "@/components/injector";
 import Banner from "@/components/svg/Banner";
 import { Alert } from "@/components/ui/Alert";
 import { FontAwesome } from "@expo/vector-icons";
-import { Link, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { Link } from "expo-router";
+import { useState } from "react";
 import { View } from "react-native";
 import { TextInput as RNTextInput } from "react-native-paper";
 
-const Login = () => {
+const Forgot = () => {
   const theme = useTheme();
-  const { session, login } = useSession();
-  const router = useRouter();
   const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    if (session) router.push("/account");
-  }, [session, router]);
 
   return (
     <SafeAreaView className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">
@@ -48,33 +41,18 @@ const Login = () => {
             />
           }
         />
-        <TextInput
-          mode="outlined"
-          placeholder="Password"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-          className="w-full"
-          left={
-            <RNTextInput.Icon
-              icon={(props) => <FontAwesome name="lock" {...props} />}
-              size={25}
-            />
-          }
-        />
         <Button
           mode="contained"
           className="w-full"
           onPress={() => {
-            honoClient.auth.login
-              .$post({ json: { email, password } })
+            honoClient.auth.password.forgot
+              .$post({ json: { email } })
               .then(async (res) => await res.json())
               .then((data) => {
-                if ("token" in data) {
-                  login(data.token);
-                  router.push("/account");
-                } else {
+                if ("t" in data) {
                   setError(i18n.t(`errors.${data.t || "auth.invalid_email"}`));
+                } else {
+                  setSuccess(i18n.t("account.password_reset"));
                 }
               });
           }}
@@ -83,27 +61,26 @@ const Login = () => {
         </Button>
         <View className="flex w-full flex-row justify-between">
           <Text>
-            {`${i18n.t("account.new_member")} `}
-            <Link href="/register" className="text-primary">
-              {`${i18n.t("account.register")} `}
+            {`${i18n.t("account.remember_password")} `}
+            <Link href="/login" className="text-primary">
+              {i18n.t("account.login")}
             </Link>
           </Text>
-
-          <Link href="/forgot" className="text-primary">
-            {i18n.t("account.forgot_password")}
-          </Link>
         </View>
       </View>
 
       <Alert
-        title={i18n.t("errors.screen.title")}
-        message={error}
+        title={
+          error ? i18n.t("errors.screen.title") : i18n.t("account.success")
+        }
+        message={error || success}
         onDismiss={() => {
           setError(undefined);
+          setSuccess(undefined);
         }}
       />
     </SafeAreaView>
   );
 };
 
-export default Login;
+export default Forgot;

@@ -74,7 +74,13 @@ function RootLayoutNav() {
   }, []);
 
   useEffect(() => {
-    if (pathName === "/login" || pathName === "/register") return;
+    if (
+      pathName === "/login" ||
+      pathName === "/register" ||
+      pathName === "/reset" ||
+      pathName === "/forgot"
+    )
+      return;
     if (isLoading) return;
 
     if (!session) router.push("/login");

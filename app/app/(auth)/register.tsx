@@ -11,7 +11,7 @@ import { useState } from "react";
 import { View } from "react-native";
 import { TextInput as RNTextInput } from "react-native-paper";
 
-const Login = () => {
+const Register = () => {
   const theme = useTheme();
   const { login } = useSession();
   const router = useRouter();
@@ -76,7 +76,7 @@ const Login = () => {
         />
         <TextInput
           mode="outlined"
-          placeholder="Confirm Password"
+          placeholder={i18n.t("account.confirm_password")}
           secureTextEntry
           value={confirmPassword}
           onChangeText={setConfirmPassword}
@@ -109,9 +109,9 @@ const Login = () => {
         </Button>
         <View className="flex w-full flex-row justify-between">
           <Text>
-            Already a member?{" "}
+            {`${i18n.t("account.already_member")} `}
             <Link href="/login" className="text-primary">
-              Login
+              {i18n.t("account.login")}
             </Link>
           </Text>
         </View>
@@ -128,4 +128,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

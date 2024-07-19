@@ -8,7 +8,13 @@ const AuthLayout = () => {
   const pathName = usePathname();
 
   useEffect(() => {
-    if (pathName !== "/login" && pathName !== "/register") return;
+    if (
+      pathName !== "/login" &&
+      pathName !== "/register" &&
+      pathName !== "/forgot" &&
+      pathName !== "/reset"
+    )
+      return;
     if (isLoading) return;
     if (session) router.push("/account");
   }, [session, isLoading, pathName, router]);

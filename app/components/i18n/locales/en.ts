@@ -119,7 +119,19 @@ export const en = {
     bookmarks: "Bookmarks",
     public: "Public / Shared",
     name: "Name",
+    current_password: "Current Password / Reset Code",
     confirm_password: "Confirm Password",
     submit: "Submit",
+
+    new_member: "New member?",
+    already_member: "Already a member?",
+    register: "Register",
+    login: "Login",
+    forgot_password: "Forgot password?",
+    remember_password: "Remember password?",
+
+    success: "Success",
+    password_reset: "Password reset email sent",
+    password_changed: "Password changed",
   },
 };
