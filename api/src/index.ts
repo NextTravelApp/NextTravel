@@ -4,6 +4,7 @@ import { cors } from "hono/cors";
 import { authRoute } from "./routes/auth";
 import { imageRoute } from "./routes/image";
 import { planRoute } from "./routes/plan";
+import { premiumRoute } from "./routes/premium";
 import { retrieverRoute } from "./routes/retriever";
 import { systemRoute } from "./routes/system";
 
@@ -21,7 +22,8 @@ const app = new Hono()
   .route("/plan", planRoute)
   .route("/retriever", retrieverRoute)
   .route("/image", imageRoute)
-  .route("/system", systemRoute);
+  .route("/system", systemRoute)
+  .route("/premium", premiumRoute);
 
 serve(app, (info) => {
   console.log(`[Server] Listening on ${info.address}:${info.port}`);

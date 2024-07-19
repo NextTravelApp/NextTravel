@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { Hono } from "hono";
 import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
+import { getPlan } from "../../constants/premium";
 import { searchSchema } from "../../constants/requests";
 import { generateTrip } from "../../lib/ai/generator";
 import prisma from "../../lib/prisma";
@@ -14,7 +15,7 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
     const user = ctx.get("user");
     const body = ctx.req.valid("json");
 
-    if (user.searches >= 20)
+    if (user.searches >= getPlan(user.plan).limit)
       return ctx.json(
         {
           t: "month_limit",
