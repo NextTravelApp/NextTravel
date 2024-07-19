@@ -16,6 +16,7 @@
       "supportsTablet": true,
       "associatedDomains": ["applinks:nexttravel.app"],
       "bundleIdentifier": "app.nexttravel",
+      "buildNumber": "2",
       "infoPlist": {
         "NSCameraUsageDescription": "App uses camera to scan"
       }
