@@ -1,13 +1,8 @@
-import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
+import { ai } from ".";
 import { systemPrompt } from "../../constants/ai";
 import { UnexpectedResponseError } from "./exceptions";
 import { getAccomodations, getAttraction } from "./tools";
-
-const ai = createOpenAI({
-  baseURL: process.env.OPENAI_API_URL,
-  apiKey: process.env.OPENAI_API_KEY,
-});
 
 //! WARNING: Ensure that all the variables are escaped properly
 export async function generateTrip(
@@ -34,7 +29,7 @@ export async function generateTrip(
   });
 
   console.log(
-    `[AI] Used ${result.usage.totalTokens} tokens (${result.usage.promptTokens} for prompt, ${result.usage.completionTokens} for output)`,
+    `[AI] [Generator] Used ${result.usage.totalTokens} tokens (${result.usage.promptTokens} for prompt, ${result.usage.completionTokens} for output)`,
   );
 
   try {

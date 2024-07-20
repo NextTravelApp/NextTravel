@@ -81,13 +81,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ai-sdk/react@npm:0.0.24":
-  version: 0.0.24
-  resolution: "@ai-sdk/react@npm:0.0.24"
+"@ai-sdk/react@npm:0.0.25":
+  version: 0.0.25
+  resolution: "@ai-sdk/react@npm:0.0.25"
   dependencies:
     "@ai-sdk/provider-utils": "npm:1.0.2"
-    "@ai-sdk/ui-utils": "npm:0.0.15"
-    swr: "npm:2.2.0"
+    "@ai-sdk/ui-utils": "npm:0.0.16"
+    swr: "npm:2.2.5"
   peerDependencies:
     react: ^18 || ^19
     zod: ^3.0.0
@@ -96,43 +96,43 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10c0/b7a0ef62a4325715f745399a29ee1198b5fb7177849c25fbaea1f7fcd270e4d803cf35434cad446474d9dca02a60031e909caf0324e5ca67b0d1700ad097fda2
+  checksum: 10c0/b3433f483ecc3f822517eb40559661afae8baccf3dd9d1bd92d1a5ac7d569704c31bcee0edefd1a6692e503a9270d9caf3b6a78f32ea37cec6b2597c08eb4287
   languageName: node
   linkType: hard
 
-"@ai-sdk/solid@npm:0.0.17":
-  version: 0.0.17
-  resolution: "@ai-sdk/solid@npm:0.0.17"
+"@ai-sdk/solid@npm:0.0.18":
+  version: 0.0.18
+  resolution: "@ai-sdk/solid@npm:0.0.18"
   dependencies:
-    "@ai-sdk/ui-utils": "npm:0.0.15"
+    "@ai-sdk/ui-utils": "npm:0.0.16"
   peerDependencies:
     solid-js: ^1.7.7
   peerDependenciesMeta:
     solid-js:
       optional: true
-  checksum: 10c0/5fc22c3694e14f2754713b20778232c990e16342e65c6ab785c7a8bd4464a9c9b9f5af5d1bf351fb6160f31b6d5dc44cf0abdfb3c2cabd686b4964ec394f57e5
+  checksum: 10c0/2903c0c04db892360acde610198bde6da66265c285df6f6539e046555f5f6b9cb798a4026692c65b2a942fec9f46d6e32b8dbac492a756aff93cacf1a7bfd4eb
   languageName: node
   linkType: hard
 
-"@ai-sdk/svelte@npm:0.0.18":
-  version: 0.0.18
-  resolution: "@ai-sdk/svelte@npm:0.0.18"
+"@ai-sdk/svelte@npm:0.0.19":
+  version: 0.0.19
+  resolution: "@ai-sdk/svelte@npm:0.0.19"
   dependencies:
     "@ai-sdk/provider-utils": "npm:1.0.2"
-    "@ai-sdk/ui-utils": "npm:0.0.15"
+    "@ai-sdk/ui-utils": "npm:0.0.16"
     sswr: "npm:2.1.0"
   peerDependencies:
     svelte: ^3.0.0 || ^4.0.0
   peerDependenciesMeta:
     svelte:
       optional: true
-  checksum: 10c0/a9e9b59fd4e3f92465de723a184b71d34816829f23eeea8e6b388ed4d713febf92ff86b7886735cb17535226cc2fe13c636243d01cc167c9d44db6bb26c64e4d
+  checksum: 10c0/ed645d54f460a346c680ebe279e83a0a88eb1083ebbcd18ddd2f8a3166e1fb105445753ba3c01b6eb16c5585070b9ab658bd1206f66d5aa6f215d4cb13104435
   languageName: node
   linkType: hard
 
-"@ai-sdk/ui-utils@npm:0.0.15":
-  version: 0.0.15
-  resolution: "@ai-sdk/ui-utils@npm:0.0.15"
+"@ai-sdk/ui-utils@npm:0.0.16":
+  version: 0.0.16
+  resolution: "@ai-sdk/ui-utils@npm:0.0.16"
   dependencies:
     "@ai-sdk/provider-utils": "npm:1.0.2"
     secure-json-parse: "npm:2.7.0"
@@ -141,23 +141,23 @@ __metadata:
   peerDependenciesMeta:
     zod:
       optional: true
-  checksum: 10c0/c49d8c8aa90dbaa669f7a4b0f6033094854383c48760469ec0b32578f2a8492fb4914da64d32f8b7273d1faa93467802faa760c4c62fe78773e7420e8fab3cae
+  checksum: 10c0/b9b8174e0b20d20e5a3cfef959b12fa665af76cb7de72416c820c4f774c41e4d76c1572fe5b0469b6d6efa80a029b3f1d0d4a7f6905bf0f5789eb76cbbf9a2ab
   languageName: node
   linkType: hard
 
-"@ai-sdk/vue@npm:0.0.19":
-  version: 0.0.19
-  resolution: "@ai-sdk/vue@npm:0.0.19"
+"@ai-sdk/vue@npm:0.0.20":
+  version: 0.0.20
+  resolution: "@ai-sdk/vue@npm:0.0.20"
   dependencies:
     "@ai-sdk/provider-utils": "npm:0.0.14"
-    "@ai-sdk/ui-utils": "npm:0.0.15"
+    "@ai-sdk/ui-utils": "npm:0.0.16"
     swrv: "npm:1.0.4"
   peerDependencies:
     vue: ^3.3.4
   peerDependenciesMeta:
     vue:
       optional: true
-  checksum: 10c0/162553b777dd501e01ddcee668b4c4cc8efa6f4c39c70079413e44451e9f8ff7daa5fcf7426c2045ee3d0b2543d0a9731d523db5b3a72224344f6a99535f631b
+  checksum: 10c0/44bd241a30cbf320c4ee918ad66d9149c0be23937bad2b9dbcd19a0521fd294fa560ce67f9ebc021cf56771f168179be91e9ed745ef43b55a9e6a99af1d47e13
   languageName: node
   linkType: hard
 
@@ -3477,14 +3477,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.51.9":
-  version: 5.51.9
-  resolution: "@tanstack/react-query@npm:5.51.9"
+"@tanstack/react-query@npm:^5.51.11":
+  version: 5.51.11
+  resolution: "@tanstack/react-query@npm:5.51.11"
   dependencies:
     "@tanstack/query-core": "npm:5.51.9"
   peerDependencies:
     react: ^18.0.0
-  checksum: 10c0/5a4a5ba4205db22c4a9429d4a864ebad2be02bf85ebc13ed02b7accad7e2c0fadbdbc41c63b2782bd0b50d052c09d1a08c6524be4564252109869687090359a4
+  checksum: 10c0/318aea36ffafc3e5123d970442c1358058137c069ef65dddcef87ea2406bc2f943f5e6da286df581885ba192b962b96eb785e57ef29366ee2178f18e39190f76
   languageName: node
   linkType: hard
 
@@ -3751,17 +3751,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ai@npm:^3.2.31":
-  version: 3.2.31
-  resolution: "ai@npm:3.2.31"
+"ai@npm:^3.2.32":
+  version: 3.2.32
+  resolution: "ai@npm:3.2.32"
   dependencies:
     "@ai-sdk/provider": "npm:0.0.12"
     "@ai-sdk/provider-utils": "npm:1.0.2"
-    "@ai-sdk/react": "npm:0.0.24"
-    "@ai-sdk/solid": "npm:0.0.17"
-    "@ai-sdk/svelte": "npm:0.0.18"
-    "@ai-sdk/ui-utils": "npm:0.0.15"
-    "@ai-sdk/vue": "npm:0.0.19"
+    "@ai-sdk/react": "npm:0.0.25"
+    "@ai-sdk/solid": "npm:0.0.18"
+    "@ai-sdk/svelte": "npm:0.0.19"
+    "@ai-sdk/ui-utils": "npm:0.0.16"
+    "@ai-sdk/vue": "npm:0.0.20"
     "@opentelemetry/api": "npm:1.9.0"
     eventsource-parser: "npm:1.1.2"
     json-schema: "npm:0.4.0"
@@ -3784,7 +3784,7 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10c0/f1c4bfba5385ffa79cc6cf20e0c6424358447fc4692df0c7c0749abd28207a9e3b664c03f9638bbc80f46bd4463505eb51b5a15418038c2dda3cb8bc1a947605
+  checksum: 10c0/38f0a39f7f26be85e12c634c9bea6cf044f8406cd2a28d41d6e060512769a4775a30fa4360573f5850a313c848a5d197d73fd02a1f1ce64c18cba47f157fc56e
   languageName: node
   linkType: hard
 
@@ -3937,9 +3937,9 @@ __metadata:
     "@hono/node-server": "npm:^1.12.0"
     "@hono/zod-validator": "npm:^0.2.2"
     "@node-rs/argon2": "npm:^1.8.3"
-    ai: "npm:^3.2.31"
+    ai: "npm:^3.2.32"
     database: "workspace:*"
-    hono: "npm:^4.5.0"
+    hono: "npm:^4.5.1"
     stripe: "npm:^16.2.0"
     travelpayouts: "workspace:*"
     tsx: "npm:^4.16.2"
@@ -3963,7 +3963,7 @@ __metadata:
     "@stripe/react-stripe-js": "npm:^2.7.3"
     "@stripe/stripe-js": "npm:^4.1.0"
     "@stripe/stripe-react-native": "npm:0.37.2"
-    "@tanstack/react-query": "npm:^5.51.9"
+    "@tanstack/react-query": "npm:^5.51.11"
     "@types/react": "npm:~18.2.79"
     api: "workspace:*"
     expo: "npm:~51.0.21"
@@ -3979,7 +3979,7 @@ __metadata:
     expo-status-bar: "npm:~1.12.1"
     expo-system-ui: "npm:~3.0.7"
     expo-web-browser: "npm:~13.0.3"
-    hono: "npm:^4.5.0"
+    hono: "npm:^4.5.1"
     i18n-js: "npm:^4.4.3"
     lottie-react-native: "npm:6.7.0"
     nativewind: "npm:^4.0.1"
@@ -4682,6 +4682,13 @@ __metadata:
     slice-ansi: "npm:^5.0.0"
     string-width: "npm:^7.0.0"
   checksum: 10c0/d7f0b73e3d9b88cb496e6c086df7410b541b56a43d18ade6a573c9c18bd001b1c3fba1ad578f741a4218fdc794d042385f8ac02c25e1c295a2d8b9f3cb86eb4c
+  languageName: node
+  linkType: hard
+
+"client-only@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "client-only@npm:0.0.1"
+  checksum: 10c0/9d6cfd0c19e1c96a434605added99dff48482152af791ec4172fb912a71cff9027ff174efd8cdb2160cc7f377543e0537ffc462d4f279bc4701de3f2a3c4b358
   languageName: node
   linkType: hard
 
@@ -6847,10 +6854,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^4.5.0":
-  version: 4.5.0
-  resolution: "hono@npm:4.5.0"
-  checksum: 10c0/0c1d10b0e30202a1493ab9db7e8068449a10ad352e3a9794d866eaa08c15b04c0d896499fec8ebe8994035a93ae0f54691c59c712600cd0515bcaee87bfbb1c9
+"hono@npm:^4.5.1":
+  version: 4.5.1
+  resolution: "hono@npm:4.5.1"
+  checksum: 10c0/71228cefd3808b4bb42c10de23d67f135678eb0ab7fdfd1728d934ec2ee1241be9b1260f279b81acd2a6a57346d06d047a2650ff9bddd48fda6581751a690d80
   languageName: node
   linkType: hard
 
@@ -6934,12 +6941,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^9.0.11":
-  version: 9.0.11
-  resolution: "husky@npm:9.0.11"
+"husky@npm:^9.1.1":
+  version: 9.1.1
+  resolution: "husky@npm:9.1.1"
   bin:
-    husky: bin.mjs
-  checksum: 10c0/2c787dcf74a837fc9a4fea7da907509d4bd9a289f4ea10ecc9d86279e4d4542b0f5f6443a619bccae19e265f2677172cc2b86aae5c932a35a330cc227d914605
+    husky: bin.js
+  checksum: 10c0/56394f5a08201badece23a8599bd76fe8c41e4510a956022fe54897645900c5c5a96a740ffb0604e99e808dffc3714bae982f1cbda4a069082cc713414f17ad3
   languageName: node
   linkType: hard
 
@@ -8949,9 +8956,9 @@ __metadata:
   resolution: "nexttravel@workspace:."
   dependencies:
     "@biomejs/biome": "npm:^1.8.3"
-    husky: "npm:^9.0.11"
+    husky: "npm:^9.1.1"
     lint-staged: "npm:^15.2.7"
-    turbo: "npm:^2.0.7"
+    turbo: "npm:^2.0.9"
   languageName: unknown
   linkType: soft
 
@@ -11498,14 +11505,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swr@npm:2.2.0":
-  version: 2.2.0
-  resolution: "swr@npm:2.2.0"
+"swr@npm:2.2.5":
+  version: 2.2.5
+  resolution: "swr@npm:2.2.5"
   dependencies:
+    client-only: "npm:^0.0.1"
     use-sync-external-store: "npm:^1.2.0"
   peerDependencies:
     react: ^16.11.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/f631dfd206a989313cd82e7d9477b11af08496000c339752c745e8b42ba58667528ee0c70ea529910a7b6dee9b4085e8a2cd622efb70b9709883211111e0d756
+  checksum: 10c0/731488d609ac6db60626632e3f76b046f28400b44504b3dfa69231a645127579b1add7a1595e5a6c718e24c80f1399506883bb456ca83c1b621357a0bf5a2a94
   languageName: node
   linkType: hard
 
@@ -11791,30 +11799,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-darwin-64@npm:2.0.7":
-  version: 2.0.7
-  resolution: "turbo-darwin-64@npm:2.0.7"
+"turbo-darwin-64@npm:2.0.9":
+  version: 2.0.9
+  resolution: "turbo-darwin-64@npm:2.0.9"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-darwin-arm64@npm:2.0.7":
-  version: 2.0.7
-  resolution: "turbo-darwin-arm64@npm:2.0.7"
+"turbo-darwin-arm64@npm:2.0.9":
+  version: 2.0.9
+  resolution: "turbo-darwin-arm64@npm:2.0.9"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-linux-64@npm:2.0.7":
-  version: 2.0.7
-  resolution: "turbo-linux-64@npm:2.0.7"
+"turbo-linux-64@npm:2.0.9":
+  version: 2.0.9
+  resolution: "turbo-linux-64@npm:2.0.9"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-linux-arm64@npm:2.0.7":
-  version: 2.0.7
-  resolution: "turbo-linux-arm64@npm:2.0.7"
+"turbo-linux-arm64@npm:2.0.9":
+  version: 2.0.9
+  resolution: "turbo-linux-arm64@npm:2.0.9"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
@@ -11826,30 +11834,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-windows-64@npm:2.0.7":
-  version: 2.0.7
-  resolution: "turbo-windows-64@npm:2.0.7"
+"turbo-windows-64@npm:2.0.9":
+  version: 2.0.9
+  resolution: "turbo-windows-64@npm:2.0.9"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-windows-arm64@npm:2.0.7":
-  version: 2.0.7
-  resolution: "turbo-windows-arm64@npm:2.0.7"
+"turbo-windows-arm64@npm:2.0.9":
+  version: 2.0.9
+  resolution: "turbo-windows-arm64@npm:2.0.9"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo@npm:^2.0.7":
-  version: 2.0.7
-  resolution: "turbo@npm:2.0.7"
+"turbo@npm:^2.0.9":
+  version: 2.0.9
+  resolution: "turbo@npm:2.0.9"
   dependencies:
-    turbo-darwin-64: "npm:2.0.7"
-    turbo-darwin-arm64: "npm:2.0.7"
-    turbo-linux-64: "npm:2.0.7"
-    turbo-linux-arm64: "npm:2.0.7"
-    turbo-windows-64: "npm:2.0.7"
-    turbo-windows-arm64: "npm:2.0.7"
+    turbo-darwin-64: "npm:2.0.9"
+    turbo-darwin-arm64: "npm:2.0.9"
+    turbo-linux-64: "npm:2.0.9"
+    turbo-linux-arm64: "npm:2.0.9"
+    turbo-windows-64: "npm:2.0.9"
+    turbo-windows-arm64: "npm:2.0.9"
   dependenciesMeta:
     turbo-darwin-64:
       optional: true
@@ -11865,7 +11873,7 @@ __metadata:
       optional: true
   bin:
     turbo: bin/turbo
-  checksum: 10c0/fda30dcd8daad8dea024ecb50001b4c17b084d68ba0127cbc137e75ba51af3fd5f7c710be8703c8cad78bd2beb7a37064328dfa68e044b787004ab66844f74ce
+  checksum: 10c0/09501ca97f4e4f3b36dfdd4c8b77bfa6cbef8f55181ead808eb53c88144c2a06bae7ba5fb209a53ffb19ebace031875bea243bddcfeb2134168714635b0f7356
   languageName: node
   linkType: hard
 

@@ -1,5 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
+import prisma from "../prisma";
 import { searchAccomodations } from "../retriever/accomodations";
 import { searchAttractions } from "../retriever/attractions";
 
@@ -38,3 +39,16 @@ export const getAccomodations = tool({
     return await searchAccomodations(request);
   },
 });
+
+export const getUserSearches = (id: string) =>
+  tool({
+    description: "Get the searches made by the current user",
+    parameters: z.object({}),
+    execute: async () => {
+      return await prisma.searchRequest.findMany({
+        where: {
+          userId: id,
+        },
+      });
+    },
+  });

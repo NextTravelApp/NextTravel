@@ -2,6 +2,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { authRoute } from "./routes/auth";
+import { chatRoute } from "./routes/chat";
 import { imageRoute } from "./routes/image";
 import { planRoute } from "./routes/plan";
 import { premiumRoute } from "./routes/premium";
@@ -23,13 +24,14 @@ const app = new Hono()
   .route("/retriever", retrieverRoute)
   .route("/image", imageRoute)
   .route("/system", systemRoute)
-  .route("/premium", premiumRoute);
+  .route("/premium", premiumRoute)
+  .route("/chat", chatRoute);
 
 serve(app, (info) => {
   console.log(`[Server] Listening on ${info.address}:${info.port}`);
 });
 
 export type AppType = typeof app;
-export type * from "./constants/requests";
-export type * from "./constants/premium";
 export type { responseType } from "./constants/ai";
+export type * from "./constants/premium";
+export type * from "./constants/requests";

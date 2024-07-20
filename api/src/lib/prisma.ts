@@ -10,5 +10,8 @@ export default new PrismaClient({
     searchRequest: {
       tokens: true,
     },
+    chatMessage: {
+      tokens: true,
+    },
   },
 });
