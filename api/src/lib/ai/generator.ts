@@ -22,9 +22,9 @@ export async function generateTrip(
     model: ai(process.env.OPENAI_MODEL ?? "gpt-4o"),
     maxToolRoundtrips: 5,
     system: systemPrompt,
-    prompt: `Location: "${location}" from ${startDate.toLocaleDateString("en-US")} to ${endDate.toLocaleDateString("en-US")}.
-      Members: ${members.length}, ages ${members.join(", ")}.
-      Language: ${locale}.
+    prompt: `I want to visit ${location} from ${startDate.toLocaleDateString("en-US")} to ${endDate.toLocaleDateString("en-US")}.
+      I will travel with ${members.length} of the ages ${members.join(", ")} including me.
+      My language is ${locale}.
       ${theme ? `My ideal trip theme is ${theme}` : ""}`,
     maxTokens: 4000,
     tools: {

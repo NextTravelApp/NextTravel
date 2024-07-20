@@ -8,12 +8,12 @@ function logTool(tool: string, request: unknown) {
 }
 
 export const attractionRequestSchema = z.object({
-  name: z.string().describe("Name of the attraction"),
-  location: z.string().describe("City of the attraction"),
+  name: z.string().describe("The name of the attraction"),
+  location: z.string().describe("The city of the attraction"),
 });
 export type AttractionRequest = z.infer<typeof attractionRequestSchema>;
 export const getAttraction = tool({
-  description: "Get info about a specific attraction",
+  description: "Get info and pricing about a specific attraction",
   parameters: attractionRequestSchema,
   execute: async (request) => {
     logTool("getAttractions", request);
@@ -22,14 +22,14 @@ export const getAttraction = tool({
 });
 
 export const accomodationsRequestSchema = z.object({
-  location: z.string().describe("Hotel location"),
-  members: z.array(z.number()).describe("Member ages"),
-  checkIn: z.string().date().describe("Date in YYYY-MM-DD"),
-  checkOut: z.string().date().describe("Date in YYYY-MM-DD"),
+  location: z.string().describe("The location to get the hotels for"),
+  members: z.array(z.number()).describe("The ages of the members"),
+  checkIn: z.string().date().describe("The check-in date in YYYY-MM-DD"),
+  checkOut: z.string().date().describe("The check-out date in YYYY-MM-DD"),
 });
 export type AccomodationsRequest = z.infer<typeof accomodationsRequestSchema>;
 export const getAccomodations = tool({
-  description: "Get the accomodations for a location",
+  description: "Get the best accomodations in a specific location",
   parameters: accomodationsRequestSchema,
   execute: async (request) => {
     if (request.checkIn === request.checkOut) return [];
