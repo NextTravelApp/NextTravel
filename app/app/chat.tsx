@@ -16,14 +16,25 @@ const Chat = () => {
     queryKey: ["chat", session?.id],
     queryFn: () =>
       session
-        ? honoClient.chat.$get().then(async (res) => await res.json())
+        ? honoClient.chat.$get().then(async (res) => {
+            const data = await res.json();
+            if ("t" in data) throw new Error(data.t as string);
+
+            return data;
+          })
         : [],
   });
   const sendMessage = useMutation({
     mutationFn: async (message: string) => {
-      return await honoClient.chat
+      const data = await honoClient.chat
         .$post({ json: { message } })
         .then((res) => res.json());
+
+      if ("t" in data) {
+        throw new Error(data.t as string);
+      }
+
+      return data;
     },
     onSettled: () => refetch(),
   });
@@ -42,15 +53,23 @@ const Chat = () => {
             marginTop: "auto",
           }}
         >
-          {data
-            ?.filter((message) => message.content.length)
-            .map((message) => (
-              <ChatBubble
-                bot={message.bot}
-                content={message.content}
-                key={message.id}
-              />
-            ))}
+          {sendMessage.isError && (
+            <ChatBubble
+              bot
+              content={i18n.t(`errors.${sendMessage.error.message}`)}
+            />
+          )}
+          {data &&
+            "filter" in data &&
+            data
+              ?.filter((message) => message.content.length)
+              .map((message) => (
+                <ChatBubble
+                  bot={message.bot}
+                  content={message.content}
+                  key={message.id}
+                />
+              ))}
           {sendMessage.isPending && (
             <ChatBubble bot={false} content={sendMessage.variables} />
           )}

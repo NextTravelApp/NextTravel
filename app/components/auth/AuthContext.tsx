@@ -30,17 +30,21 @@ export function useSession() {
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [[isLoading, token], setToken] = useStorageState("token");
+  const [loading, setLoading] = useState(true);
   const [session, setSession] =
     useState<InferResponseType<typeof honoClient.auth.me.$get>>();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Refresh with token
   useEffect(() => {
+    setLoading(true);
+
     honoClient.auth.me
       .$get()
       .then(async (res) => await res.json())
       .then((data) => {
-        if (!("id" in data)) throw new Error("Invalid session data");
+        setLoading(false);
 
+        if (!("id" in data)) throw new Error("Invalid session data");
         setSession(data);
       });
   }, [token]);
@@ -49,7 +53,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     <AuthContext.Provider
       value={{
         session: session || null,
-        isLoading: isLoading,
+        isLoading: isLoading || loading,
         login: (token: string) => {
           setToken(token);
 

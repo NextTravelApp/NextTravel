@@ -41,9 +41,11 @@ export function CheckoutButton(props: CheckoutButtonProps) {
       mode="contained"
       onPress={() => subscribe.mutate()}
     >
-      {(session?.plan || "random_traveler") === props.plan
-        ? i18n.t("account.premium.current")
-        : i18n.t("account.premium.buy")}
+      {!process.env.EXPO_PUBLIC_ENABLE_STRIPE
+        ? i18n.t("account.premium.soon")
+        : (session?.plan || "random_traveler") === props.plan
+          ? i18n.t("account.premium.current")
+          : i18n.t("account.premium.buy")}
     </Button>
   );
 }
