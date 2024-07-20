@@ -1,13 +1,13 @@
 import { useTheme } from "@/components/Theme";
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
-import { Button, SafeAreaView, Text, TextInput } from "@/components/injector";
+import { Button, Text, TextInput } from "@/components/injector";
 import Banner from "@/components/svg/Banner";
 import { Alert } from "@/components/ui/Alert";
 import { FontAwesome } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useState } from "react";
-import { View } from "react-native";
+import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
 import { TextInput as RNTextInput } from "react-native-paper";
 
 const Forgot = () => {
@@ -17,11 +17,12 @@ const Forgot = () => {
   const [email, setEmail] = useState("");
 
   return (
-    <SafeAreaView className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">
-      <View className="m-auto flex w-5/6 flex-col items-center justify-center gap-3">
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">
         <Banner
           style={{
-            marginBottom: 100,
+            position: "absolute",
+            top: 50,
           }}
           color={theme.text}
         />
@@ -79,7 +80,7 @@ const Forgot = () => {
           setSuccess(undefined);
         }}
       />
-    </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
