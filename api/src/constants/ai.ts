@@ -3,28 +3,23 @@ import createSchema from "zod-to-json-schema";
 
 export const responseSchema = z.object({
   title: z.string().describe("A creative and short title for the trip"),
-  plan: z
-    .array(
-      z
-        .object({
-          title: z.string().describe("The title of the step"),
-          date: z.string().describe("The date of the step"),
-          time: z.string().describe("The time of the step"),
-          duration: z.number().describe("The duration of the step"),
-          location: z.string().describe("The location of the step"),
-          attractionId: z
-            .string()
-            .optional()
-            .describe("The id of an attraction if present"),
-        })
-        .describe("A step for the trip"),
-    )
-    .describe("The plan for the trip"),
+  plan: z.array(
+    z
+      .object({
+        title: z.string(),
+        date: z.string(),
+        time: z.string(),
+        duration: z.number(),
+        location: z.string(),
+        attractionId: z
+          .string()
+          .optional()
+          .describe("The id of an attraction if present"),
+      })
+      .describe("A step for the trip"),
+  ),
 
-  accomodationId: z
-    .string()
-    .optional()
-    .describe("The id of the accomodation to book"),
+  accomodationId: z.string().optional().describe("The id of the accomodation"),
 });
 
 export type responseType = z.infer<typeof responseSchema>;
@@ -43,10 +38,9 @@ export const systemPrompt = [
     "one provided below,",
   "- You should base the plan based on user preferences if given and also on the " +
     "ages of the members,",
-  "- You should give a creative and short name to the trip based on what is included in it,",
+  "- If start and end date matches, do not look for an accomodation,",
   "- Use the language provided by the user to write the titles,",
-  "- You should never add formatting ticks for the json output. " +
-    "Just return it in plain text,",
+  "- You should never add formatting ticks for the json output.",
   "",
   "JSON schema:",
   JSON.stringify(createSchema(responseSchema)),

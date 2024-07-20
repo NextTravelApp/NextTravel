@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 10.2.1"
+    "version": ">= 10.2.1",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -16,12 +17,14 @@
       "distribution": "internal",
       "env": {
         "EXPO_USE_METRO_WORKSPACE_ROOT": "1"
-      }
+      },
+      "autoIncrement": true
     },
     "production": {
       "env": {
         "EXPO_USE_METRO_WORKSPACE_ROOT": "1"
-      }
+      },
+      "autoIncrement": true
     }
   },
   "submit": {
