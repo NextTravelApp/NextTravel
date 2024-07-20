@@ -10,7 +10,7 @@ export type CheckoutButtonProps = {
 };
 
 export function CheckoutButton(props: CheckoutButtonProps) {
-  const { session, refetch } = useSession();
+  const { session } = useSession();
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const subscribe = useMutation({
     mutationFn: async () => {
@@ -28,10 +28,6 @@ export function CheckoutButton(props: CheckoutButtonProps) {
 
       if (error) return;
       await presentPaymentSheet();
-
-      setTimeout(() => {
-        refetch();
-      }, 500);
     },
   });
 

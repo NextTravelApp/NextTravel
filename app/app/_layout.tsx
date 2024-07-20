@@ -131,6 +131,12 @@ function RootLayoutNav() {
           }}
         />
         <Tabs.Screen
+          name="chat"
+          options={{
+            tabBarIcon: (props) => <FontAwesome name="comments" {...props} />,
+          }}
+        />
+        <Tabs.Screen
           name="(auth)"
           options={{
             tabBarIcon: (props) => (

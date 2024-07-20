@@ -134,4 +134,7 @@ export const en = {
     password_reset: "Password reset email sent",
     password_changed: "Password changed",
   },
+  chat: {
+    title: "Chat",
+  },
 };

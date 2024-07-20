@@ -232,7 +232,7 @@ const App = () => {
                   value={member.toString()}
                   onChangeText={(value) => {
                     const newMembers = members.slice();
-                    newMembers[index] = Number.parseInt(value);
+                    newMembers[index] = Number.parseInt(value) || 0;
                     setMembers(newMembers);
                   }}
                   className="!bg-transparent mb-4"

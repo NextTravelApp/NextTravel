@@ -1,8 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
 import type { InferResponseType } from "hono/client";
-import { type PropsWithChildren, createContext, useContext } from "react";
+import {
+  type PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { registerForPushNotificationsAsync } from "../NotificationHandler";
-import { honoClient } from "../fetcher";
+import { authenticatedHonoClient, honoClient } from "../fetcher";
 import { getLocale } from "../i18n/LocalesHandler";
 import { useStorageState } from "../useStorageState";
 
@@ -11,7 +16,6 @@ export type AuthContextType = {
   isLoading: boolean;
   login: (token: string) => void;
   logout: () => void;
-  refetch: () => void;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -26,35 +30,44 @@ export function useSession() {
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [[isLoading, token], setToken] = useStorageState("token");
-  const {
-    data: session,
-    isLoading: isSessionLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["session", token],
-    queryFn: () =>
-      token
-        ? honoClient.auth.me.$get().then(async (res) => await res.json())
-        : null,
-  });
+  const [session, setSession] =
+    useState<InferResponseType<typeof honoClient.auth.me.$get>>();
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Refresh with token
+  useEffect(() => {
+    honoClient.auth.me
+      .$get()
+      .then(async (res) => await res.json())
+      .then((data) => {
+        if (!("id" in data)) throw new Error("Invalid session data");
+
+        setSession(data);
+      });
+  }, [token]);
 
   return (
     <AuthContext.Provider
       value={{
         session: session || null,
-        isLoading: isLoading || isSessionLoading,
+        isLoading: isLoading,
         login: (token: string) => {
           setToken(token);
+
+          const honoClient = authenticatedHonoClient(token);
+
           registerForPushNotificationsAsync();
 
           honoClient.auth.language
             .$patch({
               json: { language: getLocale() },
             })
-            .then(() => console.log("[Locale] Locale updated successfully"));
+            .then(async (res) =>
+              console.log(
+                `[Locale] Locale updated successfully (${JSON.stringify(await res.json())})`,
+              ),
+            );
         },
         logout: () => setToken(null),
-        refetch,
       }}
     >
       {children}

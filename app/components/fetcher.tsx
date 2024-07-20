@@ -8,6 +8,21 @@ import type { Client } from "hono/dist/types/client/types";
 import type { UnionToIntersection } from "hono/utils/types";
 import { Platform } from "react-native";
 
+export const authenticatedHonoClient = (token: string | null) => {
+  // biome-ignore lint/suspicious/noExplicitAny: any is required here
+  const headers: any = {};
+  if (token) headers.Authorization = `Bearer ${token}`;
+
+  return hc<AppType>(process.env.EXPO_PUBLIC_API_URL as string, {
+    headers: {
+      ...headers,
+      "User-Agent": `NextTravel/${
+        Constants.appOwnership === "expo" ? "expo-go" : nativeApplicationVersion
+      }`,
+    },
+  }) as UnionToIntersection<Client<AppType>>;
+};
+
 const token =
   Platform.OS === "web"
     ? typeof window !== "undefined"
@@ -15,21 +30,4 @@ const token =
       : null
     : SecureStore.getItem("token");
 
-let headers = {};
-if (token) {
-  headers = {
-    Authorization: `Bearer ${token}`,
-  };
-}
-
-export const honoClient: UnionToIntersection<Client<AppType>> = hc<AppType>(
-  process.env.EXPO_PUBLIC_API_URL as string,
-  {
-    headers: {
-      ...headers,
-      "User-Agent": `NextTravel/${
-        Constants.appOwnership === "expo" ? "expo-go" : nativeApplicationVersion
-      }`,
-    },
-  },
-);
+export const honoClient = authenticatedHonoClient(token);
