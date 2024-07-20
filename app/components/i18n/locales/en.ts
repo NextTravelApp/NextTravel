@@ -136,5 +136,6 @@ export const en = {
   },
   chat: {
     title: "Chat",
+    input: "Type your message",
   },
 };

@@ -33,7 +33,7 @@ export const chatRoute = new Hono<{ Variables: Variables }>()
         userId: user.id,
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: "asc",
       },
     });
 
