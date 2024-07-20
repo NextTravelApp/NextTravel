@@ -30,7 +30,7 @@ export const systemPrompt = [
   "Some rules and explanation:",
   "- User gives some information regarding the trip they want to execute,",
   "- Dates are always in the format 'MM/DD/YYYY",
-  "- You can call functions(getAttraction,getAccomodations) to retrieve data " +
+  "- You can call tools(getAttraction,getAccomodations) to retrieve data " +
     "from the web,",
   "- When you respond, you must provide a full plan, select the best accomodation based " +
     "on where the attractions are, the price and the ratings,",

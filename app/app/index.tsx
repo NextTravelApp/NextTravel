@@ -45,7 +45,7 @@ const App = () => {
       session
         ? honoClient.plan.history.$get().then(async (res) => await res.json())
         : [],
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60,
   });
 
   useEffect(() => {

@@ -26,7 +26,7 @@ export function Accomodation(props: AccomodationProps) {
   return (
     <Link
       href={props.edit || !props.switch ? "#" : `/plan/${id}/accomodation`}
-      className="flex min-h-36 w-full flex-1 flex-row gap-3 rounded-xl bg-card"
+      className="flex max-h-36 w-full flex-1 flex-row gap-3 rounded-xl bg-card"
       asChild
     >
       <Pressable

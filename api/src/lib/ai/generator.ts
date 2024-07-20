@@ -6,6 +6,7 @@ import { getAccomodations, getAttraction } from "./tools";
 
 const ai = createOpenAI({
   baseURL: process.env.OPENAI_API_URL,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 //! WARNING: Ensure that all the variables are escaped properly
