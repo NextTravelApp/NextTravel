@@ -1,4 +1,6 @@
 import type { AppType } from "api";
+import { nativeApplicationVersion } from "expo-application";
+import Constants from "expo-constants";
 import * as SecureStore from "expo-secure-store";
 // @ts-expect-error Metro seems to not be able to find the package
 import { hc } from "hono/dist/client/client";
@@ -25,7 +27,9 @@ export const honoClient: UnionToIntersection<Client<AppType>> = hc<AppType>(
   {
     headers: {
       ...headers,
-      "User-Agent": "NextTravel/0.0.0",
+      "User-Agent": `NextTravel/${
+        Constants.appOwnership === "expo" ? "expo-go" : nativeApplicationVersion
+      }`,
     },
   },
 );
