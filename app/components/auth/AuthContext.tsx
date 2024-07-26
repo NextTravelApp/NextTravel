@@ -34,9 +34,14 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const [session, setSession] =
     useState<InferResponseType<typeof honoClient.auth.me.$get>>();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Refresh with token
   useEffect(() => {
     setLoading(true);
+
+    if (!token) {
+      setSession(undefined);
+      setLoading(false);
+      return;
+    }
 
     honoClient.auth.me
       .$get()
@@ -44,7 +49,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
       .then((data) => {
         setLoading(false);
 
-        if (!("id" in data)) throw new Error("Invalid session data");
+        if (!("id" in data)) {
+          setSession(undefined);
+          throw new Error("Invalid session data");
+        }
+
         setSession(data);
       });
   }, [token]);
