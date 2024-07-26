@@ -14,7 +14,7 @@ import { useStorageState } from "../useStorageState";
 export type AuthContextType = {
   session: InferResponseType<typeof honoClient.auth.me.$get> | null;
   isLoading: boolean;
-  login: (token: string) => void;
+  login: (token: string) => Promise<void>;
   logout: () => void;
 };
 
@@ -34,7 +34,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const [session, setSession] =
     useState<InferResponseType<typeof honoClient.auth.me.$get>>();
 
-  useEffect(() => {
+  const fetchSession = async () => {
     setLoading(true);
 
     if (!token) {
@@ -43,19 +43,23 @@ export function AuthProvider({ children }: PropsWithChildren) {
       return;
     }
 
-    honoClient.auth.me
+    const data = await honoClient.auth.me
       .$get()
-      .then(async (res) => await res.json())
-      .then((data) => {
-        setLoading(false);
+      .then(async (res) => await res.json());
 
-        if (!("id" in data)) {
-          setSession(undefined);
-          throw new Error("Invalid session data");
-        }
+    if (!("id" in data)) {
+      setSession(undefined);
+      setLoading(false);
+      throw new Error("Invalid session data");
+    }
 
-        setSession(data);
-      });
+    setSession(data);
+    setLoading(false);
+  };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Token is used
+  useEffect(() => {
+    fetchSession();
   }, [token]);
 
   return (
@@ -63,7 +67,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       value={{
         session: session || null,
         isLoading: isLoading || loading,
-        login: (token: string) => {
+        login: async (token: string) => {
           setToken(token);
 
           const honoClient = authenticatedHonoClient(token);
@@ -79,6 +83,8 @@ export function AuthProvider({ children }: PropsWithChildren) {
                 `[Locale] Locale updated successfully (${JSON.stringify(await res.json())})`,
               ),
             );
+
+          await fetchSession();
         },
         logout: () => setToken(null),
       }}

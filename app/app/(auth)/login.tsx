@@ -71,9 +71,9 @@ const Login = () => {
               honoClient.auth.login
                 .$post({ json: { email, password } })
                 .then(async (res) => await res.json())
-                .then((data) => {
+                .then(async (data) => {
                   if ("token" in data) {
-                    login(data.token);
+                    await login(data.token);
                     router.push("/");
                   } else {
                     setError(
