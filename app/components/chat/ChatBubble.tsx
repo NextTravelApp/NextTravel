@@ -1,3 +1,4 @@
+import { View } from "react-native";
 import { Text } from "../injector";
 
 export type ChatBubbleProps = {
@@ -7,13 +8,13 @@ export type ChatBubbleProps = {
 
 export function ChatBubble(props: ChatBubbleProps) {
   return (
-    <Text
+    <View
       className={`w-1/2 rounded-xl p-4 ${props.bot ? "bg-card" : "bg-primary"}`}
       style={{
         alignSelf: props.bot ? "flex-start" : "flex-end",
       }}
     >
-      {props.content}
-    </Text>
+      <Text>{props.content}</Text>
+    </View>
   );
 }

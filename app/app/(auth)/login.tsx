@@ -20,7 +20,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (session) router.push("/account");
+    if (session) router.push("/");
   }, [session, router]);
 
   return (
@@ -74,7 +74,7 @@ const Login = () => {
                 .then((data) => {
                   if ("token" in data) {
                     login(data.token);
-                    router.push("/account");
+                    router.push("/");
                   } else {
                     setError(
                       i18n.t(`errors.${data.t || "auth.invalid_email"}`),

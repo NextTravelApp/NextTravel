@@ -10,7 +10,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import {
+  Keyboard,
+  ScrollView,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { Dialog, Portal, TextInput as RNTextInput } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -215,68 +221,72 @@ const App = () => {
       />
 
       <Portal>
-        <Dialog visible={membersOpen} onDismiss={() => setMembersOpen(false)}>
-          <Dialog.Title>{i18n.t("home.members.title")}</Dialog.Title>
-          <Dialog.Content>
-            {members.every((m) => m < 18) && (
-              <Text className="mb-4">{i18n.t("home.members.description")}</Text>
-            )}
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <Dialog visible={membersOpen} onDismiss={() => setMembersOpen(false)}>
+            <Dialog.Title>{i18n.t("home.members.title")}</Dialog.Title>
+            <Dialog.Content>
+              {members.every((m) => m < 18) && (
+                <Text className="mb-4">
+                  {i18n.t("home.members.description")}
+                </Text>
+              )}
 
-            <ScrollView>
-              {members.map((member, index) => (
-                <TextInput
-                  // biome-ignore lint/suspicious/noArrayIndexKey: This is a unique key
-                  key={index}
-                  mode="outlined"
-                  keyboardType="numeric"
-                  value={member.toString()}
-                  onChangeText={(value) => {
-                    const newMembers = members.slice();
-                    newMembers[index] = Number.parseInt(value) || 0;
-                    setMembers(newMembers);
-                  }}
-                  className="!bg-transparent mb-4"
-                  right={
-                    <RNTextInput.Icon
-                      className="m-auto"
-                      icon={(props) => (
-                        <FontAwesome
-                          className="m-auto"
-                          name="trash"
-                          {...props}
-                        />
-                      )}
-                      size={25}
-                      onPress={() => {
-                        const newMembers = members.slice();
-                        newMembers.splice(index, 1);
-                        setMembers(newMembers);
-                      }}
-                    />
-                  }
-                />
-              ))}
-            </ScrollView>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button
-              className="px-4"
-              mode="contained-tonal"
-              onPress={() => {
-                setMembers([...members, 18]);
-              }}
-            >
-              {i18n.t("home.members.add")}
-            </Button>
-            <Button
-              className="px-4"
-              mode="contained"
-              onPress={() => setMembersOpen(false)}
-            >
-              {i18n.t("home.members.done")}
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
+              <ScrollView>
+                {members.map((member, index) => (
+                  <TextInput
+                    // biome-ignore lint/suspicious/noArrayIndexKey: This is a unique key
+                    key={index}
+                    mode="outlined"
+                    keyboardType="numeric"
+                    value={member.toString()}
+                    onChangeText={(value) => {
+                      const newMembers = members.slice();
+                      newMembers[index] = Number.parseInt(value) || 0;
+                      setMembers(newMembers);
+                    }}
+                    className="!bg-transparent mb-4"
+                    right={
+                      <RNTextInput.Icon
+                        className="m-auto"
+                        icon={(props) => (
+                          <FontAwesome
+                            className="m-auto"
+                            name="trash"
+                            {...props}
+                          />
+                        )}
+                        size={25}
+                        onPress={() => {
+                          const newMembers = members.slice();
+                          newMembers.splice(index, 1);
+                          setMembers(newMembers);
+                        }}
+                      />
+                    }
+                  />
+                ))}
+              </ScrollView>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button
+                className="px-4"
+                mode="contained-tonal"
+                onPress={() => {
+                  setMembers([...members, 18]);
+                }}
+              >
+                {i18n.t("home.members.add")}
+              </Button>
+              <Button
+                className="px-4"
+                mode="contained"
+                onPress={() => setMembersOpen(false)}
+              >
+                {i18n.t("home.members.done")}
+              </Button>
+            </Dialog.Actions>
+          </Dialog>
+        </TouchableWithoutFeedback>
       </Portal>
     </ScrollView>
   );

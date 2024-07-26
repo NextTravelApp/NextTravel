@@ -16,7 +16,7 @@ const AuthLayout = () => {
     )
       return;
     if (isLoading) return;
-    if (session) router.push("/account");
+    if (session) router.push("/");
   }, [session, isLoading, pathName, router]);
 
   return <Slot />;

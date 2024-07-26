@@ -20,13 +20,13 @@
     "@stripe/stripe-js": "^4.1.0",
     "@stripe/stripe-react-native": "0.37.2",
     "@tanstack/react-query": "^5.51.11",
-    "expo": "~51.0.21",
+    "expo": "~51.0.22",
     "expo-constants": "~16.0.2",
     "expo-device": "~6.0.2",
     "expo-image": "~1.12.13",
     "expo-linking": "~6.3.1",
     "expo-localization": "~15.0.3",
-    "expo-notifications": "~0.28.10",
+    "expo-notifications": "~0.28.12",
     "expo-router": "~3.5.18",
     "expo-secure-store": "~13.0.2",
     "expo-splash-screen": "~0.27.5",
@@ -52,7 +52,7 @@
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.79",
     "api": "workspace:*",
-    "tailwindcss": "^3.4.6",
+    "tailwindcss": "^3.4.7",
     "typescript": "~5.3.3"
   }
 }

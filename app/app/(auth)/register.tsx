@@ -101,7 +101,7 @@ const Login = () => {
                 .then((data) => {
                   if ("token" in data) {
                     login(data.token);
-                    router.push("/account");
+                    router.push("/");
                   } else {
                     setError(
                       i18n.t(`errors.${data.t || "auth.invalid_email"}`),
