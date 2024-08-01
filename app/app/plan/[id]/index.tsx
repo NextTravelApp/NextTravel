@@ -26,12 +26,12 @@ const PlanPage = () => {
         },
       });
 
-      const resData = await res.json();
-      if ("t" in resData) throw new Error(resData.t);
+      const data = await res.json();
+      if ("t" in data) throw new Error(data.t);
 
       return {
-        ...(resData.response as responseType),
-        userId: resData.userId,
+        ...data,
+        response: data.response as responseType,
       };
     },
     staleTime: 1000 * 60 * 5,
@@ -41,13 +41,13 @@ const PlanPage = () => {
     refetchInterval: false,
   });
   const { data: accomodation } = useQuery({
-    queryKey: ["accomodation", data?.accomodationId],
+    queryKey: ["accomodation", data?.response.accomodationId],
     queryFn: async () => {
-      if (!data?.accomodationId) return null;
+      if (!data?.response.accomodationId) return null;
 
       const res = await honoClient.retriever.accomodations[":id"].$get({
         param: {
-          id: data.accomodationId,
+          id: data.response.accomodationId,
         },
       });
 
@@ -82,7 +82,7 @@ const PlanPage = () => {
 
         <View className="flex gap-3 pb-6">
           <Text className="!font-bold mt-4 text-xl">{i18n.t("plan.plan")}</Text>
-          {data?.plan?.map((item) => (
+          {data?.response.plan?.map((item) => (
             <PlanStep key={item.title} {...item} />
           ))}
         </View>

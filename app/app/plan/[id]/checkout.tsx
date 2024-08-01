@@ -29,7 +29,10 @@ const CheckoutPage = () => {
       const data = await res.json();
       if ("t" in data) throw new Error(data.t);
 
-      return data;
+      return {
+        ...data,
+        response: data.response as responseType,
+      };
     },
     staleTime: 1000 * 60 * 5,
     refetchOnMount: false,
@@ -101,6 +104,10 @@ const CheckoutPage = () => {
 
         {session?.id === plan?.userId && (
           <View className="flex flex-row items-center gap-3">
+            <Link href={`/plan/${id}/calendar`} asChild>
+              <FontAwesome name="calendar" size={24} color={theme.text} />
+            </Link>
+
             <Pressable
               onPress={() => {
                 publishPost.mutate(

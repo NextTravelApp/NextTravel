@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { registerForPushNotificationsAsync } from "../NotificationHandler";
-import { authenticatedHonoClient, honoClient } from "../fetcher";
+import { authenticatedHonoClient, type honoClient } from "../fetcher";
 import { getLocale } from "../i18n/LocalesHandler";
 import { useStorageState } from "../useStorageState";
 
@@ -34,7 +34,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const [session, setSession] =
     useState<InferResponseType<typeof honoClient.auth.me.$get>>();
 
-  const fetchSession = async () => {
+  const fetchSession = async (token: string | null) => {
     setLoading(true);
 
     if (!token) {
@@ -43,6 +43,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       return;
     }
 
+    const honoClient = authenticatedHonoClient(token);
     const data = await honoClient.auth.me
       .$get()
       .then(async (res) => await res.json());
@@ -59,7 +60,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Token is used
   useEffect(() => {
-    fetchSession();
+    fetchSession(token);
   }, [token]);
 
   return (
@@ -84,7 +85,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
               ),
             );
 
-          await fetchSession();
+          await fetchSession(token);
         },
         logout: () => setToken(null),
       }}

@@ -4,7 +4,7 @@ import { Button, SafeAreaView, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useQuery } from "@tanstack/react-query";
-import type { searchSchemaType } from "api";
+import type { responseType, searchSchemaType } from "api";
 import { Link, Redirect, useLocalSearchParams } from "expo-router";
 import { ScrollView, View } from "react-native";
 
@@ -29,7 +29,10 @@ const SearchAccomodationPage = () => {
       const data = await res.json();
       if ("t" in data) throw new Error(data.t);
 
-      return data;
+      return {
+        ...data,
+        response: data.response as responseType,
+      };
     },
     staleTime: 1000 * 60 * 5,
     refetchOnMount: false,
