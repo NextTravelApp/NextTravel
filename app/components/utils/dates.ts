@@ -2,11 +2,12 @@ export type DateType = `${number}/${number}/${number}`;
 
 export function parseDate(date: DateType, increment?: boolean) {
   const [month, day, year] = date.split("/");
-  return new Date(
-    Number(year),
-    Number(month) - 1,
-    Number(day + (increment ? 1 : 0)),
-  );
+
+  const d = new Date(Number(year), Number(month) - 1, Number(day));
+
+  if (increment) d.setDate(d.getDate() + 1);
+
+  return d;
 }
 
 export function dateEquals(date: Date, other: Date) {

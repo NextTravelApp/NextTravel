@@ -1,19 +1,22 @@
+import { useTheme } from "@/components/Theme";
 import { honoClient } from "@/components/fetcher";
-import { SafeAreaView } from "@/components/injector";
+import { i18n } from "@/components/i18n";
+import { Button, SafeAreaView } from "@/components/injector";
 import { LimitScreen } from "@/components/plan/LimitScreen";
 import { PlanStep } from "@/components/plan/PlanStep";
+import { Agenda } from "@/components/ui/Agenda";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { type DateType, dateEquals, parseDate } from "@/components/utils/dates";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
-import { useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { FlatList, View } from "react-native";
-import { Agenda } from "react-native-calendars";
 
 const CalendarPage = () => {
   const { id } = useLocalSearchParams<{
     id: string;
   }>();
+  const theme = useTheme();
   const { data, isLoading, error } = useQuery({
     queryKey: ["plan", id],
     queryFn: async () => {
@@ -63,7 +66,7 @@ const CalendarPage = () => {
             .toISOString()
             .split("T")[0]
         }
-        renderList={(list: { selectedDay: string }) => {
+        renderList={(list) => {
           return (
             <FlatList
               data={data.response.plan.filter((item) => {
@@ -96,7 +99,26 @@ const CalendarPage = () => {
             };
           }, {}),
         }}
+        theme={{
+          dotColor: theme.primary,
+          calendarBackground: theme.background,
+          todayTextColor: theme.primary,
+          selectedDayBackgroundColor: theme.primary,
+          todayBackgroundColor: theme.background,
+          reservationsBackgroundColor: theme.background,
+          backgroundColor: theme.background,
+          selectedDayTextColor: theme.text,
+        }}
       />
+
+      <Link href={`/plan/${id}/checkout`} asChild>
+        <Button
+          mode="contained"
+          className="h-14 w-[93vw] justify-center text-center font-bold"
+        >
+          {i18n.t("plan.back")}
+        </Button>
+      </Link>
     </SafeAreaView>
   );
 };

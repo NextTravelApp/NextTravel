@@ -91,7 +91,7 @@ const PlanPage = () => {
       <Link href={`/plan/${id}/checkout`} asChild>
         <Button
           mode="contained"
-          className="h-14 w-[93vw] items-center justify-center px-4 text-center font-bold"
+          className="h-14 w-[93vw] justify-center text-center font-bold"
         >
           {i18n.t("plan.next")}
         </Button>
