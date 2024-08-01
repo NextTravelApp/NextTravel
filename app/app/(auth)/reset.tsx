@@ -4,6 +4,7 @@ import { i18n } from "@/components/i18n";
 import { Button, Text, TextInput } from "@/components/injector";
 import Banner from "@/components/svg/Banner";
 import { Alert } from "@/components/ui/Alert";
+import { ExtraStyles } from "@/components/ui/ExtraStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useState } from "react";
@@ -19,7 +20,11 @@ const Reset = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        if (Platform.OS !== "web") Keyboard.dismiss();
+      }}
+    >
       <View className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">
         <Banner
           style={{
@@ -41,6 +46,7 @@ const Reset = () => {
               <RNTextInput.Icon
                 icon={(props) => <FontAwesome name="key" {...props} />}
                 size={25}
+                style={ExtraStyles.icons}
               />
             }
           />
@@ -55,6 +61,7 @@ const Reset = () => {
               <RNTextInput.Icon
                 icon={(props) => <FontAwesome name="lock" {...props} />}
                 size={25}
+                style={ExtraStyles.icons}
               />
             }
           />
@@ -69,6 +76,7 @@ const Reset = () => {
               <RNTextInput.Icon
                 icon={(props) => <FontAwesome name="lock" {...props} />}
                 size={25}
+                style={ExtraStyles.icons}
               />
             }
           />

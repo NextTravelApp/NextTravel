@@ -5,10 +5,16 @@ import { i18n } from "@/components/i18n";
 import { Button, Text, TextInput } from "@/components/injector";
 import Banner from "@/components/svg/Banner";
 import { Alert } from "@/components/ui/Alert";
+import { ExtraStyles } from "@/components/ui/ExtraStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import { useState } from "react";
-import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import {
+  Keyboard,
+  Platform,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { TextInput as RNTextInput } from "react-native-paper";
 
 const Login = () => {
@@ -22,7 +28,11 @@ const Login = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        if (Platform.OS !== "web") Keyboard.dismiss();
+      }}
+    >
       <View className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">
         <Banner
           style={{
@@ -44,6 +54,7 @@ const Login = () => {
               <RNTextInput.Icon
                 icon={(props) => <FontAwesome name="user" {...props} />}
                 size={25}
+                style={ExtraStyles.icons}
               />
             }
           />
@@ -60,6 +71,7 @@ const Login = () => {
               <RNTextInput.Icon
                 icon={(props) => <FontAwesome name="at" {...props} />}
                 size={25}
+                style={ExtraStyles.icons}
               />
             }
           />
@@ -75,6 +87,7 @@ const Login = () => {
               <RNTextInput.Icon
                 icon={(props) => <FontAwesome name="lock" {...props} />}
                 size={25}
+                style={ExtraStyles.icons}
               />
             }
           />
@@ -89,6 +102,7 @@ const Login = () => {
               <RNTextInput.Icon
                 icon={(props) => <FontAwesome name="lock" {...props} />}
                 size={25}
+                style={ExtraStyles.icons}
               />
             }
           />

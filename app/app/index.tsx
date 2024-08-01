@@ -6,12 +6,14 @@ import { i18n } from "@/components/i18n";
 import { getLocale } from "@/components/i18n/LocalesHandler";
 import { Button, Text, TextInput } from "@/components/injector";
 import Banner from "@/components/svg/Banner";
+import { ExtraStyles } from "@/components/ui/ExtraStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   Keyboard,
+  Platform,
   ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -49,7 +51,13 @@ const App = () => {
     queryKey: ["history", session?.id],
     queryFn: () =>
       session
-        ? honoClient.plan.history.$get().then(async (res) => await res.json())
+        ? honoClient.plan.history
+            .$get()
+            .then(async (res) => await res.json())
+            .then((data) => {
+              if ("t" in data) throw new Error("Invalid session");
+              return data;
+            })
         : [],
     staleTime: 1000 * 60,
   });
@@ -85,6 +93,7 @@ const App = () => {
             <RNTextInput.Icon
               icon={(props) => <FontAwesome name="location-arrow" {...props} />}
               size={25}
+              style={ExtraStyles.icons}
             />
           }
         />
@@ -107,6 +116,7 @@ const App = () => {
                 <RNTextInput.Icon
                   icon={(props) => <FontAwesome name="calendar" {...props} />}
                   size={25}
+                  style={ExtraStyles.icons}
                 />
               }
             />
@@ -126,6 +136,7 @@ const App = () => {
                 <RNTextInput.Icon
                   icon={(props) => <FontAwesome name="users" {...props} />}
                   size={25}
+                  style={ExtraStyles.icons}
                 />
               }
             />
@@ -221,7 +232,11 @@ const App = () => {
       />
 
       <Portal>
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            if (Platform.OS !== "web") Keyboard.dismiss();
+          }}
+        >
           <Dialog visible={membersOpen} onDismiss={() => setMembersOpen(false)}>
             <Dialog.Title>{i18n.t("home.members.title")}</Dialog.Title>
             <Dialog.Content>

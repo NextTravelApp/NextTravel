@@ -8,7 +8,8 @@
     "dev": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start",
     "android": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start --android",
     "ios": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start --ios",
-    "web": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start --web"
+    "web": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start --web",
+    "build": "EXPO_USE_METRO_WORKSPACE_ROOT=1 expo export -p web"
   },
   "dependencies": {
     "@dev-plugins/react-query": "^0.0.6",

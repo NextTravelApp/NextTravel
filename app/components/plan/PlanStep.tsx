@@ -35,7 +35,7 @@ export function PlanStep(props: PlanStepProps) {
         source={{
           uri: !image || "t" in image ? undefined : image.url,
         }}
-        contentFit="fill"
+        contentFit="cover"
         className="h-full flex-1 rounded-xl"
       />
 
