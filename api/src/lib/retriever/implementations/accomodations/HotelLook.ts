@@ -17,7 +17,10 @@ export class HotelLook implements AccomodationManager {
 
     const location = locations[0];
     const hotels = await getHotels(
-      location.id,
+      {
+        type: "cityId",
+        value: location.id,
+      },
       new Date(data.checkIn),
       new Date(data.checkOut),
       data.members.filter((age) => age >= 18).length,
@@ -35,7 +38,36 @@ export class HotelLook implements AccomodationManager {
     }));
   }
 
-  async get(id: string): Promise<Accomodation | undefined> {
+  async get(
+    id: string,
+    data: AccomodationsRequest | null,
+  ): Promise<Accomodation | undefined> {
+    if (data) {
+      const hotels = await getHotels(
+        {
+          type: "hotelId",
+          value: id,
+        },
+        new Date(data.checkIn),
+        new Date(data.checkOut),
+        data.members.filter((age) => age >= 18).length,
+        data.members.filter((age) => age < 18),
+      );
+
+      const hotel = hotels[0];
+
+      return {
+        id: `${this.provider}_${hotel.id}`,
+        name: hotel.name,
+        location: hotel.address,
+        price: hotel.minPriceTotal,
+        image: hotel.image,
+        type: AccomodationType.HOTEL,
+        rating: hotel.stars,
+        checkoutUrl: hotel.rooms[0].fullBookingURL,
+      };
+    }
+
     const { hotels } = await findHotelsOrLocation(id, "hotel");
     if (!hotels.length) return undefined;
 

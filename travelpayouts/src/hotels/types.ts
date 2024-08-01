@@ -18,7 +18,7 @@ export type HotelsLocationResult = {
   countryCode: string;
   countryName: string;
   iata: string[];
-  id: string;
+  id: number;
   location: HotelsLocation;
 };
 

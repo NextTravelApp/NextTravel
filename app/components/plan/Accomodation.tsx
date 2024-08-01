@@ -26,7 +26,7 @@ export function Accomodation(props: AccomodationProps) {
   return (
     <Link
       href={props.edit || !props.switch ? "#" : `/plan/${id}/accomodation`}
-      className="flex max-h-36 w-full flex-1 flex-row gap-3 rounded-xl bg-card"
+      className="flex h-56 w-full flex-1 flex-row gap-3 rounded-xl bg-card"
       asChild
     >
       <Pressable
@@ -43,7 +43,9 @@ export function Accomodation(props: AccomodationProps) {
         />
 
         <View className="m-auto flex h-full w-1/2 py-4">
-          <Text className="!font-bold text-xl">{props.name}</Text>
+          <Text className="!font-bold truncate text-xl" numberOfLines={2}>
+            {props.name}
+          </Text>
           <Text className="text-lg">{props.location}</Text>
           {props.price > 0 && (
             <Text className="text-lg">
@@ -78,7 +80,7 @@ export function Accomodation(props: AccomodationProps) {
                   });
               }}
               mode="contained"
-              className="mt-4 w-3/4"
+              className="mt-auto w-3/4"
             >
               Book
             </Button>

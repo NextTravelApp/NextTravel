@@ -20,4 +20,5 @@ export type Accomodation = {
   price: number;
   type: AccomodationType;
   rating: number;
+  checkoutUrl?: string;
 };

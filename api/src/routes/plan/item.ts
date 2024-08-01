@@ -2,7 +2,10 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
-import { searchUpdateSchema } from "../../constants/requests";
+import {
+  type searchSchemaType,
+  searchUpdateSchema,
+} from "../../constants/requests";
 import prisma from "../../lib/prisma";
 import { getAccomodation } from "../../lib/retriever/accomodations";
 import { getAttraction } from "../../lib/retriever/attractions";
@@ -110,6 +113,7 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
         userId: user.id,
       },
       select: {
+        request: true,
         response: true,
       },
     });
@@ -124,6 +128,7 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
         },
       );
 
+    const requestData = plan.request as searchSchemaType;
     const data = plan.response as responseType;
     const items: CheckoutItem[] = [];
 
@@ -143,7 +148,12 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
     }
 
     if (data.accomodationId) {
-      const accomodation = await getAccomodation(data.accomodationId);
+      const accomodation = await getAccomodation(data.accomodationId, {
+        checkIn: requestData.startDate,
+        checkOut: requestData.endDate,
+        location: requestData.location,
+        members: requestData.members,
+      });
 
       if (accomodation)
         items.push({
@@ -151,6 +161,7 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
           name: accomodation.name,
           provider: data.accomodationId.split("_")[0],
           price: accomodation.price,
+          url: accomodation.checkoutUrl,
         });
     }
 

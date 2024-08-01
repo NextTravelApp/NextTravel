@@ -22,7 +22,7 @@ export const accomodationsRoute = new Hono()
   )
   .get("/:id", authenticated, async (ctx) => {
     const id = ctx.req.param("id");
-    const accomodation = await getAccomodation(id);
+    const accomodation = await getAccomodation(id, null);
 
     if (!accomodation) {
       return ctx.json(

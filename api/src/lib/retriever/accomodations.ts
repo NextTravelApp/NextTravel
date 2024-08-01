@@ -8,7 +8,10 @@ if (process.env.RETURN_EXAMPLE_DATA) managers.push(new LocalData());
 export interface AccomodationManager {
   provider: string;
   search(data: AccomodationsRequest): Promise<Accomodation[]>;
-  get(id: string): Promise<Accomodation | undefined>;
+  get(
+    id: string,
+    data: AccomodationsRequest | null,
+  ): Promise<Accomodation | undefined>;
 }
 
 export async function searchAccomodations(
@@ -25,6 +28,9 @@ export async function searchAccomodations(
           "message" in error ? error.message : "Unknown error",
         );
 
+        if (process.env.NODE_ENV !== "production")
+          console.log(error?.response?.data);
+
         return [];
       }
     }),
@@ -35,11 +41,12 @@ export async function searchAccomodations(
 
 export async function getAccomodation(
   id: string,
+  data: AccomodationsRequest | null,
 ): Promise<Accomodation | undefined> {
   const manager = managers.find(
     (manager) => manager.provider === id.split("_")[0],
   );
   if (!manager) return undefined;
 
-  return manager.get(id.split(`${manager.provider}_`)[1]);
+  return manager.get(id.split(`${manager.provider}_`)[1], data);
 }
