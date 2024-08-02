@@ -15,7 +15,7 @@ export const accomodationsRoute = new Hono()
     zValidator("json", accomodationsRequestSchema, validatorCallback),
     async (ctx) => {
       const body = ctx.req.valid("json");
-      const accomodations = await searchAccomodations(body);
+      const accomodations = await searchAccomodations(body, 25);
 
       return ctx.json(accomodations);
     },

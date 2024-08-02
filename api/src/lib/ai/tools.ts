@@ -36,7 +36,7 @@ export const getAccomodations = tool({
     if (request.checkIn === request.checkOut) return [];
 
     logTool("getAccomodations", request);
-    return await searchAccomodations(request);
+    return await searchAccomodations(request, 10);
   },
 });
 

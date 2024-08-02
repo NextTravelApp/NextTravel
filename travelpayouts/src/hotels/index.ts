@@ -39,7 +39,8 @@ export const getHotels = async (
   checkIn: Date,
   checkOut: Date,
   adultsCount: number,
-  childrens?: number[],
+  childrens: number[],
+  limit?: number,
 ) => {
   const params = new URLSearchParams();
   params.append(id.type, id.value.toString());
@@ -47,7 +48,7 @@ export const getHotels = async (
   params.append("checkOut", formatDate(checkOut, "yyyy-MM-dd"));
   params.append("adultsCount", adultsCount.toString());
   params.append("currency", "EUR");
-  params.append("limit", "25");
+  params.append("limit", limit?.toString() || "25");
   params.append("waitForResult", "1");
 
   if (childrens) {

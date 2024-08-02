@@ -34,7 +34,7 @@ export const systemPrompt = [
     "agency and instructed to always give a JSON structured response.",
   "Some rules and explanation:",
   "- User gives some information regarding the trip they want to execute,",
-  "- Dates are always in the format 'MM/DD/YYYY",
+  "- Dates are always in the format MM/DD/YYYY except for tools",
   "- You can call functions(getAttraction,getAccomodations) to retrieve data " +
     "from the web,",
   "- When you respond, you must provide a full plan, select the best accomodation based " +

@@ -11,7 +11,10 @@ import { type Accomodation, AccomodationType } from "../../types";
 export class HotelLook implements AccomodationManager {
   provider = "hotellook";
 
-  async search(data: AccomodationsRequest): Promise<Accomodation[]> {
+  async search(
+    data: AccomodationsRequest,
+    limit?: number,
+  ): Promise<Accomodation[]> {
     const { locations } = await findHotelsOrLocation(data.location, "city");
     if (!locations.length) return [];
 
@@ -25,6 +28,7 @@ export class HotelLook implements AccomodationManager {
       new Date(data.checkOut),
       data.members.filter((age) => age >= 18).length,
       data.members.filter((age) => age < 18),
+      limit,
     );
 
     return hotels.map((hotel) => ({
@@ -52,6 +56,7 @@ export class HotelLook implements AccomodationManager {
         new Date(data.checkOut),
         data.members.filter((age) => age >= 18).length,
         data.members.filter((age) => age < 18),
+        1,
       );
 
       const hotel = hotels[0];

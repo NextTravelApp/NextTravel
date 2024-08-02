@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import type { AccomodationsRequest } from "../ai/tools";
 import { HotelLook, LocalData } from "./implementations/accomodations";
 import type { Accomodation } from "./types";
@@ -7,7 +8,7 @@ if (process.env.RETURN_EXAMPLE_DATA) managers.push(new LocalData());
 
 export interface AccomodationManager {
   provider: string;
-  search(data: AccomodationsRequest): Promise<Accomodation[]>;
+  search(data: AccomodationsRequest, limit?: number): Promise<Accomodation[]>;
   get(
     id: string,
     data: AccomodationsRequest | null,
@@ -16,21 +17,22 @@ export interface AccomodationManager {
 
 export async function searchAccomodations(
   data: AccomodationsRequest,
+  limit?: number,
 ): Promise<Accomodation[]> {
   const results = await Promise.all(
     managers.map(async (manager) => {
       try {
-        return await manager.search(data);
-        // biome-ignore lint/suspicious/noExplicitAny: Errors cannot have type here
-      } catch (error: any) {
-        console.log(
-          `[Retriever] [Accomodations] Manager ${manager.provider} returned an error:`,
-          "message" in error ? error.message : "Unknown error",
-        );
+        return await manager.search(data, limit);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          console.log(
+            `[Retriever] [Accomodations] Manager ${manager.provider} returned an error:`,
+            "message" in error ? error.message : "Unknown error",
+          );
 
-        if (process.env.NODE_ENV !== "production")
-          console.log(error?.response?.data);
-
+          if (process.env.NODE_ENV !== "production")
+            console.log(error?.response?.data);
+        }
         return [];
       }
     }),
