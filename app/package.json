@@ -42,6 +42,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.74.5",
     "react-native-calendars": "^1.1306.0",
+    "react-native-element-dropdown": "^2.12.1",
     "react-native-maps": "1.14.0",
     "react-native-paper": "patch:react-native-paper@npm%3A5.12.3#~/.yarn/patches/react-native-paper-npm-5.12.3-1a888b7688.patch",
     "react-native-paper-dates": "^0.22.19",

@@ -154,6 +154,12 @@ function RootLayoutNav() {
           }}
         />
         <Tabs.Screen
+          name="settings"
+          options={{
+            tabBarIcon: (props) => <FontAwesome name="gear" {...props} />,
+          }}
+        />
+        <Tabs.Screen
           name="(auth)"
           options={{
             href: null,

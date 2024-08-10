@@ -2,7 +2,8 @@ import { useSession } from "@/components/auth/AuthContext";
 import { ChatBubble } from "@/components/chat/ChatBubble";
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
-import { SafeAreaView, Text, TextInput } from "@/components/injector";
+import { SafeAreaView, TextInput } from "@/components/injector";
+import { Navbar } from "@/components/ui/Navbar";
 import { LoadingScreen } from "@/components/ui/Screens";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Redirect } from "expo-router";
@@ -45,7 +46,7 @@ const Chat = () => {
   return (
     <SafeAreaView className="flex flex-1 flex-col gap-3 bg-background p-4">
       <KeyboardAvoidingView behavior="padding" className="flex h-full gap-3">
-        <Text className="font-extrabold text-4xl">{i18n.t("chat.title")}</Text>
+        <Navbar title={i18n.t("chat.title")} />
 
         <ScrollView
           contentContainerStyle={{

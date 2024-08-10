@@ -4016,6 +4016,7 @@ __metadata:
     react-dom: "npm:18.2.0"
     react-native: "npm:0.74.5"
     react-native-calendars: "npm:^1.1306.0"
+    react-native-element-dropdown: "npm:^2.12.1"
     react-native-maps: "npm:1.14.0"
     react-native-paper: "patch:react-native-paper@npm%3A5.12.3#~/.yarn/patches/react-native-paper-npm-5.12.3-1a888b7688.patch"
     react-native-paper-dates: "npm:^0.22.19"
@@ -10072,6 +10073,18 @@ __metadata:
     react-native-svg:
       optional: true
   checksum: 10c0/95a1781331a27f68fe6ee181258d8c693f2f5d2f44cd3ec7a99959f82dcb9611eb38cca6c78443abc68bb0bfc8bb1e90ba33ffa5dfc004d56cec142fceb35335
+  languageName: node
+  linkType: hard
+
+"react-native-element-dropdown@npm:^2.12.1":
+  version: 2.12.1
+  resolution: "react-native-element-dropdown@npm:2.12.1"
+  dependencies:
+    lodash: "npm:^4.17.21"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/06a9f7951167c8784c5a073bf7f05cd624ac481d55ce977989b2f030b136c6d34393b675f9cd60374f12260dc7f817966990d3136077986be9ec4bb96f997be7
   languageName: node
   linkType: hard
 

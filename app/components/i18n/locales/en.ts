@@ -138,4 +138,7 @@ export const en = {
     title: "Chat",
     input: "Type your message",
   },
+  settings: {
+    title: "Settings",
+  },
 };
