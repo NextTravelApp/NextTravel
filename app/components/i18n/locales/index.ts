@@ -1,12 +1,16 @@
 import { en } from "./en";
-
-export * from "./en";
+import { it } from "./it";
 
 export const locales = [
   {
     name: "English",
     value: "en",
     data: en,
+  },
+  {
+    name: "Italiano",
+    value: "it",
+    data: it,
   },
 ];
 

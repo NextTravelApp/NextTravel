@@ -38,7 +38,6 @@ export const en = {
     },
 
     not_found: "The requested item was not found",
-    month_limit: "You have reached your monthly limit",
     invalid_plan: "This feature is only available to premium members!",
   },
   plan: {
@@ -71,7 +70,6 @@ export const en = {
     },
 
     title: "Plan your trip",
-    description: "Click any item that you want to change to edit it.",
     accomodation_title: "Accomodation",
     plan: "Your plan",
     next: "Next",
