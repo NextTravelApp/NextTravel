@@ -4,12 +4,10 @@ import { honoClient } from "@/components/fetcher";
 import { Location } from "@/components/home/Location";
 import { i18n } from "@/components/i18n";
 import { getLocale } from "@/components/i18n/LocalesHandler";
-import { Button, Text, TextInput } from "@/components/injector";
-import Banner from "@/components/svg/Banner";
-import { ExtraStyles } from "@/components/ui/ExtraStyles";
+import { Button, MapView, Text, TextInput } from "@/components/injector";
 import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   Keyboard,
@@ -76,99 +74,101 @@ const App = () => {
       }}
     >
       <View className="flex w-full flex-1 items-center gap-3">
-        <Banner
-          style={{
-            marginBottom: 40,
-          }}
-          color={theme.text}
-        />
+        <View className="flex w-full flex-row items-center justify-between">
+          <Text className="font-extrabold text-3xl">
+            Welcome back, {session?.name ?? "Unknown"}
+          </Text>
 
-        <TextInput
-          mode="outlined"
-          placeholder={i18n.t("home.destination")}
-          className="w-full"
-          value={location}
-          onChangeText={setLocation}
-          left={
-            <RNTextInput.Icon
-              icon={(props) => <FontAwesome name="location-arrow" {...props} />}
-              size={25}
-              style={ExtraStyles.icons}
-            />
-          }
-        />
-        <View className="flex w-full max-w-full flex-1 flex-row justify-between">
-          <TouchableOpacity
-            className="w-[49%]"
-            onPress={() => setDateOpen(true)}
-          >
-            <TextInput
-              onPress={() => setDateOpen(true)}
-              mode="outlined"
-              readOnly
-              placeholder={i18n.t("home.period")}
-              value={
-                range.startDate && range.endDate
-                  ? `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
-                  : ""
-              }
-              left={
-                <RNTextInput.Icon
-                  icon={(props) => <FontAwesome name="calendar" {...props} />}
-                  size={25}
-                  style={ExtraStyles.icons}
-                />
-              }
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            className="w-[49%]"
-            onPress={() => setMembersOpen(true)}
-          >
-            <TextInput
-              onPress={() => setMembersOpen(true)}
-              mode="outlined"
-              readOnly
-              placeholder={i18n.t("home.members_placeholder")}
-              value={members.join(", ")}
-              left={
-                <RNTextInput.Icon
-                  icon={(props) => <FontAwesome name="users" {...props} />}
-                  size={25}
-                  style={ExtraStyles.icons}
-                />
-              }
-            />
-          </TouchableOpacity>
+          <Link href="/account">
+            <FontAwesome name="user-circle" size={25} color={theme.text} />
+          </Link>
         </View>
 
-        <Button
-          onPress={() => {
-            if (
-              !location ||
-              !members.length ||
-              !range.startDate ||
-              !range.endDate
-            )
-              return;
+        <View className="flex w-full flex-1 gap-3 rounded-xl bg-card p-3">
+          <MapView
+            initialRegion={{
+              latitude: 41.9028,
+              longitude: 12.4964,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            style={{ height: 200 }}
+            className="rounded-xl"
+            userInterfaceStyle={theme.colorScheme}
+            onPress={(_e) => {
+              // TODO: Implement map selection
+            }}
+          />
 
-            router.push({
-              pathname: "/plan/create",
-              params: {
-                location,
-                members,
-                startDate: range.startDate?.toLocaleDateString("en-US"),
-                endDate: range.endDate?.toLocaleDateString("en-US"),
-                t: Date.now(),
-              },
-            });
-          }}
-          mode="contained"
-          className="w-full"
-        >
-          {i18n.t("home.submit")}
-        </Button>
+          <TextInput
+            mode="outlined"
+            placeholder={i18n.t("home.destination")}
+            className="w-full bg-white"
+            value={location}
+            onChangeText={setLocation}
+          />
+
+          <View className="flex w-full max-w-full flex-1 flex-row justify-between">
+            <TouchableOpacity
+              className="w-[49%]"
+              onPress={() => setDateOpen(true)}
+            >
+              <TextInput
+                onPress={() => setDateOpen(true)}
+                mode="outlined"
+                readOnly
+                placeholder={i18n.t("home.period")}
+                value={
+                  range.startDate && range.endDate
+                    ? `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
+                    : ""
+                }
+                className="bg-white"
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              className="w-[49%]"
+              onPress={() => setMembersOpen(true)}
+            >
+              <TextInput
+                onPress={() => setMembersOpen(true)}
+                mode="outlined"
+                readOnly
+                placeholder={i18n.t("home.members_placeholder")}
+                value={members.join(", ")}
+                className="bg-white"
+              />
+            </TouchableOpacity>
+          </View>
+
+          <Button
+            onPress={() => {
+              if (
+                !location ||
+                !members.length ||
+                !range.startDate ||
+                !range.endDate
+              )
+                return;
+
+              router.push({
+                pathname: "/plan/create",
+                params: {
+                  location,
+                  members,
+                  startDate: range.startDate?.toLocaleDateString("en-US"),
+                  endDate: range.endDate?.toLocaleDateString("en-US"),
+                  t: Date.now(),
+                },
+              });
+            }}
+            mode="contained"
+            className="w-full"
+          >
+            {i18n.t("home.submit")}
+          </Button>
+        </View>
       </View>
 
       <View className="mt-6 flex gap-2">
@@ -203,16 +203,18 @@ const App = () => {
             columnGap: 12,
           }}
         >
-          {history?.map((plan) => (
-            <Location
-              key={plan.id}
-              image={plan.image}
-              imageAttribs={plan.imageAttributes}
-              name={plan.title}
-              id={plan.id}
-              restore
-            />
-          ))}
+          {history &&
+            "map" in history &&
+            history?.map((plan) => (
+              <Location
+                key={plan.id}
+                image={plan.image}
+                imageAttribs={plan.imageAttributes}
+                name={plan.title}
+                id={plan.id}
+                restore
+              />
+            ))}
         </ScrollView>
       </View>
 

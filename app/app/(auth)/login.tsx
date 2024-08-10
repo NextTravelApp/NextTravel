@@ -38,7 +38,7 @@ const Login = () => {
           style={{
             position: "absolute",
             top: -300,
-            right: 60
+            right: 60,
           }}
         >
           <Plane color={theme.text} />

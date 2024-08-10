@@ -119,7 +119,9 @@ function RootLayoutNav() {
             paddingBottom: 0,
             borderWidth: 0,
             display:
-              pathName === "/login" || pathName === "/register" || pathName === "/auth"
+              pathName === "/login" ||
+              pathName === "/register" ||
+              pathName === "/auth"
                 ? "none"
                 : "flex",
           },
@@ -141,10 +143,7 @@ function RootLayoutNav() {
         <Tabs.Screen
           name="(auth)"
           options={{
-            tabBarIcon: (props) => (
-              <FontAwesome name="user-circle-o" {...props} />
-            ),
-            href: "/account",
+            href: null,
           }}
         />
         <Tabs.Screen name="plan" options={{ href: null }} />

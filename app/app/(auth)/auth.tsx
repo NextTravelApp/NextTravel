@@ -1,21 +1,22 @@
 import { useTheme } from "@/components/Theme";
 import { useSession } from "@/components/auth/AuthContext";
 import { i18n } from "@/components/i18n";
-import { Button } from "@/components/injector";
+import { Button, SafeAreaView } from "@/components/injector";
 import Plane from "@/components/svg/Plane";
-import { SafeAreaView } from "@/components/ui/SafeAreaView";
 import { Link, useRouter } from "expo-router";
 import { useEffect } from "react";
 import { Text, View } from "react-native";
 
 const Auth = () => {
   const theme = useTheme();
-  const { session } = useSession();
+  const { session, isLoading } = useSession();
   const router = useRouter();
 
   useEffect(() => {
     if (session) router.push("/");
   }, [session, router]);
+
+  if (isLoading) return null;
 
   return (
     <SafeAreaView className="flex flex-1 flex-col items-center gap-3 bg-background">

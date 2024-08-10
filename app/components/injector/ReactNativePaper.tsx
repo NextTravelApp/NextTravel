@@ -26,6 +26,7 @@ export function TextInput({
     <RemappedTextInput
       outlineStyle={{
         borderRadius: 15,
+        borderColor: "transparent",
       }}
       contentStyle={{
         paddingLeft: 10,

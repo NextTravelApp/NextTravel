@@ -3529,6 +3529,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/geojson@npm:^7946.0.13":
+  version: 7946.0.14
+  resolution: "@types/geojson@npm:7946.0.14"
+  checksum: 10c0/54f3997708fa2970c03eeb31f7e4540a0eb6387b15e9f8a60513a1409c23cafec8d618525404573468b59c6fecbfd053724b3327f7fca416729c26271d799f55
+  languageName: node
+  linkType: hard
+
 "@types/istanbul-lib-coverage@npm:*, @types/istanbul-lib-coverage@npm:^2.0.0":
   version: 2.0.6
   resolution: "@types/istanbul-lib-coverage@npm:2.0.6"
@@ -4009,6 +4016,7 @@ __metadata:
     react-dom: "npm:18.2.0"
     react-native: "npm:0.74.5"
     react-native-calendars: "npm:^1.1306.0"
+    react-native-maps: "npm:1.14.0"
     react-native-paper: "patch:react-native-paper@npm%3A5.12.3#~/.yarn/patches/react-native-paper-npm-5.12.3-1a888b7688.patch"
     react-native-paper-dates: "npm:^0.22.19"
     react-native-reanimated: "npm:~3.10.1"
@@ -10077,6 +10085,22 @@ __metadata:
   peerDependencies:
     react: ^16.6.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/61ec9807878d8545750fa20f04a85189e59ebacba7a66c3feb14640bead8216d7bcf781c47432e7ab20bad57e4bf0a9a261cc34b9e83c35d981be1e28251e201
+  languageName: node
+  linkType: hard
+
+"react-native-maps@npm:1.14.0":
+  version: 1.14.0
+  resolution: "react-native-maps@npm:1.14.0"
+  dependencies:
+    "@types/geojson": "npm:^7946.0.13"
+  peerDependencies:
+    react: ">= 17.0.1"
+    react-native: ">= 0.64.3"
+    react-native-web: ">= 0.11"
+  peerDependenciesMeta:
+    react-native-web:
+      optional: true
+  checksum: 10c0/67529b9b11d1dc42a698eb027c6fb0d27aaf2004b380ad3c72453aa2d13b5bde085b10328369381fd30b5afdf8ff1f211fab6138af522523548df64443874e81
   languageName: node
   linkType: hard
 
