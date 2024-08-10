@@ -78,12 +78,13 @@ function RootLayoutNav() {
       pathName === "/login" ||
       pathName === "/register" ||
       pathName === "/reset" ||
-      pathName === "/forgot"
+      pathName === "/forgot" ||
+      pathName === "/auth"
     )
       return;
     if (isLoading) return;
 
-    if (!session) router.push("/login");
+    if (!session) router.push("/auth");
   }, [session, isLoading, pathName, router]);
 
   return (
@@ -118,7 +119,7 @@ function RootLayoutNav() {
             paddingBottom: 0,
             borderWidth: 0,
             display:
-              pathName === "/login" || pathName === "/register"
+              pathName === "/login" || pathName === "/register" || pathName === "/auth"
                 ? "none"
                 : "flex",
           },

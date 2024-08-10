@@ -40,7 +40,7 @@ const Chat = () => {
   });
 
   if (isLoading) return <LoadingScreen />;
-  if (!session) return <Redirect href="/login" />;
+  if (!session) return <Redirect href="/auth" />;
 
   return (
     <SafeAreaView className="flex flex-1 flex-col gap-3 bg-background p-4">

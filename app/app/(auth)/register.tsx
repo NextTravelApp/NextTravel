@@ -2,11 +2,9 @@ import { useTheme } from "@/components/Theme";
 import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
-import { Button, Text, TextInput } from "@/components/injector";
-import Banner from "@/components/svg/Banner";
+import { Button, TextInput } from "@/components/injector";
+import Plane from "@/components/svg/Plane";
 import { Alert } from "@/components/ui/Alert";
-import { ExtraStyles } from "@/components/ui/ExtraStyles";
-import { FontAwesome } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -15,7 +13,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { TextInput as RNTextInput } from "react-native-paper";
 
 const Login = () => {
   const theme = useTheme();
@@ -34,15 +31,18 @@ const Login = () => {
       }}
     >
       <View className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">
-        <Banner
+        <Link
+          href="/auth"
           style={{
             position: "absolute",
-            top: 50,
+            top: -300,
+            right: 60,
           }}
-          color={theme.text}
-        />
+        >
+          <Plane color={theme.text} />
+        </Link>
 
-        <View className="m-auto flex w-5/6 flex-col items-center justify-center gap-3">
+        <View className="m-auto flex w-5/6 flex-col items-center justify-center gap-3 pt-20">
           <TextInput
             mode="outlined"
             placeholder="Name"
@@ -50,13 +50,6 @@ const Login = () => {
             value={name}
             onChangeText={setName}
             className="w-full"
-            left={
-              <RNTextInput.Icon
-                icon={(props) => <FontAwesome name="user" {...props} />}
-                size={25}
-                style={ExtraStyles.icons}
-              />
-            }
           />
           <TextInput
             mode="outlined"
@@ -67,13 +60,6 @@ const Login = () => {
             value={email}
             onChangeText={setEmail}
             className="w-full"
-            left={
-              <RNTextInput.Icon
-                icon={(props) => <FontAwesome name="at" {...props} />}
-                size={25}
-                style={ExtraStyles.icons}
-              />
-            }
           />
           <TextInput
             mode="outlined"
@@ -83,13 +69,6 @@ const Login = () => {
             value={password}
             onChangeText={setPassword}
             className="w-full"
-            left={
-              <RNTextInput.Icon
-                icon={(props) => <FontAwesome name="lock" {...props} />}
-                size={25}
-                style={ExtraStyles.icons}
-              />
-            }
           />
           <TextInput
             mode="outlined"
@@ -98,13 +77,6 @@ const Login = () => {
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             className="w-full"
-            left={
-              <RNTextInput.Icon
-                icon={(props) => <FontAwesome name="lock" {...props} />}
-                size={25}
-                style={ExtraStyles.icons}
-              />
-            }
           />
           <Button
             mode="contained"
@@ -127,14 +99,6 @@ const Login = () => {
           >
             {i18n.t("account.submit")}
           </Button>
-          <View className="flex w-full flex-row justify-between">
-            <Text>
-              Already a member?{" "}
-              <Link href="/login" className="text-primary">
-                Login
-              </Link>
-            </Text>
-          </View>
         </View>
 
         <Alert

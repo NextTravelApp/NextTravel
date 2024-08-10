@@ -6,7 +6,12 @@
     "lint": "biome check",
     "prepare": "husky"
   },
-  "workspaces": ["api", "app", "database", "travelpayouts"],
+  "workspaces": [
+    "api",
+    "app",
+    "database",
+    "travelpayouts"
+  ],
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "husky": "^9.1.4",
@@ -14,7 +19,9 @@
     "turbo": "^2.0.12"
   },
   "lint-staged": {
-    "*": ["biome check --no-errors-on-unmatched --files-ignore-unknown=true"]
+    "*": [
+      "biome check --no-errors-on-unmatched --files-ignore-unknown=true"
+    ]
   },
   "packageManager": "yarn@4.3.1"
 }
