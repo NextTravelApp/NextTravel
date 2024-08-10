@@ -62,15 +62,12 @@ export const en = {
       rating: "Rating",
     },
     checkout: {
-      title: "Ready for checkout?",
-      description: "Let's make this plan real!",
-      details: "Checkout Details",
-      processor: {
-        title: "Payment Processor",
-        description:
-          "NextTravel creates amazing trips for you but is not responsible for attractions, accommodations, and travels.  You can check and pay the providers by clicking the button below.",
-      },
-      plan: "Your plan",
+      title: "Checkout",
+      description:
+        "NextTravel doesn't handle payments for you, you can proceed by clicking the buttons below",
+      friends: "Traveling with friends?",
+      friends_description:
+        "Share your trip with friends to enjoy your holiday even more",
     },
 
     title: "Plan your trip",

@@ -1,6 +1,8 @@
+import { FontAwesome } from "@expo/vector-icons";
 import { useQueryClient } from "@tanstack/react-query";
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { type Href, Link, useLocalSearchParams, useRouter } from "expo-router";
 import { Pressable, View } from "react-native";
+import { useTheme } from "../Theme";
 import { honoClient } from "../fetcher";
 import { i18n } from "../i18n";
 import { Button, Text } from "../injector";
@@ -20,13 +22,16 @@ export type AccomodationProps = {
 
 export function Accomodation(props: AccomodationProps) {
   const { id } = useLocalSearchParams();
+  const theme = useTheme();
   const router = useRouter();
   const queryClient = useQueryClient();
 
   return (
     <Link
-      href={props.edit || !props.switch ? "#" : `/plan/${id}/accomodation`}
-      className="flex h-56 w-full flex-1 flex-row gap-3 rounded-xl bg-card"
+      href={
+        props.edit || !props.switch ? ("#" as Href) : `/plan/${id}/accomodation`
+      }
+      className="flex h-32 w-full flex-1 flex-row gap-3"
       asChild
     >
       <Pressable
@@ -42,11 +47,23 @@ export function Accomodation(props: AccomodationProps) {
           className="h-full flex-1 rounded-xl"
         />
 
-        <View className="m-auto flex h-full w-1/2 py-4">
-          <Text className="!font-bold truncate text-xl" numberOfLines={2}>
+        <View className="m-auto flex h-full w-1/2">
+          <Text className="!font-bold truncate text-xl" numberOfLines={1}>
             {props.name}
           </Text>
-          <Text className="text-lg">{props.location}</Text>
+
+          <View className="flex flex-row items-center">
+            {Array.from({ length: props.rating }).map((_, i) => (
+              <FontAwesome
+                name="star"
+                size={20}
+                color={theme.primary}
+                // biome-ignore lint/suspicious/noArrayIndexKey: Required
+                key={i}
+              />
+            ))}
+          </View>
+
           {props.price > 0 && (
             <Text className="text-lg">
               {i18n.t("plan.accomodation.price")}: {props.price}
@@ -76,11 +93,11 @@ export function Accomodation(props: AccomodationProps) {
                     queryClient.invalidateQueries({
                       queryKey: ["plan", id],
                     });
-                    router.push(`/plan/${id}?t=${Date.now()}`);
+                    router.push(`/plan/${id}/checkout`);
                   });
               }}
               mode="contained"
-              className="mt-auto w-3/4"
+              className="mt-auto w-full rounded-xl"
             >
               Book
             </Button>
