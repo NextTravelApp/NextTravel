@@ -13,6 +13,7 @@ export function SafeAreaView(props: View["props"]) {
           paddingTop: insets.top,
           paddingLeft: insets.left + 16,
           paddingRight: insets.right + 16,
+          paddingBottom: insets.bottom,
         },
       ]}
     />

@@ -5,9 +5,10 @@ import { Location } from "@/components/home/Location";
 import { i18n } from "@/components/i18n";
 import { getLocale } from "@/components/i18n/LocalesHandler";
 import { Button, MapView, Text, TextInput } from "@/components/injector";
+import { Navbar } from "@/components/ui/Navbar";
 import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   Keyboard,
@@ -74,15 +75,9 @@ const App = () => {
       }}
     >
       <View className="flex w-full flex-1 items-center gap-3">
-        <View className="flex w-full flex-row items-center justify-between">
-          <Text className="font-extrabold text-3xl">
-            Welcome back, {session?.name ?? "Unknown"}
-          </Text>
-
-          <Link href="/account">
-            <FontAwesome name="user-circle" size={25} color={theme.text} />
-          </Link>
-        </View>
+        <Navbar
+          title={`${i18n.t("home.title")}${session ? `, ${session.name}` : ""}`}
+        />
 
         <View className="flex w-full flex-1 gap-3 rounded-xl bg-card p-3">
           <MapView
@@ -103,7 +98,7 @@ const App = () => {
           <TextInput
             mode="outlined"
             placeholder={i18n.t("home.destination")}
-            className="w-full bg-white"
+            className="!bg-white w-full"
             value={location}
             onChangeText={setLocation}
           />
@@ -123,7 +118,7 @@ const App = () => {
                     ? `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
                     : ""
                 }
-                className="bg-white"
+                className="!bg-white"
               />
             </TouchableOpacity>
 
@@ -137,7 +132,7 @@ const App = () => {
                 readOnly
                 placeholder={i18n.t("home.members_placeholder")}
                 value={members.join(", ")}
-                className="bg-white"
+                className="!bg-white"
               />
             </TouchableOpacity>
           </View>

@@ -1,7 +1,8 @@
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
-import { Button, SafeAreaView, Text } from "@/components/injector";
+import { Button, MapView, SafeAreaView } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
+import { Navbar } from "@/components/ui/Navbar";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType, searchSchemaType } from "api";
@@ -47,6 +48,8 @@ const SearchAccomodationPage = () => {
       if (!searchRecord) return null;
 
       const request = searchRecord.request as searchSchemaType;
+      if (request.startDate === request.endDate) return [];
+
       const res = await honoClient.retriever.accomodations.$post({
         json: {
           location: request.location,
@@ -67,10 +70,11 @@ const SearchAccomodationPage = () => {
   if (error) return <ErrorScreen error={error.message} />;
 
   return (
-    <SafeAreaView className="flex min-h-screen flex-1 flex-col bg-background p-4">
-      <Text className="!font-extrabold text-2xl">
-        {i18n.t("plan.accomodation.select")}
-      </Text>
+    <SafeAreaView className="flex min-h-screen flex-1 flex-col gap-3 bg-background p-4">
+      <Navbar title={i18n.t("plan.accomodation.select")} back />
+
+      {/* TODO: Display locations and markers */}
+      <MapView className="h-60 w-full rounded-xl" />
 
       <ScrollView className="mt-4">
         <View className="flex gap-3 pb-4">
@@ -80,12 +84,12 @@ const SearchAccomodationPage = () => {
         </View>
       </ScrollView>
 
-      <Link href={`/plan/${id}`} asChild>
+      <Link href={`/plan/${id}/checkout`} asChild>
         <Button
           mode="contained"
           className="h-14 w-[93vw] justify-center text-center font-bold"
         >
-          {i18n.t("plan.back")}
+          {i18n.t("plan.next")}
         </Button>
       </Link>
     </SafeAreaView>

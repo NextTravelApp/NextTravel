@@ -121,7 +121,8 @@ function RootLayoutNav() {
             display:
               pathName === "/login" ||
               pathName === "/register" ||
-              pathName === "/auth"
+              pathName === "/auth" ||
+              pathName.startsWith("/plan")
                 ? "none"
                 : "flex",
           },

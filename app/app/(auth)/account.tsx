@@ -3,6 +3,7 @@ import { honoClient } from "@/components/fetcher";
 import { Location } from "@/components/home/Location";
 import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text } from "@/components/injector";
+import { Navbar } from "@/components/ui/Navbar";
 import { LoadingScreen } from "@/components/ui/Screens";
 import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
@@ -11,15 +12,6 @@ import { ScrollView, View } from "react-native";
 
 const Account = () => {
   const { session, isLoading, logout } = useSession();
-  const bookmarks = useQuery({
-    queryKey: ["bookmarks", session?.id],
-    queryFn: () =>
-      session
-        ? honoClient.auth.me.bookmarks
-            .$get()
-            .then(async (res) => await res.json())
-        : [],
-  });
   const publicPlans = useQuery({
     queryKey: ["public", session?.id],
     queryFn: () =>
@@ -32,7 +24,9 @@ const Account = () => {
   if (!session) return null;
 
   return (
-    <SafeAreaView className="flex flex-1 flex-col bg-background p-4">
+    <SafeAreaView className="flex flex-1 flex-col gap-3 bg-background p-4">
+      <Navbar title="Account" />
+
       <View className="flex w-full items-center">
         <FontAwesome name="user-circle-o" size={80} color="gray" />
         <Text className="text-2xl">{session.name}</Text>
@@ -42,28 +36,7 @@ const Account = () => {
       </View>
 
       <View>
-        <Text className="mt-4 font-bold text-2xl">
-          {i18n.t("account.bookmarks")}
-        </Text>
-        <ScrollView
-          horizontal
-          contentContainerStyle={{
-            columnGap: 12,
-          }}
-        >
-          {bookmarks.data?.map((bookmark) => (
-            <Location
-              key={bookmark.id}
-              image={bookmark.image}
-              imageAttribs={bookmark.imageAttributes}
-              name={bookmark.title}
-              id={bookmark.id}
-              restore
-            />
-          ))}
-        </ScrollView>
-
-        <Text className="mt-4 font-bold text-2xl">
+        <Text className="my-3 font-bold text-2xl">
           {i18n.t("account.public")}
         </Text>
         <ScrollView
@@ -87,8 +60,8 @@ const Account = () => {
 
       <View className="mt-auto flex w-full flex-row items-center gap-3">
         <Link href="/premium" asChild>
-          <Button className="w-[49%]" mode="outlined">
-            Manage Plan
+          <Button className="w-[49%] bg-card" mode="contained">
+            <Text>Manage Plan</Text>
           </Button>
         </Link>
 

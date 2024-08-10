@@ -8,7 +8,12 @@ import { ExtraStyles } from "@/components/ui/ExtraStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useState } from "react";
-import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import {
+  Keyboard,
+  Platform,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { TextInput as RNTextInput } from "react-native-paper";
 
 const Reset = () => {

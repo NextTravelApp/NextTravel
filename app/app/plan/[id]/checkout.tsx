@@ -3,6 +3,7 @@ import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text } from "@/components/injector";
+import { ExternalLink } from "@/components/ui/ExternalLink";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { FontAwesome } from "@expo/vector-icons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -200,11 +201,11 @@ const CheckoutPage = () => {
         {data.items
           .filter((item) => item.price > 0 && item.url)
           .map((item) => (
-            <Link href={item.url as string} key={item.name} asChild>
+            <ExternalLink href={item.url as string} key={item.name} asChild>
               <Button mode="contained" className="mt-2">
                 {item.name}
               </Button>
-            </Link>
+            </ExternalLink>
           ))}
       </ScrollView>
 

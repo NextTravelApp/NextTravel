@@ -8,6 +8,7 @@ export const en = {
       done: "Done",
     },
 
+    title: "Welcome back",
     destination: "Type your destination",
     period: "Period",
     members_placeholder: "Members",
@@ -56,7 +57,7 @@ export const en = {
       time: "Time",
     },
     accomodation: {
-      select: "Select your accomodation",
+      select: "Select accomodation",
       price: "Price",
       rating: "Rating",
     },
@@ -72,7 +73,7 @@ export const en = {
       plan: "Your plan",
     },
 
-    title: "Your plan is ready!",
+    title: "Plan your trip",
     description: "Click any item that you want to change to edit it.",
     accomodation_title: "Accomodation",
     plan: "Your plan",
@@ -119,7 +120,7 @@ export const en = {
     },
 
     bookmarks: "Bookmarks",
-    public: "Public / Shared",
+    public: "Shared Plans",
     name: "Name",
     current_password: "Current Password / Reset Code",
     confirm_password: "Confirm Password",

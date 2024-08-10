@@ -1,11 +1,11 @@
 import { useTheme } from "@/components/Theme";
 import { useSession } from "@/components/auth/AuthContext";
 import { i18n } from "@/components/i18n";
-import { Button, SafeAreaView } from "@/components/injector";
+import { Button, SafeAreaView, Text } from "@/components/injector";
 import Plane from "@/components/svg/Plane";
 import { Link, useRouter } from "expo-router";
 import { useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 
 const Auth = () => {
   const theme = useTheme();
