@@ -60,7 +60,10 @@ export function LocationList({
   title: string;
 }) {
   return (
-    <SafeAreaView className="flex flex-1 flex-col gap-3 bg-background p-4">
+    <SafeAreaView
+      noPaddingBottom
+      className="flex flex-1 flex-col gap-3 bg-background p-4"
+    >
       <Navbar title={title} />
 
       <ScrollView

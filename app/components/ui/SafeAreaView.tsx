@@ -1,7 +1,11 @@
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export function SafeAreaView(props: View["props"]) {
+export function SafeAreaView(
+  props: View["props"] & {
+    noPaddingBottom?: boolean;
+  },
+) {
   const insets = useSafeAreaInsets();
 
   return (
@@ -13,7 +17,7 @@ export function SafeAreaView(props: View["props"]) {
           paddingTop: insets.top,
           paddingLeft: insets.left + 16,
           paddingRight: insets.right + 16,
-          paddingBottom: insets.bottom,
+          paddingBottom: !props.noPaddingBottom ? insets.bottom : undefined,
         },
       ]}
     />

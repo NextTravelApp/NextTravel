@@ -117,6 +117,7 @@ export const en = {
     },
 
     bookmarks: "Bookmarks",
+    history: "History",
     public: "Shared Plans",
     name: "Name",
     current_password: "Current Password / Reset Code",
@@ -133,6 +134,8 @@ export const en = {
     success: "Success",
     password_reset: "Password reset email sent",
     password_changed: "Password changed",
+
+    manage_plan: "Manage Plan",
   },
   chat: {
     title: "Chat",
@@ -140,5 +143,7 @@ export const en = {
   },
   settings: {
     title: "Settings",
+    clear_cache: "Clear cache",
+    logout: "Logout",
   },
 };

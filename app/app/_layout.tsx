@@ -122,6 +122,8 @@ function RootLayoutNav() {
               pathName === "/login" ||
               pathName === "/register" ||
               pathName === "/auth" ||
+              pathName === "/reset" ||
+              pathName === "/forgot" ||
               pathName.startsWith("/plan")
                 ? "none"
                 : "flex",
@@ -144,7 +146,6 @@ function RootLayoutNav() {
           name="chat"
           options={{
             tabBarIcon: (props) => <FontAwesome name="comments" {...props} />,
-            href: process.env.EXPO_PUBLIC_ENABLE_STRIPE ? "/chat" : null,
           }}
         />
         <Tabs.Screen

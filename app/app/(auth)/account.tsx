@@ -61,12 +61,12 @@ const Account = () => {
       <View className="mt-auto flex w-full flex-row items-center gap-3">
         <Link href="/premium" asChild>
           <Button className="w-[49%] bg-card" mode="contained">
-            <Text>Manage Plan</Text>
+            <Text>{i18n.t("account.manage_plan")}</Text>
           </Button>
         </Link>
 
         <Button className="w-[49%]" mode="contained" onPress={logout}>
-          Logout
+          {i18n.t("settings.logout")}
         </Button>
       </View>
     </SafeAreaView>

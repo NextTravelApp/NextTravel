@@ -19,12 +19,15 @@ const Bookmarks = () => {
   return (
     <LocationList
       locations={
-        bookmarks.data?.map((bookmark) => ({
-          image: bookmark.image,
-          imageAttribs: bookmark.imageAttributes,
-          name: bookmark.title,
-          id: bookmark.id,
-        })) || []
+        (bookmarks.data &&
+          "map" in bookmarks.data &&
+          bookmarks.data?.map((bookmark) => ({
+            image: bookmark.image,
+            imageAttribs: bookmark.imageAttributes,
+            name: bookmark.title,
+            id: bookmark.id,
+          }))) ||
+        []
       }
       title={i18n.t("account.bookmarks")}
     />

@@ -96,6 +96,10 @@ const CheckoutPage = () => {
         </Text>
 
         {/* TODO: Show friends */}
+
+        <Text className="!font-bold mt-3 text-2xl">
+          {i18n.t("settings.title")}
+        </Text>
       </ScrollView>
     </SafeAreaView>
   );

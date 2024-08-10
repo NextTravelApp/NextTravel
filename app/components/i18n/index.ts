@@ -1,11 +1,7 @@
 import { I18n } from "i18n-js";
 import { getLocale } from "./LocalesHandler";
-import { en } from "./locales";
+import { localesToObject } from "./locales";
 
-const translations = {
-  en,
-};
-
-export const i18n = new I18n(translations);
+export const i18n = new I18n(localesToObject());
 i18n.locale = getLocale();
 i18n.enableFallback = true;

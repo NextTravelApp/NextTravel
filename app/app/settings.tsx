@@ -26,7 +26,7 @@ const Chat = () => {
             queryClient.clear();
           }}
         >
-          <Text>Clear cache</Text>
+          <Text>{i18n.t("settings.clear_cache")}</Text>
         </Button>
 
         <Button
@@ -37,7 +37,7 @@ const Chat = () => {
             router.push("/auth");
           }}
         >
-          Logout
+          {i18n.t("settings.logout")}
         </Button>
       </View>
     </SafeAreaView>

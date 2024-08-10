@@ -5,10 +5,12 @@ import { i18n } from "@/components/i18n";
 import { SafeAreaView, TextInput } from "@/components/injector";
 import { Navbar } from "@/components/ui/Navbar";
 import { LoadingScreen } from "@/components/ui/Screens";
+import { FontAwesome } from "@expo/vector-icons";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Redirect } from "expo-router";
 import { useState } from "react";
 import { KeyboardAvoidingView, ScrollView } from "react-native";
+import { TextInput as RNTextInput } from "react-native-paper";
 
 const Chat = () => {
   const { session, isLoading } = useSession();
@@ -27,6 +29,10 @@ const Chat = () => {
   });
   const sendMessage = useMutation({
     mutationFn: async (message: string) => {
+      if (message.trim().length === 0) return;
+
+      setMessage("");
+
       const data = await honoClient.chat
         .$post({ json: { message } })
         .then((res) => res.json());
@@ -37,14 +43,19 @@ const Chat = () => {
 
       return data;
     },
-    onSettled: () => refetch(),
+    onSettled: (_, error) => {
+      if (!error) refetch();
+    },
   });
 
   if (isLoading) return <LoadingScreen />;
   if (!session) return <Redirect href="/auth" />;
 
   return (
-    <SafeAreaView className="flex flex-1 flex-col gap-3 bg-background p-4">
+    <SafeAreaView
+      className="!pb-0 flex flex-1 flex-col gap-3 bg-background p-4"
+      noPaddingBottom
+    >
       <KeyboardAvoidingView behavior="padding" className="flex h-full gap-3">
         <Navbar title={i18n.t("chat.title")} />
 
@@ -54,12 +65,6 @@ const Chat = () => {
             marginTop: "auto",
           }}
         >
-          {sendMessage.isError && (
-            <ChatBubble
-              bot
-              content={i18n.t(`errors.${sendMessage.error.message}`)}
-            />
-          )}
           {data &&
             "filter" in data &&
             data
@@ -71,8 +76,14 @@ const Chat = () => {
                   key={message.id}
                 />
               ))}
-          {sendMessage.isPending && (
+          {(sendMessage.isPending || sendMessage.isError) && (
             <ChatBubble bot={false} content={sendMessage.variables} />
+          )}
+          {sendMessage.isError && (
+            <ChatBubble
+              bot
+              content={i18n.t(`errors.${sendMessage.error.message}`)}
+            />
           )}
         </ScrollView>
 
@@ -81,10 +92,13 @@ const Chat = () => {
           placeholder={i18n.t("chat.input")}
           value={message}
           onChangeText={setMessage}
-          onSubmitEditing={() => {
-            sendMessage.mutate(message);
-            setMessage("");
-          }}
+          onSubmitEditing={() => sendMessage.mutate(message)}
+          right={
+            <RNTextInput.Icon
+              icon={(props) => <FontAwesome name="send" {...props} />}
+              onPress={() => sendMessage.mutate(message)}
+            />
+          }
         />
       </KeyboardAvoidingView>
     </SafeAreaView>

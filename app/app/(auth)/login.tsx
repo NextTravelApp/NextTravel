@@ -84,6 +84,7 @@ const Login = () => {
           >
             {i18n.t("account.login")}
           </Button>
+          <Link href="/forgot">{i18n.t("account.forgot_password")}</Link>
         </View>
 
         <Alert

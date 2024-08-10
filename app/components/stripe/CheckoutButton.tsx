@@ -24,6 +24,7 @@ export function CheckoutButton(props: CheckoutButtonProps) {
       const { error } = await initPaymentSheet({
         paymentIntentClientSecret: data.clientSecret as string,
         merchantDisplayName: "NextTravel",
+        returnURL: process.env.EXPO_PUBLIC_APP_URL,
       });
 
       if (error) return;

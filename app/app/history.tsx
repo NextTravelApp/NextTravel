@@ -24,14 +24,17 @@ const History = () => {
   return (
     <LocationList
       locations={
-        history.data?.map((item) => ({
-          image: item.image,
-          imageAttribs: item.imageAttributes,
-          name: item.title,
-          id: item.id,
-        })) || []
+        (history.data &&
+          "map" in history.data &&
+          history.data?.map((item) => ({
+            image: item.image,
+            imageAttribs: item.imageAttributes,
+            name: item.title,
+            id: item.id,
+          }))) ||
+        []
       }
-      title={i18n.t("account.bookmarks")}
+      title={i18n.t("account.history")}
     />
   );
 };

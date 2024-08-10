@@ -1,11 +1,9 @@
 import { useTheme } from "@/components/Theme";
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
-import { Button, Text, TextInput } from "@/components/injector";
-import Banner from "@/components/svg/Banner";
+import { Button, TextInput } from "@/components/injector";
+import Plane from "@/components/svg/Plane";
 import { Alert } from "@/components/ui/Alert";
-import { ExtraStyles } from "@/components/ui/ExtraStyles";
-import { FontAwesome } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useState } from "react";
 import {
@@ -14,7 +12,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { TextInput as RNTextInput } from "react-native-paper";
 
 const Reset = () => {
   const theme = useTheme();
@@ -31,13 +28,16 @@ const Reset = () => {
       }}
     >
       <View className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">
-        <Banner
+        <Link
+          href="/auth"
           style={{
             position: "absolute",
-            top: 50,
+            top: -300,
+            right: 60,
           }}
-          color={theme.text}
-        />
+        >
+          <Plane color={theme.text} />
+        </Link>
 
         <View className="m-auto flex w-5/6 flex-col items-center justify-center gap-3">
           <TextInput
@@ -47,13 +47,6 @@ const Reset = () => {
             value={current}
             onChangeText={setCurrent}
             className="w-full"
-            left={
-              <RNTextInput.Icon
-                icon={(props) => <FontAwesome name="key" {...props} />}
-                size={25}
-                style={ExtraStyles.icons}
-              />
-            }
           />
           <TextInput
             mode="outlined"
@@ -62,13 +55,6 @@ const Reset = () => {
             value={password}
             onChangeText={setPassword}
             className="w-full"
-            left={
-              <RNTextInput.Icon
-                icon={(props) => <FontAwesome name="lock" {...props} />}
-                size={25}
-                style={ExtraStyles.icons}
-              />
-            }
           />
           <TextInput
             mode="outlined"
@@ -77,13 +63,6 @@ const Reset = () => {
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             className="w-full"
-            left={
-              <RNTextInput.Icon
-                icon={(props) => <FontAwesome name="lock" {...props} />}
-                size={25}
-                style={ExtraStyles.icons}
-              />
-            }
           />
           <Button
             mode="contained"
@@ -105,14 +84,6 @@ const Reset = () => {
           >
             {i18n.t("account.submit")}
           </Button>
-          <View className="flex w-full flex-row justify-between">
-            <Text>
-              {`${i18n.t("account.remember_password")} `}
-              <Link href="/login" className="text-primary">
-                {i18n.t("account.login")}
-              </Link>
-            </Text>
-          </View>
         </View>
 
         <Alert
