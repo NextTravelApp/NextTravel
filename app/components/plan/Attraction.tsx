@@ -1,12 +1,39 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import { useTheme } from "../Theme";
 import { honoClient } from "../fetcher";
 import { i18n } from "../i18n";
 import { Button, Text } from "../injector";
+import { ExternalLink } from "../ui/ExternalLink";
 import { Image } from "../ui/Image";
+
+export function RetrievedAttraction({
+  id,
+}: {
+  id: string;
+}) {
+  const { data: attraction } = useQuery({
+    queryKey: ["attraction", id],
+    queryFn: async () => {
+      const res = await honoClient.retriever.attractions[":id"].$get({
+        param: {
+          id,
+        },
+      });
+
+      const data = await res.json();
+      if ("t" in data) throw new Error(data.t);
+
+      return data;
+    },
+  });
+
+  if (!attraction) return null;
+
+  return <Attraction {...attraction} active />;
+}
 
 export type AttractionProps = {
   id: string;
@@ -17,6 +44,7 @@ export type AttractionProps = {
   rating: number;
   active: boolean;
   edit?: boolean;
+  checkoutUrl?: string;
 };
 
 export function Attraction(props: AttractionProps) {
@@ -57,9 +85,9 @@ export function Attraction(props: AttractionProps) {
 
         {props.edit && (
           <Button
-            disabled={props.active}
             onPress={() => {
               if (!props.edit) return;
+
               honoClient.plan[":id"]
                 .$patch({
                   param: {
@@ -76,10 +104,22 @@ export function Attraction(props: AttractionProps) {
                 });
             }}
             mode="contained"
-            className="mt-auto w-full rounded-xl"
+            className={`mt-auto w-full rounded-xl ${
+              props.active ? "bg-card" : "bg-primary"
+            }`}
           >
-            {i18n.t("plan.book")}
+            <Text className={props.active ? "" : "text-white"}>
+              {i18n.t("plan.booked")}
+            </Text>
           </Button>
+        )}
+
+        {props.checkoutUrl && (
+          <ExternalLink href={props.checkoutUrl} asChild>
+            <Button mode="contained" className="mt-auto w-full rounded-xl">
+              {i18n.t("plan.book")}
+            </Button>
+          </ExternalLink>
         )}
       </View>
     </View>

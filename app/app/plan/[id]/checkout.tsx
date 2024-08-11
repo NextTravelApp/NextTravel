@@ -2,6 +2,7 @@ import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
+import { RetrievedAttraction } from "@/components/plan/Attraction";
 import { InviteMember } from "@/components/plan/InviteMember";
 import { PlanSettings } from "@/components/plan/PlanSettings";
 import { Navbar } from "@/components/ui/Navbar";
@@ -146,9 +147,20 @@ const CheckoutPage = () => {
       <Text className="text-lg">{i18n.t("plan.checkout.description")}</Text>
 
       <ScrollView className="mt-4">
-        {accomodation && <Accomodation {...accomodation} />}
-
-        {/* TODO: Show extras */}
+        <View className="flex gap-3">
+          {accomodation &&
+            data.items.find((item) => item.type === "accomodation") && (
+              <Accomodation
+                {...accomodation}
+                checkoutUrl={
+                  data.items.find((item) => item.type === "accomodation")?.url
+                }
+              />
+            )}
+          {plan?.attractions?.map((attraction) => (
+            <RetrievedAttraction id={attraction} key={attraction} />
+          ))}
+        </View>
 
         <Text className="!font-bold mt-3 text-2xl">
           {i18n.t("plan.checkout.friends")}

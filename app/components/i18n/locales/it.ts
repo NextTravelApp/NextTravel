@@ -85,6 +85,7 @@ export const it = {
     back: "Indietro",
     share: "Condividi",
     book: "Prenota",
+    booked: "Prenotato",
     calendar: "Calendario",
   },
   account: {

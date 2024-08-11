@@ -84,6 +84,7 @@ export const en = {
     back: "Back",
     share: "Share",
     book: "Book",
+    booked: "Booked",
     calendar: "Calendar",
   },
   account: {

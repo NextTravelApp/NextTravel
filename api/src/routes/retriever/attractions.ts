@@ -22,7 +22,7 @@ export const attractionsRoute = new Hono()
   )
   .get("/:id", authenticated, async (ctx) => {
     const id = ctx.req.param("id");
-    const attraction = getAttraction(id);
+    const attraction = await getAttraction(id);
 
     if (!attraction) {
       return ctx.json(

@@ -69,7 +69,7 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
           userId: ctx.get("user").id,
         },
         select: {
-          response: true,
+          attractions: true,
         },
       });
 
@@ -89,9 +89,15 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
         },
         data: {
           attractions: body.attractionId
-            ? {
-                push: body.attractionId,
-              }
+            ? !search.attractions.includes(body.attractionId)
+              ? {
+                  push: body.attractionId,
+                }
+              : {
+                  set: search.attractions.filter(
+                    (id) => id !== body.attractionId,
+                  ),
+                }
             : undefined,
           accomodation: body.accomodationId,
           bookmark: body.bookmark,

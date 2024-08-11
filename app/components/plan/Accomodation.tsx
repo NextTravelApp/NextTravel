@@ -6,6 +6,7 @@ import { useTheme } from "../Theme";
 import { honoClient } from "../fetcher";
 import { i18n } from "../i18n";
 import { Button, Text } from "../injector";
+import { ExternalLink } from "../ui/ExternalLink";
 import { Image } from "../ui/Image";
 
 export type AccomodationProps = {
@@ -18,6 +19,7 @@ export type AccomodationProps = {
   link?: string;
   edit?: boolean;
   switch?: boolean;
+  checkoutUrl?: string;
 };
 
 export function Accomodation(props: AccomodationProps) {
@@ -98,6 +100,14 @@ export function Accomodation(props: AccomodationProps) {
             >
               {i18n.t("plan.book")}
             </Button>
+          )}
+
+          {props.checkoutUrl && (
+            <ExternalLink href={props.checkoutUrl} asChild>
+              <Button mode="contained" className="mt-auto w-full rounded-xl">
+                {i18n.t("plan.book")}
+              </Button>
+            </ExternalLink>
           )}
         </View>
       </Pressable>
