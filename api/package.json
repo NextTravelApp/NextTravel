@@ -15,7 +15,7 @@
     "@node-rs/argon2": "^1.8.3",
     "ai": "^3.3.5",
     "database": "workspace:*",
-    "hono": "^4.5.4",
+    "hono": "^4.5.5",
     "stripe": "^16.7.0",
     "travelpayouts": "workspace:*",
     "unsplash-js": "^7.0.19",

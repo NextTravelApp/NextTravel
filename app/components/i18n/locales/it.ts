@@ -69,6 +69,9 @@ export const it = {
       friends_description:
         "Condividi il tuo viaggio con amici per pianificare la tua vacanza al meglio",
       invite: "Invita",
+      friends_count: "amici invitati",
+      public: "Publico",
+      bookmark: "Segnalibro",
     },
 
     title: "Pianifica il tuo viaggio",

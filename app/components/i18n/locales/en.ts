@@ -68,6 +68,9 @@ export const en = {
       friends_description:
         "Share your trip with friends to enjoy your holiday even more",
       invite: "Invite",
+      friends_count: "invited friends",
+      public: "Public",
+      bookmark: "Bookmark",
     },
 
     title: "Plan your trip",

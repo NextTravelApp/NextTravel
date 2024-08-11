@@ -3968,7 +3968,7 @@ __metadata:
     "@node-rs/argon2": "npm:^1.8.3"
     ai: "npm:^3.3.5"
     database: "workspace:*"
-    hono: "npm:^4.5.4"
+    hono: "npm:^4.5.5"
     stripe: "npm:^16.7.0"
     travelpayouts: "workspace:*"
     tsx: "npm:^4.17.0"
@@ -4008,7 +4008,7 @@ __metadata:
     expo-status-bar: "npm:~1.12.1"
     expo-system-ui: "npm:~3.0.7"
     expo-web-browser: "npm:~13.0.3"
-    hono: "npm:^4.5.4"
+    hono: "npm:^4.5.5"
     i18n-js: "npm:^4.4.3"
     lottie-react-native: "npm:6.7.0"
     nativewind: "npm:^4.0.1"
@@ -6908,10 +6908,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^4.5.4":
-  version: 4.5.4
-  resolution: "hono@npm:4.5.4"
-  checksum: 10c0/980accb9567fe5ba4533c1378d175a95a0eef0a1fa8a03ceb1f9296d88d4ee8ff0e1447f5e69eb56150a8b6cc66f4a663ec9d1c1135f005f44f61353b58e276f
+"hono@npm:^4.5.5":
+  version: 4.5.5
+  resolution: "hono@npm:4.5.5"
+  checksum: 10c0/df1f3c651f1b66d3dcca310de03bdeca43b01be69506cdc47801a74870d5b1db2f9610daf72eb7603384477a8bfd5444de6ca22cde891f7991cdee254d46a29e
   languageName: node
   linkType: hard
 

@@ -3,6 +3,7 @@ import { i18n } from "@/components/i18n";
 import { SafeAreaView, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
 import { InviteMember } from "@/components/plan/InviteMember";
+import { PlanSettings } from "@/components/plan/PlanSettings";
 import { Navbar } from "@/components/ui/Navbar";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -55,7 +56,11 @@ const CheckoutPage = () => {
       return resData;
     },
   });
-  const { data: shared, refetch } = useQuery({
+  const {
+    data: shared,
+    refetch,
+    isLoading: isSharedLoading,
+  } = useQuery({
     queryKey: ["shared", id],
     queryFn: async () => {
       const res = await honoClient.plan[":id"].shared.$get({
@@ -152,11 +157,12 @@ const CheckoutPage = () => {
           {i18n.t("plan.checkout.friends_description")}
         </Text>
 
-        <View className="flex flex-row flex-wrap">
+        <View className="flex flex-row flex-wrap items-center">
           {shared
             ?.filter(
               (friend) =>
-                !deleteShare.isPending || friend.id !== deleteShare.variables,
+                (!deleteShare.isPending && !isSharedLoading) ||
+                friend.id !== deleteShare.variables,
             )
             .map((friend, i) => (
               <TouchableOpacity
@@ -182,7 +188,7 @@ const CheckoutPage = () => {
               className={`flex h-10 w-10 items-center justify-center rounded-full border border-text bg-background p-2 text-center${
                 (shared?.filter(
                   (friend) =>
-                    !deleteShare.isPending ||
+                    (!deleteShare.isPending && !isSharedLoading) ||
                     friend.id !== deleteShare.variables,
                 ).length || 0) > 0
                   ? " -ml-3"
@@ -192,11 +198,24 @@ const CheckoutPage = () => {
               <Text>+</Text>
             </View>
           </TouchableOpacity>
+
+          <Text className="ml-3 text-lg">
+            {
+              shared?.filter(
+                (friend) =>
+                  (!deleteShare.isPending && !isSharedLoading) ||
+                  friend.id !== deleteShare.variables,
+              ).length
+            }{" "}
+            {i18n.t("plan.checkout.friends_count")}
+          </Text>
         </View>
 
-        <Text className="!font-bold mt-3 text-2xl">
-          {i18n.t("settings.title")}
-        </Text>
+        <PlanSettings
+          id={id}
+          public={plan?.public ?? false}
+          bookmark={plan?.bookmark ?? false}
+        />
       </ScrollView>
 
       <InviteMember
