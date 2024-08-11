@@ -1,3 +1,4 @@
+import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, MapView, SafeAreaView } from "@/components/injector";
@@ -13,6 +14,8 @@ const AttractionsPage = () => {
   const { id } = useLocalSearchParams<{
     id: string;
   }>();
+  const { session } = useSession();
+
   const {
     data: searchRecord,
     isLoading,
@@ -76,7 +79,7 @@ const AttractionsPage = () => {
             <Attraction
               key={item.id}
               {...item}
-              edit
+              edit={searchRecord?.userId === session?.id}
               active={searchRecord?.attractions.includes(item.id) ?? false}
             />
           ))}

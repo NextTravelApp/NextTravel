@@ -1,3 +1,4 @@
+import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, MapView, SafeAreaView } from "@/components/injector";
@@ -13,6 +14,7 @@ const AccomodationsPage = () => {
   const { id } = useLocalSearchParams<{
     id: string;
   }>();
+  const { session } = useSession();
   const router = useRouter();
 
   const {
@@ -83,7 +85,11 @@ const AccomodationsPage = () => {
       <ScrollView className="mt-4">
         <View className="flex gap-3 pb-4">
           {accomodations?.map((item) => (
-            <Accomodation key={item.id} {...item} edit />
+            <Accomodation
+              key={item.id}
+              {...item}
+              edit={searchRecord?.userId === session?.id}
+            />
           ))}
         </View>
       </ScrollView>

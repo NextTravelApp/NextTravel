@@ -1,3 +1,4 @@
+import { useSession } from "@/components/auth/AuthContext";
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text } from "@/components/injector";
@@ -17,6 +18,8 @@ const CheckoutPage = () => {
   const { id } = useLocalSearchParams<{
     id: string;
   }>();
+  const { session } = useSession();
+
   const { data: plan } = useQuery({
     queryKey: ["plan", id],
     queryFn: async () => {
@@ -138,7 +141,8 @@ const CheckoutPage = () => {
   const [inviteOpen, setInviteOpen] = useState(false);
 
   if (!id) return <Redirect href="/" />;
-  if (isLoading || !data) return <LoadingScreen />;
+  if (isLoading) return <LoadingScreen />;
+  if (!data) return <ErrorScreen error={i18n.t("plan.checkout.error")} />;
   if (error) return <ErrorScreen error={error.message} />;
 
   return (
@@ -162,72 +166,76 @@ const CheckoutPage = () => {
           ))}
         </View>
 
-        <Text className="!font-bold mt-3 text-2xl">
-          {i18n.t("plan.checkout.friends")}
-        </Text>
-        <Text className="mb-4 text-lg">
-          {i18n.t("plan.checkout.friends_description")}
-        </Text>
+        {plan?.userId === session?.id && (
+          <>
+            <Text className="!font-bold mt-3 text-2xl">
+              {i18n.t("plan.checkout.friends")}
+            </Text>
+            <Text className="mb-4 text-lg">
+              {i18n.t("plan.checkout.friends_description")}
+            </Text>
 
-        <View className="flex flex-row flex-wrap items-center">
-          {shared
-            ?.filter(
-              (friend) =>
-                (!deleteShare.isPending && !isSharedLoading) ||
-                friend.id !== deleteShare.variables,
-            )
-            .map((friend, i) => (
-              <TouchableOpacity
-                key={friend.id}
-                onPress={() => {
-                  deleteShare.mutate(friend.id);
-                }}
-              >
-                <View
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-text bg-background p-2 text-center${i > 0 ? " -ml-3" : ""}`}
-                >
-                  <Text>{friend.name.substring(0, 1)}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-
-          <TouchableOpacity
-            onPress={() => {
-              setInviteOpen(true);
-            }}
-          >
-            <View
-              className={`flex h-10 w-10 items-center justify-center rounded-full border border-text bg-background p-2 text-center${
-                (shared?.filter(
+            <View className="flex flex-row flex-wrap items-center">
+              {shared
+                ?.filter(
                   (friend) =>
                     (!deleteShare.isPending && !isSharedLoading) ||
                     friend.id !== deleteShare.variables,
-                ).length || 0) > 0
-                  ? " -ml-3"
-                  : ""
-              }`}
-            >
-              <Text>+</Text>
+                )
+                .map((friend, i) => (
+                  <TouchableOpacity
+                    key={friend.id}
+                    onPress={() => {
+                      deleteShare.mutate(friend.id);
+                    }}
+                  >
+                    <View
+                      className={`flex h-10 w-10 items-center justify-center rounded-full border border-text bg-background p-2 text-center${i > 0 ? " -ml-3" : ""}`}
+                    >
+                      <Text>{friend.name.substring(0, 1)}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+
+              <TouchableOpacity
+                onPress={() => {
+                  setInviteOpen(true);
+                }}
+              >
+                <View
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-text bg-background p-2 text-center${
+                    (shared?.filter(
+                      (friend) =>
+                        (!deleteShare.isPending && !isSharedLoading) ||
+                        friend.id !== deleteShare.variables,
+                    ).length || 0) > 0
+                      ? " -ml-3"
+                      : ""
+                  }`}
+                >
+                  <Text>+</Text>
+                </View>
+              </TouchableOpacity>
+
+              <Text className="ml-3 text-lg">
+                {
+                  shared?.filter(
+                    (friend) =>
+                      (!deleteShare.isPending && !isSharedLoading) ||
+                      friend.id !== deleteShare.variables,
+                  ).length
+                }{" "}
+                {i18n.t("plan.checkout.friends_count")}
+              </Text>
             </View>
-          </TouchableOpacity>
 
-          <Text className="ml-3 text-lg">
-            {
-              shared?.filter(
-                (friend) =>
-                  (!deleteShare.isPending && !isSharedLoading) ||
-                  friend.id !== deleteShare.variables,
-              ).length
-            }{" "}
-            {i18n.t("plan.checkout.friends_count")}
-          </Text>
-        </View>
-
-        <PlanSettings
-          id={id}
-          public={plan?.public ?? false}
-          bookmark={plan?.bookmark ?? false}
-        />
+            <PlanSettings
+              id={id}
+              public={plan?.public ?? false}
+              bookmark={plan?.bookmark ?? false}
+            />
+          </>
+        )}
       </ScrollView>
 
       <View className="flex flex-row gap-3">

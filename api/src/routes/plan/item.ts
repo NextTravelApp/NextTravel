@@ -27,17 +27,24 @@ export type CheckoutResponse = {
 export const itemRoute = new Hono<{ Variables: Variables }>()
   .get("/", authenticated, async (ctx) => {
     const id = ctx.req.param("id");
+    const user = ctx.get("user");
 
     const search = await prisma.searchRequest.findFirst({
       where: {
         OR: [
           {
             id: id,
-            userId: ctx.get("user").id,
+            userId: user.id,
           },
           {
             id: id,
             public: true,
+          },
+          {
+            id: id,
+            sharedWith: {
+              has: user.id,
+            },
           },
         ],
       },
@@ -261,10 +268,24 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
     const id = ctx.req.param("id");
     const user = ctx.get("user");
 
-    const plan = await prisma.searchRequest.findUnique({
+    const plan = await prisma.searchRequest.findFirst({
       where: {
-        id: id,
-        userId: user.id,
+        OR: [
+          {
+            id: id,
+            userId: user.id,
+          },
+          {
+            id: id,
+            public: true,
+          },
+          {
+            id: id,
+            sharedWith: {
+              has: user.id,
+            },
+          },
+        ],
       },
       select: {
         request: true,
