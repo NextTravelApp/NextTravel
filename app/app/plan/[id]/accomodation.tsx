@@ -6,13 +6,14 @@ import { Navbar } from "@/components/ui/Navbar";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType, searchSchemaType } from "api";
-import { Link, Redirect, useLocalSearchParams } from "expo-router";
+import { Link, Redirect, useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
 
 const SearchAccomodationPage = () => {
   const { id } = useLocalSearchParams<{
     id: string;
   }>();
+  const router = useRouter();
 
   const {
     data: searchRecord,
@@ -48,7 +49,10 @@ const SearchAccomodationPage = () => {
       if (!searchRecord) return null;
 
       const request = searchRecord.request as searchSchemaType;
-      if (request.startDate === request.endDate) return [];
+      if (request.startDate === request.endDate) {
+        router.replace(`/plan/${id}/checkout`);
+        return [];
+      }
 
       const res = await honoClient.retriever.accomodations.$post({
         json: {

@@ -38,6 +38,7 @@ model SearchRequest {
   bookmark        Boolean  @default(false)
   public          Boolean  @default(false)
   date            DateTime
+  sharedWith      String[]
 
   tokens Int
 
@@ -64,5 +65,5 @@ model ChatMessage {
   tokens  Int?
 
   createdAt DateTime @default(now())
-  bot Boolean @default(false)
+  bot       Boolean  @default(false)
 }

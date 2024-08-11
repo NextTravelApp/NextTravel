@@ -1,6 +1,7 @@
+import { Link } from "expo-router";
 import { View } from "react-native";
 import { i18n } from "../i18n";
-import { Text } from "../injector";
+import { Button, Text } from "../injector";
 import { AnimatedLogo } from "../svg/Logo";
 
 export function LoadingScreen({ title }: { title?: string }) {
@@ -26,6 +27,12 @@ export function ErrorScreen({
         {i18n.t("errors.screen.description")}
       </Text>
       <Text className="text-center text-lg">{i18n.t(`errors.${error}`)}</Text>
+
+      <Link href="/" asChild>
+        <Button mode="contained" className="bg-card">
+          <Text>{i18n.t("plan.back")}</Text>
+        </Button>
+      </Link>
     </View>
   );
 }

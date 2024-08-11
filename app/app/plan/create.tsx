@@ -41,7 +41,7 @@ const CreatePlanPage = () => {
         throw new Error((data as any).error);
 
       if ("t" in data) throw new Error(data.t);
-      if (data.id) router.push(`/plan/${data.id}`);
+      if (data.id) router.replace(`/plan/${data.id}`);
 
       return data;
     },

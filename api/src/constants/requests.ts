@@ -79,4 +79,5 @@ export const searchUpdateSchema = z.object({
   accomodationId: z.string().optional(),
   bookmark: z.boolean().optional(),
   public: z.boolean().optional(),
+  sharedWith: z.array(z.string()).optional(),
 });

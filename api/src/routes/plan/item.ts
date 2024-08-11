@@ -97,6 +97,7 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
           response: newBody,
           bookmark: body.bookmark,
           public: body.public,
+          sharedWith: body.sharedWith,
         },
       });
 

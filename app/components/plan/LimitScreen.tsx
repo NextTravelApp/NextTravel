@@ -13,9 +13,16 @@ export function LimitScreen() {
         {i18n.t("plan.limit.description")}
       </Text>
 
-      <Link href="/premium" asChild>
-        <Button mode="contained">{i18n.t("plan.limit.premium")}</Button>
-      </Link>
+      <View className="flex flex-row gap-3">
+        <Link href="/premium" asChild>
+          <Button mode="contained">{i18n.t("plan.limit.premium")}</Button>
+        </Link>
+        <Link href="/" asChild>
+          <Button mode="contained" className="bg-card">
+            <Text>{i18n.t("plan.back")}</Text>
+          </Button>
+        </Link>
+      </View>
     </View>
   );
 }
