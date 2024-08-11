@@ -66,7 +66,7 @@ const PlanPage = () => {
         </View>
       </ScrollView>
 
-      <Link href={`/plan/${id}/accomodation`} asChild>
+      <Link href={`/plan/${id}/accomodations`} asChild>
         <Button
           mode="contained"
           className="h-14 w-[93vw] justify-center text-center font-bold"

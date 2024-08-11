@@ -50,7 +50,7 @@ const AccomodationsPage = () => {
 
       const request = searchRecord.request as searchSchemaType;
       if (request.startDate === request.endDate) {
-        router.replace(`/plan/${id}/checkout`);
+        router.replace(`/plan/${id}/attractions`);
         return [];
       }
 
@@ -88,7 +88,7 @@ const AccomodationsPage = () => {
         </View>
       </ScrollView>
 
-      <Link href={`/plan/${id}/checkout`} asChild>
+      <Link href={`/plan/${id}/attractions`} asChild>
         <Button
           mode="contained"
           className="h-14 w-[93vw] justify-center text-center font-bold"

@@ -83,6 +83,7 @@ export const en = {
     next: "Next",
     back: "Back",
     share: "Share",
+    book: "Book",
     calendar: "Calendar",
   },
   account: {

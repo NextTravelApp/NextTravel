@@ -23,6 +23,8 @@ export class WeGoTrip implements AttractionManager {
       name: trip.title,
       location: trip.city.name,
       price: trip.price,
+      image: trip.cover,
+      rating: trip.rating,
     }));
   }
 
@@ -36,6 +38,8 @@ export class WeGoTrip implements AttractionManager {
       name: trip.title,
       location: trip.city.name,
       price: trip.price,
+      image: trip.cover,
+      rating: trip.rating,
       checkoutUrl: checkout,
     };
   }

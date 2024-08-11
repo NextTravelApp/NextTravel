@@ -88,6 +88,11 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
           id: id,
         },
         data: {
+          attractions: body.attractionId
+            ? {
+                push: body.attractionId,
+              }
+            : undefined,
           accomodation: body.accomodationId,
           bookmark: body.bookmark,
           public: body.public,
@@ -257,7 +262,7 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
       },
       select: {
         request: true,
-        extras: true,
+        attractions: true,
         accomodation: true,
       },
     });
@@ -275,7 +280,7 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
     const requestData = plan.request as searchSchemaType;
     const items: CheckoutItem[] = [];
 
-    for (const extra of plan.extras) {
+    for (const extra of plan.attractions) {
       const attraction = await getAttraction(extra);
 
       if (attraction)

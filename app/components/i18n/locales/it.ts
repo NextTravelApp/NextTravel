@@ -84,6 +84,7 @@ export const it = {
     next: "Avanti",
     back: "Indietro",
     share: "Condividi",
+    book: "Prenota",
     calendar: "Calendario",
   },
   account: {

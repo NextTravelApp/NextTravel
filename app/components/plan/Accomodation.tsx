@@ -29,7 +29,9 @@ export function Accomodation(props: AccomodationProps) {
   return (
     <Link
       href={
-        props.edit || !props.switch ? ("#" as Href) : `/plan/${id}/accomodation`
+        props.edit || !props.switch
+          ? ("#" as Href)
+          : `/plan/${id}/accomodations`
       }
       className="flex h-32 w-full flex-1 flex-row gap-3"
       asChild
@@ -69,11 +71,6 @@ export function Accomodation(props: AccomodationProps) {
               {i18n.t("plan.accomodation.price")}: {props.price}
             </Text>
           )}
-          {props.rating > 0 && (
-            <Text className="text-lg">
-              {i18n.t("plan.accomodation.rating")}: {props.rating}
-            </Text>
-          )}
 
           {props.edit && (
             <Button
@@ -99,7 +96,7 @@ export function Accomodation(props: AccomodationProps) {
               mode="contained"
               className="mt-auto w-full rounded-xl"
             >
-              Book
+              {i18n.t("plan.book")}
             </Button>
           )}
         </View>

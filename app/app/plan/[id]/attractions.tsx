@@ -1,6 +1,7 @@
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, MapView, SafeAreaView } from "@/components/injector";
+import { Attraction } from "@/components/plan/Attraction";
 import { Navbar } from "@/components/ui/Navbar";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useQuery } from "@tanstack/react-query";
@@ -70,7 +71,16 @@ const AttractionsPage = () => {
       <MapView className="h-60 w-full rounded-xl" />
 
       <ScrollView className="mt-4">
-        <View className="flex gap-3 pb-4">{/* TODO */}</View>
+        <View className="flex gap-3 pb-4">
+          {attractions?.map((item) => (
+            <Attraction
+              key={item.id}
+              {...item}
+              edit
+              active={searchRecord?.attractions.includes(item.id) ?? false}
+            />
+          ))}
+        </View>
       </ScrollView>
 
       <Link href={`/plan/${id}/checkout`} asChild>

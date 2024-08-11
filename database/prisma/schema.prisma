@@ -36,7 +36,7 @@ model SearchRequest {
   request         Json
   response        Json
   accomodation    String?
-  extras          String[] @default([])
+  attractions     String[] @default([])
   bookmark        Boolean  @default(false)
   public          Boolean  @default(false)
   date            DateTime
