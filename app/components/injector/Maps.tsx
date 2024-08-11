@@ -1,5 +1,5 @@
 import { cssInterop } from "nativewind";
-import RNMapView from "react-native-maps";
+import RNMapView from "../ui/MapView";
 
 export const MapView = cssInterop(RNMapView, {
   className: { target: "style" },
