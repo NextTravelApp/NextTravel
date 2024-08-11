@@ -67,6 +67,7 @@ export const en = {
       friends: "Traveling with friends?",
       friends_description:
         "Share your trip with friends to enjoy your holiday even more",
+      invite: "Invite",
     },
 
     title: "Plan your trip",

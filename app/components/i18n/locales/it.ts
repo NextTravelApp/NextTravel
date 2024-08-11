@@ -68,6 +68,7 @@ export const it = {
       friends: "Viaggi con amici?",
       friends_description:
         "Condividi il tuo viaggio con amici per pianificare la tua vacanza al meglio",
+      invite: "Invita",
     },
 
     title: "Pianifica il tuo viaggio",

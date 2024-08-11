@@ -38,7 +38,7 @@ model SearchRequest {
   bookmark        Boolean  @default(false)
   public          Boolean  @default(false)
   date            DateTime
-  sharedWith      String[]
+  sharedWith      String[] @default([])
 
   tokens Int
 

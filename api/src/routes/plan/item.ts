@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { z } from "zod";
 import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
 import {
@@ -97,11 +98,122 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
           response: newBody,
           bookmark: body.bookmark,
           public: body.public,
-          sharedWith: body.sharedWith,
         },
       });
 
       return ctx.json(newBody);
+    },
+  )
+  .get("/shared", authenticated, async (ctx) => {
+    const id = ctx.req.param("id");
+    const user = ctx.get("user");
+
+    const search = await prisma.searchRequest.findUnique({
+      where: {
+        id: id,
+        userId: user.id,
+      },
+      select: {
+        sharedWith: true,
+      },
+    });
+
+    if (!search)
+      return ctx.json(
+        {
+          t: "not_found",
+        },
+        {
+          status: 404,
+        },
+      );
+
+    const users = await prisma.user.findMany({
+      where: {
+        id: {
+          in: search.sharedWith,
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+
+    return ctx.json(users);
+  })
+  .post(
+    "/share",
+    authenticated,
+
+    zValidator(
+      "json",
+      z.object({
+        email: z.string().email(),
+      }),
+      validatorCallback,
+    ),
+    async (ctx) => {
+      const id = ctx.req.param("id");
+      const body = ctx.req.valid("json");
+      const user = ctx.get("user");
+
+      const search = await prisma.searchRequest.findUnique({
+        where: {
+          id: id,
+          userId: user.id,
+        },
+        select: {
+          sharedWith: true,
+        },
+      });
+
+      if (!search)
+        return ctx.json(
+          {
+            t: "not_found",
+          },
+          {
+            status: 404,
+          },
+        );
+
+      const sharedWith = search.sharedWith;
+      const target = await prisma.user.findUnique({
+        where: {
+          email: body.email,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      if (!target)
+        return ctx.json(
+          {
+            t: "not_found",
+          },
+          {
+            status: 404,
+          },
+        );
+
+      if (!sharedWith.includes(target.id))
+        await prisma.searchRequest.update({
+          where: {
+            id: id,
+          },
+          data: {
+            sharedWith: {
+              push: target.id,
+            },
+          },
+        });
+
+      return ctx.json({
+        success: true,
+      });
     },
   )
   .post("/checkout", authenticated, async (ctx) => {
