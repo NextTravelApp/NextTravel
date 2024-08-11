@@ -1,7 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
-import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
 import {
   type searchSchemaType,
@@ -84,24 +83,18 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
           },
         );
 
-      const newBody = {
-        ...(search.response as responseType),
-      };
-
-      if (body.accomodationId) newBody.accomodationId = body.accomodationId;
-
       await prisma.searchRequest.update({
         where: {
           id: id,
         },
         data: {
-          response: newBody,
+          accomodation: body.accomodationId,
           bookmark: body.bookmark,
           public: body.public,
         },
       });
 
-      return ctx.json(newBody);
+      return ctx.json({ success: true });
     },
   )
   .get("/shared", authenticated, async (ctx) => {
@@ -264,7 +257,8 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
       },
       select: {
         request: true,
-        response: true,
+        extras: true,
+        accomodation: true,
       },
     });
 
@@ -279,26 +273,23 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
       );
 
     const requestData = plan.request as searchSchemaType;
-    const data = plan.response as responseType;
     const items: CheckoutItem[] = [];
 
-    for (const step of data.plan) {
-      if (step.attractionId) {
-        const attraction = await getAttraction(step.attractionId);
+    for (const extra of plan.extras) {
+      const attraction = await getAttraction(extra);
 
-        if (attraction)
-          items.push({
-            type: "attraction",
-            name: attraction.name,
-            provider: step.attractionId.split("_")[0],
-            price: attraction.price,
-            url: attraction.checkoutUrl,
-          });
-      }
+      if (attraction)
+        items.push({
+          type: "attraction",
+          name: attraction.name,
+          provider: extra.split("_")[0],
+          price: attraction.price,
+          url: attraction.checkoutUrl,
+        });
     }
 
-    if (data.accomodationId) {
-      const accomodation = await getAccomodation(data.accomodationId, {
+    if (plan.accomodation) {
+      const accomodation = await getAccomodation(plan.accomodation, {
         checkIn: requestData.startDate,
         checkOut: requestData.endDate,
         location: requestData.location,
@@ -309,7 +300,7 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
         items.push({
           type: "accomodation",
           name: accomodation.name,
-          provider: data.accomodationId.split("_")[0],
+          provider: plan.accomodation.split("_")[0],
           price: accomodation.price,
           url: accomodation.checkoutUrl,
         });

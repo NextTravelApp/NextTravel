@@ -39,13 +39,13 @@ const CheckoutPage = () => {
     refetchInterval: false,
   });
   const { data: accomodation } = useQuery({
-    queryKey: ["accomodation", plan?.response.accomodationId],
+    queryKey: ["accomodation", plan?.accomodation],
     queryFn: async () => {
-      if (!plan?.response.accomodationId) return null;
+      if (!plan?.accomodation) return null;
 
       const res = await honoClient.retriever.accomodations[":id"].$get({
         param: {
-          id: plan.response.accomodationId,
+          id: plan.accomodation,
         },
       });
 

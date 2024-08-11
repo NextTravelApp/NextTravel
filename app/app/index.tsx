@@ -119,6 +119,9 @@ const App = () => {
                     : ""
                 }
                 className="!bg-white"
+                style={{
+                  textAlign: "auto",
+                }}
               />
             </TouchableOpacity>
 

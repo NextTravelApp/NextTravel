@@ -49,43 +49,46 @@ const CalendarPage = () => {
     <SafeAreaView className="flex flex-1 flex-col bg-background px-0">
       <Agenda
         minDate={
-          parseDate(data.response.plan[0].date as DateType, true)
+          parseDate(data.response.dates[0].date as DateType, true)
             .toISOString()
             .split("T")[0]
         }
         maxDate={
           parseDate(
-            data.response.plan[data.response.plan.length - 1].date as DateType,
+            data.response.dates[data.response.dates.length - 1]
+              .date as DateType,
             true,
           )
             .toISOString()
             .split("T")[0]
         }
         selected={
-          parseDate(data.response.plan[0].date as DateType, true)
+          parseDate(data.response.dates[0].date as DateType, true)
             .toISOString()
             .split("T")[0]
         }
         renderList={(list) => {
           return (
             <FlatList
-              data={data.response.plan.filter((item) => {
-                return dateEquals(
-                  parseDate(item.date as DateType),
-                  new Date(list.selectedDay),
-                );
-              })}
+              data={data.response.dates
+                .filter((item) => {
+                  return dateEquals(
+                    parseDate(item.date as DateType),
+                    new Date(list.selectedDay),
+                  );
+                })
+                .flatMap((item) => item.steps)}
               renderItem={({ item }) => (
                 <View className="my-1">
                   <PlanStep key={item.title} {...item} />
                 </View>
               )}
-              keyExtractor={(item) => `${item.title}-${item.date}`}
+              keyExtractor={(item) => `${item.title}-${item.time}`}
             />
           );
         }}
         markedDates={{
-          ...data.response.plan.reduce((acc, item) => {
+          ...data.response.dates.reduce((acc, item) => {
             const date = parseDate(item.date as DateType);
             const month = date.getMonth().toString().padStart(2, "0");
             const dateString = `${date.getFullYear()}-${month}-${date.getDate()}`;

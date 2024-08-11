@@ -52,8 +52,16 @@ const PlanPage = () => {
       <ScrollView className="mt-4">
         <View className="flex gap-3 pb-6">
           <Text className="!font-bold mt-4 text-xl">{i18n.t("plan.plan")}</Text>
-          {data?.response.plan?.map((item) => (
-            <PlanStep key={item.title} {...item} />
+          {data?.response.dates?.map((item) => (
+            <View key={item.date} className="flex gap-3">
+              <Text className="font-bold text-xl">
+                {item.date} - {item.title}
+              </Text>
+
+              {item.steps.map((step) => (
+                <PlanStep key={step.title} {...step} />
+              ))}
+            </View>
           ))}
         </View>
       </ScrollView>
