@@ -1,4 +1,4 @@
-import type { AttractionRequest } from "../ai/tools";
+import type { AttractionsRequest } from "../ai/tools";
 import { LocalData, WeGoTrip } from "./implementations/attractions";
 import type { Attraction } from "./types";
 
@@ -7,12 +7,12 @@ if (process.env.RETURN_EXAMPLE_DATA) managers.push(new LocalData());
 
 export interface AttractionManager {
   provider: string;
-  search(data: AttractionRequest): Promise<Attraction[]>;
+  search(data: AttractionsRequest): Promise<Attraction[]>;
   get(id: string): Promise<Attraction | undefined>;
 }
 
 export async function searchAttractions(
-  data: AttractionRequest,
+  data: AttractionsRequest,
 ): Promise<Attraction[]> {
   const results = await Promise.all(
     managers.map(async (manager) => {

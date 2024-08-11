@@ -1,6 +1,6 @@
 import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
-import { SafeAreaView, Text } from "@/components/injector";
+import { Button, SafeAreaView, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
 import { InviteMember } from "@/components/plan/InviteMember";
 import { PlanSettings } from "@/components/plan/PlanSettings";
@@ -8,7 +8,7 @@ import { Navbar } from "@/components/ui/Navbar";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
-import { Redirect, useLocalSearchParams } from "expo-router";
+import { Link, Redirect, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 
@@ -217,6 +217,26 @@ const CheckoutPage = () => {
           bookmark={plan?.bookmark ?? false}
         />
       </ScrollView>
+
+      <View className="flex flex-row gap-3">
+        <Link href={`/plan/${id}/calendar`} asChild>
+          <Button
+            mode="contained"
+            className="h-14 w-[49%] justify-center bg-card text-center font-bold"
+          >
+            <Text>{i18n.t("plan.calendar")}</Text>
+          </Button>
+        </Link>
+
+        <Link href="/" asChild>
+          <Button
+            mode="contained"
+            className="h-14 w-[49%] justify-center text-center font-bold"
+          >
+            {i18n.t("plan.back")}
+          </Button>
+        </Link>
+      </View>
 
       <InviteMember
         open={inviteOpen}

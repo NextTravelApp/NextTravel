@@ -6,7 +6,7 @@ export const responseSchema = z.object({
   dates: z
     .array(
       z.object({
-        date: z.string().date().describe("The date of the step"),
+        date: z.string().describe("The date of the step"),
         title: z.string().describe("The title of the day"),
         steps: z.array(
           z
@@ -30,7 +30,7 @@ export const systemPrompt = [
     "agency and instructed to always give a JSON structured response.",
   "Some rules and explanation:",
   "- User gives some information regarding the trip they want to execute,",
-  "- Dates are always in the format MM/DD/YYYY except for tools",
+  "- Dates are always in the format MM/DD/YYYY,",
   "- When you respond, you must provide a full plan based on user preferences, ages and trip duration,",
   "- No matter what, you should NEVER respond with a different structure than the " +
     "one provided below,",

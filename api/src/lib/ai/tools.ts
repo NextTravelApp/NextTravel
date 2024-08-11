@@ -8,14 +8,13 @@ function logTool(tool: string, request: unknown) {
   console.log(`[AI] [Tool] ${tool}`, request);
 }
 
-export const attractionRequestSchema = z.object({
-  name: z.string().describe("The name of the attraction"),
+export const attractionsRequestSchema = z.object({
   location: z.string().describe("The city of the attraction"),
 });
-export type AttractionRequest = z.infer<typeof attractionRequestSchema>;
-export const getAttraction = tool({
-  description: "Get info and pricing about a specific attraction",
-  parameters: attractionRequestSchema,
+export type AttractionsRequest = z.infer<typeof attractionsRequestSchema>;
+export const getAttractions = tool({
+  description: "Get info and pricing about attractions in a city",
+  parameters: attractionsRequestSchema,
   execute: async (request) => {
     logTool("getAttractions", request);
     return await searchAttractions(request);

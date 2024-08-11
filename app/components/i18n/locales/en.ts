@@ -44,6 +44,7 @@ export const en = {
     loading: {
       create: "Generating your trip..",
       accomodation: "Looking for the best accomodations..",
+      attractions: "Finding the best attractions..",
     },
     limit: {
       title: "Oh no!",
@@ -59,6 +60,9 @@ export const en = {
       select: "Select accomodation",
       price: "Price",
       rating: "Rating",
+    },
+    attractions: {
+      select: "Select attractions",
     },
     checkout: {
       title: "Checkout",
@@ -79,6 +83,7 @@ export const en = {
     next: "Next",
     back: "Back",
     share: "Share",
+    calendar: "Calendar",
   },
   account: {
     premium: {

@@ -4,18 +4,18 @@ import {
   getTripCheckoutLink,
   getTrips,
 } from "travelpayouts";
-import type { AttractionRequest } from "../../../ai/tools";
+import type { AttractionsRequest } from "../../../ai/tools";
 import type { AttractionManager } from "../../attractions";
 import type { Attraction } from "../../types";
 
 export class WeGoTrip implements AttractionManager {
   provider = "wegotrip";
 
-  async search(data: AttractionRequest): Promise<Attraction[]> {
-    const locations = await findTrips(data.name);
-    if (!locations.length) return [];
+  async search(data: AttractionsRequest): Promise<Attraction[]> {
+    const locations = await findTrips(data.location);
+    const location = locations.filter((loc) => loc.type === "city")[0];
+    if (!location) return [];
 
-    const location = locations[0];
     const trips = await getTrips(location.id);
 
     return trips.map((trip) => ({
