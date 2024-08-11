@@ -47,6 +47,7 @@ const Login = () => {
             mode="outlined"
             placeholder="Name"
             autoComplete="name"
+            textContentType="name"
             value={name}
             onChangeText={setName}
             className="w-full"
@@ -57,6 +58,7 @@ const Login = () => {
             keyboardType="email-address"
             autoComplete="email"
             autoCapitalize="none"
+            textContentType="username"
             value={email}
             onChangeText={setEmail}
             className="w-full"
@@ -66,6 +68,7 @@ const Login = () => {
             placeholder="Password"
             autoComplete="password"
             secureTextEntry
+            textContentType="password"
             value={password}
             onChangeText={setPassword}
             className="w-full"
@@ -74,6 +77,7 @@ const Login = () => {
             mode="outlined"
             placeholder="Confirm Password"
             secureTextEntry
+            textContentType="newPassword"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             className="w-full"

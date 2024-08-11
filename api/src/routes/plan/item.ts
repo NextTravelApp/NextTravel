@@ -216,6 +216,43 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
       });
     },
   )
+  .delete("/shared/:userId", authenticated, async (ctx) => {
+    const id = ctx.req.param("id");
+    const userId = ctx.req.param("userId");
+    const user = ctx.get("user");
+
+    const search = await prisma.searchRequest.findUnique({
+      where: {
+        id: id,
+        userId: user.id,
+      },
+    });
+
+    if (!search)
+      return ctx.json(
+        {
+          t: "not_found",
+        },
+        {
+          status: 404,
+        },
+      );
+
+    await prisma.searchRequest.update({
+      where: {
+        id: id,
+      },
+      data: {
+        sharedWith: {
+          set: search.sharedWith.filter((id) => id !== userId),
+        },
+      },
+    });
+
+    return ctx.json({
+      success: true,
+    });
+  })
   .post("/checkout", authenticated, async (ctx) => {
     const id = ctx.req.param("id");
     const user = ctx.get("user");

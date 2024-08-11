@@ -51,6 +51,7 @@ const Login = () => {
             keyboardType="email-address"
             autoComplete="email"
             autoCapitalize="none"
+            textContentType="username"
             value={email}
             onChangeText={setEmail}
             className="w-full"
@@ -59,6 +60,7 @@ const Login = () => {
             mode="outlined"
             placeholder="Password"
             secureTextEntry
+            textContentType="password"
             value={password}
             onChangeText={setPassword}
             className="w-full"

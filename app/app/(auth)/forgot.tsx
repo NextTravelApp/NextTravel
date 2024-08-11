@@ -44,6 +44,7 @@ const Forgot = () => {
             keyboardType="email-address"
             autoComplete="email"
             autoCapitalize="none"
+            textContentType="emailAddress"
             value={email}
             onChangeText={setEmail}
             className="w-full"

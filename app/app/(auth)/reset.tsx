@@ -44,6 +44,7 @@ const Reset = () => {
             mode="outlined"
             placeholder={i18n.t("account.current_password")}
             secureTextEntry
+            textContentType="password"
             value={current}
             onChangeText={setCurrent}
             className="w-full"
@@ -52,6 +53,7 @@ const Reset = () => {
             mode="outlined"
             placeholder="Password"
             secureTextEntry
+            textContentType="newPassword"
             value={password}
             onChangeText={setPassword}
             className="w-full"
@@ -60,6 +62,7 @@ const Reset = () => {
             mode="outlined"
             placeholder={i18n.t("account.confirm_password")}
             secureTextEntry
+            textContentType="newPassword"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             className="w-full"

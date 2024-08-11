@@ -2,12 +2,14 @@ import { honoClient } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { SafeAreaView, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
+import { InviteMember } from "@/components/plan/InviteMember";
 import { Navbar } from "@/components/ui/Navbar";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
 import { Redirect, useLocalSearchParams } from "expo-router";
-import { ScrollView } from "react-native";
+import { useState } from "react";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 
 const CheckoutPage = () => {
   const { id } = useLocalSearchParams<{
@@ -53,6 +55,21 @@ const CheckoutPage = () => {
       return resData;
     },
   });
+  const { data: shared, refetch } = useQuery({
+    queryKey: ["shared", id],
+    queryFn: async () => {
+      const res = await honoClient.plan[":id"].shared.$get({
+        param: {
+          id,
+        },
+      });
+
+      const resData = await res.json();
+      if ("t" in resData) throw new Error(resData.t);
+
+      return resData;
+    },
+  });
   const { data, isLoading, error } = useQuery({
     queryKey: ["checkout", id],
     queryFn: async () => {
@@ -73,6 +90,46 @@ const CheckoutPage = () => {
     refetchOnReconnect: false,
     refetchInterval: false,
   });
+  const share = useMutation({
+    mutationFn: async (email: string) => {
+      const res = await honoClient.plan[":id"].share.$post({
+        param: {
+          id: id as string,
+        },
+        json: {
+          email,
+        },
+      });
+
+      const data = await res.json();
+      if ("t" in data) throw new Error(data.t);
+
+      return data;
+    },
+    onSettled: () => {
+      refetch();
+    },
+  });
+  const deleteShare = useMutation({
+    mutationFn: async (userId: string) => {
+      const res = await honoClient.plan[":id"].shared[":userId"].$delete({
+        param: {
+          id: id as string,
+          userId,
+        },
+      });
+
+      const data = await res.json();
+      if ("t" in data) throw new Error(data.t);
+
+      return data;
+    },
+    onSettled: () => {
+      refetch();
+    },
+  });
+
+  const [inviteOpen, setInviteOpen] = useState(false);
 
   if (!id) return <Redirect href="/" />;
   if (isLoading || !data) return <LoadingScreen />;
@@ -95,12 +152,60 @@ const CheckoutPage = () => {
           {i18n.t("plan.checkout.friends_description")}
         </Text>
 
-        {/* TODO: Show friends */}
+        <View className="flex flex-row flex-wrap">
+          {shared
+            ?.filter(
+              (friend) =>
+                !deleteShare.isPending || friend.id !== deleteShare.variables,
+            )
+            .map((friend, i) => (
+              <TouchableOpacity
+                key={friend.id}
+                onPress={() => {
+                  deleteShare.mutate(friend.id);
+                }}
+              >
+                <View
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-text bg-background p-2 text-center${i > 0 ? " -ml-3" : ""}`}
+                >
+                  <Text>{friend.name.substring(0, 1)}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+
+          <TouchableOpacity
+            onPress={() => {
+              setInviteOpen(true);
+            }}
+          >
+            <View
+              className={`flex h-10 w-10 items-center justify-center rounded-full border border-text bg-background p-2 text-center${
+                (shared?.filter(
+                  (friend) =>
+                    !deleteShare.isPending ||
+                    friend.id !== deleteShare.variables,
+                ).length || 0) > 0
+                  ? " -ml-3"
+                  : ""
+              }`}
+            >
+              <Text>+</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
         <Text className="!font-bold mt-3 text-2xl">
           {i18n.t("settings.title")}
         </Text>
       </ScrollView>
+
+      <InviteMember
+        open={inviteOpen}
+        onClose={() => setInviteOpen(false)}
+        onInvite={(email) => {
+          share.mutate(email);
+        }}
+      />
     </SafeAreaView>
   );
 };
