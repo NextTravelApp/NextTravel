@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import { useTheme } from "../Theme";
-import { honoClient } from "../fetcher";
+import { useFetcher } from "../fetcher";
 import { i18n } from "../i18n";
 import { Button, Text } from "../injector";
 import { ExternalLink } from "../ui/ExternalLink";
@@ -14,10 +14,11 @@ export function RetrievedAttraction({
 }: {
   id: string;
 }) {
+  const { fetcher } = useFetcher();
   const { data: attraction } = useQuery({
     queryKey: ["attraction", id],
     queryFn: async () => {
-      const res = await honoClient.retriever.attractions[":id"].$get({
+      const res = await fetcher.retriever.attractions[":id"].$get({
         param: {
           id,
         },
@@ -49,6 +50,7 @@ export type AttractionProps = {
 
 export function Attraction(props: AttractionProps) {
   const { id } = useLocalSearchParams();
+  const { fetcher } = useFetcher();
   const theme = useTheme();
   const queryClient = useQueryClient();
 
@@ -88,7 +90,7 @@ export function Attraction(props: AttractionProps) {
             onPress={() => {
               if (!props.edit) return;
 
-              honoClient.plan[":id"]
+              fetcher.plan[":id"]
                 .$patch({
                   param: {
                     id: id as string,

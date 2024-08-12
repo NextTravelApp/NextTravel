@@ -1,16 +1,17 @@
 import { useSession } from "@/components/auth/AuthContext";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { LocationList } from "@/components/home/Location";
 import { i18n } from "@/components/i18n";
 import { useQuery } from "@tanstack/react-query";
 
 const History = () => {
   const { session } = useSession();
+  const { fetcher } = useFetcher();
   const history = useQuery({
     queryKey: ["history", session?.id],
     queryFn: () =>
       session
-        ? honoClient.plan.history
+        ? fetcher.plan.history
             .$get()
             .then(async (res) => await res.json())
             .then((data) => {

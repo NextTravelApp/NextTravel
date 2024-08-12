@@ -3467,10 +3467,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stripe/stripe-js@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "@stripe/stripe-js@npm:4.1.0"
-  checksum: 10c0/68d207ef6e019b04ae9d0ded32353aff11789a93ddcafaa441ac7e919e531dace5dbc549afa6aa24bb57b73404cb3c4f89ac1252d2e5167d25909b21ab67d8b7
+"@stripe/stripe-js@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "@stripe/stripe-js@npm:4.2.0"
+  checksum: 10c0/e4030d8d49f55c5daf01f0a1492f75a48f16974cd792419b59fa37fc976d62b086e07863a80a6eca9d59d2b9a5552523eddba6b8175fb3035e367a9bca29fe70
   languageName: node
   linkType: hard
 
@@ -3990,7 +3990,7 @@ __metadata:
     "@lottiefiles/react-lottie-player": "npm:^3.5.4"
     "@react-navigation/native": "npm:^6.1.18"
     "@stripe/react-stripe-js": "npm:^2.7.3"
-    "@stripe/stripe-js": "npm:^4.1.0"
+    "@stripe/stripe-js": "npm:^4.2.0"
     "@stripe/stripe-react-native": "npm:0.37.2"
     "@tanstack/react-query": "npm:^5.51.23"
     "@types/react": "npm:~18.2.79"
@@ -4019,7 +4019,7 @@ __metadata:
     react-native-element-dropdown: "npm:^2.12.1"
     react-native-maps: "npm:1.14.0"
     react-native-paper: "npm:^5.12.5"
-    react-native-paper-dates: "npm:^0.22.19"
+    react-native-paper-dates: "npm:^0.22.21"
     react-native-reanimated: "npm:~3.10.1"
     react-native-safe-area-context: "npm:4.10.5"
     react-native-screens: "npm:3.31.1"
@@ -10117,9 +10117,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-paper-dates@npm:^0.22.19":
-  version: 0.22.19
-  resolution: "react-native-paper-dates@npm:0.22.19"
+"react-native-paper-dates@npm:^0.22.21":
+  version: 0.22.21
+  resolution: "react-native-paper-dates@npm:0.22.21"
   dependencies:
     color: "npm:^4.2.3"
   peerDependencies:
@@ -10127,7 +10127,7 @@ __metadata:
     react-native: "*"
     react-native-paper: "*"
     react-native-vector-icons: "*"
-  checksum: 10c0/1b328d93aa41218be6744386033cb97963c86c7f959d1b387356d9ef98d6a5cd66798babf3ae9d4a25327c83a9ab957fbe11a71c30c505f4ba9028ce8ee0191d
+  checksum: 10c0/fc2630e2f663fcde3f056e51dc6e019ae5c0cb59ee3a1788b22346e440c7b224acf59b6ccf4e0d7e04f2d83b3584e8f19fe4a18ef49dee4938e060d8cd38eb61
   languageName: node
   linkType: hard
 

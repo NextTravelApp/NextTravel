@@ -1,5 +1,5 @@
 import { useSession } from "@/components/auth/AuthContext";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, MapView, SafeAreaView } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
@@ -15,6 +15,7 @@ const AccomodationsPage = () => {
     id: string;
   }>();
   const { session } = useSession();
+  const { fetcher } = useFetcher();
   const router = useRouter();
 
   const {
@@ -24,7 +25,7 @@ const AccomodationsPage = () => {
   } = useQuery({
     queryKey: ["plan", id],
     queryFn: async () => {
-      const res = await honoClient.plan[":id"].$get({
+      const res = await fetcher.plan[":id"].$get({
         param: {
           id: id as string,
         },
@@ -56,7 +57,7 @@ const AccomodationsPage = () => {
         return [];
       }
 
-      const res = await honoClient.retriever.accomodations.$post({
+      const res = await fetcher.retriever.accomodations.$post({
         json: {
           location: request.location,
           members: request.members,

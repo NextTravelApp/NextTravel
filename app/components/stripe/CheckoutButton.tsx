@@ -1,7 +1,7 @@
 import { useStripe } from "@stripe/stripe-react-native";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "../auth/AuthContext";
-import { honoClient } from "../fetcher";
+import { useFetcher } from "../fetcher";
 import { i18n } from "../i18n";
 import { Button } from "../injector";
 
@@ -11,10 +11,11 @@ export type CheckoutButtonProps = {
 
 export function CheckoutButton(props: CheckoutButtonProps) {
   const { session } = useSession();
+  const { fetcher } = useFetcher();
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const subscribe = useMutation({
     mutationFn: async () => {
-      const res = await honoClient.premium.subscribe.$post({
+      const res = await fetcher.premium.subscribe.$post({
         json: { plan: props.plan },
       });
 

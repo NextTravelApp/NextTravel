@@ -1,6 +1,6 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { PlanCard } from "@/components/auth/PlanCard";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { SafeAreaView, Text } from "@/components/injector";
 import { StripeProvider } from "@/components/stripe/StripeProvider";
@@ -9,11 +9,12 @@ import { useQuery } from "@tanstack/react-query";
 
 const Premium = () => {
   const { session, isLoading } = useSession();
+  const { fetcher } = useFetcher();
   const { data: plans, isLoading: isPlansLoading } = useQuery({
     queryKey: ["plans"],
     queryFn: () =>
       session
-        ? honoClient.premium.plans.$get().then(async (res) => await res.json())
+        ? fetcher.premium.plans.$get().then(async (res) => await res.json())
         : [],
   });
 

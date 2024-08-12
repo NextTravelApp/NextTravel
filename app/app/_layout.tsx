@@ -3,6 +3,7 @@ import "../assets/global.css";
 
 import { ThemeProvider, useTheme } from "@/components/Theme";
 import { AuthProvider, useSession } from "@/components/auth/AuthContext";
+import { FetcherProvider } from "@/components/fetcher";
 import { getLocale } from "@/components/i18n/LocalesHandler";
 import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -45,7 +46,9 @@ const RootLayout = () => {
       <SafeAreaProvider>
         <ThemeProvider>
           <AuthProvider>
-            <RootLayoutNav />
+            <FetcherProvider>
+              <RootLayoutNav />
+            </FetcherProvider>
           </AuthProvider>
         </ThemeProvider>
       </SafeAreaProvider>

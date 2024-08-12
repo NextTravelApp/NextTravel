@@ -1,4 +1,4 @@
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, MapView, SafeAreaView, Text } from "@/components/injector";
 import { LimitScreen } from "@/components/plan/LimitScreen";
@@ -14,10 +14,11 @@ const PlanPage = () => {
   const { id } = useLocalSearchParams<{
     id: string;
   }>();
+  const { fetcher } = useFetcher();
   const { data, isLoading, error } = useQuery({
     queryKey: ["plan", id],
     queryFn: async () => {
-      const res = await honoClient.plan[":id"].$get({
+      const res = await fetcher.plan[":id"].$get({
         param: {
           id: id as string,
         },

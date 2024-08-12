@@ -1,6 +1,6 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { ChatBubble } from "@/components/chat/ChatBubble";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { SafeAreaView, TextInput } from "@/components/injector";
 import { Navbar } from "@/components/ui/Navbar";
@@ -14,12 +14,13 @@ import { TextInput as RNTextInput } from "react-native-paper";
 
 const Chat = () => {
   const { session, isLoading } = useSession();
+  const { fetcher } = useFetcher();
   const [message, setMessage] = useState("");
   const { data, refetch } = useQuery({
     queryKey: ["chat", session?.id],
     queryFn: () =>
       session
-        ? honoClient.chat.$get().then(async (res) => {
+        ? fetcher.chat.$get().then(async (res) => {
             const data = await res.json();
             if ("t" in data) throw new Error(data.t as string);
 
@@ -33,7 +34,7 @@ const Chat = () => {
 
       setMessage("");
 
-      const data = await honoClient.chat
+      const data = await fetcher.chat
         .$post({ json: { message } })
         .then((res) => res.json());
 

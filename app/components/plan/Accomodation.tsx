@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { type Href, Link, useLocalSearchParams, useRouter } from "expo-router";
 import { Pressable, View } from "react-native";
 import { useTheme } from "../Theme";
-import { honoClient } from "../fetcher";
+import { useFetcher } from "../fetcher";
 import { i18n } from "../i18n";
 import { Button, Text } from "../injector";
 import { ExternalLink } from "../ui/ExternalLink";
@@ -24,6 +24,7 @@ export type AccomodationProps = {
 
 export function Accomodation(props: AccomodationProps) {
   const { id } = useLocalSearchParams();
+  const { fetcher } = useFetcher();
   const theme = useTheme();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -79,7 +80,7 @@ export function Accomodation(props: AccomodationProps) {
               onPress={() => {
                 if (!props.edit) return;
 
-                honoClient.plan[":id"]
+                fetcher.plan[":id"]
                   .$patch({
                     param: {
                       id: id as string,

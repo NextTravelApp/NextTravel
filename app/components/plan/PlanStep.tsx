@@ -1,7 +1,7 @@
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { View } from "react-native";
-import { honoClient } from "../fetcher";
+import { useFetcher } from "../fetcher";
 import { i18n } from "../i18n";
 import { Text } from "../injector";
 import { ExternalLink } from "../ui/ExternalLink";
@@ -15,10 +15,11 @@ export type PlanStepProps = {
 };
 
 export function PlanStep(props: PlanStepProps) {
+  const { fetcher } = useFetcher();
   const { data: image } = useQuery({
     queryKey: ["image", props.location],
     queryFn: () =>
-      honoClient.image.search
+      fetcher.image.search
         .$get({
           query: { location: props.location },
         })

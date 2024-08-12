@@ -1,5 +1,5 @@
 import { useTheme } from "@/components/Theme";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, TextInput } from "@/components/injector";
 import Plane from "@/components/svg/Plane";
@@ -15,6 +15,7 @@ import {
 
 const Forgot = () => {
   const theme = useTheme();
+  const { fetcher } = useFetcher();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [email, setEmail] = useState("");
@@ -53,7 +54,7 @@ const Forgot = () => {
             mode="contained"
             className="w-full"
             onPress={() => {
-              honoClient.auth.password.forgot
+              fetcher.auth.password.forgot
                 .$post({ json: { email } })
                 .then(async (res) => await res.json())
                 .then((data) => {

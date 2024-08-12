@@ -1,16 +1,24 @@
+import { useQueryClient } from "@tanstack/react-query";
 import type { AppType } from "api";
 import { nativeApplicationVersion } from "expo-application";
 import Constants from "expo-constants";
-import * as SecureStore from "expo-secure-store";
 // @ts-expect-error Metro seems to not be able to find the package
 import { hc } from "hono/dist/client/client";
 import type { Client } from "hono/dist/types/client/types";
 import type { UnionToIntersection } from "hono/utils/types";
-import { Platform } from "react-native";
+import {
+  type PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+} from "react";
+import { useStorageState } from "./useStorageState";
 
-export const authenticatedHonoClient = (token: string | null) => {
-  // biome-ignore lint/suspicious/noExplicitAny: any is required here
-  const headers: any = {};
+export type ClientType = UnionToIntersection<Client<AppType>>;
+export const authenticatedfetcher = (token: string | null) => {
+  const headers: {
+    [key: string]: string;
+  } = {};
   if (token) headers.Authorization = `Bearer ${token}`;
 
   return hc<AppType>(process.env.EXPO_PUBLIC_API_URL as string, {
@@ -20,14 +28,40 @@ export const authenticatedHonoClient = (token: string | null) => {
         Constants.appOwnership === "expo" ? "expo-go" : nativeApplicationVersion
       }`,
     },
-  }) as UnionToIntersection<Client<AppType>>;
+  }) as ClientType;
 };
 
-const token =
-  Platform.OS === "web"
-    ? typeof window !== "undefined"
-      ? localStorage.getItem("token")
-      : null
-    : SecureStore.getItem("token");
+export type FetcherContextType = {
+  fetcher: ClientType;
+};
 
-export const honoClient = authenticatedHonoClient(token);
+export const FetcherContext = createContext<FetcherContextType | null>(null);
+
+export function useFetcher() {
+  const value = useContext(FetcherContext);
+  if (!value)
+    throw new Error("useFetcher must be used within a FetcherProvider");
+
+  return value;
+}
+
+export function FetcherProvider({ children }: PropsWithChildren) {
+  const [[_, token]] = useStorageState("token");
+  const queryClient = useQueryClient();
+  const hono = authenticatedfetcher(token);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    queryClient.invalidateQueries();
+  }, [hono]);
+
+  return (
+    <FetcherContext.Provider
+      value={{
+        fetcher: hono,
+      }}
+    >
+      {children}
+    </FetcherContext.Provider>
+  );
+}

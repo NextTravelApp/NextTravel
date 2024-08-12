@@ -1,5 +1,5 @@
 import { useSession } from "@/components/auth/AuthContext";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
@@ -19,11 +19,11 @@ const CheckoutPage = () => {
     id: string;
   }>();
   const { session } = useSession();
-
+  const { fetcher } = useFetcher();
   const { data: plan } = useQuery({
     queryKey: ["plan", id],
     queryFn: async () => {
-      const res = await honoClient.plan[":id"].$get({
+      const res = await fetcher.plan[":id"].$get({
         param: {
           id: id as string,
         },
@@ -48,7 +48,7 @@ const CheckoutPage = () => {
     queryFn: async () => {
       if (!plan?.accomodation) return null;
 
-      const res = await honoClient.retriever.accomodations[":id"].$get({
+      const res = await fetcher.retriever.accomodations[":id"].$get({
         param: {
           id: plan.accomodation,
         },
@@ -67,7 +67,7 @@ const CheckoutPage = () => {
   } = useQuery({
     queryKey: ["shared", id],
     queryFn: async () => {
-      const res = await honoClient.plan[":id"].shared.$get({
+      const res = await fetcher.plan[":id"].shared.$get({
         param: {
           id,
         },
@@ -82,7 +82,7 @@ const CheckoutPage = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["checkout", id],
     queryFn: async () => {
-      const res = await honoClient.plan[":id"].checkout.$post({
+      const res = await fetcher.plan[":id"].checkout.$post({
         param: {
           id: id as string,
         },
@@ -101,7 +101,7 @@ const CheckoutPage = () => {
   });
   const share = useMutation({
     mutationFn: async (email: string) => {
-      const res = await honoClient.plan[":id"].share.$post({
+      const res = await fetcher.plan[":id"].share.$post({
         param: {
           id: id as string,
         },
@@ -121,7 +121,7 @@ const CheckoutPage = () => {
   });
   const deleteShare = useMutation({
     mutationFn: async (userId: string) => {
-      const res = await honoClient.plan[":id"].shared[":userId"].$delete({
+      const res = await fetcher.plan[":id"].shared[":userId"].$delete({
         param: {
           id: id as string,
           userId,

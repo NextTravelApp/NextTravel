@@ -1,5 +1,5 @@
 import { useSession } from "@/components/auth/AuthContext";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, MapView, SafeAreaView } from "@/components/injector";
 import { Attraction } from "@/components/plan/Attraction";
@@ -15,6 +15,7 @@ const AttractionsPage = () => {
     id: string;
   }>();
   const { session } = useSession();
+  const { fetcher } = useFetcher();
 
   const {
     data: searchRecord,
@@ -23,7 +24,7 @@ const AttractionsPage = () => {
   } = useQuery({
     queryKey: ["plan", id],
     queryFn: async () => {
-      const res = await honoClient.plan[":id"].$get({
+      const res = await fetcher.plan[":id"].$get({
         param: {
           id: id as string,
         },
@@ -50,7 +51,7 @@ const AttractionsPage = () => {
       if (!searchRecord) return null;
 
       const request = searchRecord.request as searchSchemaType;
-      const res = await honoClient.retriever.attractions.$post({
+      const res = await fetcher.retriever.attractions.$post({
         json: {
           location: request.location,
         },

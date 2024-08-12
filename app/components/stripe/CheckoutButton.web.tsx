@@ -4,7 +4,7 @@ import { useState } from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Dialog, Portal } from "react-native-paper";
 import { useSession } from "../auth/AuthContext";
-import { honoClient } from "../fetcher";
+import { useFetcher } from "../fetcher";
 import { i18n } from "../i18n";
 import { Button } from "../injector";
 import type { CheckoutButtonProps } from "./CheckoutButton";
@@ -13,11 +13,12 @@ const stripePromise = loadStripe(process.env.EXPO_PUBLIC_STRIPE as string);
 
 export function CheckoutButton(props: CheckoutButtonProps) {
   const { session } = useSession();
+  const { fetcher } = useFetcher();
   const [open, setOpen] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | undefined>();
 
   const fetchClientSecret = async () => {
-    const res = await honoClient.premium.subscribe.$post({
+    const res = await fetcher.premium.subscribe.$post({
       json: { plan: props.plan },
     });
 

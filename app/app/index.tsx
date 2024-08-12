@@ -1,6 +1,6 @@
 import { useTheme } from "@/components/Theme";
 import { useSession } from "@/components/auth/AuthContext";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { Location } from "@/components/home/Location";
 import { i18n } from "@/components/i18n";
 import { getLocale } from "@/components/i18n/LocalesHandler";
@@ -26,6 +26,7 @@ const App = () => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const { session } = useSession();
+  const { fetcher } = useFetcher();
   const router = useRouter();
   const { location: defaultLocation } = useLocalSearchParams<{
     location?: string;
@@ -44,13 +45,13 @@ const App = () => {
   const { data: popular } = useQuery({
     queryKey: ["popular"],
     queryFn: () =>
-      honoClient.plan.popular.$get().then(async (res) => await res.json()),
+      fetcher.plan.popular.$get().then(async (res) => await res.json()),
   });
   const { data: history } = useQuery({
     queryKey: ["history", session?.id],
     queryFn: () =>
       session
-        ? honoClient.plan.history
+        ? fetcher.plan.history
             .$get()
             .then(async (res) => await res.json())
             .then((data) => {

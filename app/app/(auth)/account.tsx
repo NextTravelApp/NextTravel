@@ -1,5 +1,5 @@
 import { useSession } from "@/components/auth/AuthContext";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { Location } from "@/components/home/Location";
 import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text } from "@/components/injector";
@@ -12,11 +12,12 @@ import { ScrollView, View } from "react-native";
 
 const Account = () => {
   const { session, isLoading, logout } = useSession();
+  const { fetcher } = useFetcher();
   const publicPlans = useQuery({
     queryKey: ["public", session?.id],
     queryFn: () =>
       session
-        ? honoClient.auth.me.public.$get().then(async (res) => await res.json())
+        ? fetcher.auth.me.public.$get().then(async (res) => await res.json())
         : [],
   });
 

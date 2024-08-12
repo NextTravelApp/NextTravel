@@ -1,5 +1,5 @@
 import { useTheme } from "@/components/Theme";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView } from "@/components/injector";
 import { LimitScreen } from "@/components/plan/LimitScreen";
@@ -16,11 +16,12 @@ const CalendarPage = () => {
   const { id } = useLocalSearchParams<{
     id: string;
   }>();
+  const { fetcher } = useFetcher();
   const theme = useTheme();
   const { data, isLoading, error } = useQuery({
     queryKey: ["plan", id],
     queryFn: async () => {
-      const res = await honoClient.plan[":id"].$get({
+      const res = await fetcher.plan[":id"].$get({
         param: {
           id: id as string,
         },

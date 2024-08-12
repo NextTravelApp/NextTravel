@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { View } from "react-native";
 import { Switch } from "react-native-paper";
-import { honoClient } from "../fetcher";
+import { useFetcher } from "../fetcher";
 import { i18n } from "../i18n";
 import { Text } from "../injector";
 
@@ -15,9 +15,10 @@ export function PlanSettings({
   bookmark: boolean;
 }) {
   const queryClient = useQueryClient();
+  const { fetcher } = useFetcher();
   const bookmark = useMutation({
     mutationFn: (bookmark: boolean) =>
-      honoClient.plan[":id"].$patch({
+      fetcher.plan[":id"].$patch({
         param: {
           id: id as string,
         },
@@ -30,7 +31,7 @@ export function PlanSettings({
   });
   const publishPost = useMutation({
     mutationFn: (publicPost: boolean) =>
-      honoClient.plan[":id"].$patch({
+      fetcher.plan[":id"].$patch({
         param: {
           id: id as string,
         },

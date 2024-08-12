@@ -1,6 +1,6 @@
 import { useTheme } from "@/components/Theme";
 import { useSession } from "@/components/auth/AuthContext";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, TextInput } from "@/components/injector";
 import Plane from "@/components/svg/Plane";
@@ -17,6 +17,7 @@ import {
 const Login = () => {
   const theme = useTheme();
   const { login } = useSession();
+  const { fetcher } = useFetcher();
   const router = useRouter();
   const [error, setError] = useState<string | undefined>();
   const [name, setName] = useState("");
@@ -86,7 +87,7 @@ const Login = () => {
             mode="contained"
             className="w-full"
             onPress={() => {
-              honoClient.auth.register
+              fetcher.auth.register
                 .$post({ json: { name, email, password, confirmPassword } })
                 .then(async (res) => await res.json())
                 .then((data) => {
