@@ -16,7 +16,9 @@ type Theme = {
 };
 
 function exportTheme(theme: Theme) {
-  const keys = Object.keys(theme).filter((key) => key !== "style");
+  const keys = Object.keys(theme).filter(
+    (key) => key !== "style" && key !== "colorScheme",
+  );
   const values = Object.values(theme);
 
   return keys.reduce(

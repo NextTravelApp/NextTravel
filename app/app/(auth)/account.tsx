@@ -61,7 +61,7 @@ const Account = () => {
 
       <View className="mt-auto flex w-full flex-row items-center gap-3">
         <Link href="/premium" asChild>
-          <Button className="w-[49%] bg-card" mode="contained">
+          <Button className="!bg-card w-[49%]" mode="contained">
             <Text>{i18n.t("account.manage_plan")}</Text>
           </Button>
         </Link>

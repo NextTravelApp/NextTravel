@@ -30,7 +30,7 @@ const Auth = () => {
           </Button>
         </Link>
         <Link href="/register" asChild>
-          <Button mode="contained" className="w-full bg-card">
+          <Button mode="contained" className="!bg-card w-full">
             <Text className="text-text">{i18n.t("account.register")}</Text>
           </Button>
         </Link>

@@ -99,9 +99,10 @@ const App = () => {
           <TextInput
             mode="outlined"
             placeholder={i18n.t("home.destination")}
-            className="!bg-white w-full"
+            className="w-full"
             value={location}
             onChangeText={setLocation}
+            style={{ backgroundColor: theme.background }}
           />
 
           <View className="flex w-full max-w-full flex-1 flex-row justify-between">
@@ -119,9 +120,9 @@ const App = () => {
                     ? `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
                     : ""
                 }
-                className="!bg-white"
                 style={{
                   textAlign: "auto",
+                  backgroundColor: theme.background,
                 }}
               />
             </TouchableOpacity>
@@ -136,7 +137,7 @@ const App = () => {
                 readOnly
                 placeholder={i18n.t("home.members_placeholder")}
                 value={members.join(", ")}
-                className="!bg-white"
+                style={{ backgroundColor: theme.background }}
               />
             </TouchableOpacity>
           </View>

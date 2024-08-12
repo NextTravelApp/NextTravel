@@ -4,6 +4,7 @@ import {
   Text as RNText,
   TextInput as RNTextInput,
 } from "react-native-paper";
+import { useTheme } from "../Theme";
 
 export const Button = cssInterop(RNButton, {
   className: { target: "style" },
@@ -20,18 +21,35 @@ const RemappedText = cssInterop(RNText, {
 
 export function TextInput({
   className,
+  style,
+  outlineStyle,
+  contentStyle,
   ...props
 }: React.ComponentProps<typeof RemappedTextInput>) {
+  const theme = useTheme();
+
   return (
     <RemappedTextInput
-      outlineStyle={{
-        borderRadius: 15,
-        borderColor: "transparent",
-      }}
-      contentStyle={{
-        paddingLeft: 10,
-      }}
-      className={`bg-card ${className || ""}`}
+      outlineStyle={[
+        {
+          borderRadius: 15,
+          borderColor: "transparent",
+        },
+        outlineStyle,
+      ]}
+      contentStyle={[
+        {
+          paddingLeft: 10,
+        },
+        contentStyle,
+      ]}
+      style={[
+        {
+          backgroundColor: theme.card,
+        },
+        style,
+      ]}
+      className={className}
       {...props}
     />
   );

@@ -107,11 +107,11 @@ export function Attraction(props: AttractionProps) {
             }}
             mode="contained"
             className={`mt-auto w-full rounded-xl ${
-              props.active ? "bg-card" : "bg-primary"
+              props.active ? "!bg-card" : "!bg-primary"
             }`}
           >
             <Text className={props.active ? "" : "text-white"}>
-              {i18n.t("plan.booked")}
+              {props.active ? i18n.t("plan.booked") : i18n.t("plan.book")}
             </Text>
           </Button>
         )}

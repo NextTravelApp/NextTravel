@@ -34,11 +34,7 @@ const Login = () => {
       <View className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">
         <Link
           href="/auth"
-          style={{
-            position: "absolute",
-            top: -300,
-            right: 60,
-          }}
+          className={`-top-80 absolute flex w-full items-center justify-center ${Platform.OS === "web" ? "" : "-left-16"}`}
         >
           <Plane color={theme.text} />
         </Link>

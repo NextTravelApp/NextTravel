@@ -110,6 +110,7 @@ const Chat = () => {
               onPress={() => sendMessage.mutate(message)}
             />
           }
+          className="!bg-background"
         />
       </KeyboardAvoidingView>
     </SafeAreaView>

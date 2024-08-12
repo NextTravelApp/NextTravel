@@ -18,7 +18,7 @@ const Chat = () => {
       <View className="flex flex-row gap-3">
         <Button
           mode="contained"
-          className="w-[49%] bg-card"
+          className="!bg-card w-[49%]"
           onPress={() => {
             queryClient.invalidateQueries();
           }}

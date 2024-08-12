@@ -242,7 +242,7 @@ const CheckoutPage = () => {
         <Link href={`/plan/${id}/calendar`} asChild>
           <Button
             mode="contained"
-            className="h-14 w-[49%] justify-center bg-card text-center font-bold"
+            className="!bg-card h-14 w-[49%] justify-center text-center font-bold"
           >
             <Text>{i18n.t("plan.calendar")}</Text>
           </Button>

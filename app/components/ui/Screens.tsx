@@ -29,7 +29,7 @@ export function ErrorScreen({
       <Text className="text-center text-lg">{i18n.t(`errors.${error}`)}</Text>
 
       <Link href="/" asChild>
-        <Button mode="contained" className="bg-card">
+        <Button mode="contained" className="!bg-card">
           <Text>{i18n.t("plan.back")}</Text>
         </Button>
       </Link>
