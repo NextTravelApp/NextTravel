@@ -8,7 +8,7 @@ import { LoadingScreen } from "@/components/ui/Screens";
 import { FontAwesome } from "@expo/vector-icons";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Redirect } from "expo-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { KeyboardAvoidingView, ScrollView } from "react-native";
 import { TextInput as RNTextInput } from "react-native-paper";
 
@@ -16,6 +16,7 @@ const Chat = () => {
   const { session, isLoading } = useSession();
   const { fetcher } = useFetcher();
   const [message, setMessage] = useState("");
+  const view = useRef<ScrollView>(null);
   const { data, refetch } = useQuery({
     queryKey: ["chat", session?.id],
     queryFn: () =>
@@ -61,10 +62,13 @@ const Chat = () => {
         <Navbar title={i18n.t("chat.title")} />
 
         <ScrollView
+          ref={view}
           contentContainerStyle={{
             rowGap: 12,
-            marginTop: "auto",
           }}
+          onContentSizeChange={() =>
+            view.current?.scrollToEnd({ animated: true })
+          }
         >
           {data &&
             "filter" in data &&
@@ -75,6 +79,12 @@ const Chat = () => {
                   bot={message.bot}
                   content={message.content}
                   key={message.id}
+                  diffs={
+                    (message.data as {
+                      added: string[];
+                      removed: string[];
+                    }) || undefined
+                  }
                 />
               ))}
           {(sendMessage.isPending || sendMessage.isError) && (

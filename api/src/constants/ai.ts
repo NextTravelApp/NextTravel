@@ -3,6 +3,7 @@ import createSchema from "zod-to-json-schema";
 
 export const responseSchema = z.object({
   title: z.string().describe("A creative and short title for the trip"),
+  location: z.string().describe("English name of the location"),
   dates: z
     .array(
       z.object({
@@ -46,10 +47,13 @@ export const systemPrompt = [
 ].join("\n");
 
 export const chatSystemPrompt = [
-  "You are a travel assistant, users can ask you anything related to travels.",
+  "You are Travis, a travel assistant, users can ask you anything related to travels.",
   "Some rules and explanation:",
   "- You should always be polite, helpful and professional,",
-  "- You can call functions to retrieve user data,",
-  "- Respond in the user's language,",
+  "- You can use tools(getUserSearches) to retrieve user data,",
+  "- Respond in the same language of the user request,",
   "- Never go out of the travel context,",
+  "- Don't provide big responses, keep it short and simple,",
+  "- When editing a plan, remember to keep the steps sorted by time,",
+  "- If you need to generate a FULL new plan, tell to the user to do so from the home page, don't do it here",
 ].join("\n");
