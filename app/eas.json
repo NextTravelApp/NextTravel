@@ -10,7 +10,7 @@
       "env": {
         "EXPO_USE_METRO_WORKSPACE_ROOT": "1",
         "EXPO_PUBLIC_API_URL": "https://api.nexttravel.app",
-        "EXPO_PUBLIC_APP_URL": "nexttravel:/"
+        "EXPO_PUBLIC_APP_URL": "https://nexttravel.app"
       }
     },
     "preview": {
@@ -18,7 +18,7 @@
       "env": {
         "EXPO_USE_METRO_WORKSPACE_ROOT": "1",
         "EXPO_PUBLIC_API_URL": "https://api.nexttravel.app",
-        "EXPO_PUBLIC_APP_URL": "nexttravel:/"
+        "EXPO_PUBLIC_APP_URL": "https://nexttravel.app"
       },
       "autoIncrement": true
     },
@@ -26,9 +26,15 @@
       "env": {
         "EXPO_USE_METRO_WORKSPACE_ROOT": "1",
         "EXPO_PUBLIC_API_URL": "https://api.nexttravel.app",
-        "EXPO_PUBLIC_APP_URL": "nexttravel:/"
+        "EXPO_PUBLIC_APP_URL": "https://nexttravel.app"
       },
-      "autoIncrement": true
+      "autoIncrement": true,
+      "ios": {
+        "image": "latest"
+      },
+      "android": {
+        "image": "latest"
+      }
     }
   },
   "submit": {
