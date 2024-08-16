@@ -12,7 +12,8 @@ const AuthLayout = () => {
       pathName !== "/login" &&
       pathName !== "/register" &&
       pathName !== "/forgot" &&
-      pathName !== "/reset"
+      pathName !== "/reset" &&
+      pathName !== "/auth"
     )
       return;
     if (isLoading) return;

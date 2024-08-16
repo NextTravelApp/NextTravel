@@ -1,12 +1,10 @@
 import { useTheme } from "@/components/Theme";
 import { useSession } from "@/components/auth/AuthContext";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
-import { Button, Text, TextInput } from "@/components/injector";
-import Banner from "@/components/svg/Banner";
+import { Button, TextInput } from "@/components/injector";
+import Plane from "@/components/svg/Plane";
 import { Alert } from "@/components/ui/Alert";
-import { ExtraStyles } from "@/components/ui/ExtraStyles";
-import { FontAwesome } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
@@ -15,11 +13,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { TextInput as RNTextInput } from "react-native-paper";
 
 const Login = () => {
   const theme = useTheme();
   const { session, login } = useSession();
+  const { fetcher } = useFetcher();
   const router = useRouter();
   const [error, setError] = useState<string | undefined>();
   const [email, setEmail] = useState("");
@@ -36,13 +34,12 @@ const Login = () => {
       }}
     >
       <View className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">
-        <Banner
-          style={{
-            position: "absolute",
-            top: 50,
-          }}
-          color={theme.text}
-        />
+        <Link
+          href="/auth"
+          className={`-top-80 absolute flex w-full items-center justify-center ${Platform.OS === "web" ? "" : "-left-16"}`}
+        >
+          <Plane color={theme.text} />
+        </Link>
 
         <View className="m-auto flex w-5/6 flex-col items-center justify-center gap-3">
           <TextInput
@@ -51,37 +48,25 @@ const Login = () => {
             keyboardType="email-address"
             autoComplete="email"
             autoCapitalize="none"
+            textContentType="username"
             value={email}
             onChangeText={setEmail}
             className="w-full"
-            left={
-              <RNTextInput.Icon
-                icon={(props) => <FontAwesome name="at" {...props} />}
-                size={25}
-                style={ExtraStyles.icons}
-              />
-            }
           />
           <TextInput
             mode="outlined"
             placeholder="Password"
             secureTextEntry
+            textContentType="password"
             value={password}
             onChangeText={setPassword}
             className="w-full"
-            left={
-              <RNTextInput.Icon
-                icon={(props) => <FontAwesome name="lock" {...props} />}
-                size={25}
-                style={ExtraStyles.icons}
-              />
-            }
           />
           <Button
             mode="contained"
             className="w-full"
             onPress={() => {
-              honoClient.auth.login
+              fetcher.auth.login
                 .$post({ json: { email, password } })
                 .then(async (res) => await res.json())
                 .then(async (data) => {
@@ -96,20 +81,11 @@ const Login = () => {
                 });
             }}
           >
-            {i18n.t("account.submit")}
+            {i18n.t("account.login")}
           </Button>
-          <View className="flex w-full flex-row justify-between">
-            <Text>
-              {`${i18n.t("account.new_member")} `}
-              <Link href="/register" className="text-primary">
-                {`${i18n.t("account.register")} `}
-              </Link>
-            </Text>
-
-            <Link href="/forgot" className="text-primary">
-              {i18n.t("account.forgot_password")}
-            </Link>
-          </View>
+          <Link className="text-text" href="/forgot">
+            {i18n.t("account.forgot_password")}
+          </Link>
         </View>
 
         <Alert

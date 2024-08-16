@@ -1,4 +1,4 @@
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { LimitScreen } from "@/components/plan/LimitScreen";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
@@ -20,13 +20,14 @@ const CreatePlanPage = () => {
     endDate?: string;
     t?: string;
   }>();
+  const { fetcher } = useFetcher();
   const router = useRouter();
   const { error } = useQuery({
     queryKey: ["plan", location, members, startDate, endDate, t],
     queryFn: async () => {
       if (!location || !members || !startDate || !endDate) return null;
 
-      const res = await honoClient.plan.$post({
+      const res = await fetcher.plan.$post({
         json: {
           location: location as string,
           members: members.split(",").map((item) => Number.parseInt(item)),
@@ -41,7 +42,7 @@ const CreatePlanPage = () => {
         throw new Error((data as any).error);
 
       if ("t" in data) throw new Error(data.t);
-      if (data.id) router.push(`/plan/${data.id}`);
+      if (data.id) router.replace(`/plan/${data.id}`);
 
       return data;
     },

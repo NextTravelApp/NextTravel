@@ -15,10 +15,10 @@ export const findTrips = async (query: string) => {
     .then((res) => res.data.data.results);
 };
 
-export const getTrips = async (attractionId: number) => {
+export const getTrips = async (cityId: number) => {
   const params = new URLSearchParams();
   params.append("currency", "EUR");
-  params.append("attraction", attractionId.toString());
+  params.append("city", cityId.toString());
 
   const url = `https://app.wegotrip.com/api/v2/products/popular/?${params.toString()}`;
   return axiosClient

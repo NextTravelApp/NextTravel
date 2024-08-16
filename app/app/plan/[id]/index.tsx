@@ -1,10 +1,9 @@
-import { useSession } from "@/components/auth/AuthContext";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
-import { Button, SafeAreaView, Text } from "@/components/injector";
-import { Accomodation } from "@/components/plan/Accomodation";
+import { Button, MapView, SafeAreaView, Text } from "@/components/injector";
 import { LimitScreen } from "@/components/plan/LimitScreen";
 import { PlanStep } from "@/components/plan/PlanStep";
+import { Navbar } from "@/components/ui/Navbar";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
@@ -12,15 +11,14 @@ import { Link, useLocalSearchParams } from "expo-router";
 import { ScrollView, View } from "react-native";
 
 const PlanPage = () => {
-  const { id, t } = useLocalSearchParams<{
+  const { id } = useLocalSearchParams<{
     id: string;
-    t?: string;
   }>();
-  const { session } = useSession();
+  const { fetcher } = useFetcher();
   const { data, isLoading, error } = useQuery({
-    queryKey: ["plan", id, t],
+    queryKey: ["plan", id],
     queryFn: async () => {
-      const res = await honoClient.plan[":id"].$get({
+      const res = await fetcher.plan[":id"].$get({
         param: {
           id: id as string,
         },
@@ -40,55 +38,36 @@ const PlanPage = () => {
     refetchOnReconnect: false,
     refetchInterval: false,
   });
-  const { data: accomodation } = useQuery({
-    queryKey: ["accomodation", data?.response.accomodationId],
-    queryFn: async () => {
-      if (!data?.response.accomodationId) return null;
-
-      const res = await honoClient.retriever.accomodations[":id"].$get({
-        param: {
-          id: data.response.accomodationId,
-        },
-      });
-
-      const resData = await res.json();
-      if ("t" in resData) throw new Error(resData.t);
-
-      return resData;
-    },
-  });
 
   if (isLoading) return <LoadingScreen />;
   if (error && error.message === "month_limit") return <LimitScreen />;
   if (error) return <ErrorScreen error={error.message} />;
 
   return (
-    <SafeAreaView className="flex flex-1 flex-col bg-background p-4">
-      <Text className="!font-extrabold text-2xl">{i18n.t("plan.title")}</Text>
-      <Text className="text-lg">{i18n.t("plan.description")}</Text>
+    <SafeAreaView className="flex flex-1 flex-col gap-3 bg-background p-4">
+      <Navbar title={i18n.t("plan.title")} back />
+
+      {/* TODO: Display locations and markers */}
+      <MapView className="h-60 w-full rounded-xl" />
 
       <ScrollView className="mt-4">
-        {accomodation && (
-          <>
-            <Text className="!font-bold text-xl">
-              {i18n.t("plan.accomodation_title")}
-            </Text>
-            <Accomodation
-              {...accomodation}
-              switch={session?.id === data?.userId}
-            />
-          </>
-        )}
-
         <View className="flex gap-3 pb-6">
           <Text className="!font-bold mt-4 text-xl">{i18n.t("plan.plan")}</Text>
-          {data?.response.plan?.map((item) => (
-            <PlanStep key={item.title} {...item} />
+          {data?.response.dates?.map((item) => (
+            <View key={item.date} className="flex gap-3">
+              <Text className="font-bold text-xl">
+                {item.date} - {item.title}
+              </Text>
+
+              {item.steps.map((step) => (
+                <PlanStep key={step.title} {...step} />
+              ))}
+            </View>
           ))}
         </View>
       </ScrollView>
 
-      <Link href={`/plan/${id}/checkout`} asChild>
+      <Link href={`/plan/${id}/accomodations`} asChild>
         <Button
           mode="contained"
           className="h-14 w-[93vw] justify-center text-center font-bold"

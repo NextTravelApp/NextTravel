@@ -1,26 +1,29 @@
-import { useTheme } from "@/components/Theme";
 import { useSession } from "@/components/auth/AuthContext";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
 import { Button, SafeAreaView, Text } from "@/components/injector";
+import { Accomodation } from "@/components/plan/Accomodation";
+import { RetrievedAttraction } from "@/components/plan/Attraction";
+import { InviteMember } from "@/components/plan/InviteMember";
+import { PlanSettings } from "@/components/plan/PlanSettings";
+import { Navbar } from "@/components/ui/Navbar";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
-import { FontAwesome } from "@expo/vector-icons";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
 import { Link, Redirect, useLocalSearchParams } from "expo-router";
-import { Pressable, ScrollView, Share, View } from "react-native";
+import { useState } from "react";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 
 const CheckoutPage = () => {
   const { id } = useLocalSearchParams<{
     id: string;
   }>();
-  const theme = useTheme();
   const { session } = useSession();
-  const queryClient = useQueryClient();
+  const { fetcher } = useFetcher();
   const { data: plan } = useQuery({
     queryKey: ["plan", id],
     queryFn: async () => {
-      const res = await honoClient.plan[":id"].$get({
+      const res = await fetcher.plan[":id"].$get({
         param: {
           id: id as string,
         },
@@ -40,11 +43,46 @@ const CheckoutPage = () => {
     refetchOnReconnect: false,
     refetchInterval: false,
   });
+  const { data: accomodation } = useQuery({
+    queryKey: ["accomodation", plan?.accomodation],
+    queryFn: async () => {
+      if (!plan?.accomodation) return null;
 
+      const res = await fetcher.retriever.accomodations[":id"].$get({
+        param: {
+          id: plan.accomodation,
+        },
+      });
+
+      const resData = await res.json();
+      if ("t" in resData) throw new Error(resData.t);
+
+      return resData;
+    },
+  });
+  const {
+    data: shared,
+    refetch,
+    isLoading: isSharedLoading,
+  } = useQuery({
+    queryKey: ["shared", id],
+    queryFn: async () => {
+      const res = await fetcher.plan[":id"].shared.$get({
+        param: {
+          id,
+        },
+      });
+
+      const resData = await res.json();
+      if ("t" in resData) throw new Error(resData.t);
+
+      return resData;
+    },
+  });
   const { data, isLoading, error } = useQuery({
     queryKey: ["checkout", id],
     queryFn: async () => {
-      const res = await honoClient.plan[":id"].checkout.$post({
+      const res = await fetcher.plan[":id"].checkout.$post({
         param: {
           id: id as string,
         },
@@ -61,166 +99,172 @@ const CheckoutPage = () => {
     refetchOnReconnect: false,
     refetchInterval: false,
   });
-  const bookmark = useMutation({
-    mutationFn: (bookmark: boolean) =>
-      honoClient.plan[":id"].$patch({
+  const share = useMutation({
+    mutationFn: async (email: string) => {
+      const res = await fetcher.plan[":id"].share.$post({
         param: {
           id: id as string,
         },
         json: {
-          bookmark,
+          email,
         },
-      }),
-    onSettled: async () =>
-      await queryClient.invalidateQueries({ queryKey: ["plan", id] }),
+      });
+
+      const data = await res.json();
+      if ("t" in data) throw new Error(data.t);
+
+      return data;
+    },
+    onSettled: () => {
+      refetch();
+    },
   });
-  const publishPost = useMutation({
-    mutationFn: (publicPost: boolean) =>
-      honoClient.plan[":id"].$patch({
+  const deleteShare = useMutation({
+    mutationFn: async (userId: string) => {
+      const res = await fetcher.plan[":id"].shared[":userId"].$delete({
         param: {
           id: id as string,
+          userId,
         },
-        json: {
-          public: publicPost,
-        },
-      }),
-    onSettled: async () =>
-      await queryClient.invalidateQueries({ queryKey: ["plan", id] }),
+      });
+
+      const data = await res.json();
+      if ("t" in data) throw new Error(data.t);
+
+      return data;
+    },
+    onSettled: () => {
+      refetch();
+    },
   });
 
+  const [inviteOpen, setInviteOpen] = useState(false);
+
   if (!id) return <Redirect href="/" />;
-  if (isLoading || !data) return <LoadingScreen />;
+  if (isLoading) return <LoadingScreen />;
+  if (!data) return <ErrorScreen error={i18n.t("plan.checkout.error")} />;
   if (error) return <ErrorScreen error={error.message} />;
 
   return (
     <SafeAreaView className="flex flex-1 flex-col bg-background p-4">
-      <View className="flex flex-row items-center justify-between">
-        <View>
-          <Text className="!font-extrabold text-2xl">
-            {i18n.t("plan.checkout.title")}
-          </Text>
-          <Text className="text-lg">{i18n.t("plan.checkout.description")}</Text>
-        </View>
-
-        {session?.id === plan?.userId && (
-          <View className="flex flex-row items-center gap-3">
-            <Link href={`/plan/${id}/calendar`} asChild>
-              <FontAwesome name="calendar" size={24} color={theme.text} />
-            </Link>
-
-            <Pressable
-              onPress={() => {
-                publishPost.mutate(
-                  publishPost.isPending
-                    ? !publishPost.variables
-                    : !plan?.public,
-                );
-              }}
-            >
-              <FontAwesome
-                name={
-                  publishPost.isPending
-                    ? publishPost.variables
-                      ? "eye-slash"
-                      : "eye"
-                    : plan?.public
-                      ? "eye-slash"
-                      : "eye"
-                }
-                size={24}
-                color={theme.text}
-              />
-            </Pressable>
-
-            <Pressable
-              onPress={() => {
-                bookmark.mutate(
-                  bookmark.isPending ? !bookmark.variables : !plan?.bookmark,
-                );
-              }}
-            >
-              <FontAwesome
-                name={
-                  bookmark.isPending
-                    ? bookmark.variables
-                      ? "bookmark"
-                      : "bookmark-o"
-                    : plan?.bookmark
-                      ? "bookmark"
-                      : "bookmark-o"
-                }
-                size={24}
-                color={theme.text}
-              />
-            </Pressable>
-          </View>
-        )}
-      </View>
+      <Navbar title={i18n.t("plan.checkout.title")} back />
+      <Text className="text-lg">{i18n.t("plan.checkout.description")}</Text>
 
       <ScrollView className="mt-4">
-        <Text className="!font-bold text-xl">
-          {i18n.t("plan.checkout.details")}
-        </Text>
-        <View className="mt-1">
-          {data.items
-            .filter((item) => item.price > 0)
-            .filter(
-              (item, i, arr) =>
-                arr.findIndex((a) => a.name === item.name) === i,
-            )
-            .map((item) => (
-              <View
-                key={item.name}
-                className="flex w-full flex-row justify-between"
-              >
-                <Text className="text-lg">{item.name}</Text>
-                <Text className="text-lg">€{item.price}</Text>
-              </View>
-            ))}
+        <View className="flex gap-3">
+          {accomodation &&
+            data.items.find((item) => item.type === "accomodation") && (
+              <Accomodation
+                {...accomodation}
+                checkoutUrl={
+                  data.items.find((item) => item.type === "accomodation")?.url
+                }
+              />
+            )}
+          {plan?.attractions?.map((attraction) => (
+            <RetrievedAttraction id={attraction} key={attraction} />
+          ))}
         </View>
 
-        <Text className="!font-bold mt-3 text-xl">
-          {i18n.t("plan.checkout.plan")}
-        </Text>
-        {((plan?.response as responseType)?.plan ?? []).map((item) => (
-          <Text
-            key={item.title}
-            className="flex flex-row items-center gap-2 text-lg"
-          >
-            <View className="block h-2 w-2 rounded-full bg-text" /> {item.title}
-          </Text>
-        ))}
+        {plan?.userId === session?.id && (
+          <>
+            <Text className="!font-bold mt-3 text-2xl">
+              {i18n.t("plan.checkout.friends")}
+            </Text>
+            <Text className="mb-4 text-lg">
+              {i18n.t("plan.checkout.friends_description")}
+            </Text>
 
-        <Text className="!font-bold mt-3 text-xl">
-          {i18n.t("plan.checkout.processor.title")}
-        </Text>
-        <Text className="mb-4 text-lg">
-          {i18n.t("plan.checkout.processor.description")}
-        </Text>
-        {data.items
-          .filter((item) => item.price > 0 && item.url)
-          .map((item) => (
-            <Link href={item.url as string} key={item.name} asChild>
-              <Button mode="contained" className="mt-2">
-                {item.name}
-              </Button>
-            </Link>
-          ))}
+            <View className="flex flex-row flex-wrap items-center">
+              {shared
+                ?.filter(
+                  (friend) =>
+                    (!deleteShare.isPending && !isSharedLoading) ||
+                    friend.id !== deleteShare.variables,
+                )
+                .map((friend, i) => (
+                  <TouchableOpacity
+                    key={friend.id}
+                    onPress={() => {
+                      deleteShare.mutate(friend.id);
+                    }}
+                  >
+                    <View
+                      className={`flex h-10 w-10 items-center justify-center rounded-full border border-text bg-background p-2 text-center${i > 0 ? " -ml-3" : ""}`}
+                    >
+                      <Text>{friend.name.substring(0, 1)}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+
+              <TouchableOpacity
+                onPress={() => {
+                  setInviteOpen(true);
+                }}
+              >
+                <View
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border border-text bg-background p-2 text-center${
+                    (shared?.filter(
+                      (friend) =>
+                        (!deleteShare.isPending && !isSharedLoading) ||
+                        friend.id !== deleteShare.variables,
+                    ).length || 0) > 0
+                      ? " -ml-3"
+                      : ""
+                  }`}
+                >
+                  <Text>+</Text>
+                </View>
+              </TouchableOpacity>
+
+              <Text className="ml-3 text-lg">
+                {
+                  shared?.filter(
+                    (friend) =>
+                      (!deleteShare.isPending && !isSharedLoading) ||
+                      friend.id !== deleteShare.variables,
+                  ).length
+                }{" "}
+                {i18n.t("plan.checkout.friends_count")}
+              </Text>
+            </View>
+
+            <PlanSettings
+              id={id}
+              public={plan?.public ?? false}
+              bookmark={plan?.bookmark ?? false}
+            />
+          </>
+        )}
       </ScrollView>
 
-      <Button
-        mode="outlined"
-        className="mt-4"
-        onPress={async () => {
-          publishPost.mutate(true);
+      <View className="flex flex-row gap-3">
+        <Link href={`/plan/${id}/calendar`} asChild>
+          <Button
+            mode="contained"
+            className="!bg-card h-14 w-[49%] justify-center text-center font-bold"
+          >
+            <Text>{i18n.t("plan.calendar")}</Text>
+          </Button>
+        </Link>
 
-          Share.share({
-            url: `${process.env.EXPO_PUBLIC_APP_URL as string}/plan/${id}`,
-          });
+        <Link href="/" asChild>
+          <Button
+            mode="contained"
+            className="h-14 w-[49%] justify-center text-center font-bold"
+          >
+            {i18n.t("plan.back")}
+          </Button>
+        </Link>
+      </View>
+
+      <InviteMember
+        open={inviteOpen}
+        onClose={() => setInviteOpen(false)}
+        onInvite={(email) => {
+          share.mutate(email);
         }}
-      >
-        {i18n.t("plan.share")}
-      </Button>
+      />
     </SafeAreaView>
   );
 };

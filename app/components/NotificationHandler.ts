@@ -2,7 +2,7 @@ import Constants from "expo-constants";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
-import { honoClient } from "./fetcher";
+import type { ClientType } from "./fetcher";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -12,7 +12,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export async function registerForPushNotificationsAsync() {
+export async function registerForPushNotificationsAsync(fetcher: ClientType) {
   if (Platform.OS === "android") {
     Notifications.setNotificationChannelAsync("default", {
       name: "default",
@@ -47,7 +47,7 @@ export async function registerForPushNotificationsAsync() {
       })
     ).data;
 
-    await honoClient.auth.notification.$post({
+    await fetcher.auth.notification.$post({
       json: {
         token: pushTokenString,
       },

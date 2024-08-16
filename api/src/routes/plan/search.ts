@@ -63,7 +63,7 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
           title: trip.title,
           image: image?.url,
           imageAttributes: image?.author,
-          location: body.location as string,
+          location: trip.location,
           request: body,
           response: {
             ...trip,

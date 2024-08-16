@@ -7,12 +7,13 @@ import {
   useState,
 } from "react";
 import { registerForPushNotificationsAsync } from "../NotificationHandler";
-import { authenticatedHonoClient, type honoClient } from "../fetcher";
+import { type ClientType, authenticatedfetcher } from "../fetcher";
 import { getLocale } from "../i18n/LocalesHandler";
 import { useStorageState } from "../useStorageState";
 
+export type Session = InferResponseType<ClientType["auth"]["me"]["$get"]>;
 export type AuthContextType = {
-  session: InferResponseType<typeof honoClient.auth.me.$get> | null;
+  session: Session | null;
   isLoading: boolean;
   login: (token: string) => Promise<void>;
   logout: () => void;
@@ -31,8 +32,7 @@ export function useSession() {
 export function AuthProvider({ children }: PropsWithChildren) {
   const [[isLoading, token], setToken] = useStorageState("token");
   const [loading, setLoading] = useState(true);
-  const [session, setSession] =
-    useState<InferResponseType<typeof honoClient.auth.me.$get>>();
+  const [session, setSession] = useState<Session>();
 
   const fetchSession = async (token: string | null) => {
     setLoading(true);
@@ -43,8 +43,8 @@ export function AuthProvider({ children }: PropsWithChildren) {
       return;
     }
 
-    const honoClient = authenticatedHonoClient(token);
-    const data = await honoClient.auth.me
+    const fetcher = authenticatedfetcher(token);
+    const data = await fetcher.auth.me
       .$get()
       .then(async (res) => await res.json());
 
@@ -58,7 +58,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     setLoading(false);
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Token is used
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Fetch session not
   useEffect(() => {
     fetchSession(token);
   }, [token]);
@@ -71,11 +71,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
         login: async (token: string) => {
           setToken(token);
 
-          const honoClient = authenticatedHonoClient(token);
+          const fetcher = authenticatedfetcher(token);
 
-          registerForPushNotificationsAsync();
+          registerForPushNotificationsAsync(fetcher);
 
-          honoClient.auth.language
+          fetcher.auth.language
             .$patch({
               json: { language: getLocale() },
             })

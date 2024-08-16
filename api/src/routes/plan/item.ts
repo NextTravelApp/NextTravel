@@ -1,6 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import type { responseType } from "../../constants/ai";
+import { z } from "zod";
 import type { Variables } from "../../constants/context";
 import {
   type searchSchemaType,
@@ -27,17 +27,24 @@ export type CheckoutResponse = {
 export const itemRoute = new Hono<{ Variables: Variables }>()
   .get("/", authenticated, async (ctx) => {
     const id = ctx.req.param("id");
+    const user = ctx.get("user");
 
     const search = await prisma.searchRequest.findFirst({
       where: {
         OR: [
           {
             id: id,
-            userId: ctx.get("user").id,
+            userId: user.id,
           },
           {
             id: id,
             public: true,
+          },
+          {
+            id: id,
+            sharedWith: {
+              has: user.id,
+            },
           },
         ],
       },
@@ -69,7 +76,7 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
           userId: ctx.get("user").id,
         },
         select: {
-          response: true,
+          attractions: true,
         },
       });
 
@@ -83,38 +90,207 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
           },
         );
 
-      const newBody = {
-        ...(search.response as responseType),
-      };
-
-      if (body.accomodationId) newBody.accomodationId = body.accomodationId;
-
       await prisma.searchRequest.update({
         where: {
           id: id,
         },
         data: {
-          response: newBody,
+          attractions: body.attractionId
+            ? !search.attractions.includes(body.attractionId)
+              ? {
+                  push: body.attractionId,
+                }
+              : {
+                  set: search.attractions.filter(
+                    (id) => id !== body.attractionId,
+                  ),
+                }
+            : undefined,
+          accomodation: body.accomodationId,
           bookmark: body.bookmark,
           public: body.public,
         },
       });
 
-      return ctx.json(newBody);
+      return ctx.json({ success: true });
     },
   )
-  .post("/checkout", authenticated, async (ctx) => {
+  .get("/shared", authenticated, async (ctx) => {
     const id = ctx.req.param("id");
     const user = ctx.get("user");
 
-    const plan = await prisma.searchRequest.findUnique({
+    const search = await prisma.searchRequest.findUnique({
       where: {
         id: id,
         userId: user.id,
       },
       select: {
+        sharedWith: true,
+      },
+    });
+
+    if (!search)
+      return ctx.json(
+        {
+          t: "not_found",
+        },
+        {
+          status: 404,
+        },
+      );
+
+    const users = await prisma.user.findMany({
+      where: {
+        id: {
+          in: search.sharedWith,
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+
+    return ctx.json(users);
+  })
+  .post(
+    "/share",
+    authenticated,
+
+    zValidator(
+      "json",
+      z.object({
+        email: z.string().email(),
+      }),
+      validatorCallback,
+    ),
+    async (ctx) => {
+      const id = ctx.req.param("id");
+      const body = ctx.req.valid("json");
+      const user = ctx.get("user");
+
+      const search = await prisma.searchRequest.findUnique({
+        where: {
+          id: id,
+          userId: user.id,
+        },
+        select: {
+          sharedWith: true,
+        },
+      });
+
+      if (!search)
+        return ctx.json(
+          {
+            t: "not_found",
+          },
+          {
+            status: 404,
+          },
+        );
+
+      const sharedWith = search.sharedWith;
+      const target = await prisma.user.findUnique({
+        where: {
+          email: body.email,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      if (!target)
+        return ctx.json(
+          {
+            t: "not_found",
+          },
+          {
+            status: 404,
+          },
+        );
+
+      if (!sharedWith.includes(target.id))
+        await prisma.searchRequest.update({
+          where: {
+            id: id,
+          },
+          data: {
+            sharedWith: {
+              push: target.id,
+            },
+          },
+        });
+
+      return ctx.json({
+        success: true,
+      });
+    },
+  )
+  .delete("/shared/:userId", authenticated, async (ctx) => {
+    const id = ctx.req.param("id");
+    const userId = ctx.req.param("userId");
+    const user = ctx.get("user");
+
+    const search = await prisma.searchRequest.findUnique({
+      where: {
+        id: id,
+        userId: user.id,
+      },
+    });
+
+    if (!search)
+      return ctx.json(
+        {
+          t: "not_found",
+        },
+        {
+          status: 404,
+        },
+      );
+
+    await prisma.searchRequest.update({
+      where: {
+        id: id,
+      },
+      data: {
+        sharedWith: {
+          set: search.sharedWith.filter((id) => id !== userId),
+        },
+      },
+    });
+
+    return ctx.json({
+      success: true,
+    });
+  })
+  .post("/checkout", authenticated, async (ctx) => {
+    const id = ctx.req.param("id");
+    const user = ctx.get("user");
+
+    const plan = await prisma.searchRequest.findFirst({
+      where: {
+        OR: [
+          {
+            id: id,
+            userId: user.id,
+          },
+          {
+            id: id,
+            public: true,
+          },
+          {
+            id: id,
+            sharedWith: {
+              has: user.id,
+            },
+          },
+        ],
+      },
+      select: {
         request: true,
-        response: true,
+        attractions: true,
+        accomodation: true,
       },
     });
 
@@ -129,26 +305,23 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
       );
 
     const requestData = plan.request as searchSchemaType;
-    const data = plan.response as responseType;
     const items: CheckoutItem[] = [];
 
-    for (const step of data.plan) {
-      if (step.attractionId) {
-        const attraction = await getAttraction(step.attractionId);
+    for (const extra of plan.attractions) {
+      const attraction = await getAttraction(extra);
 
-        if (attraction)
-          items.push({
-            type: "attraction",
-            name: attraction.name,
-            provider: step.attractionId.split("_")[0],
-            price: attraction.price,
-            url: attraction.checkoutUrl,
-          });
-      }
+      if (attraction)
+        items.push({
+          type: "attraction",
+          name: attraction.name,
+          provider: extra.split("_")[0],
+          price: attraction.price,
+          url: attraction.checkoutUrl,
+        });
     }
 
-    if (data.accomodationId) {
-      const accomodation = await getAccomodation(data.accomodationId, {
+    if (plan.accomodation) {
+      const accomodation = await getAccomodation(plan.accomodation, {
         checkIn: requestData.startDate,
         checkOut: requestData.endDate,
         location: requestData.location,
@@ -159,7 +332,7 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
         items.push({
           type: "accomodation",
           name: accomodation.name,
-          provider: data.accomodationId.split("_")[0],
+          provider: plan.accomodation.split("_")[0],
           price: accomodation.price,
           url: accomodation.checkoutUrl,
         });

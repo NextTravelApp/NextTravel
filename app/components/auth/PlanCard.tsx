@@ -15,7 +15,7 @@ type Features = {
 
 export function PlanCard({ plan }: PlanCardProps) {
   return (
-    <View className="flex flex-row justify-between rounded-xl bg-card p-6">
+    <View className="relative flex flex-row justify-between rounded-xl bg-card p-6">
       <View>
         <View className="h-2 w-10 rounded-xl bg-primary" />
         <Text className="font-extrabold text-2xl">
@@ -38,7 +38,7 @@ export function PlanCard({ plan }: PlanCardProps) {
         ))}
       </View>
 
-      <View className="mt-auto gap-1">
+      <View className="absolute right-3 bottom-3 mt-auto gap-1">
         <Text className="ml-auto text-end font-extrabold text-3xl">
           €{plan.price}
         </Text>

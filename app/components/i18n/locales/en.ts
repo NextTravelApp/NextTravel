@@ -8,6 +8,7 @@ export const en = {
       done: "Done",
     },
 
+    title: "Welcome back",
     destination: "Type your destination",
     period: "Period",
     members_placeholder: "Members",
@@ -37,13 +38,13 @@ export const en = {
     },
 
     not_found: "The requested item was not found",
-    month_limit: "You have reached your monthly limit",
     invalid_plan: "This feature is only available to premium members!",
   },
   plan: {
     loading: {
       create: "Generating your trip..",
       accomodation: "Looking for the best accomodations..",
+      attractions: "Finding the best attractions..",
     },
     limit: {
       title: "Oh no!",
@@ -56,29 +57,35 @@ export const en = {
       time: "Time",
     },
     accomodation: {
-      select: "Select your accomodation",
+      select: "Select accomodation",
       price: "Price",
       rating: "Rating",
     },
+    attractions: {
+      select: "Select attractions",
+    },
     checkout: {
-      title: "Ready for checkout?",
-      description: "Let's make this plan real!",
-      details: "Checkout Details",
-      processor: {
-        title: "Payment Processor",
-        description:
-          "NextTravel creates amazing trips for you but is not responsible for attractions, accommodations, and travels.  You can check and pay the providers by clicking the button below.",
-      },
-      plan: "Your plan",
+      title: "Checkout",
+      description:
+        "NextTravel doesn't handle payments for you, you can proceed by clicking the buttons below",
+      friends: "Traveling with friends?",
+      friends_description:
+        "Share your trip with friends to enjoy your holiday even more",
+      invite: "Invite",
+      friends_count: "invited friends",
+      public: "Public",
+      bookmark: "Bookmark",
     },
 
-    title: "Your plan is ready!",
-    description: "Click any item that you want to change to edit it.",
+    title: "Plan your trip",
     accomodation_title: "Accomodation",
     plan: "Your plan",
     next: "Next",
     back: "Back",
     share: "Share",
+    book: "Book",
+    booked: "Booked",
+    calendar: "Calendar",
   },
   account: {
     premium: {
@@ -119,7 +126,8 @@ export const en = {
     },
 
     bookmarks: "Bookmarks",
-    public: "Public / Shared",
+    history: "History",
+    public: "Shared Plans",
     name: "Name",
     current_password: "Current Password / Reset Code",
     confirm_password: "Confirm Password",
@@ -135,9 +143,16 @@ export const en = {
     success: "Success",
     password_reset: "Password reset email sent",
     password_changed: "Password changed",
+
+    manage_plan: "Manage Plan",
   },
   chat: {
     title: "Chat",
     input: "Type your message",
+  },
+  settings: {
+    title: "Settings",
+    clear_cache: "Clear cache",
+    logout: "Logout",
   },
 };

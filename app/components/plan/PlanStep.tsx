@@ -1,8 +1,7 @@
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { View } from "react-native";
-import { useTheme } from "../Theme";
-import { honoClient } from "../fetcher";
+import { useFetcher } from "../fetcher";
 import { i18n } from "../i18n";
 import { Text } from "../injector";
 import { ExternalLink } from "../ui/ExternalLink";
@@ -11,18 +10,16 @@ import { Image } from "../ui/Image";
 export type PlanStepProps = {
   location: string;
   title: string;
-  date: string;
   time: string;
   duration: number;
-  attractionId?: string | undefined;
 };
 
 export function PlanStep(props: PlanStepProps) {
-  const theme = useTheme();
+  const { fetcher } = useFetcher();
   const { data: image } = useQuery({
     queryKey: ["image", props.location],
     queryFn: () =>
-      honoClient.image.search
+      fetcher.image.search
         .$get({
           query: { location: props.location },
         })
@@ -55,12 +52,6 @@ export function PlanStep(props: PlanStepProps) {
           <FontAwesome6 name="unsplash" size={24} color="white" />
         </ExternalLink>
       )}
-
-      <Text className="absolute right-3 bottom-3 flex flex-row justify-end gap-3">
-        {props.attractionId && (
-          <FontAwesome6 name="landmark" size={24} color={theme.text} />
-        )}
-      </Text>
     </View>
   );
 }

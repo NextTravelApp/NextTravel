@@ -6,10 +6,18 @@ import { Platform } from "react-native";
 export function ExternalLink(
   props: Omit<ComponentProps<typeof Link>, "href"> & { href: string },
 ) {
+  if (props.href.startsWith("/") || props.href.startsWith("#")) {
+    return (
+      // @ts-ignore
+      <Link {...props} />
+    );
+  }
+
   return (
     <Link
       target="_blank"
       {...props}
+      // @ts-ignore
       href={props.href}
       onPress={(e) => {
         if (Platform.OS !== "web") {

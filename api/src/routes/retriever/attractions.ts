@@ -1,6 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { attractionRequestSchema } from "../../lib/ai/tools";
+import { attractionsRequestSchema } from "../../lib/ai/tools";
 import {
   getAttraction,
   searchAttractions,
@@ -12,7 +12,7 @@ export const attractionsRoute = new Hono()
   .post(
     "/",
     authenticated,
-    zValidator("json", attractionRequestSchema, validatorCallback),
+    zValidator("json", attractionsRequestSchema, validatorCallback),
     async (ctx) => {
       const body = ctx.req.valid("json");
       const attractions = await searchAttractions(body);
@@ -22,7 +22,7 @@ export const attractionsRoute = new Hono()
   )
   .get("/:id", authenticated, async (ctx) => {
     const id = ctx.req.param("id");
-    const attraction = getAttraction(id);
+    const attraction = await getAttraction(id);
 
     if (!attraction) {
       return ctx.json(

@@ -1,5 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
+import { responseSchema } from "../../constants/ai";
 import prisma from "../prisma";
 import { searchAccomodations } from "../retriever/accomodations";
 import { searchAttractions } from "../retriever/attractions";
@@ -8,14 +9,13 @@ function logTool(tool: string, request: unknown) {
   console.log(`[AI] [Tool] ${tool}`, request);
 }
 
-export const attractionRequestSchema = z.object({
-  name: z.string().describe("The name of the attraction"),
+export const attractionsRequestSchema = z.object({
   location: z.string().describe("The city of the attraction"),
 });
-export type AttractionRequest = z.infer<typeof attractionRequestSchema>;
-export const getAttraction = tool({
-  description: "Get info and pricing about a specific attraction",
-  parameters: attractionRequestSchema,
+export type AttractionsRequest = z.infer<typeof attractionsRequestSchema>;
+export const getAttractions = tool({
+  description: "Get info and pricing about attractions in a city",
+  parameters: attractionsRequestSchema,
   execute: async (request) => {
     logTool("getAttractions", request);
     return await searchAttractions(request);
@@ -43,12 +43,58 @@ export const getAccomodations = tool({
 export const getUserSearches = (id: string) =>
   tool({
     description: "Get the searches made by the current user",
-    parameters: z.object({}),
-    execute: async () => {
+    parameters: z.object({
+      location: z.string().describe("The location of the plan"),
+    }),
+    execute: async (request) => {
+      logTool("getUserSearches", request);
+
       return await prisma.searchRequest.findMany({
         where: {
           userId: id,
+          location: {
+            contains: request.location,
+            mode: "insensitive",
+          },
+        },
+        orderBy: {
+          date: "desc",
+        },
+        take: 2,
+      });
+    },
+  });
+
+export const editPlanResponse = (user: string) =>
+  tool({
+    description: "Edit the response field of a plan",
+    parameters: z.object({
+      id: z.string().describe("The id of the plan"),
+      response: responseSchema.describe("The new response for the plan"),
+      diff: z
+        .object({
+          removed: z
+            .array(z.string())
+            .describe("Readable name for removed steps, empty if none"),
+          added: z
+            .array(z.string())
+            .describe("Readable name for added steps, empty if none"),
+        })
+        .describe("The diff applied to this response"),
+    }),
+    execute: async (request) => {
+      logTool("editPlanResponse", request);
+
+      await prisma.searchRequest.update({
+        where: {
+          id: request.id,
+          userId: user,
+        },
+        data: {
+          response: request.response,
         },
       });
+
+      return request.diff;
     },
   });

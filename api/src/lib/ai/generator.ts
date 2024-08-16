@@ -2,7 +2,6 @@ import { generateText } from "ai";
 import { ai } from ".";
 import { systemPrompt } from "../../constants/ai";
 import { UnexpectedResponseError } from "./exceptions";
-import { getAccomodations, getAttraction } from "./tools";
 
 //! WARNING: Ensure that all the variables are escaped properly
 export async function generateTrip(
@@ -22,10 +21,6 @@ export async function generateTrip(
       My language is ${locale}.
       ${theme ? `My ideal trip theme is ${theme}` : ""}`,
     maxTokens: 4000,
-    tools: {
-      getAttraction,
-      getAccomodations,
-    },
   });
 
   console.log(

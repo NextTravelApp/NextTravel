@@ -3,6 +3,7 @@ import "../assets/global.css";
 
 import { ThemeProvider, useTheme } from "@/components/Theme";
 import { AuthProvider, useSession } from "@/components/auth/AuthContext";
+import { FetcherProvider } from "@/components/fetcher";
 import { getLocale } from "@/components/i18n/LocalesHandler";
 import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -45,7 +46,9 @@ const RootLayout = () => {
       <SafeAreaProvider>
         <ThemeProvider>
           <AuthProvider>
-            <RootLayoutNav />
+            <FetcherProvider>
+              <RootLayoutNav />
+            </FetcherProvider>
           </AuthProvider>
         </ThemeProvider>
       </SafeAreaProvider>
@@ -78,12 +81,13 @@ function RootLayoutNav() {
       pathName === "/login" ||
       pathName === "/register" ||
       pathName === "/reset" ||
-      pathName === "/forgot"
+      pathName === "/forgot" ||
+      pathName === "/auth"
     )
       return;
     if (isLoading) return;
 
-    if (!session) router.push("/login");
+    if (!session) router.push("/auth");
   }, [session, isLoading, pathName, router]);
 
   return (
@@ -118,7 +122,12 @@ function RootLayoutNav() {
             paddingBottom: 0,
             borderWidth: 0,
             display:
-              pathName === "/login" || pathName === "/register"
+              pathName === "/login" ||
+              pathName === "/register" ||
+              pathName === "/auth" ||
+              pathName === "/reset" ||
+              pathName === "/forgot" ||
+              pathName.startsWith("/plan")
                 ? "none"
                 : "flex",
           },
@@ -131,19 +140,33 @@ function RootLayoutNav() {
           }}
         />
         <Tabs.Screen
+          name="history"
+          options={{
+            tabBarIcon: (props) => <FontAwesome name="list" {...props} />,
+          }}
+        />
+        <Tabs.Screen
           name="chat"
           options={{
             tabBarIcon: (props) => <FontAwesome name="comments" {...props} />,
-            href: process.env.EXPO_PUBLIC_ENABLE_STRIPE ? "/chat" : null,
+          }}
+        />
+        <Tabs.Screen
+          name="bookmarks"
+          options={{
+            tabBarIcon: (props) => <FontAwesome name="bookmark" {...props} />,
+          }}
+        />
+        <Tabs.Screen
+          name="settings"
+          options={{
+            tabBarIcon: (props) => <FontAwesome name="gear" {...props} />,
           }}
         />
         <Tabs.Screen
           name="(auth)"
           options={{
-            tabBarIcon: (props) => (
-              <FontAwesome name="user-circle-o" {...props} />
-            ),
-            href: "/account",
+            href: null,
           }}
         />
         <Tabs.Screen name="plan" options={{ href: null }} />

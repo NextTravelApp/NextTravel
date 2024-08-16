@@ -1,12 +1,11 @@
 import { useTheme } from "@/components/Theme";
 import { useSession } from "@/components/auth/AuthContext";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { Location } from "@/components/home/Location";
 import { i18n } from "@/components/i18n";
 import { getLocale } from "@/components/i18n/LocalesHandler";
-import { Button, Text, TextInput } from "@/components/injector";
-import Banner from "@/components/svg/Banner";
-import { ExtraStyles } from "@/components/ui/ExtraStyles";
+import { Button, MapView, Text, TextInput } from "@/components/injector";
+import { Navbar } from "@/components/ui/Navbar";
 import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -27,6 +26,7 @@ const App = () => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const { session } = useSession();
+  const { fetcher } = useFetcher();
   const router = useRouter();
   const { location: defaultLocation } = useLocalSearchParams<{
     location?: string;
@@ -45,13 +45,13 @@ const App = () => {
   const { data: popular } = useQuery({
     queryKey: ["popular"],
     queryFn: () =>
-      honoClient.plan.popular.$get().then(async (res) => await res.json()),
+      fetcher.plan.popular.$get().then(async (res) => await res.json()),
   });
   const { data: history } = useQuery({
     queryKey: ["history", session?.id],
     queryFn: () =>
       session
-        ? honoClient.plan.history
+        ? fetcher.plan.history
             .$get()
             .then(async (res) => await res.json())
             .then((data) => {
@@ -76,99 +76,99 @@ const App = () => {
       }}
     >
       <View className="flex w-full flex-1 items-center gap-3">
-        <Banner
-          style={{
-            marginBottom: 40,
-          }}
-          color={theme.text}
+        <Navbar
+          title={`${i18n.t("home.title")}${session ? `, ${session.name}` : ""}`}
         />
 
-        <TextInput
-          mode="outlined"
-          placeholder={i18n.t("home.destination")}
-          className="w-full"
-          value={location}
-          onChangeText={setLocation}
-          left={
-            <RNTextInput.Icon
-              icon={(props) => <FontAwesome name="location-arrow" {...props} />}
-              size={25}
-              style={ExtraStyles.icons}
-            />
-          }
-        />
-        <View className="flex w-full max-w-full flex-1 flex-row justify-between">
-          <TouchableOpacity
-            className="w-[49%]"
-            onPress={() => setDateOpen(true)}
-          >
-            <TextInput
+        <View className="flex w-full flex-1 gap-3 rounded-xl bg-card p-3">
+          <MapView
+            initialRegion={{
+              latitude: 41.9028,
+              longitude: 12.4964,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            style={{ height: 200 }}
+            className="rounded-xl"
+            userInterfaceStyle={theme.colorScheme}
+            onPress={(_e) => {
+              // TODO: Implement map selection
+            }}
+          />
+
+          <TextInput
+            mode="outlined"
+            placeholder={i18n.t("home.destination")}
+            className="w-full"
+            value={location}
+            onChangeText={setLocation}
+            style={{ backgroundColor: theme.background }}
+          />
+
+          <View className="flex w-full max-w-full flex-1 flex-row justify-between">
+            <TouchableOpacity
+              className="w-[49%]"
               onPress={() => setDateOpen(true)}
-              mode="outlined"
-              readOnly
-              placeholder={i18n.t("home.period")}
-              value={
-                range.startDate && range.endDate
-                  ? `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
-                  : ""
-              }
-              left={
-                <RNTextInput.Icon
-                  icon={(props) => <FontAwesome name="calendar" {...props} />}
-                  size={25}
-                  style={ExtraStyles.icons}
-                />
-              }
-            />
-          </TouchableOpacity>
+            >
+              <TextInput
+                onPress={() => setDateOpen(true)}
+                mode="outlined"
+                readOnly
+                placeholder={i18n.t("home.period")}
+                value={
+                  range.startDate && range.endDate
+                    ? `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
+                    : ""
+                }
+                style={{
+                  textAlign: "auto",
+                  backgroundColor: theme.background,
+                }}
+              />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            className="w-[49%]"
-            onPress={() => setMembersOpen(true)}
-          >
-            <TextInput
+            <TouchableOpacity
+              className="w-[49%]"
               onPress={() => setMembersOpen(true)}
-              mode="outlined"
-              readOnly
-              placeholder={i18n.t("home.members_placeholder")}
-              value={members.join(", ")}
-              left={
-                <RNTextInput.Icon
-                  icon={(props) => <FontAwesome name="users" {...props} />}
-                  size={25}
-                  style={ExtraStyles.icons}
-                />
-              }
-            />
-          </TouchableOpacity>
+            >
+              <TextInput
+                onPress={() => setMembersOpen(true)}
+                mode="outlined"
+                readOnly
+                placeholder={i18n.t("home.members_placeholder")}
+                value={members.join(", ")}
+                style={{ backgroundColor: theme.background }}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <Button
+            onPress={() => {
+              if (
+                !location ||
+                !members.length ||
+                !range.startDate ||
+                !range.endDate
+              )
+                return;
+
+              router.push({
+                pathname: "/plan/create",
+                params: {
+                  location,
+                  members,
+                  startDate: range.startDate?.toLocaleDateString("en-US"),
+                  endDate: range.endDate?.toLocaleDateString("en-US"),
+                  t: Date.now(),
+                },
+              });
+            }}
+            mode="contained"
+            className="w-full"
+          >
+            {i18n.t("home.submit")}
+          </Button>
         </View>
-
-        <Button
-          onPress={() => {
-            if (
-              !location ||
-              !members.length ||
-              !range.startDate ||
-              !range.endDate
-            )
-              return;
-
-            router.push({
-              pathname: "/plan/create",
-              params: {
-                location,
-                members,
-                startDate: range.startDate?.toLocaleDateString("en-US"),
-                endDate: range.endDate?.toLocaleDateString("en-US"),
-                t: Date.now(),
-              },
-            });
-          }}
-          mode="contained"
-          className="w-full"
-        >
-          {i18n.t("home.submit")}
-        </Button>
       </View>
 
       <View className="mt-6 flex gap-2">
@@ -203,16 +203,18 @@ const App = () => {
             columnGap: 12,
           }}
         >
-          {history?.map((plan) => (
-            <Location
-              key={plan.id}
-              image={plan.image}
-              imageAttribs={plan.imageAttributes}
-              name={plan.title}
-              id={plan.id}
-              restore
-            />
-          ))}
+          {history &&
+            "map" in history &&
+            history?.map((plan) => (
+              <Location
+                key={plan.id}
+                image={plan.image}
+                imageAttribs={plan.imageAttributes}
+                name={plan.title}
+                id={plan.id}
+                restore
+              />
+            ))}
         </ScrollView>
       </View>
 

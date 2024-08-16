@@ -1,11 +1,9 @@
 import { useTheme } from "@/components/Theme";
-import { honoClient } from "@/components/fetcher";
+import { useFetcher } from "@/components/fetcher";
 import { i18n } from "@/components/i18n";
-import { Button, Text, TextInput } from "@/components/injector";
-import Banner from "@/components/svg/Banner";
+import { Button, TextInput } from "@/components/injector";
+import Plane from "@/components/svg/Plane";
 import { Alert } from "@/components/ui/Alert";
-import { ExtraStyles } from "@/components/ui/ExtraStyles";
-import { FontAwesome } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useState } from "react";
 import {
@@ -14,10 +12,10 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { TextInput as RNTextInput } from "react-native-paper";
 
 const Forgot = () => {
   const theme = useTheme();
+  const { fetcher } = useFetcher();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [email, setEmail] = useState("");
@@ -29,13 +27,16 @@ const Forgot = () => {
       }}
     >
       <View className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">
-        <Banner
+        <Link
+          href="/auth"
           style={{
             position: "absolute",
-            top: 50,
+            top: -300,
+            right: 60,
           }}
-          color={theme.text}
-        />
+        >
+          <Plane color={theme.text} />
+        </Link>
 
         <View className="m-auto flex w-5/6 flex-col items-center justify-center gap-3">
           <TextInput
@@ -44,22 +45,16 @@ const Forgot = () => {
             keyboardType="email-address"
             autoComplete="email"
             autoCapitalize="none"
+            textContentType="emailAddress"
             value={email}
             onChangeText={setEmail}
             className="w-full"
-            left={
-              <RNTextInput.Icon
-                icon={(props) => <FontAwesome name="at" {...props} />}
-                size={25}
-                style={ExtraStyles.icons}
-              />
-            }
           />
           <Button
             mode="contained"
             className="w-full"
             onPress={() => {
-              honoClient.auth.password.forgot
+              fetcher.auth.password.forgot
                 .$post({ json: { email } })
                 .then(async (res) => await res.json())
                 .then((data) => {
@@ -75,14 +70,6 @@ const Forgot = () => {
           >
             {i18n.t("account.submit")}
           </Button>
-          <View className="flex w-full flex-row justify-between">
-            <Text>
-              {`${i18n.t("account.remember_password")} `}
-              <Link href="/login" className="text-primary">
-                {i18n.t("account.login")}
-              </Link>
-            </Text>
-          </View>
         </View>
 
         <Alert
