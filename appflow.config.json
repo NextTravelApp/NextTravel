@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "appId": "83266de3",
+      "root": "app",
+      "dependencyInstallCommand": "cd .. && yarn install"
+    }
+  ]
+}
