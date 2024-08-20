@@ -75,10 +75,12 @@ export const editPlanResponse = (user: string) =>
         .object({
           removed: z
             .array(z.string())
-            .describe("Readable name for removed steps, empty if none"),
+            .describe("Readable name for removed steps, empty if none")
+            .optional(),
           added: z
             .array(z.string())
-            .describe("Readable name for added steps, empty if none"),
+            .describe("Readable name for added steps, empty if none")
+            .optional(),
         })
         .describe("The diff applied to this response"),
     }),

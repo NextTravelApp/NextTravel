@@ -51,12 +51,12 @@ export async function chat(user: string, message: string) {
     .flatMap((call) => call.content)
     .filter((content) => content.toolName === "editPlanResponse")
     .map((content) => content.result) as {
-    added: string[];
-    removed: string[];
+    added: string[] | undefined;
+    removed: string[] | undefined;
   }[];
 
-  const added = diffs.flatMap((diff) => diff.added);
-  const removed = diffs.flatMap((diff) => diff.removed);
+  const added = diffs.flatMap((diff) => diff.added ?? []);
+  const removed = diffs.flatMap((diff) => diff.removed ?? []);
   const data = diffs.length > 0 ? { added, removed } : undefined;
 
   const response = await prisma.chatMessage.create({
