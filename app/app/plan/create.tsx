@@ -13,13 +13,15 @@ const formatDate = (date: string) => {
 };
 
 const CreatePlanPage = () => {
-  const { location, members, startDate, endDate, t } = useLocalSearchParams<{
-    location?: string;
-    members?: string;
-    startDate?: string;
-    endDate?: string;
-    t?: string;
-  }>();
+  const { location, members, startDate, endDate, theme, t } =
+    useLocalSearchParams<{
+      location?: string;
+      members?: string;
+      startDate?: string;
+      endDate?: string;
+      theme?: string;
+      t?: string;
+    }>();
   const { fetcher } = useFetcher();
   const router = useRouter();
   const { error } = useQuery({
@@ -33,6 +35,7 @@ const CreatePlanPage = () => {
           members: members.split(",").map((item) => Number.parseInt(item)),
           startDate: formatDate(startDate),
           endDate: formatDate(endDate),
+          theme,
         },
       });
 

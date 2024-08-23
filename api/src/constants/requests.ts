@@ -52,6 +52,7 @@ export const searchSchema = z
     members: z.array(z.number().min(1, "min_age")).min(1, "plan.min_members"),
     startDate: z.string().date(),
     endDate: z.string().date(),
+    theme: z.string().optional(),
   })
   .superRefine((data, ctx) => {
     if (data.startDate && new Date(data.startDate) < new Date())

@@ -17,23 +17,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ai-sdk/openai@npm:^0.0.48":
-  version: 0.0.48
-  resolution: "@ai-sdk/openai@npm:0.0.48"
+"@ai-sdk/openai@npm:^0.0.53":
+  version: 0.0.53
+  resolution: "@ai-sdk/openai@npm:0.0.53"
   dependencies:
-    "@ai-sdk/provider": "npm:0.0.20"
-    "@ai-sdk/provider-utils": "npm:1.0.13"
+    "@ai-sdk/provider": "npm:0.0.21"
+    "@ai-sdk/provider-utils": "npm:1.0.16"
   peerDependencies:
     zod: ^3.0.0
-  checksum: 10c0/a46b4adcdda2dfd0b715612136c97c76a360c058629d858844de114b9b9080c7ab6a79386135d194305c0c33f9b1de7a568c4e59aa540417e2dd06ca7357b0df
+  checksum: 10c0/8317e02a30ce11c9aa922121424b30378400b6def1bcdb5dde9907d0c5a1bd7c82bf02009ab8197413da45d19d0d43ef0d0a0b2e132c64f2fc522e4e8c4decd4
   languageName: node
   linkType: hard
 
-"@ai-sdk/provider-utils@npm:1.0.13":
-  version: 1.0.13
-  resolution: "@ai-sdk/provider-utils@npm:1.0.13"
+"@ai-sdk/provider-utils@npm:1.0.16":
+  version: 1.0.16
+  resolution: "@ai-sdk/provider-utils@npm:1.0.16"
   dependencies:
-    "@ai-sdk/provider": "npm:0.0.20"
+    "@ai-sdk/provider": "npm:0.0.21"
     eventsource-parser: "npm:1.1.2"
     nanoid: "npm:3.3.6"
     secure-json-parse: "npm:2.7.0"
@@ -42,25 +42,25 @@ __metadata:
   peerDependenciesMeta:
     zod:
       optional: true
-  checksum: 10c0/c1fd1db6825352d5053d319ac8433d573f0b4a3d3fe146728dce4163634ff3be9ae402d071b82166c63a9ed91a8757338606a9618906fb1bf03ac76595fcda23
+  checksum: 10c0/1f69ad827362f5cfdf9aea6ee8489aff4ad4d02713b6afc083bf6b7df4844afca52f9c63314beeafce0ceaeb28bad215174393a376e3c35a7f073b0dd281ce57
   languageName: node
   linkType: hard
 
-"@ai-sdk/provider@npm:0.0.20":
-  version: 0.0.20
-  resolution: "@ai-sdk/provider@npm:0.0.20"
+"@ai-sdk/provider@npm:0.0.21":
+  version: 0.0.21
+  resolution: "@ai-sdk/provider@npm:0.0.21"
   dependencies:
     json-schema: "npm:0.4.0"
-  checksum: 10c0/8df37ffae44c32339459acc6bdc088362187c21baa450ddc58437ed015067ea9beae0dcc58159a81ff0ab09e35dadeafaa37fc0c060651030fc66dbcc1cf721b
+  checksum: 10c0/e5dc76df190e7f037f3c7e8b08ac3e0d3fba5fda43cf9efe2d1e93e5e880e1d83faaa38573725608767bc7a418d78a22186eba6801efe4b48211f79aad4977b9
   languageName: node
   linkType: hard
 
-"@ai-sdk/react@npm:0.0.45":
-  version: 0.0.45
-  resolution: "@ai-sdk/react@npm:0.0.45"
+"@ai-sdk/react@npm:0.0.50":
+  version: 0.0.50
+  resolution: "@ai-sdk/react@npm:0.0.50"
   dependencies:
-    "@ai-sdk/provider-utils": "npm:1.0.13"
-    "@ai-sdk/ui-utils": "npm:0.0.33"
+    "@ai-sdk/provider-utils": "npm:1.0.16"
+    "@ai-sdk/ui-utils": "npm:0.0.37"
     swr: "npm:2.2.5"
   peerDependencies:
     react: ^18 || ^19
@@ -70,72 +70,72 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10c0/4d083e38dd7fa69b0925ff317f3a7ea0158d5adc8b7ab89cc3b8d2eb9b6676585e5e084bbc94501e76e754dcf0691e760adbf8dcee3c285c68e153b4e1c9fa6d
+  checksum: 10c0/2b8bb4d3e4771e4aa0b83be5d407cea61a54b945c2002be34fb48dd9da0207a59fea4f7e32b8aa98b9207c05f0407fe30435df4e165f8f880417d9e4a7bd42ee
   languageName: node
   linkType: hard
 
-"@ai-sdk/solid@npm:0.0.36":
-  version: 0.0.36
-  resolution: "@ai-sdk/solid@npm:0.0.36"
+"@ai-sdk/solid@npm:0.0.40":
+  version: 0.0.40
+  resolution: "@ai-sdk/solid@npm:0.0.40"
   dependencies:
-    "@ai-sdk/provider-utils": "npm:1.0.13"
-    "@ai-sdk/ui-utils": "npm:0.0.33"
+    "@ai-sdk/provider-utils": "npm:1.0.16"
+    "@ai-sdk/ui-utils": "npm:0.0.37"
   peerDependencies:
     solid-js: ^1.7.7
   peerDependenciesMeta:
     solid-js:
       optional: true
-  checksum: 10c0/13751aafbd2bf97abe3577cc349676a9492acf79812ce0d70f000fa11127b7f194aaf02b8c5be55f825573d49238ed8918fcbc4b30666e4b57f5a4adcefbf86b
+  checksum: 10c0/0b4afea22b8ca399db5ed02990ab05c2f4266b74017d1f2794268179510915be2f236dc3aa177422462eaee386b09325e2aa7d5c14dbee30df8cc104e3375ae8
   languageName: node
   linkType: hard
 
-"@ai-sdk/svelte@npm:0.0.38":
-  version: 0.0.38
-  resolution: "@ai-sdk/svelte@npm:0.0.38"
+"@ai-sdk/svelte@npm:0.0.42":
+  version: 0.0.42
+  resolution: "@ai-sdk/svelte@npm:0.0.42"
   dependencies:
-    "@ai-sdk/provider-utils": "npm:1.0.13"
-    "@ai-sdk/ui-utils": "npm:0.0.33"
+    "@ai-sdk/provider-utils": "npm:1.0.16"
+    "@ai-sdk/ui-utils": "npm:0.0.37"
     sswr: "npm:2.1.0"
   peerDependencies:
     svelte: ^3.0.0 || ^4.0.0
   peerDependenciesMeta:
     svelte:
       optional: true
-  checksum: 10c0/f9a0f3c22e8aff0a6b7561fb12ad4deb4e784ba2c8aafe4aa99de695648b9ca2fa554411b3c6524e9b332944d364a2fa163d59cc62df754edff06cc481d84327
+  checksum: 10c0/e59046034b4f0e509e7b5683fab3804073c546cad5818762d95655a3a71dd55671c20ae4e8ede557bab541f03a1f7196f148894bacd243f21158586a14bd0777
   languageName: node
   linkType: hard
 
-"@ai-sdk/ui-utils@npm:0.0.33":
-  version: 0.0.33
-  resolution: "@ai-sdk/ui-utils@npm:0.0.33"
+"@ai-sdk/ui-utils@npm:0.0.37":
+  version: 0.0.37
+  resolution: "@ai-sdk/ui-utils@npm:0.0.37"
   dependencies:
-    "@ai-sdk/provider": "npm:0.0.20"
-    "@ai-sdk/provider-utils": "npm:1.0.13"
+    "@ai-sdk/provider": "npm:0.0.21"
+    "@ai-sdk/provider-utils": "npm:1.0.16"
     json-schema: "npm:0.4.0"
     secure-json-parse: "npm:2.7.0"
-    zod-to-json-schema: "npm:3.22.5"
+    zod-to-json-schema: "npm:3.23.2"
   peerDependencies:
     zod: ^3.0.0
   peerDependenciesMeta:
     zod:
       optional: true
-  checksum: 10c0/570fa18ed2b2dfbc2af7ce1a15e161b8ab789acbd6894fd24fed5f0c1bbc2a6343a151beb35525e0f940a152a5bd70ad09c62a4582464ff48a6af2f9a64bd3d5
+  checksum: 10c0/ac3c0e4e0d585bd12739c8d105ef30c6b9266026851a6128b3f9f02a72b52dbed694b3f79ce56c1f8146c5c854c0ceefd65a04c3d4faad7be3117d83a319bab5
   languageName: node
   linkType: hard
 
-"@ai-sdk/vue@npm:0.0.37":
-  version: 0.0.37
-  resolution: "@ai-sdk/vue@npm:0.0.37"
+"@ai-sdk/vue@npm:0.0.42":
+  version: 0.0.42
+  resolution: "@ai-sdk/vue@npm:0.0.42"
   dependencies:
-    "@ai-sdk/provider-utils": "npm:1.0.13"
-    "@ai-sdk/ui-utils": "npm:0.0.33"
+    "@ai-sdk/provider-utils": "npm:1.0.16"
+    "@ai-sdk/ui-utils": "npm:0.0.37"
     swrv: "npm:1.0.4"
   peerDependencies:
     vue: ^3.3.4
   peerDependenciesMeta:
     vue:
       optional: true
-  checksum: 10c0/14536da06290c088a2a61e993cea3af9d9da3aa021f7c7fabed6fedd5680dd1790471430b7c660c6668aa5ee74341d6bf52ba6235d23ad06f30e4dbdb9088f81
+  checksum: 10c0/b76ef6a204228df804a82031482c013d821e15ed5358bdf28a3bb4e0c5a7d7aae683571c1531d53693525e205f5369b360e9a6786a9cb17b7d337729bff5b204
   languageName: node
   linkType: hard
 
@@ -2116,10 +2116,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hono/node-server@npm:^1.12.0":
-  version: 1.12.0
-  resolution: "@hono/node-server@npm:1.12.0"
-  checksum: 10c0/44906b163084dd98c882649f65fa520c7f5da5cba90850192c38db858ca54317069f683bd7413879d619911fea744d845c22f161cbdeb1814641cb05193683d6
+"@hono/node-server@npm:^1.12.1":
+  version: 1.12.1
+  resolution: "@hono/node-server@npm:1.12.1"
+  checksum: 10c0/0e5732c3a7c38a506eb7ffda8bf32c646e6350f5c53c65e2cd223228c3d37f99adb07097f9842b2eb3096a788a009e84e66336c8d5bde7e7a59efd676e7b30f1
   languageName: node
   linkType: hard
 
@@ -3550,21 +3550,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.51.21":
-  version: 5.51.21
-  resolution: "@tanstack/query-core@npm:5.51.21"
-  checksum: 10c0/bb9e03391facd21c431d6571f3e088f47dc996b42a10ef636d3fd4444a483019d0e9bd4eb971d554bb4317ac3ee3ab23d5ce9221345753b792fb6fae030d1ad7
+"@tanstack/query-core@npm:5.52.0":
+  version: 5.52.0
+  resolution: "@tanstack/query-core@npm:5.52.0"
+  checksum: 10c0/6f2309294d23721e4508241a4e109d6134bd125b732271217181ae99cc7994ec02ff964397e08bc5e9af5302e3838a3f3259d6e49fdf6fc8aaf324bc4fde4939
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.51.23":
-  version: 5.51.23
-  resolution: "@tanstack/react-query@npm:5.51.23"
+"@tanstack/react-query@npm:^5.52.1":
+  version: 5.52.1
+  resolution: "@tanstack/react-query@npm:5.52.1"
   dependencies:
-    "@tanstack/query-core": "npm:5.51.21"
+    "@tanstack/query-core": "npm:5.52.0"
   peerDependencies:
-    react: ^18.0.0
-  checksum: 10c0/913566a6778197b0b6dd04416e7ccb2fc766b4c0d04b0dc7f0e10f2bb5dee5663688369e363ae129ccbc1844578f57c81ee7599fac7f3b90ab9611bc52a35e69
+    react: ^18 || ^19
+  checksum: 10c0/a07697446311e908173bcce25ccbf019d7ffde19a7607b6791195414f1b337754f48d3d40b8100283e0fea556295240ecf9fe7bb39b3c1f3040d1ac38da03485
   languageName: node
   linkType: hard
 
@@ -3838,24 +3838,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ai@npm:^3.3.9":
-  version: 3.3.9
-  resolution: "ai@npm:3.3.9"
+"ai@npm:^3.3.16":
+  version: 3.3.16
+  resolution: "ai@npm:3.3.16"
   dependencies:
-    "@ai-sdk/provider": "npm:0.0.20"
-    "@ai-sdk/provider-utils": "npm:1.0.13"
-    "@ai-sdk/react": "npm:0.0.45"
-    "@ai-sdk/solid": "npm:0.0.36"
-    "@ai-sdk/svelte": "npm:0.0.38"
-    "@ai-sdk/ui-utils": "npm:0.0.33"
-    "@ai-sdk/vue": "npm:0.0.37"
+    "@ai-sdk/provider": "npm:0.0.21"
+    "@ai-sdk/provider-utils": "npm:1.0.16"
+    "@ai-sdk/react": "npm:0.0.50"
+    "@ai-sdk/solid": "npm:0.0.40"
+    "@ai-sdk/svelte": "npm:0.0.42"
+    "@ai-sdk/ui-utils": "npm:0.0.37"
+    "@ai-sdk/vue": "npm:0.0.42"
     "@opentelemetry/api": "npm:1.9.0"
     eventsource-parser: "npm:1.1.2"
     json-schema: "npm:0.4.0"
     jsondiffpatch: "npm:0.6.0"
     nanoid: "npm:3.3.6"
     secure-json-parse: "npm:2.7.0"
-    zod-to-json-schema: "npm:3.22.5"
+    zod-to-json-schema: "npm:3.23.2"
   peerDependencies:
     openai: ^4.42.0
     react: ^18 || ^19
@@ -3873,7 +3873,7 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10c0/0b53c5f1fcd407fa87a5477211065a754f52d6cb70ca4bc9f29c74f17076930cae106048b320f96307697289912cf16fdc6de6af2cc0a7c94f41a895d3db3f5b
+  checksum: 10c0/3ae87b31881116af5a3fd9acb7bba4c2eac2f5fa6f15f2b88bc07305666d706dd7c1e1c22bb0fe74ada8b9e39ed6fca2a852ee7578948739fb4e497302d7ac1b
   languageName: node
   linkType: hard
 
@@ -4024,13 +4024,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "api@workspace:api"
   dependencies:
-    "@ai-sdk/openai": "npm:^0.0.48"
-    "@hono/node-server": "npm:^1.12.0"
+    "@ai-sdk/openai": "npm:^0.0.53"
+    "@hono/node-server": "npm:^1.12.1"
     "@hono/zod-validator": "npm:^0.2.2"
     "@node-rs/argon2": "npm:^1.8.3"
-    ai: "npm:^3.3.9"
+    ai: "npm:^3.3.16"
     database: "workspace:*"
-    hono: "npm:^4.5.5"
+    hono: "npm:^4.5.8"
     stripe: "npm:^16.8.0"
     travelpayouts: "workspace:*"
     tsx: "npm:^4.17.0"
@@ -4054,34 +4054,34 @@ __metadata:
     "@stripe/react-stripe-js": "npm:^2.8.0"
     "@stripe/stripe-js": "npm:^4.3.0"
     "@stripe/stripe-react-native": "npm:0.37.2"
-    "@tanstack/react-query": "npm:^5.51.23"
+    "@tanstack/react-query": "npm:^5.52.1"
     "@types/react": "npm:~18.2.79"
     api: "workspace:*"
-    expo: "npm:~51.0.28"
+    expo: "npm:~51.0.30"
     expo-constants: "npm:~16.0.2"
     expo-device: "npm:~6.0.2"
-    expo-image: "npm:~1.12.13"
+    expo-image: "npm:~1.12.14"
     expo-linking: "npm:~6.3.1"
     expo-localization: "npm:~15.0.3"
-    expo-notifications: "npm:~0.28.15"
+    expo-notifications: "npm:~0.28.16"
     expo-router: "npm:~3.5.23"
     expo-secure-store: "npm:~13.0.2"
     expo-splash-screen: "npm:~0.27.5"
     expo-status-bar: "npm:~1.12.1"
     expo-system-ui: "npm:~3.0.7"
     expo-web-browser: "npm:~13.0.3"
-    hono: "npm:^4.5.5"
+    hono: "npm:^4.5.8"
     i18n-js: "npm:^4.4.3"
     lottie-react-native: "npm:6.7.0"
     nativewind: "npm:^4.0.36"
-    react: "npm:18.3.1"
-    react-dom: "npm:18.3.1"
+    react: "npm:18.2.0"
+    react-dom: "npm:18.2.0"
     react-native: "npm:0.74.5"
     react-native-calendars: "npm:^1.1306.0"
     react-native-element-dropdown: "npm:^2.12.1"
     react-native-maps: "npm:1.14.0"
     react-native-paper: "npm:^5.12.5"
-    react-native-paper-dates: "npm:^0.22.21"
+    react-native-paper-dates: "npm:^0.22.24"
     react-native-reanimated: "npm:~3.10.1"
     react-native-safe-area-context: "npm:4.10.5"
     react-native-screens: "npm:3.31.1"
@@ -6054,12 +6054,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-image@npm:~1.12.13":
-  version: 1.12.13
-  resolution: "expo-image@npm:1.12.13"
+"expo-image@npm:~1.12.14":
+  version: 1.12.14
+  resolution: "expo-image@npm:1.12.14"
   peerDependencies:
     expo: "*"
-  checksum: 10c0/8ca3844419ace3c37e75db89a7a1b955b3d82ebd1a4987ca7f80d25f89ed910bb5ba3d96756bcf7fe6b90ca070c14fc6a49b5bf0f5a8cea40dc2b4d135f59960
+  checksum: 10c0/f2d7a6d9cd04805f9ef64fc020fbb8f849bfdbcb7563cc0a8402a4c99504f8328aec72f8368b17f7c47f55b1f86c798f63655fa757cab92984eea1d54f721c2d
   languageName: node
   linkType: hard
 
@@ -6110,18 +6110,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-modules-core@npm:1.12.21":
-  version: 1.12.21
-  resolution: "expo-modules-core@npm:1.12.21"
+"expo-modules-core@npm:1.12.22":
+  version: 1.12.22
+  resolution: "expo-modules-core@npm:1.12.22"
   dependencies:
     invariant: "npm:^2.2.4"
-  checksum: 10c0/e89f2e174485a3536e6763e5291fdd1a518194106e1612a2b3dcb0407999137c2a9712420b9f92007f9f3ada4d2114144ccd4a51ba8b5ce5e260b13974987505
+  checksum: 10c0/b1b5b7b1947e23895fcb4f464366243a0876ef078ee927d9149dffa494236b5df3984fc6053abd96f6e1232186ee8dc51148f325915dfe6e38b1f4e752e50c5a
   languageName: node
   linkType: hard
 
-"expo-notifications@npm:~0.28.15":
-  version: 0.28.15
-  resolution: "expo-notifications@npm:0.28.15"
+"expo-notifications@npm:~0.28.16":
+  version: 0.28.16
+  resolution: "expo-notifications@npm:0.28.16"
   dependencies:
     "@expo/image-utils": "npm:^0.5.0"
     "@ide/backoff": "npm:^1.0.0"
@@ -6133,7 +6133,7 @@ __metadata:
     fs-extra: "npm:^9.1.0"
   peerDependencies:
     expo: "*"
-  checksum: 10c0/bcb2e86dbcaf8324bd386fa7b2928b73c6389b3734b6686e17582c561b09b39c13169af212a8556e7e65bba31fa8dbdd5fe78be9a5a3b3c187aa019cf6fd6348
+  checksum: 10c0/11b1b33c984b68413d8f1edd04d80a34bcc1dc8ba43ea7dedf46e62aa9edac7f3256de04d02c94e5368c6fba9064dd0e75a18e2a72cb604c3e6a8f482fd75cd2
   languageName: node
   linkType: hard
 
@@ -6218,9 +6218,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo@npm:~51.0.28":
-  version: 51.0.28
-  resolution: "expo@npm:51.0.28"
+"expo@npm:~51.0.30":
+  version: 51.0.30
+  resolution: "expo@npm:51.0.30"
   dependencies:
     "@babel/runtime": "npm:^7.20.0"
     "@expo/cli": "npm:0.18.29"
@@ -6234,12 +6234,12 @@ __metadata:
     expo-font: "npm:~12.0.9"
     expo-keep-awake: "npm:~13.0.2"
     expo-modules-autolinking: "npm:1.11.2"
-    expo-modules-core: "npm:1.12.21"
+    expo-modules-core: "npm:1.12.22"
     fbemitter: "npm:^3.0.0"
     whatwg-url-without-unicode: "npm:8.0.0-3"
   bin:
     expo: bin/cli
-  checksum: 10c0/410ee5a6e418514c84c6f4f4963ae5747fe84f5b388a9931708b95f127d17473dd1fd329d32f3b2bd5bfc29ec65fbfa1b7c90fa36c9d9669959d45c176d179c0
+  checksum: 10c0/7f3c14efd45e8f77d6f7d3838ef36dc178e1c5d5c03ffe07bf643a6e6ad25b80ed6fbc565643a2cbfd7c5eaf61111b2d6b9d6d7f691c09a57e8846a43175ba0e
   languageName: node
   linkType: hard
 
@@ -6983,10 +6983,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^4.5.5":
-  version: 4.5.5
-  resolution: "hono@npm:4.5.5"
-  checksum: 10c0/df1f3c651f1b66d3dcca310de03bdeca43b01be69506cdc47801a74870d5b1db2f9610daf72eb7603384477a8bfd5444de6ca22cde891f7991cdee254d46a29e
+"hono@npm:^4.5.8":
+  version: 4.5.8
+  resolution: "hono@npm:4.5.8"
+  checksum: 10c0/873f9d901d6df7bc482997fc60d99261b566756be80146d1f901b71d64c89379b31e145ff4ea19b57ddca026730249c64a3ef641e4c29019eebcb9aa9f8c9cfc
   languageName: node
   linkType: hard
 
@@ -7070,12 +7070,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^9.1.4":
-  version: 9.1.4
-  resolution: "husky@npm:9.1.4"
+"husky@npm:^9.1.5":
+  version: 9.1.5
+  resolution: "husky@npm:9.1.5"
   bin:
     husky: bin.js
-  checksum: 10c0/f5185003bef9ad9ec3f40e821963e4c12409b993fdcab89e3d660bed7d8c9d8bfd399f05222e27e0ead6589601fb1bb08d1a589c51751a4ab0547ead3429b8de
+  checksum: 10c0/f42efb95a026303eb880898760f802d88409780dd72f17781d2dfc302177d4f80b641cf1f1694f53f6d97c536c7397684133d8c8fe4a4426f7460186a7d1c6b8
   languageName: node
   linkType: hard
 
@@ -9099,7 +9099,7 @@ __metadata:
   resolution: "nexttravel@workspace:."
   dependencies:
     "@biomejs/biome": "npm:^1.8.3"
-    husky: "npm:^9.1.4"
+    husky: "npm:^9.1.5"
     lint-staged: "npm:^15.2.9"
     turbo: "npm:^2.0.14"
   languageName: unknown
@@ -10060,15 +10060,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.3.1":
-  version: 18.3.1
-  resolution: "react-dom@npm:18.3.1"
+"react-dom@npm:18.2.0":
+  version: 18.2.0
+  resolution: "react-dom@npm:18.2.0"
   dependencies:
     loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.2"
+    scheduler: "npm:^0.23.0"
   peerDependencies:
-    react: ^18.3.1
-  checksum: 10c0/a752496c1941f958f2e8ac56239172296fcddce1365ce45222d04a1947e0cc5547df3e8447f855a81d6d39f008d7c32eab43db3712077f09e3f67c4874973e85
+    react: ^18.2.0
+  checksum: 10c0/66dfc5f93e13d0674e78ef41f92ed21dfb80f9c4ac4ac25a4b51046d41d4d2186abc915b897f69d3d0ebbffe6184e7c5876f2af26bfa956f179225d921be713a
   languageName: node
   linkType: hard
 
@@ -10192,9 +10192,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-paper-dates@npm:^0.22.21":
-  version: 0.22.21
-  resolution: "react-native-paper-dates@npm:0.22.21"
+"react-native-paper-dates@npm:^0.22.24":
+  version: 0.22.24
+  resolution: "react-native-paper-dates@npm:0.22.24"
   dependencies:
     color: "npm:^4.2.3"
   peerDependencies:
@@ -10202,7 +10202,7 @@ __metadata:
     react-native: "*"
     react-native-paper: "*"
     react-native-vector-icons: "*"
-  checksum: 10c0/fc2630e2f663fcde3f056e51dc6e019ae5c0cb59ee3a1788b22346e440c7b224acf59b6ccf4e0d7e04f2d83b3584e8f19fe4a18ef49dee4938e060d8cd38eb61
+  checksum: 10c0/7ef9f5e190974bf4ae60e2570cb1cb6110184299f5b049f6b501185a129f7d168bf0d43352eaae2a925533b1cc7d80d1dbf21b0926040301dccda27f15815baf
   languageName: node
   linkType: hard
 
@@ -10376,12 +10376,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.3.1":
-  version: 18.3.1
-  resolution: "react@npm:18.3.1"
+"react@npm:18.2.0":
+  version: 18.2.0
+  resolution: "react@npm:18.2.0"
   dependencies:
     loose-envify: "npm:^1.1.0"
-  checksum: 10c0/283e8c5efcf37802c9d1ce767f302dd569dd97a70d9bb8c7be79a789b9902451e0d16334b05d73299b20f048cbc3c7d288bbbde10b701fa194e2089c237dbea3
+  checksum: 10c0/b562d9b569b0cb315e44b48099f7712283d93df36b19a39a67c254c6686479d3980b7f013dc931f4a5a3ae7645eae6386b4aa5eea933baa54ecd0f9acb0902b8
   languageName: node
   linkType: hard
 
@@ -10818,7 +10818,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.23.2":
+"scheduler@npm:^0.23.0":
   version: 0.23.2
   resolution: "scheduler@npm:0.23.2"
   dependencies:
@@ -12954,16 +12954,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod-to-json-schema@npm:3.22.5":
-  version: 3.22.5
-  resolution: "zod-to-json-schema@npm:3.22.5"
-  peerDependencies:
-    zod: ^3.22.4
-  checksum: 10c0/f3c4038338af3c0268ced73edaa2eed12002d461ae181657547b0a4a296be4247edc3dcdd5bf14a4058426c1e0c3574407cb282f115249f0ec0fcbc82dcbdabd
-  languageName: node
-  linkType: hard
-
-"zod-to-json-schema@npm:^3.23.2":
+"zod-to-json-schema@npm:3.23.2, zod-to-json-schema@npm:^3.23.2":
   version: 3.23.2
   resolution: "zod-to-json-schema@npm:3.23.2"
   peerDependencies:

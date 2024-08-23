@@ -44,6 +44,7 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
           new Date(body.endDate as string),
           body.members,
           user.language,
+          body.theme?.trim() || undefined,
         );
       }
 

@@ -12,6 +12,7 @@ export const en = {
     destination: "Type your destination",
     period: "Period",
     members_placeholder: "Members",
+    theme: "Theme (optional)",
     most_requested: "Most requested",
     last_searches: "Last searches",
     submit: "Start planning!",

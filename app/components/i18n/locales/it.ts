@@ -12,6 +12,7 @@ export const it = {
     destination: "Digita la tua destinazione",
     period: "Periodo",
     members_placeholder: "Membri",
+    theme: "Tema (opzionale)",
     most_requested: "Più richiesti",
     last_searches: "Ultime ricerche",
     submit: "Inizia a pianificare!",

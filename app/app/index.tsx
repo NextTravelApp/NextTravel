@@ -42,6 +42,7 @@ const App = () => {
     startDate: undefined,
     endDate: undefined,
   });
+  const [tripTheme, setTripTheme] = useState("");
   const { data: popular } = useQuery({
     queryKey: ["popular"],
     queryFn: () =>
@@ -142,6 +143,18 @@ const App = () => {
             </TouchableOpacity>
           </View>
 
+          {session?.plan === "expert_traveler" ||
+            (session?.plan === "free_spirit" && (
+              <TextInput
+                mode="outlined"
+                placeholder={i18n.t("home.theme")}
+                className="w-full"
+                value={tripTheme}
+                onChangeText={setTripTheme}
+                style={{ backgroundColor: theme.background }}
+              />
+            ))}
+
           <Button
             onPress={() => {
               if (
@@ -159,6 +172,7 @@ const App = () => {
                   members,
                   startDate: range.startDate?.toLocaleDateString("en-US"),
                   endDate: range.endDate?.toLocaleDateString("en-US"),
+                  theme: tripTheme.trim() || undefined,
                   t: Date.now(),
                 },
               });
