@@ -37,7 +37,12 @@ const Reset = () => {
             right: 60,
           }}
         >
-          <Plane color={theme.text} />
+          <Plane
+            color={theme.text}
+            style={{
+              marginHorizontal: "-50%",
+            }}
+          />
         </Link>
 
         <View className="m-auto flex w-5/6 flex-col items-center justify-center gap-3">

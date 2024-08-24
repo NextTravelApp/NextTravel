@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export function SafeAreaView(
@@ -17,7 +17,11 @@ export function SafeAreaView(
           paddingTop: insets.top,
           paddingLeft: insets.left + 16,
           paddingRight: insets.right + 16,
-          paddingBottom: !props.noPaddingBottom ? insets.bottom : undefined,
+          paddingBottom: !props.noPaddingBottom
+            ? insets.bottom + (Platform.OS === "web" ? 16 : 0)
+            : Platform.OS === "web"
+              ? 16
+              : undefined,
         },
       ]}
     />
