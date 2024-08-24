@@ -8,7 +8,7 @@ export function StripeProvider({
     <RNStripeProvider
       publishableKey={process.env.EXPO_PUBLIC_STRIPE as string}
       urlScheme="nexttravel"
-      merchantIdentifier="app.nexttravel"
+      merchantIdentifier="app.nexttravel.app"
     >
       {children}
     </RNStripeProvider>

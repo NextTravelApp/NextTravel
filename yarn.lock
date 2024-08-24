@@ -55,12 +55,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ai-sdk/react@npm:0.0.50":
-  version: 0.0.50
-  resolution: "@ai-sdk/react@npm:0.0.50"
+"@ai-sdk/react@npm:0.0.51":
+  version: 0.0.51
+  resolution: "@ai-sdk/react@npm:0.0.51"
   dependencies:
     "@ai-sdk/provider-utils": "npm:1.0.16"
-    "@ai-sdk/ui-utils": "npm:0.0.37"
+    "@ai-sdk/ui-utils": "npm:0.0.38"
     swr: "npm:2.2.5"
   peerDependencies:
     react: ^18 || ^19
@@ -70,44 +70,44 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10c0/2b8bb4d3e4771e4aa0b83be5d407cea61a54b945c2002be34fb48dd9da0207a59fea4f7e32b8aa98b9207c05f0407fe30435df4e165f8f880417d9e4a7bd42ee
+  checksum: 10c0/7fb21bd5fbcecb0da71908d265880aa686c4606b62a89d99c00a9a5986853c1da50b0136b5146ffcedc2f421639f327dc5ed7029ec94b7110cbfd64873033f7e
   languageName: node
   linkType: hard
 
-"@ai-sdk/solid@npm:0.0.40":
-  version: 0.0.40
-  resolution: "@ai-sdk/solid@npm:0.0.40"
+"@ai-sdk/solid@npm:0.0.41":
+  version: 0.0.41
+  resolution: "@ai-sdk/solid@npm:0.0.41"
   dependencies:
     "@ai-sdk/provider-utils": "npm:1.0.16"
-    "@ai-sdk/ui-utils": "npm:0.0.37"
+    "@ai-sdk/ui-utils": "npm:0.0.38"
   peerDependencies:
     solid-js: ^1.7.7
   peerDependenciesMeta:
     solid-js:
       optional: true
-  checksum: 10c0/0b4afea22b8ca399db5ed02990ab05c2f4266b74017d1f2794268179510915be2f236dc3aa177422462eaee386b09325e2aa7d5c14dbee30df8cc104e3375ae8
+  checksum: 10c0/eb30e7a723c66d9ba17d764a13db024c8305be26765e364f5521887a935542dd3e35499dd2becb7a0671db6ecbe804f5784d094818ac86a3d12877cd26fc17ea
   languageName: node
   linkType: hard
 
-"@ai-sdk/svelte@npm:0.0.42":
-  version: 0.0.42
-  resolution: "@ai-sdk/svelte@npm:0.0.42"
+"@ai-sdk/svelte@npm:0.0.43":
+  version: 0.0.43
+  resolution: "@ai-sdk/svelte@npm:0.0.43"
   dependencies:
     "@ai-sdk/provider-utils": "npm:1.0.16"
-    "@ai-sdk/ui-utils": "npm:0.0.37"
+    "@ai-sdk/ui-utils": "npm:0.0.38"
     sswr: "npm:2.1.0"
   peerDependencies:
     svelte: ^3.0.0 || ^4.0.0
   peerDependenciesMeta:
     svelte:
       optional: true
-  checksum: 10c0/e59046034b4f0e509e7b5683fab3804073c546cad5818762d95655a3a71dd55671c20ae4e8ede557bab541f03a1f7196f148894bacd243f21158586a14bd0777
+  checksum: 10c0/489de076f11657d20fd369a180e46175026a7972725be7ed0bb33018ac96ce5abc21d570781d7c27457a28f6e59d4c641bdc5fd72410e89811617862d6668d67
   languageName: node
   linkType: hard
 
-"@ai-sdk/ui-utils@npm:0.0.37":
-  version: 0.0.37
-  resolution: "@ai-sdk/ui-utils@npm:0.0.37"
+"@ai-sdk/ui-utils@npm:0.0.38":
+  version: 0.0.38
+  resolution: "@ai-sdk/ui-utils@npm:0.0.38"
   dependencies:
     "@ai-sdk/provider": "npm:0.0.21"
     "@ai-sdk/provider-utils": "npm:1.0.16"
@@ -119,23 +119,23 @@ __metadata:
   peerDependenciesMeta:
     zod:
       optional: true
-  checksum: 10c0/ac3c0e4e0d585bd12739c8d105ef30c6b9266026851a6128b3f9f02a72b52dbed694b3f79ce56c1f8146c5c854c0ceefd65a04c3d4faad7be3117d83a319bab5
+  checksum: 10c0/abe35aeec4e1e8f409b7988b6237e840fdb8a7c29027faa98fd5738b4601d8d72cfdbf69b8ef2b66b90a3e2c7b396a427c661dbf6311ee1afd80cf1f3efa4e6e
   languageName: node
   linkType: hard
 
-"@ai-sdk/vue@npm:0.0.42":
-  version: 0.0.42
-  resolution: "@ai-sdk/vue@npm:0.0.42"
+"@ai-sdk/vue@npm:0.0.43":
+  version: 0.0.43
+  resolution: "@ai-sdk/vue@npm:0.0.43"
   dependencies:
     "@ai-sdk/provider-utils": "npm:1.0.16"
-    "@ai-sdk/ui-utils": "npm:0.0.37"
+    "@ai-sdk/ui-utils": "npm:0.0.38"
     swrv: "npm:1.0.4"
   peerDependencies:
     vue: ^3.3.4
   peerDependenciesMeta:
     vue:
       optional: true
-  checksum: 10c0/b76ef6a204228df804a82031482c013d821e15ed5358bdf28a3bb4e0c5a7d7aae683571c1531d53693525e205f5369b360e9a6786a9cb17b7d337729bff5b204
+  checksum: 10c0/1b37ea6c06702066895fa0d4163db177a536747834d4f4ff36a4b1c965ad66b0683cc4e1b67732afa2abc31a42011c974dce212daf1c5abfc7eb659a0e5211bd
   languageName: node
   linkType: hard
 
@@ -3838,17 +3838,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ai@npm:^3.3.16":
-  version: 3.3.16
-  resolution: "ai@npm:3.3.16"
+"ai@npm:^3.3.17":
+  version: 3.3.17
+  resolution: "ai@npm:3.3.17"
   dependencies:
     "@ai-sdk/provider": "npm:0.0.21"
     "@ai-sdk/provider-utils": "npm:1.0.16"
-    "@ai-sdk/react": "npm:0.0.50"
-    "@ai-sdk/solid": "npm:0.0.40"
-    "@ai-sdk/svelte": "npm:0.0.42"
-    "@ai-sdk/ui-utils": "npm:0.0.37"
-    "@ai-sdk/vue": "npm:0.0.42"
+    "@ai-sdk/react": "npm:0.0.51"
+    "@ai-sdk/solid": "npm:0.0.41"
+    "@ai-sdk/svelte": "npm:0.0.43"
+    "@ai-sdk/ui-utils": "npm:0.0.38"
+    "@ai-sdk/vue": "npm:0.0.43"
     "@opentelemetry/api": "npm:1.9.0"
     eventsource-parser: "npm:1.1.2"
     json-schema: "npm:0.4.0"
@@ -3873,7 +3873,7 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10c0/3ae87b31881116af5a3fd9acb7bba4c2eac2f5fa6f15f2b88bc07305666d706dd7c1e1c22bb0fe74ada8b9e39ed6fca2a852ee7578948739fb4e497302d7ac1b
+  checksum: 10c0/0f896f08ebe12a460767933cd5011d25af4f27eccaf67471de4e4a1753758d8b819ea1ac14cceba9526f55eaf2b7580723cdb6f60e55fc27c383519d3de25da8
   languageName: node
   linkType: hard
 
@@ -4028,7 +4028,7 @@ __metadata:
     "@hono/node-server": "npm:^1.12.1"
     "@hono/zod-validator": "npm:^0.2.2"
     "@node-rs/argon2": "npm:^1.8.3"
-    ai: "npm:^3.3.16"
+    ai: "npm:^3.3.17"
     database: "workspace:*"
     hono: "npm:^4.5.8"
     stripe: "npm:^16.8.0"
@@ -4057,10 +4057,10 @@ __metadata:
     "@tanstack/react-query": "npm:^5.52.1"
     "@types/react": "npm:~18.2.79"
     api: "workspace:*"
-    expo: "npm:~51.0.30"
+    expo: "npm:~51.0.31"
     expo-constants: "npm:~16.0.2"
     expo-device: "npm:~6.0.2"
-    expo-image: "npm:~1.12.14"
+    expo-image: "npm:~1.12.15"
     expo-linking: "npm:~6.3.1"
     expo-localization: "npm:~15.0.3"
     expo-notifications: "npm:~0.28.16"
@@ -4081,7 +4081,7 @@ __metadata:
     react-native-element-dropdown: "npm:^2.12.1"
     react-native-maps: "npm:1.14.0"
     react-native-paper: "npm:^5.12.5"
-    react-native-paper-dates: "npm:^0.22.24"
+    react-native-paper-dates: "npm:^0.22.25"
     react-native-reanimated: "npm:~3.10.1"
     react-native-safe-area-context: "npm:4.10.5"
     react-native-screens: "npm:3.31.1"
@@ -4228,14 +4228,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.4":
-  version: 1.7.4
-  resolution: "axios@npm:1.7.4"
+"axios@npm:^1.7.5":
+  version: 1.7.5
+  resolution: "axios@npm:1.7.5"
   dependencies:
     follow-redirects: "npm:^1.15.6"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10c0/5ea1a93140ca1d49db25ef8e1bd8cfc59da6f9220159a944168860ad15a2743ea21c5df2967795acb15cbe81362f5b157fdebbea39d53117ca27658bab9f7f17
+  checksum: 10c0/1d5daeb28b3d1bb2a7b9f0743433c4bfbeaddc15461e50ebde487eec6c009af2515749d5261096dd430c90cd891bd310bcba5ec3967bae2033c4a307f58a6ad3
   languageName: node
   linkType: hard
 
@@ -6054,12 +6054,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-image@npm:~1.12.14":
-  version: 1.12.14
-  resolution: "expo-image@npm:1.12.14"
+"expo-image@npm:~1.12.15":
+  version: 1.12.15
+  resolution: "expo-image@npm:1.12.15"
   peerDependencies:
     expo: "*"
-  checksum: 10c0/f2d7a6d9cd04805f9ef64fc020fbb8f849bfdbcb7563cc0a8402a4c99504f8328aec72f8368b17f7c47f55b1f86c798f63655fa757cab92984eea1d54f721c2d
+  checksum: 10c0/1ff8aa5df06a2bff5bf620a9884096aeadcdc50fc629237ab79b74eee6bad7b5f659c945e65d3063aeeaa54412176bd8d57019599febad1ff072951337a4e888
   languageName: node
   linkType: hard
 
@@ -6110,12 +6110,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-modules-core@npm:1.12.22":
-  version: 1.12.22
-  resolution: "expo-modules-core@npm:1.12.22"
+"expo-modules-core@npm:1.12.23":
+  version: 1.12.23
+  resolution: "expo-modules-core@npm:1.12.23"
   dependencies:
     invariant: "npm:^2.2.4"
-  checksum: 10c0/b1b5b7b1947e23895fcb4f464366243a0876ef078ee927d9149dffa494236b5df3984fc6053abd96f6e1232186ee8dc51148f325915dfe6e38b1f4e752e50c5a
+  checksum: 10c0/c0700327afb5a7f01217829713c01b4716976c987bed53ac008dd8db63ac26312c427ca0fbdbe61fa8b793f09794c10e80f0ccbae40c5bee69cb8d88646a5acb
   languageName: node
   linkType: hard
 
@@ -6218,9 +6218,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo@npm:~51.0.30":
-  version: 51.0.30
-  resolution: "expo@npm:51.0.30"
+"expo@npm:~51.0.31":
+  version: 51.0.31
+  resolution: "expo@npm:51.0.31"
   dependencies:
     "@babel/runtime": "npm:^7.20.0"
     "@expo/cli": "npm:0.18.29"
@@ -6234,12 +6234,12 @@ __metadata:
     expo-font: "npm:~12.0.9"
     expo-keep-awake: "npm:~13.0.2"
     expo-modules-autolinking: "npm:1.11.2"
-    expo-modules-core: "npm:1.12.22"
+    expo-modules-core: "npm:1.12.23"
     fbemitter: "npm:^3.0.0"
     whatwg-url-without-unicode: "npm:8.0.0-3"
   bin:
     expo: bin/cli
-  checksum: 10c0/7f3c14efd45e8f77d6f7d3838ef36dc178e1c5d5c03ffe07bf643a6e6ad25b80ed6fbc565643a2cbfd7c5eaf61111b2d6b9d6d7f691c09a57e8846a43175ba0e
+  checksum: 10c0/71ce011bbfdec0c9cde9bed9119ba6a7fa5436fb77fd524364a792de597e96e6e8568ca5d0b8df1be8ce8d9577e557ea5fac52975e6f83ddfbc97fffa9e76029
   languageName: node
   linkType: hard
 
@@ -10192,9 +10192,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-paper-dates@npm:^0.22.24":
-  version: 0.22.24
-  resolution: "react-native-paper-dates@npm:0.22.24"
+"react-native-paper-dates@npm:^0.22.25":
+  version: 0.22.25
+  resolution: "react-native-paper-dates@npm:0.22.25"
   dependencies:
     color: "npm:^4.2.3"
   peerDependencies:
@@ -10202,7 +10202,7 @@ __metadata:
     react-native: "*"
     react-native-paper: "*"
     react-native-vector-icons: "*"
-  checksum: 10c0/7ef9f5e190974bf4ae60e2570cb1cb6110184299f5b049f6b501185a129f7d168bf0d43352eaae2a925533b1cc7d80d1dbf21b0926040301dccda27f15815baf
+  checksum: 10c0/d5a100056c5e5a6422dcd3502f6ba43139da960432d690fd5992203d99f45fb0da8a75daa0c264e9213a94567fa662899cb38390b2d11864844856804f0309bd
   languageName: node
   linkType: hard
 
@@ -11955,7 +11955,7 @@ __metadata:
   resolution: "travelpayouts@workspace:travelpayouts"
   dependencies:
     "@types/md5": "npm:^2"
-    axios: "npm:^1.7.4"
+    axios: "npm:^1.7.5"
     date-fns: "npm:^3.6.0"
     md5: "npm:^2.3.0"
     typescript: "npm:^5.5.4"

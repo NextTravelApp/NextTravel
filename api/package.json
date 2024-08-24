@@ -13,7 +13,7 @@
     "@hono/node-server": "^1.12.1",
     "@hono/zod-validator": "^0.2.2",
     "@node-rs/argon2": "^1.8.3",
-    "ai": "^3.3.16",
+    "ai": "^3.3.17",
     "database": "workspace:*",
     "hono": "^4.5.8",
     "stripe": "^16.8.0",
