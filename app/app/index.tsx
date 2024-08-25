@@ -6,6 +6,7 @@ import { i18n } from "@/components/i18n";
 import { getLocale } from "@/components/i18n/LocalesHandler";
 import { Button, MapView, Text, TextInput } from "@/components/injector";
 import { Navbar } from "@/components/ui/Navbar";
+import { reverseGeocode } from "@/components/utils/maps";
 import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -92,8 +93,15 @@ const App = () => {
             style={{ height: 200 }}
             className="rounded-xl"
             userInterfaceStyle={theme.colorScheme}
-            onPress={(_e) => {
-              // TODO: Implement map selection
+            onPress={async (e) => {
+              const coordinate = e.nativeEvent.coordinate;
+              const data = await reverseGeocode(
+                fetcher,
+                coordinate.latitude,
+                coordinate.longitude,
+              );
+
+              if (data) setLocation(data);
             }}
           />
 

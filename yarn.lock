@@ -4073,6 +4073,7 @@ __metadata:
     hono: "npm:^4.5.8"
     i18n-js: "npm:^4.4.3"
     lottie-react-native: "npm:6.7.0"
+    mapkit-typescript: "npm:^5.18.2"
     nativewind: "npm:^4.0.36"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
@@ -8460,6 +8461,13 @@ __metadata:
   dependencies:
     tmpl: "npm:1.0.5"
   checksum: 10c0/b0e6e599780ce6bab49cc413eba822f7d1f0dfebd1c103eaa3785c59e43e22c59018323cf9e1708f0ef5329e94a745d163fcbb6bff8e4c6742f9be9e86f3500c
+  languageName: node
+  linkType: hard
+
+"mapkit-typescript@npm:^5.18.2":
+  version: 5.18.2
+  resolution: "mapkit-typescript@npm:5.18.2"
+  checksum: 10c0/d65de74ae37047ce94a44e953a4ba35aacc8189e6def179a643daac71b7823976488c3137e684a7e36c921ca486becb2202259280b31b22fb05082ea35d61424
   languageName: node
   linkType: hard
 

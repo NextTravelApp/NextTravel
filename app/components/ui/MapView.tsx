@@ -1,3 +1,4 @@
-import MapView from "react-native-maps";
+import RNMapView from "react-native-maps";
 
-export default MapView;
+export type MapViewProps = React.ComponentProps<typeof RNMapView>;
+export const MapView = RNMapView;

@@ -58,6 +58,7 @@
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.79",
     "api": "workspace:*",
+    "mapkit-typescript": "^5.18.2",
     "tailwindcss": "^3.4.10",
     "typescript": "~5.3.3"
   }
