@@ -8,7 +8,7 @@ import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
 import { Link, useLocalSearchParams } from "expo-router";
-import { ScrollView, View } from "react-native";
+import { Platform, ScrollView, View } from "react-native";
 
 const PlanPage = () => {
   const { id } = useLocalSearchParams<{
@@ -48,7 +48,7 @@ const PlanPage = () => {
       <Navbar title={i18n.t("plan.title")} back />
 
       {/* TODO: Display locations and markers */}
-      <MapView className="h-60 w-full rounded-xl" />
+      <MapView id={`plan-${id}`} className="h-60 w-full rounded-xl" />
 
       <ScrollView className="mt-4">
         <View className="flex gap-3 pb-6">
@@ -71,6 +71,9 @@ const PlanPage = () => {
         <Button
           mode="contained"
           className="h-14 w-[93vw] justify-center text-center font-bold"
+          style={{
+            width: Platform.OS === "web" ? "100%" : undefined,
+          }}
         >
           {i18n.t("plan.next")}
         </Button>

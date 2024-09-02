@@ -9,8 +9,7 @@ import type { responseType, searchSchemaType } from "api";
 import { Image } from "expo-image";
 import { Link, Redirect, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
-import { View } from "react-native";
-import { Marker } from "react-native-maps";
+import { Platform, View } from "react-native";
 
 const AccomodationsPage = () => {
   const { id } = useLocalSearchParams<{
@@ -116,6 +115,7 @@ const AccomodationsPage = () => {
       <Navbar title={i18n.t("plan.accomodation.select")} back />
 
       <MapView
+        id={`accomodations-${id}`}
         initialRegion={
           accomodations?.[0]?.locationData && {
             latitude: accomodations[0].locationData.latitude || 0,
@@ -129,22 +129,16 @@ const AccomodationsPage = () => {
           if (e.nativeEvent.action === "marker-press") return;
           setSelected(null);
         }}
-      >
-        {accomodations
+        markers={accomodations
           ?.filter((item) => !!item.locationData)
-          .map(
-            (item) =>
-              item.locationData && (
-                <Marker
-                  key={`marker-${item.id}`}
-                  coordinate={item.locationData}
-                  title={item.name}
-                  description={`€${item.price}`}
-                  onPress={() => setSelected(item.id)}
-                />
-              ),
-          )}
-      </MapView>
+          .map((item) => ({
+            // biome-ignore lint/style/noNonNullAssertion: Checked
+            coordinate: item.locationData!,
+            title: item.name,
+            description: `€${item.price}`,
+            onPress: () => setSelected(item.id),
+          }))}
+      />
 
       {selectedAccomodation && (
         <View className="flex flex-1">
@@ -152,7 +146,7 @@ const AccomodationsPage = () => {
             source={{
               uri: selectedAccomodation.image,
             }}
-            contentFit="fill"
+            contentFit="cover"
             className="max-h-60 flex-1 rounded-xl"
           />
           <Text className="mt-3 font-extrabold text-3xl">
@@ -181,6 +175,9 @@ const AccomodationsPage = () => {
         <Button
           mode="contained"
           className="h-14 w-[93vw] justify-center text-center font-bold"
+          style={{
+            width: Platform.OS === "web" ? "100%" : undefined,
+          }}
         >
           {i18n.t("plan.next")}
         </Button>

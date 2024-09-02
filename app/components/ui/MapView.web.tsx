@@ -9,6 +9,10 @@ export function MapView(props: MapViewProps) {
     script.src = "https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.js";
 
     document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
   }, []);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: window.mapkit is injected by the script tag
@@ -22,19 +26,19 @@ export function MapView(props: MapViewProps) {
       language: getLocale(),
     });
 
-    const Rome = new window.mapkit.CoordinateRegion(
-      new window.mapkit.Coordinate(
-        props.initialRegion?.latitude ?? 0,
-        props.initialRegion?.longitude ?? 0,
-      ),
-      new window.mapkit.CoordinateSpan(
-        props.initialRegion?.latitudeDelta ?? 0,
-        props.initialRegion?.longitudeDelta ?? 0,
-      ),
-    );
+    const map = new window.mapkit.Map(`map${props.id ? `-${props.id}` : ""}`);
 
-    const map = new window.mapkit.Map("map");
-    map.region = Rome;
+    if (props.initialRegion)
+      map.region = new window.mapkit.CoordinateRegion(
+        new window.mapkit.Coordinate(
+          props.initialRegion.latitude,
+          props.initialRegion.longitude,
+        ),
+        new window.mapkit.CoordinateSpan(
+          props.initialRegion.latitudeDelta,
+          props.initialRegion.longitudeDelta,
+        ),
+      );
 
     // @ts-expect-error: mapkit events are not typed correctly
     map.element.addEventListener("click", (event: MouseEvent) => {
@@ -48,12 +52,34 @@ export function MapView(props: MapViewProps) {
         nativeEvent: { coordinate },
       });
     });
+
+    if (props.markers)
+      for (const marker of props.markers) {
+        const annotation = new window.mapkit.MarkerAnnotation(
+          new window.mapkit.Coordinate(
+            marker.coordinate.latitude,
+            marker.coordinate.longitude,
+          ),
+          {
+            title: marker.title,
+            subtitle: marker.description,
+          },
+        );
+
+        annotation.addEventListener("select", () => marker.onPress());
+
+        map.addAnnotation(annotation);
+      }
+
+    return () => {
+      map.destroy();
+    };
   }, [window.mapkit]);
 
   return (
     <View {...props}>
       <div
-        id="map"
+        id={`map${props.id ? `-${props.id}` : ""}`}
         style={{
           height: "100%",
           width: "100%",

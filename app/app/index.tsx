@@ -84,6 +84,7 @@ const App = () => {
 
         <View className="flex w-full flex-1 gap-3 rounded-xl bg-card p-3">
           <MapView
+            id="home"
             initialRegion={{
               latitude: 41.9028,
               longitude: 12.4964,
