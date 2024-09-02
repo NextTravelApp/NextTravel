@@ -18,6 +18,10 @@ export type Accomodation = {
   id: string;
   name: string;
   location: string;
+  locationData?: {
+    latitude: number;
+    longitude: number;
+  };
   image: string;
   price: number;
   type: AccomodationType;

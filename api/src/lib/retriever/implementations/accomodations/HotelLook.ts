@@ -39,6 +39,10 @@ export class HotelLook implements AccomodationManager {
       image: hotel.image,
       type: AccomodationType.HOTEL,
       rating: hotel.stars,
+      locationData: {
+        latitude: Number.parseFloat(hotel.location.lat),
+        longitude: Number.parseFloat(hotel.location.lon),
+      },
     }));
   }
 
@@ -70,6 +74,10 @@ export class HotelLook implements AccomodationManager {
         type: AccomodationType.HOTEL,
         rating: hotel.stars,
         checkoutUrl: hotel.rooms[0].fullBookingURL,
+        locationData: {
+          latitude: Number.parseFloat(hotel.location.lat),
+          longitude: Number.parseFloat(hotel.location.lon),
+        },
       };
     }
 
@@ -87,6 +95,10 @@ export class HotelLook implements AccomodationManager {
       image: formatImage(image[hotel.id][0]),
       type: AccomodationType.HOTEL,
       rating: 0,
+      locationData: {
+        latitude: Number.parseFloat(hotel.location.lat),
+        longitude: Number.parseFloat(hotel.location.lon),
+      },
     };
   }
 }
