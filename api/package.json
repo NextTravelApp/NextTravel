@@ -9,21 +9,21 @@
   },
   "types": "src/index.ts",
   "dependencies": {
-    "@ai-sdk/openai": "^0.0.54",
-    "@hono/node-server": "^1.12.2",
-    "@hono/zod-validator": "^0.2.2",
-    "@node-rs/argon2": "^1.8.3",
-    "ai": "^3.3.23",
+    "@ai-sdk/openai": "^0.0.70",
+    "@hono/node-server": "^1.13.3",
+    "@hono/zod-validator": "^0.4.1",
+    "@node-rs/argon2": "^2.0.0",
+    "ai": "^3.4.23",
     "database": "workspace:*",
-    "hono": "^4.5.10",
-    "stripe": "^16.9.0",
+    "hono": "^4.6.7",
+    "stripe": "^17.2.1",
     "travelpayouts": "workspace:*",
     "unsplash-js": "^7.0.19",
     "zod": "^3.23.8",
-    "zod-to-json-schema": "^3.23.2"
+    "zod-to-json-schema": "^3.23.5"
   },
   "devDependencies": {
-    "tsx": "^4.19.0",
-    "typescript": "^5.5.4"
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
   }
 }

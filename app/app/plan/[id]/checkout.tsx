@@ -204,11 +204,13 @@ const CheckoutPage = () => {
               >
                 <View
                   className={`flex h-10 w-10 items-center justify-center rounded-full border border-text bg-background p-2 text-center${
-                    (shared?.filter(
-                      (friend) =>
-                        (!deleteShare.isPending && !isSharedLoading) ||
-                        friend.id !== deleteShare.variables,
-                    ).length || 0) > 0
+                    (
+                      shared?.filter(
+                        (friend) =>
+                          (!deleteShare.isPending && !isSharedLoading) ||
+                          friend.id !== deleteShare.variables,
+                      ).length || 0
+                    ) > 0
                       ? " -ml-3"
                       : ""
                   }`}
