@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "concurrently 'trigger dev' 'tsx watch src/index.ts' -n 'TRIGGER,APP' -c 'bgBlue.bold,bgGreen.bold'",
     "build": "tsc",
+    "deploy": "yarn trigger:deploy",
     "trigger:dev": "trigger dev",
     "trigger:deploy": "trigger deploy"
   },

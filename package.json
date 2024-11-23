@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
+    "deploy": "turbo deploy",
     "lint": "biome check",
     "prepare": "husky"
   },
