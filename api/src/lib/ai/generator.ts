@@ -14,7 +14,6 @@ export async function generateTrip(
 ) {
   const result = await generateText({
     model: ai(process.env.OPENAI_MODEL ?? "gpt-4o"),
-    maxToolRoundtrips: 5,
     system: systemPrompt,
     prompt: `I want to visit ${location} from ${startDate.toLocaleDateString("en-US")} to ${endDate.toLocaleDateString("en-US")}.
       I will travel with ${members.length} of the ages ${members.join(", ")} including me.

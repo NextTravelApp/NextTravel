@@ -8,7 +8,6 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "EXPO_USE_METRO_WORKSPACE_ROOT": "1",
         "EXPO_PUBLIC_API_URL": "https://api.nexttravel.app",
         "EXPO_PUBLIC_APP_URL": "https://nexttravel.app"
       }
@@ -16,7 +15,6 @@
     "preview": {
       "distribution": "internal",
       "env": {
-        "EXPO_USE_METRO_WORKSPACE_ROOT": "1",
         "EXPO_PUBLIC_API_URL": "https://api.nexttravel.app",
         "EXPO_PUBLIC_APP_URL": "https://nexttravel.app"
       },
@@ -24,7 +22,6 @@
     },
     "production": {
       "env": {
-        "EXPO_USE_METRO_WORKSPACE_ROOT": "1",
         "EXPO_PUBLIC_API_URL": "https://api.nexttravel.app",
         "EXPO_PUBLIC_APP_URL": "https://nexttravel.app"
       },

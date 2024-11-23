@@ -35,7 +35,6 @@ export async function chat(user: string, message: string) {
       })),
     ),
     maxTokens: 1000,
-    maxToolRoundtrips: 3,
     tools: {
       getUserSearches: getUserSearches(user),
       editPlanResponse: editPlanResponse(user),
@@ -46,9 +45,7 @@ export async function chat(user: string, message: string) {
     `[AI] [Chat] Used ${result.usage.totalTokens} tokens (${result.usage.promptTokens} for prompt, ${result.usage.completionTokens} for output)`,
   );
 
-  const diffs = result.responseMessages
-    .filter((call) => call.role === "tool")
-    .flatMap((call) => call.content)
+  const diffs = result.toolResults
     .filter((content) => content.toolName === "editPlanResponse")
     .map((content) => content.result) as {
     added: string[] | undefined;

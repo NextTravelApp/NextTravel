@@ -2,7 +2,6 @@
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": [".env"],
   "globalEnv": [
-    "EXPO_USE_METRO_WORKSPACE_ROOT",
     "EXPO_PUBLIC_API_URL",
     "EXPO_PUBLIC_APP_URL",
     "EXPO_PUBLIC_ENABLE_STRIPE",
