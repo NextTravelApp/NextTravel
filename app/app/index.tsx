@@ -5,7 +5,9 @@ import { Location } from "@/components/home/Location";
 import { i18n } from "@/components/i18n";
 import { getLocale } from "@/components/i18n/LocalesHandler";
 import { Button, MapView, Text, TextInput } from "@/components/injector";
+import { LimitScreen } from "@/components/plan/LimitScreen";
 import { Navbar } from "@/components/ui/Navbar";
+import { ErrorScreen } from "@/components/ui/Screens";
 import { reverseGeocode } from "@/components/utils/maps";
 import { FontAwesome } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
@@ -22,6 +24,12 @@ import {
 import { Dialog, Portal, TextInput as RNTextInput } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+const formatDate = (date: Date) => {
+  return `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+};
 
 const App = () => {
   const theme = useTheme();
@@ -44,6 +52,7 @@ const App = () => {
     endDate: undefined,
   });
   const [tripTheme, setTripTheme] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const { data: popular } = useQuery({
     queryKey: ["popular"],
     queryFn: () =>
@@ -67,6 +76,10 @@ const App = () => {
   useEffect(() => {
     if (defaultLocation) setLocation(defaultLocation);
   }, [defaultLocation]);
+
+  if (error === "month_limit")
+    return <LimitScreen back={() => setError(null)} />;
+  if (error) return <ErrorScreen back={() => setError(null)} error={error} />;
 
   return (
     <ScrollView
@@ -127,11 +140,10 @@ const App = () => {
                 placeholder={i18n.t("home.period")}
                 value={
                   range.startDate && range.endDate
-                    ? `${range.startDate.toLocaleDateString()} - ${range.endDate.toLocaleDateString()}`
+                    ? `${range.startDate.getDate()}/${range.startDate.getMonth() + 1} - ${range.endDate.getDate()}/${range.endDate.getMonth() + 1}`
                     : ""
                 }
                 style={{
-                  textAlign: "auto",
                   backgroundColor: theme.background,
                 }}
               />
@@ -165,7 +177,7 @@ const App = () => {
             ))}
 
           <Button
-            onPress={() => {
+            onPress={async () => {
               if (
                 !location ||
                 !members.length ||
@@ -174,16 +186,25 @@ const App = () => {
               )
                 return;
 
-              router.push({
-                pathname: "/plan/create",
-                params: {
-                  location,
-                  members,
-                  startDate: range.startDate?.toLocaleDateString("en-US"),
-                  endDate: range.endDate?.toLocaleDateString("en-US"),
+              const res = await fetcher.plan.$post({
+                json: {
+                  location: location,
+                  members: members,
+                  startDate: formatDate(range.startDate),
+                  endDate: formatDate(range.endDate),
                   theme: tripTheme.trim() || undefined,
-                  t: Date.now(),
                 },
+              });
+
+              const data = await res.json();
+              if ("t" in data) {
+                setError(data.t);
+                return;
+              }
+
+              router.push({
+                pathname: "/plan/[id]",
+                params: { id: data.id },
               });
             }}
             mode="contained"

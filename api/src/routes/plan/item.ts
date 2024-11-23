@@ -1,6 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
+import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
 import {
   type searchSchemaType,
@@ -50,7 +51,19 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
       },
     });
 
-    if (!search)
+    if (!search) {
+      const pendingJob = await prisma.requestJob.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      if (pendingJob)
+        return ctx.json({
+          id: pendingJob.id,
+          pending: true,
+        });
+
       return ctx.json(
         {
           t: "not_found",
@@ -59,8 +72,13 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
           status: 404,
         },
       );
+    }
 
-    return ctx.json(search);
+    return ctx.json({
+      ...search,
+      request: search.request as searchSchemaType,
+      response: search.response as responseType,
+    });
   })
   .patch(
     "/",

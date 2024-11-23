@@ -5,7 +5,7 @@ import { Button, MapView, SafeAreaView, Text } from "@/components/injector";
 import { Navbar } from "@/components/ui/Navbar";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { responseType, searchSchemaType } from "api";
+import type { searchSchemaType } from "api";
 import { Image } from "expo-image";
 import { Link, Redirect, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
@@ -35,11 +35,9 @@ const AccomodationsPage = () => {
 
       const data = await res.json();
       if ("t" in data) throw new Error(data.t);
+      if ("pending" in data) throw new Error("plan.loadin.not_ready");
 
-      return {
-        ...data,
-        response: data.response as responseType,
-      };
+      return data;
     },
     staleTime: 1000 * 60 * 5,
     refetchOnMount: false,

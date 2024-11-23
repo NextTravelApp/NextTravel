@@ -4,8 +4,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc"
+    "dev": "concurrently 'trigger dev' 'tsx watch src/index.ts' -n 'TRIGGER,APP' -c 'bgBlue.bold,bgGreen.bold'",
+    "build": "tsc",
+    "trigger:dev": "trigger dev",
+    "trigger:deploy": "trigger deploy"
   },
   "types": "src/index.ts",
   "dependencies": {
@@ -13,6 +15,7 @@
     "@hono/node-server": "^1.13.7",
     "@hono/zod-validator": "^0.4.1",
     "@node-rs/argon2": "^2.0.0",
+    "@trigger.dev/sdk": "^3.2.1",
     "ai": "^4.0.3",
     "database": "workspace:*",
     "hono": "^4.6.11",
@@ -23,6 +26,9 @@
     "zod-to-json-schema": "^3.23.5"
   },
   "devDependencies": {
+    "@trigger.dev/build": "^3.2.1",
+    "concurrently": "^9.1.0",
+    "trigger.dev": "^3.2.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }

@@ -15,8 +15,10 @@ export function LoadingScreen({ title }: { title?: string }) {
 
 export function ErrorScreen({
   error,
+  back,
 }: {
   error: string;
+  back?: () => void;
 }) {
   return (
     <View className="flex flex-1 flex-col items-center justify-center gap-3 bg-background text-center">
@@ -28,7 +30,7 @@ export function ErrorScreen({
       </Text>
       <Text className="text-center text-lg">{i18n.t(`errors.${error}`)}</Text>
 
-      <Link href="/" asChild>
+      <Link href="/" asChild onPress={back}>
         <Button mode="contained" className="!bg-card">
           <Text>{i18n.t("plan.back")}</Text>
         </Button>

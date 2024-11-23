@@ -6,7 +6,6 @@ import { PlanStep } from "@/components/plan/PlanStep";
 import { Navbar } from "@/components/ui/Navbar";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useQuery } from "@tanstack/react-query";
-import type { responseType } from "api";
 import { Link, useLocalSearchParams } from "expo-router";
 import { Platform, ScrollView, View } from "react-native";
 
@@ -27,21 +26,22 @@ const PlanPage = () => {
       const data = await res.json();
       if ("t" in data) throw new Error(data.t);
 
-      return {
-        ...data,
-        response: data.response as responseType,
-      };
+      if ("pending" in data)
+        return {
+          pending: true,
+        };
+
+      return data;
     },
-    staleTime: 1000 * 60 * 5,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    refetchInterval: false,
+    refetchInterval: (query) =>
+      !query.state.data || "pending" in query.state.data ? 1000 : false,
   });
 
   if (isLoading) return <LoadingScreen />;
   if (error && error.message === "month_limit") return <LimitScreen />;
   if (error) return <ErrorScreen error={error.message} />;
+  if (data && "pending" in data)
+    return <LoadingScreen title={i18n.t("plan.loading.create")} />;
 
   return (
     <SafeAreaView className="flex flex-1 flex-col gap-3 bg-background p-4">

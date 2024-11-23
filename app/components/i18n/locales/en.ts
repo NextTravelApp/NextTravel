@@ -46,6 +46,7 @@ export const en = {
       create: "Generating your trip..",
       accomodation: "Looking for the best accomodations..",
       attractions: "Finding the best attractions..",
+      not_ready: "Your trip is not ready yet",
     },
     limit: {
       title: "Oh no!",

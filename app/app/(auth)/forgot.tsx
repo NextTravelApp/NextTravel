@@ -4,7 +4,7 @@ import { i18n } from "@/components/i18n";
 import { Button, TextInput } from "@/components/injector";
 import Plane from "@/components/svg/Plane";
 import { Alert } from "@/components/ui/Alert";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
   Keyboard,
@@ -15,6 +15,7 @@ import {
 
 const Forgot = () => {
   const theme = useTheme();
+  const router = useRouter();
   const { fetcher } = useFetcher();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
@@ -27,21 +28,14 @@ const Forgot = () => {
       }}
     >
       <View className="flex flex-1 flex-col items-center justify-center gap-3 bg-background">
-        <Link
-          href="/auth"
+        <Plane
+          color={theme.text}
           style={{
             position: "absolute",
             top: -300,
-            right: 60,
           }}
-        >
-          <Plane
-            color={theme.text}
-            style={{
-              marginHorizontal: "-50%",
-            }}
-          />
-        </Link>
+          onPress={() => router.push("/auth")}
+        />
 
         <View className="m-auto flex w-5/6 flex-col items-center justify-center gap-3">
           <TextInput

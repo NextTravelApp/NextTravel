@@ -24,6 +24,18 @@ model User {
   stripeId           String?       @unique
   notificationTokens String[]
   messages           ChatMessage[]
+  pendingRequests    RequestJob[]
+}
+
+model RequestJob {
+  id String @id @default(cuid())
+
+  triggerId String   @unique
+  request   Json
+  date      DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model SearchRequest {

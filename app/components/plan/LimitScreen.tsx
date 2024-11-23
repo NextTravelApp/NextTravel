@@ -3,7 +3,11 @@ import { View } from "react-native";
 import { i18n } from "../i18n";
 import { Button, Text } from "../injector";
 
-export function LimitScreen() {
+export function LimitScreen({
+  back,
+}: {
+  back?: () => void;
+}) {
   return (
     <View className="flex flex-1 flex-col items-center justify-center gap-3 bg-background text-center">
       <Text className="text-center font-extrabold text-4xl">
@@ -17,7 +21,7 @@ export function LimitScreen() {
         <Link href="/premium" asChild>
           <Button mode="contained">{i18n.t("plan.limit.premium")}</Button>
         </Link>
-        <Link href="/" asChild>
+        <Link href="/" asChild onPress={back}>
           <Button mode="contained" className="bg-card">
             <Text>{i18n.t("plan.back")}</Text>
           </Button>

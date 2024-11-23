@@ -1,15 +1,14 @@
 import { readFileSync } from "node:fs";
 import { zValidator } from "@hono/zod-validator";
+import { tasks } from "@trigger.dev/sdk/v3";
 import { Hono } from "hono";
-import type { responseType } from "../../constants/ai";
 import type { Variables } from "../../constants/context";
 import { getPlan } from "../../constants/premium";
 import { searchSchema } from "../../constants/requests";
-import { generateTrip } from "../../lib/ai/generator";
 import prisma from "../../lib/prisma";
-import { getImage } from "../../lib/unsplash";
 import { authenticated } from "../../middlewares/auth";
 import { validatorCallback } from "../../middlewares/validator";
+import type { generateTask } from "../../trigger/generate";
 
 export const searchRoute = new Hono<{ Variables: Variables }>()
   .post(
@@ -31,22 +30,6 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
         );
 
       console.log("[Plan] Begin plan create");
-      let trip: responseType & {
-        tokens?: number;
-      };
-
-      if (process.env.RETURN_EXAMPLE_DATA) {
-        trip = JSON.parse(readFileSync("local/search.json", "utf-8"));
-      } else {
-        trip = await generateTrip(
-          body.location as string,
-          new Date(body.startDate as string),
-          new Date(body.endDate as string),
-          body.members,
-          user.language,
-          body.theme?.trim() || undefined,
-        );
-      }
 
       await prisma.user.update({
         where: { id: user.id },
@@ -57,28 +40,27 @@ export const searchRoute = new Hono<{ Variables: Variables }>()
         },
       });
 
-      const image = await getImage(body.location as string);
-      const record = await prisma.searchRequest.create({
+      const task = await tasks.trigger<typeof generateTask>("generate-plan", {
+        request: body,
+        user: {
+          id: user.id,
+          language: user.language,
+        },
+        exampleResponse: process.env.RETURN_EXAMPLE_DATA
+          ? JSON.parse(readFileSync("local/search.json", "utf-8"))
+          : undefined,
+      });
+
+      const job = await prisma.requestJob.create({
         data: {
           userId: user.id,
-          title: trip.title,
-          image: image?.url,
-          imageAttributes: image?.author,
-          location: trip.location,
           request: body,
-          response: {
-            ...trip,
-            tokens: undefined,
-          },
-          tokens: trip.tokens ?? 0,
-          date: new Date(body.startDate),
+          triggerId: task.id,
         },
       });
 
       return ctx.json({
-        ...trip,
-        tokens: undefined,
-        id: record.id,
+        id: job.id,
       });
     },
   )

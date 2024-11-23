@@ -119,6 +119,7 @@ function RootLayoutNav() {
             <View className="relative h-full w-full bg-background" />
           ),
           tabBarStyle: {
+            paddingTop: 10,
             paddingBottom: 0,
             borderWidth: 0,
             display:
