@@ -54,4 +54,4 @@ USER hono
 COPY --from=installer /app .
 
 EXPOSE 3000
-CMD ["infisical", "run", "--", "node", "api/dist/index.js"]
+CMD ["infisical", "run", "--", "node", "api/dist/src/index.js"]
