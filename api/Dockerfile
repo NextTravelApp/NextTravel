@@ -1,6 +1,9 @@
 FROM node:20-alpine AS base
 
 RUN corepack enable
+RUN apk add --no-cache bash curl && curl -1sLf \
+    'https://dl.cloudsmith.io/public/infisical/infisical-cli/setup.alpine.sh' | bash \
+    && apk add infisical
 
 # The web Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
 # Make sure you update this Dockerfile, the Dockerfile in the web workspace and copy that over to Dockerfile in the docs.
@@ -51,4 +54,4 @@ USER hono
 COPY --from=installer /app .
 
 EXPOSE 3000
-CMD node api/dist/index.js
+CMD ["infisical", "run", "--", "node", "api/dist/index.js"]

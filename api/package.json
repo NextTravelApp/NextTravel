@@ -27,6 +27,7 @@
     "zod-to-json-schema": "^3.23.5"
   },
   "devDependencies": {
+    "@infisical/sdk": "^3.0.3",
     "@trigger.dev/build": "^3.2.1",
     "concurrently": "^9.1.0",
     "trigger.dev": "^3.2.1",
