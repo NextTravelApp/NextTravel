@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { View } from "react-native";
 import { Switch } from "react-native-paper";
 import { useFetcher } from "../fetcher";
-import { i18n } from "../i18n";
+import { i18n } from "../i18n/LocalesHandler";
 import { Text } from "../injector";
 
 export function PlanSettings({

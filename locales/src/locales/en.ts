@@ -157,4 +157,15 @@ export const en = {
     clear_cache: "Clear cache",
     logout: "Logout",
   },
+  notifications: {
+    resume_plan: {
+      title: "Don't forget your travel plan!",
+      body: "Your {{title}} is ready in your app. What are you waiting for?",
+    },
+
+    plan_ready: {
+      title: "Your plan is ready!",
+      body: "Your plan for {{destination}} is ready. Check it out!",
+    },
+  },
 };

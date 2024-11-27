@@ -14,6 +14,10 @@
     "db:generate": {
       "dependsOn": ["^db:generate"]
     },
+    "db:studio": {
+      "cache": false,
+      "persistent": true
+    },
     "build": {
       "dependsOn": ["^db:generate", "^build"],
       "outputs": [".expo/**", ".output/**", "dist/**"]

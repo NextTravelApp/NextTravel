@@ -1,7 +1,7 @@
 import { useTheme } from "@/components/Theme";
 import { useSession } from "@/components/auth/AuthContext";
 import { useFetcher } from "@/components/fetcher";
-import { i18n } from "@/components/i18n";
+import { i18n } from "@/components/i18n/LocalesHandler";
 import { Button, TextInput } from "@/components/injector";
 import Plane from "@/components/svg/Plane";
 import { Alert } from "@/components/ui/Alert";

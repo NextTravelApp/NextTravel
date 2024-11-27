@@ -1,7 +1,7 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { PlanCard } from "@/components/auth/PlanCard";
 import { useFetcher } from "@/components/fetcher";
-import { i18n } from "@/components/i18n";
+import { i18n } from "@/components/i18n/LocalesHandler";
 import { SafeAreaView, Text } from "@/components/injector";
 import { StripeProvider } from "@/components/stripe/StripeProvider";
 import { LoadingScreen } from "@/components/ui/Screens";

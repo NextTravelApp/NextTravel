@@ -1,5 +1,5 @@
 import { useFetcher } from "@/components/fetcher";
-import { i18n } from "@/components/i18n";
+import { i18n } from "@/components/i18n/LocalesHandler";
 import { Button, MapView, SafeAreaView, Text } from "@/components/injector";
 import { LimitScreen } from "@/components/plan/LimitScreen";
 import { PlanStep } from "@/components/plan/PlanStep";

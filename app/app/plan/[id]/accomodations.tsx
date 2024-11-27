@@ -1,6 +1,6 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { useFetcher } from "@/components/fetcher";
-import { i18n } from "@/components/i18n";
+import { i18n } from "@/components/i18n/LocalesHandler";
 import { Button, MapView, SafeAreaView, Text } from "@/components/injector";
 import { Navbar } from "@/components/ui/Navbar";
 import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";

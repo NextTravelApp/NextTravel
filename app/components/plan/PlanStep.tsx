@@ -2,7 +2,7 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { View } from "react-native";
 import { useFetcher } from "../fetcher";
-import { i18n } from "../i18n";
+import { i18n } from "../i18n/LocalesHandler";
 import { Text } from "../injector";
 import { ExternalLink } from "../ui/ExternalLink";
 import { Image } from "../ui/Image";

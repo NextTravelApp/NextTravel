@@ -1,4 +1,6 @@
-export const it = {
+import type { en } from "./en";
+
+export const it: typeof en = {
   home: {
     members: {
       title: "Membri",
@@ -47,6 +49,7 @@ export const it = {
       create: "Pianificazione del tuo viaggio..",
       accomodation: "Cercando i migliori alloggi..",
       attractions: "Cercando le migliori attrazioni..",
+      not_ready: "Il tuo viaggio non è ancora pronto",
     },
     limit: {
       title: "Oh no!",
@@ -156,5 +159,16 @@ export const it = {
     title: "Impostazioni",
     clear_cache: "Svuota cache",
     logout: "Esci",
+  },
+  notifications: {
+    resume_plan: {
+      title: "Il tuo piano è pronto",
+      body: "Il tuo {{title}} è pronto nell'app. Cosa stai aspettando?",
+    },
+
+    plan_ready: {
+      title: "Il tuo piano è pronto!",
+      body: "Il tuo piano per {{destination}} è pronto nell'app. Esploralo ora!",
+    },
   },
 };

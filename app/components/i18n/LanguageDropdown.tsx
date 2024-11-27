@@ -1,8 +1,7 @@
+import { i18n, locales } from "locales";
 import { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
-import { i18n } from ".";
 import { Button, Text } from "../injector";
-import { locales } from "./locales";
 
 const getFlagEmoji = (countryCode: string): string => {
   const codePoints = countryCode
@@ -14,7 +13,7 @@ const getFlagEmoji = (countryCode: string): string => {
 
 export function LanguageDropdown() {
   const [value, setValue] = useState<string | null>(
-    i18n.availableLocales.includes(i18n.locale)
+    locales.map((locale) => locale.value).includes(i18n.locale)
       ? i18n.locale
       : i18n.defaultLocale,
   );

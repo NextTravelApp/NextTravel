@@ -29,15 +29,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ai-sdk/openai@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "@ai-sdk/openai@npm:1.0.4"
+"@ai-sdk/openai@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "@ai-sdk/openai@npm:1.0.5"
   dependencies:
     "@ai-sdk/provider": "npm:1.0.1"
     "@ai-sdk/provider-utils": "npm:2.0.2"
   peerDependencies:
     zod: ^3.0.0
-  checksum: 10c0/8e98a13480b4428d76a222e1173eeb6e3da9f3304ffb11d83ec38b6cb91c9e9090effb9787c915da1cc51c7cd4f0fafe213b466e994fe537584fc7c7083a9ecd
+  checksum: 10c0/564c9a5bb7d329f84f2a82374b15cfbf74e448823b9422350e66d40e55219ae3185cf3de24eb204d4aa77e10f8682d79b46178ce65ea88b76aa7673a346a9290
   languageName: node
   linkType: hard
 
@@ -67,9 +67,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ai-sdk/react@npm:1.0.2":
-  version: 1.0.2
-  resolution: "@ai-sdk/react@npm:1.0.2"
+"@ai-sdk/react@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@ai-sdk/react@npm:1.0.3"
   dependencies:
     "@ai-sdk/provider-utils": "npm:2.0.2"
     "@ai-sdk/ui-utils": "npm:1.0.2"
@@ -83,7 +83,7 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10c0/fb2e279e4df54aaeee9f6f23dda0a6456a1aaca4ddc61d4779a6c063fff758b83fc0a9f180d150e903f0a98389094df657b86acab291ae36aebd6d9b3f3a3b89
+  checksum: 10c0/8b79b922343dc1489a63f40d7f2e517d85f419f99894b3e6e32c6462d5199a94eb8b980409f7546c4e1cc31fafb7ccfb21366f2b0b622bd7849285b0a5ea61d6
   languageName: node
   linkType: hard
 
@@ -175,7 +175,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.25.2":
+"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.25.2, @babel/core@npm:^7.26.0":
   version: 7.26.0
   resolution: "@babel/core@npm:7.26.0"
   dependencies:
@@ -3178,15 +3178,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@infisical/sdk@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "@infisical/sdk@npm:3.0.3"
+"@infisical/sdk@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@infisical/sdk@npm:3.0.4"
   dependencies:
     aws-sdk: "npm:2.1311.0"
     axios: "npm:^1.7.5"
     typescript: "npm:^5.5.4"
     zod: "npm:^3.23.8"
-  checksum: 10c0/c3b14f251f1528b171178234a527dc76969f07b508f0736be692aa574783fd9b2cea68512a3104f85ad156ba0ef05e02e5ace6a26778f78118518139b02c089d
+  checksum: 10c0/56bda3a2937807a2bddf07b0d4884aacfdda6234208748989a9fe07bcd60ca18f7ea406587006027b0110e4e6d98464ff72dc5b5506057270697dbe064cf3041
   languageName: node
   linkType: hard
 
@@ -3378,22 +3378,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lottiefiles/dotlottie-react@npm:^0.10.0":
-  version: 0.10.0
-  resolution: "@lottiefiles/dotlottie-react@npm:0.10.0"
+"@lottiefiles/dotlottie-react@npm:^0.10.1":
+  version: 0.10.1
+  resolution: "@lottiefiles/dotlottie-react@npm:0.10.1"
   dependencies:
-    "@lottiefiles/dotlottie-web": "npm:0.37.0"
+    "@lottiefiles/dotlottie-web": "npm:0.38.0"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/506e37de08df98693fe2e94a25273f67ed9b428ee1bb908d161260f1c125f0ef7457a5298c7702afbfbbf1e9bddc4399cb3691b38433eb7148c18b9cd8bafb22
+  checksum: 10c0/a832e9ee466ad15b27614028b06dd831d75f223794d727921e23d60dbd41938211d35cc5797032937d78ce64bd2de5bd6b4128f73ca6ee6494e17d05f114232f
   languageName: node
   linkType: hard
 
-"@lottiefiles/dotlottie-web@npm:0.37.0":
-  version: 0.37.0
-  resolution: "@lottiefiles/dotlottie-web@npm:0.37.0"
-  checksum: 10c0/c48474eaf3726e5f03ad2ee191fd2aec9c88404490620fb5753aaab02a8dc32a1549df9ed1128f3f40380b4c58b686c8dd028df0adf1fd66e55c79a109805330
+"@lottiefiles/dotlottie-web@npm:0.38.0":
+  version: 0.38.0
+  resolution: "@lottiefiles/dotlottie-web@npm:0.38.0"
+  checksum: 10c0/28307298222178d22ab381fe117986ea04d6f0727fd2782913dd74a39617edd000df55ab133c02cdd25c84d3a75e79368775457f223a768b0516954c0df141fa
   languageName: node
   linkType: hard
 
@@ -4612,39 +4612,39 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.60.6":
-  version: 5.60.6
-  resolution: "@tanstack/query-core@npm:5.60.6"
-  checksum: 10c0/3339c637b00b38b704dfdde26bc475e6d1b46d130b2b22383e73012e791c8747ebebb8c72dd645e214691fcdbd2f09138d7f5b61e5c1fe64955850ddbbe32e11
+"@tanstack/query-core@npm:5.61.5":
+  version: 5.61.5
+  resolution: "@tanstack/query-core@npm:5.61.5"
+  checksum: 10c0/597af37641eb7e4123259f2f4244de977de98b1cab245a246f892b73bceac78d02e49f3368304e74691ab5ed74aa2b203b0a17045406f0303bbf962696856db9
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.61.0":
-  version: 5.61.0
-  resolution: "@tanstack/react-query@npm:5.61.0"
+"@tanstack/react-query@npm:^5.61.5":
+  version: 5.61.5
+  resolution: "@tanstack/react-query@npm:5.61.5"
   dependencies:
-    "@tanstack/query-core": "npm:5.60.6"
+    "@tanstack/query-core": "npm:5.61.5"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10c0/b65477a8bda401dbde0daae002c4a42ce8581d749eaec723634cdeb378f5a8eb609f00d2010060a05db995adb8e20e50b2540a560e782878f4b6db132e13c140
+  checksum: 10c0/1c535836025622a13f7a53947bc715147a34a5f98bcda32c0afd56f605073f21788b19f3e47e21876cad2cff7c9cd3b25cadd12eba5ddcc4c7e37f75d0742c32
   languageName: node
   linkType: hard
 
-"@trigger.dev/build@npm:3.2.1, @trigger.dev/build@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "@trigger.dev/build@npm:3.2.1"
+"@trigger.dev/build@npm:3.2.2, @trigger.dev/build@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "@trigger.dev/build@npm:3.2.2"
   dependencies:
-    "@trigger.dev/core": "npm:3.2.1"
+    "@trigger.dev/core": "npm:3.2.2"
     pkg-types: "npm:^1.1.3"
     tinyglobby: "npm:^0.2.2"
     tsconfck: "npm:3.1.3"
-  checksum: 10c0/95ab8cb23c6aade79a3227913971aff99e5ec4ad137ff92c95479e531751a66bf7e9e6c2eb3bd2244616ae7670a9aa6221250b7cbf97e983a136d0530fd9205c
+  checksum: 10c0/d205e7c044d2dbece9fda57d01b9fed6c6823af7cafa0581ebf2fd80df188fcb5dbdb61bd9fa9adfe5809d3f8635a8a2bc7f8a05daafe2a988597949abdb68a3
   languageName: node
   linkType: hard
 
-"@trigger.dev/core@npm:3.2.1":
-  version: 3.2.1
-  resolution: "@trigger.dev/core@npm:3.2.1"
+"@trigger.dev/core@npm:3.2.2":
+  version: 3.2.2
+  resolution: "@trigger.dev/core@npm:3.2.2"
   dependencies:
     "@electric-sql/client": "npm:0.7.1"
     "@google-cloud/precise-date": "npm:^4.0.0"
@@ -4671,18 +4671,18 @@ __metadata:
     zod: "npm:3.23.8"
     zod-error: "npm:1.5.0"
     zod-validation-error: "npm:^1.5.0"
-  checksum: 10c0/f68d10df6fbef33cd18749e5014c9fc8b7f78bb9a04708921c87640e0fc762e1a95f3c4f688c02c8076d79603d0a693ee8185e4e64c7a2f4b80931bab7c97dba
+  checksum: 10c0/05364e27752af6d32cbf6d533379926f9c9598ffe3cf1100527b84c8c85921a3d2ac51e9827863040796ad930765b3769d377ad83a8e519afc8b9a78a4bfcb10
   languageName: node
   linkType: hard
 
-"@trigger.dev/sdk@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "@trigger.dev/sdk@npm:3.2.1"
+"@trigger.dev/sdk@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "@trigger.dev/sdk@npm:3.2.2"
   dependencies:
     "@opentelemetry/api": "npm:1.9.0"
     "@opentelemetry/api-logs": "npm:0.52.1"
     "@opentelemetry/semantic-conventions": "npm:1.25.1"
-    "@trigger.dev/core": "npm:3.2.1"
+    "@trigger.dev/core": "npm:3.2.2"
     chalk: "npm:^5.2.0"
     cronstrue: "npm:^2.21.0"
     debug: "npm:^4.3.4"
@@ -4694,7 +4694,7 @@ __metadata:
     ws: "npm:^8.11.0"
   peerDependencies:
     zod: ^3.0.0
-  checksum: 10c0/557a1da993103d77fa5f0909c80fe2ec3ec4b465e8bcf814f4a4d67880f4a091c2f3d8f83c58d4f5b8bc53084fbf93560a9db47563c29a47d710daef10dc7aa6
+  checksum: 10c0/2e379eb71dfbcd40a04359710b16a5491dc1d71d1432a8672ba25204573b4a55bf6cfc058d7c3b1cbc50fd8e3e5e864131aee1bb75542133a0d4d9b09d161794
   languageName: node
   linkType: hard
 
@@ -5027,13 +5027,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ai@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "ai@npm:4.0.3"
+"ai@npm:^4.0.7":
+  version: 4.0.7
+  resolution: "ai@npm:4.0.7"
   dependencies:
     "@ai-sdk/provider": "npm:1.0.1"
     "@ai-sdk/provider-utils": "npm:2.0.2"
-    "@ai-sdk/react": "npm:1.0.2"
+    "@ai-sdk/react": "npm:1.0.3"
     "@ai-sdk/ui-utils": "npm:1.0.2"
     "@opentelemetry/api": "npm:1.9.0"
     jsondiffpatch: "npm:0.6.0"
@@ -5046,7 +5046,7 @@ __metadata:
       optional: true
     zod:
       optional: true
-  checksum: 10c0/1cf4bee16ea8afaacd6d76ebb090fd577d9223363ff24766dbf59988aa0bdc4bf1763dc951e71612985b7a41a2cca4507832552e6e044f042321b42b030ff687
+  checksum: 10c0/b9ca34b1fc77042a9984ee04e7051e2fe6d5d3298ae046369487a59de8f0b8eda4b3e37d4f520f7abcc5084f6cdbc497a871898d3c677f812aaf7286943979ea
   languageName: node
   linkType: hard
 
@@ -5195,20 +5195,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "api@workspace:api"
   dependencies:
-    "@ai-sdk/openai": "npm:^1.0.4"
+    "@ai-sdk/openai": "npm:^1.0.5"
     "@hono/node-server": "npm:^1.13.7"
     "@hono/zod-validator": "npm:^0.4.1"
-    "@infisical/sdk": "npm:^3.0.3"
+    "@infisical/sdk": "npm:^3.0.4"
     "@node-rs/argon2": "npm:^2.0.0"
-    "@trigger.dev/build": "npm:^3.2.1"
-    "@trigger.dev/sdk": "npm:^3.2.1"
-    ai: "npm:^4.0.3"
+    "@trigger.dev/build": "npm:^3.2.2"
+    "@trigger.dev/sdk": "npm:^3.2.2"
+    ai: "npm:^4.0.7"
     concurrently: "npm:^9.1.0"
     database: "workspace:*"
-    hono: "npm:^4.6.11"
+    hono: "npm:^4.6.12"
+    locales: "workspace:*"
     stripe: "npm:^17.4.0"
     travelpayouts: "workspace:*"
-    trigger.dev: "npm:^3.2.1"
+    trigger.dev: "npm:^3.2.2"
     tsx: "npm:^4.19.2"
     typescript: "npm:^5.7.2"
     unsplash-js: "npm:^7.0.19"
@@ -5221,17 +5222,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app@workspace:app"
   dependencies:
-    "@babel/core": "npm:^7.25.2"
+    "@babel/core": "npm:^7.26.0"
     "@dev-plugins/react-query": "npm:^0.1.0"
     "@dotlottie/react-player": "npm:^1.6.19"
     "@expo/vector-icons": "npm:^14.0.4"
-    "@lottiefiles/dotlottie-react": "npm:^0.10.0"
+    "@lottiefiles/dotlottie-react": "npm:^0.10.1"
     "@lottiefiles/react-lottie-player": "npm:^3.5.4"
     "@react-navigation/native": "npm:^7.0.0"
     "@stripe/react-stripe-js": "npm:^3.0.0"
     "@stripe/stripe-js": "npm:^5.2.0"
     "@stripe/stripe-react-native": "npm:0.38.6"
-    "@tanstack/react-query": "npm:^5.61.0"
+    "@tanstack/react-query": "npm:^5.61.5"
     "@types/react": "npm:~18.3.12"
     api: "workspace:*"
     expo: "npm:~52.0.11"
@@ -5247,8 +5248,9 @@ __metadata:
     expo-status-bar: "npm:~2.0.0"
     expo-system-ui: "npm:~4.0.4"
     expo-web-browser: "npm:~14.0.1"
-    hono: "npm:^4.6.11"
+    hono: "npm:^4.6.12"
     i18n-js: "npm:^4.5.0"
+    locales: "workspace:*"
     lottie-react-native: "npm:7.1.0"
     mapkit-typescript: "npm:^5.18.2"
     nativewind: "npm:^4.1.23"
@@ -5260,7 +5262,7 @@ __metadata:
     react-native-maps: "npm:1.18.0"
     react-native-paper: "npm:^5.12.5"
     react-native-paper-dates: "npm:^0.22.27"
-    react-native-reanimated: "npm:~3.16.2"
+    react-native-reanimated: "npm:~3.16.3"
     react-native-safe-area-context: "npm:4.12.0"
     react-native-screens: "npm:~4.1.0"
     react-native-svg: "npm:15.8.0"
@@ -5391,7 +5393,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.5, axios@npm:^1.7.7":
+"axios@npm:^1.7.5":
   version: 1.7.7
   resolution: "axios@npm:1.7.7"
   dependencies:
@@ -5399,6 +5401,17 @@ __metadata:
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
   checksum: 10c0/4499efc89e86b0b49ffddc018798de05fab26e3bf57913818266be73279a6418c3ce8f9e934c7d2d707ab8c095e837fc6c90608fb7715b94d357720b5f568af7
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.7.8":
+  version: 1.7.8
+  resolution: "axios@npm:1.7.8"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10c0/23ae2d0105aea9170c34ac9b6f30d9b2ab2fa8b1370205d2f7ce98b9f9510ab420148c13359ee837ea5a4bf2fb028ff225bd2fc92052fb0c478c6b4a836e2d5f
   languageName: node
   linkType: hard
 
@@ -8412,10 +8425,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^4.6.11":
-  version: 4.6.11
-  resolution: "hono@npm:4.6.11"
-  checksum: 10c0/f4a792692227c63806959e8e8fa67d1693272fed53b3e901cebd7238bc369cd18169aae5d2b2a67b48113babc6351a2186fe42a4094771fa403b386cd7df68ee
+"hono@npm:^4.6.12":
+  version: 4.6.12
+  resolution: "hono@npm:4.6.12"
+  checksum: 10c0/34dbaf9ac7ed45c1f1ab8c13535077eed70621b3bb5a07d8ee1a13d7a5f362a748b5f119399292f5496d2db1e19be46c0e49683fd21224c0a57aec897edc42fe
   languageName: node
   linkType: hard
 
@@ -9659,6 +9672,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"locales@workspace:*, locales@workspace:locales":
+  version: 0.0.0-use.local
+  resolution: "locales@workspace:locales"
+  dependencies:
+    typescript: "npm:^5.7.2"
+  languageName: unknown
+  linkType: soft
+
 "locate-path@npm:^3.0.0":
   version: 3.0.0
   resolution: "locate-path@npm:3.0.0"
@@ -10539,7 +10560,7 @@ __metadata:
     "@biomejs/biome": "npm:^1.9.4"
     husky: "npm:^9.1.7"
     lint-staged: "npm:^15.2.10"
-    turbo: "npm:^2.3.1"
+    turbo: "npm:^2.3.3"
   languageName: unknown
   linkType: soft
 
@@ -11805,9 +11826,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated@npm:~3.16.2":
-  version: 3.16.2
-  resolution: "react-native-reanimated@npm:3.16.2"
+"react-native-reanimated@npm:~3.16.3":
+  version: 3.16.3
+  resolution: "react-native-reanimated@npm:3.16.3"
   dependencies:
     "@babel/plugin-transform-arrow-functions": "npm:^7.0.0-0"
     "@babel/plugin-transform-class-properties": "npm:^7.0.0-0"
@@ -11824,7 +11845,7 @@ __metadata:
     "@babel/core": ^7.0.0-0
     react: "*"
     react-native: "*"
-  checksum: 10c0/640790d87683812e964a342016bdfda956d698bfdd289ef6cc0b214b0f62ac34da788f8795a29fe51bcc49b0002bd32fa2074ab79b63640cafb48d99473d36ca
+  checksum: 10c0/ef0ec527f9d19df3560f1060c79c89f4fa1771e2f16d5537921ebd974eff2e5a2b0badc7f2193843a6e070c36c33010fb7f00720383b225cf90cabdb7e55a406
   languageName: node
   linkType: hard
 
@@ -13536,7 +13557,7 @@ __metadata:
   resolution: "travelpayouts@workspace:travelpayouts"
   dependencies:
     "@types/md5": "npm:^2"
-    axios: "npm:^1.7.7"
+    axios: "npm:^1.7.8"
     date-fns: "npm:^4.1.0"
     md5: "npm:^2.3.0"
     typescript: "npm:^5.7.2"
@@ -13552,9 +13573,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"trigger.dev@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "trigger.dev@npm:3.2.1"
+"trigger.dev@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "trigger.dev@npm:3.2.2"
   dependencies:
     "@clack/prompts": "npm:^0.7.0"
     "@depot/cli": "npm:0.0.1-cli.2.73.0"
@@ -13570,8 +13591,8 @@ __metadata:
     "@opentelemetry/sdk-trace-base": "npm:1.25.1"
     "@opentelemetry/sdk-trace-node": "npm:1.25.1"
     "@opentelemetry/semantic-conventions": "npm:1.25.1"
-    "@trigger.dev/build": "npm:3.2.1"
-    "@trigger.dev/core": "npm:3.2.1"
+    "@trigger.dev/build": "npm:3.2.2"
+    "@trigger.dev/core": "npm:3.2.2"
     c12: "npm:^1.11.1"
     chalk: "npm:^5.2.0"
     cli-table3: "npm:^0.6.3"
@@ -13608,7 +13629,7 @@ __metadata:
     zod-validation-error: "npm:^1.5.0"
   bin:
     trigger: dist/esm/index.js
-  checksum: 10c0/2b104d14165d0bd2e8132257841e27dd7fa024b0a89c13983ad98841f01e322feb4bfc20f7903b3bbfb4a0d343880370ee1c8b8b729440e9cafd71ad3833fffb
+  checksum: 10c0/786cfa268675ea1e88eabeebbc37d187cc6af1e33b8736467c32d43c44b2c521bbde9db7c9822759ec55f388748bb0cf8733f0c4f4da830e51a4d865dbd5beaa
   languageName: node
   linkType: hard
 
@@ -13677,30 +13698,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-darwin-64@npm:2.3.1":
-  version: 2.3.1
-  resolution: "turbo-darwin-64@npm:2.3.1"
+"turbo-darwin-64@npm:2.3.3":
+  version: 2.3.3
+  resolution: "turbo-darwin-64@npm:2.3.3"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-darwin-arm64@npm:2.3.1":
-  version: 2.3.1
-  resolution: "turbo-darwin-arm64@npm:2.3.1"
+"turbo-darwin-arm64@npm:2.3.3":
+  version: 2.3.3
+  resolution: "turbo-darwin-arm64@npm:2.3.3"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-linux-64@npm:2.3.1":
-  version: 2.3.1
-  resolution: "turbo-linux-64@npm:2.3.1"
+"turbo-linux-64@npm:2.3.3":
+  version: 2.3.3
+  resolution: "turbo-linux-64@npm:2.3.3"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-linux-arm64@npm:2.3.1":
-  version: 2.3.1
-  resolution: "turbo-linux-arm64@npm:2.3.1"
+"turbo-linux-arm64@npm:2.3.3":
+  version: 2.3.3
+  resolution: "turbo-linux-arm64@npm:2.3.3"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
@@ -13712,30 +13733,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-windows-64@npm:2.3.1":
-  version: 2.3.1
-  resolution: "turbo-windows-64@npm:2.3.1"
+"turbo-windows-64@npm:2.3.3":
+  version: 2.3.3
+  resolution: "turbo-windows-64@npm:2.3.3"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-windows-arm64@npm:2.3.1":
-  version: 2.3.1
-  resolution: "turbo-windows-arm64@npm:2.3.1"
+"turbo-windows-arm64@npm:2.3.3":
+  version: 2.3.3
+  resolution: "turbo-windows-arm64@npm:2.3.3"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo@npm:^2.3.1":
-  version: 2.3.1
-  resolution: "turbo@npm:2.3.1"
+"turbo@npm:^2.3.3":
+  version: 2.3.3
+  resolution: "turbo@npm:2.3.3"
   dependencies:
-    turbo-darwin-64: "npm:2.3.1"
-    turbo-darwin-arm64: "npm:2.3.1"
-    turbo-linux-64: "npm:2.3.1"
-    turbo-linux-arm64: "npm:2.3.1"
-    turbo-windows-64: "npm:2.3.1"
-    turbo-windows-arm64: "npm:2.3.1"
+    turbo-darwin-64: "npm:2.3.3"
+    turbo-darwin-arm64: "npm:2.3.3"
+    turbo-linux-64: "npm:2.3.3"
+    turbo-linux-arm64: "npm:2.3.3"
+    turbo-windows-64: "npm:2.3.3"
+    turbo-windows-arm64: "npm:2.3.3"
   dependenciesMeta:
     turbo-darwin-64:
       optional: true
@@ -13751,7 +13772,7 @@ __metadata:
       optional: true
   bin:
     turbo: bin/turbo
-  checksum: 10c0/0e6766540b0b92591f9b0232b8ccc41e7bf54f1bf3c2b7deb96d7f51f1384dcf1aa11351d613948a9d073d9a1a454254e5bdd25db757cce7f9888200138040f7
+  checksum: 10c0/9aab52fb868a2b6246f41fe2343dec56c70252a9cb7729a3ea183458cfa728c1445d1b98882dd43542f0ffd46524e8ba7776fe0925e31a86904b113222778fa5
   languageName: node
   linkType: hard
 

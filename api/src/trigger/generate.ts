@@ -1,7 +1,9 @@
 import { logger, task } from "@trigger.dev/sdk/v3";
+import { localesToObject } from "locales";
 import type { responseType } from "../constants/ai";
 import type { searchSchemaType } from "../constants/requests";
 import { generateTrip } from "../lib/ai/generator";
+import { sendNotification } from "../lib/notifications";
 import prisma from "../lib/prisma";
 import { getImage } from "../lib/unsplash";
 
@@ -66,8 +68,29 @@ export const generateTask = task({
         tokens: trip.tokens ?? 0,
         date: new Date(payload.request.startDate),
       },
+      include: {
+        user: {
+          select: {
+            language: true,
+            notificationTokens: true,
+          },
+        },
+      },
     });
 
-    return record;
+    logger.info("Sending notification");
+    const notification =
+      localesToObject()[record.user.language ?? "en"].notifications.plan_ready;
+
+    for (const token of record.user.notificationTokens)
+      await sendNotification(token, {
+        title: notification.title,
+        body: notification.body.replace("{{destination}}", record.location),
+      });
+
+    return {
+      ...record,
+      user: undefined,
+    };
   },
 });

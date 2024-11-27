@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { localesToObject } from "locales";
 import type { responseType } from "../constants/ai";
 import { sendNotification } from "../lib/notifications";
 import prisma from "../lib/prisma";
@@ -20,6 +21,7 @@ export const systemRoute = new Hono()
           select: {
             email: true,
             notificationTokens: true,
+            language: true,
           },
         },
       },
@@ -27,9 +29,16 @@ export const systemRoute = new Hono()
 
     for (const plan of plans) {
       for (const token of plan.user.notificationTokens) {
+        const notification =
+          localesToObject()[plan.user.language ?? "en"].notifications
+            .resume_plan;
+
         await sendNotification(token, {
-          title: "Don't forget your travel plan!",
-          body: `Your ${(plan.response as responseType)?.title} is ready in your app. What are you waiting for?`,
+          title: notification.title,
+          body: notification.body.replace(
+            "{{title}}",
+            (plan.response as responseType)?.title,
+          ),
         });
       }
     }

@@ -1,4 +1,5 @@
 import { getLocales } from "expo-localization";
+import { i18n } from "locales";
 
 export const getLocale = () => {
   const locales = getLocales();
@@ -9,3 +10,6 @@ export const getLocale = () => {
 
   return "en";
 };
+
+i18n.locale = getLocale();
+export { i18n };

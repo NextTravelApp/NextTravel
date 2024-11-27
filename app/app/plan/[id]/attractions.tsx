@@ -1,6 +1,6 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { useFetcher } from "@/components/fetcher";
-import { i18n } from "@/components/i18n";
+import { i18n } from "@/components/i18n/LocalesHandler";
 import { Button, MapView, SafeAreaView } from "@/components/injector";
 import { Attraction } from "@/components/plan/Attraction";
 import { Navbar } from "@/components/ui/Navbar";
@@ -32,6 +32,7 @@ const AttractionsPage = () => {
 
       const data = await res.json();
       if ("t" in data) throw new Error(data.t);
+      if ("pending" in data) throw new Error("not_ready");
 
       return {
         ...data,
@@ -63,7 +64,7 @@ const AttractionsPage = () => {
   });
 
   if (!id) return <Redirect href="/" />;
-  if (isLoading || isListLoading)
+  if (isLoading || isListLoading || (searchRecord && "pending" in searchRecord))
     return <LoadingScreen title={i18n.t("plan.loading.attractions")} />;
   if (error) return <ErrorScreen error={error.message} />;
 

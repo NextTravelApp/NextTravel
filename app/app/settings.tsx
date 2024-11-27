@@ -1,5 +1,5 @@
 import { useSession } from "@/components/auth/AuthContext";
-import { i18n } from "@/components/i18n";
+import { i18n } from "@/components/i18n/LocalesHandler";
 import { Button, SafeAreaView, Text } from "@/components/injector";
 import { Navbar } from "@/components/ui/Navbar";
 import { useQueryClient } from "@tanstack/react-query";

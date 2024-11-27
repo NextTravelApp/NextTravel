@@ -1,6 +1,6 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { useFetcher } from "@/components/fetcher";
-import { i18n } from "@/components/i18n";
+import { i18n } from "@/components/i18n/LocalesHandler";
 import { Button, SafeAreaView, Text } from "@/components/injector";
 import { Accomodation } from "@/components/plan/Accomodation";
 import { RetrievedAttraction } from "@/components/plan/Attraction";
@@ -11,7 +11,7 @@ import { ErrorScreen, LoadingScreen } from "@/components/ui/Screens";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import type { responseType } from "api";
 import { Link, Redirect, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 
 const CheckoutPage = () => {
@@ -31,6 +31,7 @@ const CheckoutPage = () => {
 
       const data = await res.json();
       if ("t" in data) throw new Error(data.t);
+      if ("pending" in data) throw new Error("not_ready");
 
       return {
         ...data,
@@ -167,7 +168,7 @@ const CheckoutPage = () => {
         </View>
 
         {plan?.userId === session?.id && (
-          <>
+          <Fragment>
             <Text className="!font-bold mt-3 text-2xl">
               {i18n.t("plan.checkout.friends")}
             </Text>
@@ -236,7 +237,7 @@ const CheckoutPage = () => {
               public={plan?.public ?? false}
               bookmark={plan?.bookmark ?? false}
             />
-          </>
+          </Fragment>
         )}
       </ScrollView>
 

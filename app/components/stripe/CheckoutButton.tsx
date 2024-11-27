@@ -2,7 +2,7 @@ import { useStripe } from "@stripe/stripe-react-native";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "../auth/AuthContext";
 import { useFetcher } from "../fetcher";
-import { i18n } from "../i18n";
+import { i18n } from "../i18n/LocalesHandler";
 import { Button } from "../injector";
 
 export type CheckoutButtonProps = {

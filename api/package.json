@@ -12,14 +12,15 @@
   },
   "types": "src/index.ts",
   "dependencies": {
-    "@ai-sdk/openai": "^1.0.4",
+    "@ai-sdk/openai": "^1.0.5",
     "@hono/node-server": "^1.13.7",
     "@hono/zod-validator": "^0.4.1",
     "@node-rs/argon2": "^2.0.0",
-    "@trigger.dev/sdk": "^3.2.1",
-    "ai": "^4.0.3",
+    "@trigger.dev/sdk": "^3.2.2",
+    "ai": "^4.0.7",
     "database": "workspace:*",
-    "hono": "^4.6.11",
+    "hono": "^4.6.12",
+    "locales": "workspace:*",
     "stripe": "^17.4.0",
     "travelpayouts": "workspace:*",
     "unsplash-js": "^7.0.19",
@@ -27,10 +28,10 @@
     "zod-to-json-schema": "^3.23.5"
   },
   "devDependencies": {
-    "@infisical/sdk": "^3.0.3",
-    "@trigger.dev/build": "^3.2.1",
+    "@infisical/sdk": "^3.0.4",
+    "@trigger.dev/build": "^3.2.2",
     "concurrently": "^9.1.0",
-    "trigger.dev": "^3.2.1",
+    "trigger.dev": "^3.2.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }

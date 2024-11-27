@@ -4,7 +4,7 @@ import { type Href, Link, useLocalSearchParams, useRouter } from "expo-router";
 import { Pressable, View } from "react-native";
 import { useTheme } from "../Theme";
 import { useFetcher } from "../fetcher";
-import { i18n } from "../i18n";
+import { i18n } from "../i18n/LocalesHandler";
 import { Button, Text } from "../injector";
 import { ExternalLink } from "../ui/ExternalLink";
 import { Image } from "../ui/Image";

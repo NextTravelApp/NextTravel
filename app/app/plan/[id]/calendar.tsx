@@ -1,6 +1,6 @@
 import { useTheme } from "@/components/Theme";
 import { useFetcher } from "@/components/fetcher";
-import { i18n } from "@/components/i18n";
+import { i18n } from "@/components/i18n/LocalesHandler";
 import { Button, SafeAreaView } from "@/components/injector";
 import { LimitScreen } from "@/components/plan/LimitScreen";
 import { PlanStep } from "@/components/plan/PlanStep";
@@ -29,6 +29,7 @@ const CalendarPage = () => {
 
       const data = await res.json();
       if ("t" in data) throw new Error(data.t);
+      if ("pending" in data) throw new Error("not_ready");
 
       return {
         ...data,

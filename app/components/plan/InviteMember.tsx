@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Keyboard, Platform, TouchableWithoutFeedback } from "react-native";
 import { Dialog, Portal } from "react-native-paper";
-import { i18n } from "../i18n";
+import { i18n } from "../i18n/LocalesHandler";
 import { Button, TextInput } from "../injector";
 
 export function InviteMember({

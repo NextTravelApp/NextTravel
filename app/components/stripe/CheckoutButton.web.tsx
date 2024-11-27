@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { ActivityIndicator, Dialog, Portal } from "react-native-paper";
 import { useSession } from "../auth/AuthContext";
 import { useFetcher } from "../fetcher";
-import { i18n } from "../i18n";
+import { i18n } from "../i18n/LocalesHandler";
 import { Button } from "../injector";
 import type { CheckoutButtonProps } from "./CheckoutButton";
 

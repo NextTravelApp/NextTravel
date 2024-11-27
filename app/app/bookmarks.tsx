@@ -1,7 +1,7 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { useFetcher } from "@/components/fetcher";
 import { LocationList } from "@/components/home/Location";
-import { i18n } from "@/components/i18n";
+import { i18n } from "@/components/i18n/LocalesHandler";
 import { useQuery } from "@tanstack/react-query";
 
 const Bookmarks = () => {

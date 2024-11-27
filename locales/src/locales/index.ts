@@ -15,8 +15,7 @@ export const locales = [
 ];
 
 export function localesToObject() {
-  // biome-ignore lint/suspicious/noExplicitAny: any is needed here
-  const obj: any = {};
+  const obj: Record<string, typeof en> = {};
 
   for (const locale of locales) {
     obj[locale.value] = locale.data;

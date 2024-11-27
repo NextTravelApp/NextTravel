@@ -1,6 +1,6 @@
 import type { Plan } from "api";
 import { View } from "react-native";
-import { i18n } from "../i18n";
+import { i18n } from "../i18n/LocalesHandler";
 import { Text } from "../injector";
 import { CheckoutButton } from "../stripe/CheckoutButton";
 

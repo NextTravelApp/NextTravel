@@ -1,7 +1,7 @@
 import { useSession } from "@/components/auth/AuthContext";
 import { ChatBubble } from "@/components/chat/ChatBubble";
 import { useFetcher } from "@/components/fetcher";
-import { i18n } from "@/components/i18n";
+import { i18n } from "@/components/i18n/LocalesHandler";
 import { SafeAreaView, TextInput } from "@/components/injector";
 import { Navbar } from "@/components/ui/Navbar";
 import { LoadingScreen } from "@/components/ui/Screens";
@@ -80,7 +80,7 @@ const Chat = () => {
                   content={message.content}
                   key={message.id}
                   diffs={
-                    (message.data as {
+                    (message.data as unknown as {
                       added: string[];
                       removed: string[];
                     }) || undefined
