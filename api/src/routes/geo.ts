@@ -1,6 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import type { StatusCode } from "hono/utils/http-status";
+import type { ContentfulStatusCode } from "hono/utils/http-status";
 import { z } from "zod";
 import { validatorCallback } from "../middlewares/validator";
 
@@ -35,7 +35,7 @@ export const geoRoute = new Hono().get(
           error: "Failed to fetch data",
           data,
         },
-        res.status as StatusCode,
+        res.status as ContentfulStatusCode,
       );
 
     return ctx.json(
