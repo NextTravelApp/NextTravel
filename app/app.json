@@ -18,7 +18,8 @@
       "associatedDomains": ["applinks:nexttravel.app"],
       "bundleIdentifier": "app.nexttravel.app",
       "infoPlist": {
-        "NSCameraUsageDescription": "App uses camera to scan"
+        "NSCameraUsageDescription": "App uses camera to scan",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
