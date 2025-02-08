@@ -339,21 +339,25 @@ export const itemRoute = new Hono<{ Variables: Variables }>()
     }
 
     if (plan.accomodation) {
-      const accomodation = await getAccomodation(plan.accomodation, {
-        checkIn: requestData.startDate,
-        checkOut: requestData.endDate,
-        location: requestData.location,
-        members: requestData.members,
-      });
-
-      if (accomodation)
-        items.push({
-          type: "accomodation",
-          name: accomodation.name,
-          provider: plan.accomodation.split("_")[0],
-          price: accomodation.price,
-          url: accomodation.checkoutUrl,
+      try {
+        const accomodation = await getAccomodation(plan.accomodation, {
+          checkIn: requestData.startDate,
+          checkOut: requestData.endDate,
+          location: requestData.location,
+          members: requestData.members,
         });
+
+        if (accomodation)
+          items.push({
+            type: "accomodation",
+            name: accomodation.name,
+            provider: plan.accomodation.split("_")[0],
+            price: accomodation.price,
+            url: accomodation.checkoutUrl,
+          });
+      } catch {
+        // Accomodation not found or date expired
+      }
     }
 
     return ctx.json({

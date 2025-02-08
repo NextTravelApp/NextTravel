@@ -39,10 +39,10 @@ export const geoRoute = new Hono().get(
       );
 
     return ctx.json(
-      data.address.city ??
+      (data.address.city ??
         data.address.town ??
         data.address.village ??
-        data.address.county,
+        data.address.county) as string,
     );
   },
 );

@@ -12,27 +12,27 @@
   },
   "types": "src/index.ts",
   "dependencies": {
-    "@ai-sdk/openai": "^1.0.12",
-    "@hono/node-server": "^1.13.7",
+    "@ai-sdk/openai": "^1.1.9",
+    "@hono/node-server": "^1.13.8",
     "@hono/zod-validator": "^0.4.2",
     "@node-rs/argon2": "^2.0.2",
-    "@trigger.dev/sdk": "^3.3.7",
-    "ai": "^4.0.23",
+    "@trigger.dev/sdk": "^3.3.13",
+    "ai": "^4.1.25",
     "database": "workspace:*",
-    "hono": "^4.6.15",
+    "hono": "^4.7.0",
     "locales": "workspace:*",
-    "stripe": "^17.5.0",
+    "stripe": "^17.6.0",
     "travelpayouts": "workspace:*",
     "unsplash-js": "^7.0.19",
     "zod": "^3.24.1",
     "zod-to-json-schema": "^3.24.1"
   },
   "devDependencies": {
-    "@infisical/sdk": "^3.0.4",
-    "@trigger.dev/build": "^3.3.7",
+    "@infisical/sdk": "^3.0.5",
+    "@trigger.dev/build": "^3.3.13",
     "concurrently": "^9.1.2",
-    "trigger.dev": "^3.3.7",
+    "trigger.dev": "^3.3.13",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.3"
   }
 }
