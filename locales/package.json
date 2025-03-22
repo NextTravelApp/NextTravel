@@ -9,7 +9,7 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.2"
   },
   "dependencies": {
     "i18n-js": "^4.5.1"
