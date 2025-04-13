@@ -8,6 +8,7 @@ import { imageRoute } from "./routes/image";
 import { planRoute } from "./routes/plan";
 import { premiumRoute } from "./routes/premium";
 import { retrieverRoute } from "./routes/retriever";
+import { stripeRoute } from "./routes/stripe";
 import { systemRoute } from "./routes/system";
 
 const app = new Hono()
@@ -27,7 +28,8 @@ const app = new Hono()
   .route("/system", systemRoute)
   .route("/premium", premiumRoute)
   .route("/chat", chatRoute)
-  .route("/geo", geoRoute);
+  .route("/geo", geoRoute)
+  .route("/stripe", stripeRoute);
 
 serve(app, (info) => {
   console.log(`[Server] Listening on ${info.address}:${info.port}`);

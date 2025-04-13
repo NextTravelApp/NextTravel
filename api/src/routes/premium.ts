@@ -54,7 +54,10 @@ export const premiumRoute = new Hono<{ Variables: Variables }>()
       }
 
       if (plan.price === 0) {
-        const customer = await stripe.customers.retrieve(stripeId);
+        const customer = await stripe.customers.retrieve(stripeId, {
+          expand: ["subscriptions"],
+        });
+
         if (!customer.deleted) {
           for (const item of customer.subscriptions?.data ?? []) {
             if (item.status !== "active") continue;
@@ -89,7 +92,7 @@ export const premiumRoute = new Hono<{ Variables: Variables }>()
         ],
         payment_behavior: "default_incomplete",
         payment_settings: { save_default_payment_method: "on_subscription" },
-        expand: ["latest_invoice.payment_intent"],
+        expand: ["latest_invoice.confirmation_secret"],
         metadata: {
           user: user.id,
           plan: plan.id,
@@ -98,10 +101,8 @@ export const premiumRoute = new Hono<{ Variables: Variables }>()
 
       return ctx.json({
         subscriptionId: subscription.id,
-        clientSecret: (
-          (subscription.latest_invoice as Stripe.Invoice)
-            ?.payment_intent as Stripe.PaymentIntent
-        )?.client_secret,
+        clientSecret: (subscription.latest_invoice as Stripe.Invoice)
+          ?.confirmation_secret?.client_secret,
       });
     },
   );

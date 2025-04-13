@@ -19,6 +19,7 @@ export const stripeRoute = new Hono().post("/webhook", async (ctx) => {
 
     if (
       event.type !== "customer.subscription.created" &&
+      event.type !== "customer.subscription.updated" &&
       event.type !== "customer.subscription.deleted"
     )
       return ctx.json({ success: true }, 200);
@@ -29,7 +30,11 @@ export const stripeRoute = new Hono().post("/webhook", async (ctx) => {
     };
 
     switch (event.type) {
+      case "customer.subscription.updated":
       case "customer.subscription.created": {
+        if (event.data.object.status !== "active")
+          return ctx.json({ success: true }, 200);
+
         await prisma.user.update({
           where: {
             id: metadata.user,
