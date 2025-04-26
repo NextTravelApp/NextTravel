@@ -20,7 +20,7 @@ const Chat = () => {
           mode="contained"
           className="!bg-card w-[49%]"
           onPress={() => {
-            queryClient.invalidateQueries();
+            queryClient.clear();
           }}
         >
           <Text>{i18n.t("settings.clear_cache")}</Text>

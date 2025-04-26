@@ -11,6 +11,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
 } from "react";
 import { useStorageState } from "./useStorageState";
 
@@ -48,11 +49,13 @@ export function useFetcher() {
 export function FetcherProvider({ children }: PropsWithChildren) {
   const [[_, token]] = useStorageState("token");
   const queryClient = useQueryClient();
-  const hono = authenticatedfetcher(token);
+  const hono = useMemo(() => {
+    return authenticatedfetcher(token);
+  }, [token]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    queryClient.invalidateQueries();
+    queryClient.clear();
   }, [hono]);
 
   return (

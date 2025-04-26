@@ -223,6 +223,16 @@ export const authRoute = new Hono<{ Variables: Variables }>()
       const user = ctx.get("user");
       const body = ctx.req.valid("json");
 
+      const existingUser = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: {
+          notificationTokens: true,
+        },
+      });
+
+      if (!existingUser || existingUser.notificationTokens.includes(body.token))
+        return ctx.json({ success: true });
+
       await prisma.user.update({
         where: { id: user.id },
         data: {
