@@ -217,5 +217,3 @@ expo-env.d.ts
 # @end expo-cli
 
 .turbo
-
-.infisical.json

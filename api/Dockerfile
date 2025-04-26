@@ -1,9 +1,7 @@
 FROM node:20-alpine AS base
 
 RUN corepack enable
-RUN apk add --no-cache bash curl && curl -1sLf \
-    'https://dl.cloudsmith.io/public/infisical/infisical-cli/setup.alpine.sh' | bash \
-    && apk add infisical
+COPY --from=1password/op:2 /usr/local/bin/op /usr/local/bin/op
 
 # The web Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
 # Make sure you update this Dockerfile, the Dockerfile in the web workspace and copy that over to Dockerfile in the docs.
@@ -52,6 +50,7 @@ RUN addgroup --system --gid 1001 hono
 RUN adduser --system --uid 1001 hono
 USER hono
 COPY --from=installer /app .
+COPY 1password.env .env
 
 EXPOSE 3000
-CMD ["infisical", "run", "--", "node", "api/dist/src/index.js"]
+CMD ["op", "run", "--env-file", ".env", "--", "node", "api/dist/src/index.js"]
